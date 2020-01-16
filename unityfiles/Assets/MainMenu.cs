@@ -8,6 +8,7 @@ public class MainMenu : MonoBehaviour
 {
     public void PlayGame()
     {
+        Debug.Log("Starting the main game");
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1); // todo set the right scene
     }
 
