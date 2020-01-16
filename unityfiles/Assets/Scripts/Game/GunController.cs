@@ -116,12 +116,9 @@ public class GunController : MonoBehaviour
 
         BulletControll bulletControll = bullet.AddComponent<BulletControll>() as BulletControll;
 
-        //print(bulletControll.Velocety);
         bulletControll.Velocety = this.bulletVelocity;
-        //print(this.bulletVelocity);
-        //print(bulletControll.Velocety);
         bulletControll.Damage = this.bulletDamage;
-        bulletControll.Ttl = 20.0f;
+        bulletControll.Ttl = this.bulletTtl;
 
 
 
@@ -129,9 +126,7 @@ public class GunController : MonoBehaviour
         rigidB2d.bodyType = RigidbodyType2D.Kinematic;
 
 
-        print(bulletControll.Velocety);
         bullet.SetActive(false);
-        print(bulletControll.Velocety);
         
 
         //        Texture2D sTexture = (Texture2D)UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/Resources/Graphics/banana_PNG835.png", typeof(Texture2D));

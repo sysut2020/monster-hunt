@@ -328,9 +328,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed5f91fdc298f64b7a2937950f862e10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletVelocity: {x: 3, y: 0}
+  bulletVelocity: {x: 0.25, y: 0}
   bulletDamage: 5
-  bulletTtl: 10
+  bulletTtl: 5
   bulletTexure: {fileID: 2800000, guid: 86acfbe00216097f5828537f1db32cf7, type: 3}
   spriteScale: {x: 0.025, y: 0.025}
   fireRate: 5

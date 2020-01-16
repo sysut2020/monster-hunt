@@ -20,9 +20,11 @@ public class BulletControll : MonoBehaviour
 {
 
     // -- internal
+    [SerializeField] 
     private Vector2 velocety;
     [SerializeField]
     private float ttl;                      // Time to live
+    [SerializeField]
     private float damage;
 
     // -- properties
@@ -31,7 +33,7 @@ public class BulletControll : MonoBehaviour
     public Vector2 Velocety 
     {   
         get{return this.velocety;} 
-        set{this.velocety = value;print(value);print(this.velocety);}
+        set{this.velocety = value;}
     } 
     public float Ttl 
     {   
@@ -65,8 +67,6 @@ public class BulletControll : MonoBehaviour
 
     void Start()
     {
-        print(this.velocety);
-        //print(this.velocety.y);
         this.StartTtlTimer();   // to avoid potensial instant removal
         this.tag = "Bullet";
     }
@@ -74,15 +74,9 @@ public class BulletControll : MonoBehaviour
     void FixedUpdate() // 50 cals per sec
     {
         this.gameObject.transform.Translate(this.velocety.x, this.velocety.y, 0);
-        //print(this.velocety.x);
-        //print(this.velocety.y);
 
 
         if (Time.time > this.killAt & this.isKillable){
-            //print(Time.time);
-            //print(this.killAt);
-            //print(this.ttl);
-            //print("bullet timeout");
             this.isKillable = false;
             this.KillSelf();
         }
@@ -92,7 +86,7 @@ public class BulletControll : MonoBehaviour
     if (Col.tag == "Enemy"){
         Debug.Log("hit");
         
-        HealthController enemy = (HealthController)Col.gameObject.GetComponent("EntetyHealth");
+        HealthController enemy = (HealthController)Col.gameObject.GetComponent("HealthController");
         enemy.ApplyDamage(this.damage);
 
         this.KillSelf();

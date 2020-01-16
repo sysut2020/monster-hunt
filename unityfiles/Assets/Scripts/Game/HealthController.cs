@@ -27,7 +27,6 @@ public class HealthController : MonoBehaviour
     {
         if (this.entityHealth <= 0f)
         {
-            Debug.Log(this.entityHealth);
             Debug.Log("Entity killed");
             Destroy(this.gameObject);
         }
@@ -36,7 +35,7 @@ public class HealthController : MonoBehaviour
     public void ApplyDamage(float dmg){
         // TODO: mulg debonce her 
         this.entityHealth = this.entityHealth - dmg;
-        //Debug.Log(this.entityHealth);
+        Debug.Log(this.entityHealth);
     }
 
 
