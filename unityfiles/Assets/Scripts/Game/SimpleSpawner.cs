@@ -3,17 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-/*
-Til trygve husk og fjern
 
-Do use camelCasing for member variables
-Do use camelCasing for parameters
-Do use camelCasing for local variables
-Do use PascalCasing for function, property, event, and class names
-Do prefix interfaces names with “I”
-Do not prefix enums, classes, or delegates with any letter 
-
-*/
 
 public class SimpleSpawner : MonoBehaviour
 {

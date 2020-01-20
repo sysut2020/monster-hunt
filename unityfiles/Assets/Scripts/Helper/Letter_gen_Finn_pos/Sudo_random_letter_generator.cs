@@ -17,7 +17,7 @@ public class Sudo_random_letter_generator : MonoBehaviour
 
 
 
-    private SettValuePairs allSVP;
+    private SettValuePairs allSettValuePairs;
     private LetterFreq letterFreq;
     void Start()
     {
@@ -31,7 +31,7 @@ public class Sudo_random_letter_generator : MonoBehaviour
         using (StreamReader r = new StreamReader("Assets/Scripts/Helper/Letter_gen_Finn_pos/letter_sett_lists/score_sorted_sett_size_dict.json"))
         {
             string jsonText = r.ReadToEnd();
-            this.allSVP = JsonUtility.FromJson<SettValuePairs>(jsonText);
+            this.allSettValuePairs = JsonUtility.FromJson<SettValuePairs>(jsonText);
         }
 
 
@@ -87,19 +87,12 @@ public class Sudo_random_letter_generator : MonoBehaviour
 
     public String GenerateLetter()
     {
-         print("current Sequence ");
-        foreach (string l in this.activeLetterSett)
-        {
-            print(l);
-        }
-        print("sq end ##");
 
         List<SettValuePair> nexUsedSetts = new List<SettValuePair>();
 
         // if to short return weighted random
         if (this.activeLetterSett.Count <= 2)
         {
-            print("short random");
             String l = this.letterFreq.GetLetterByFreq();
             this.activeLetterSett.Add(l);
             this.letterSett.Add(l);
@@ -114,13 +107,11 @@ public class Sudo_random_letter_generator : MonoBehaviour
         // no normal found try find from reduced
         if (nexUsedSetts.Count == 0)
         {
-            print("will reduce");
-            nexUsedSetts = this.GettFromReduced();
+            nexUsedSetts = this.GetFromReduced();
         } 
 
         if (nexUsedSetts.Count > 0)
         {
-            print("is found");
             // TODO:
             //      Find an algorithm for selecting words based on diffeculty
             //
@@ -136,7 +127,6 @@ public class Sudo_random_letter_generator : MonoBehaviour
             return nextLetter;
         } else
         {
-            print("no solution random");
             String l = this.letterFreq.GetLetterByFreq();
             this.activeLetterSett.Add(l);
             this.letterSett.Add(l);
@@ -153,7 +143,7 @@ public class Sudo_random_letter_generator : MonoBehaviour
     {
         List<SettValuePair> possibleLetterSetts = new List<SettValuePair>();
 
-        foreach (SettValuePair svp in this.allSVP.GetListFromIndex(letterSett.Count + 1))
+        foreach (SettValuePair svp in this.allSettValuePairs.GetListFromIndex(letterSett.Count + 1))
         {
             if (this.IsAsubsettB(letterSett, svp.letter_sett)){
                 possibleLetterSetts.Add(svp);
@@ -163,7 +153,7 @@ public class Sudo_random_letter_generator : MonoBehaviour
 
     }
 
-    List<SettValuePair> GettFromReduced()
+    List<SettValuePair> GetFromReduced()
     {
         int activeSetLen = this.activeLetterSett.Count;
         int tmpRedWordSize = this.reduceWordSizeMin;
@@ -200,7 +190,7 @@ public class Sudo_random_letter_generator : MonoBehaviour
     List<SettValuePair> GetPossibleReductions(int reductionWordSize)
     {
         List<SettValuePair> possibleReductionSetts = new List<SettValuePair>();
-        foreach (SettValuePair svp in this.allSVP.GetListFromIndex(reductionWordSize))
+        foreach (SettValuePair svp in this.allSettValuePairs.GetListFromIndex(reductionWordSize))
         {
             if (this.IsAsubsettB(svp.letter_sett, this.activeLetterSett)){
                 possibleReductionSetts.Add(svp);

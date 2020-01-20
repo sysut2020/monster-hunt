@@ -3,27 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-/*
-Til trygve husk og fjern
-
-Do use camelCasing for member variables
-Do use camelCasing for parameters
-Do use camelCasing for local variables
-Do use PascalCasing for function, property, event, and class names
-Do prefix interfaces names with “I”
-Do not prefix enums, classes, or delegates with any letter 
-
-*/
-
 
 public class BulletControll : MonoBehaviour
 {
 
     // -- internal
     [SerializeField] 
-    private Vector2 velocety;
+    private Vector2 velocity;
     [SerializeField]
-    private float ttl;                      // Time to live
+    private float bulletTimeToLive;                      // Time to live
     [SerializeField]
     private float damage;
 
@@ -32,13 +20,13 @@ public class BulletControll : MonoBehaviour
 
     public Vector2 Velocety 
     {   
-        get{return this.velocety;} 
-        set{this.velocety = value;}
+        get{return this.velocity;} 
+        set{this.velocity = value;}
     } 
-    public float Ttl 
+    public float BulletTimeToLive 
     {   
-        get{return this.ttl;} 
-        set{this.ttl = value;}
+        get{return this.bulletTimeToLive;} 
+        set{this.bulletTimeToLive = value;}
     }
 
     public float Damage
@@ -54,7 +42,7 @@ public class BulletControll : MonoBehaviour
 
     // Starts the time to live timer
     public void StartTtlTimer(){
-        this.killAt = Time.time + this.ttl;
+        this.killAt = Time.time + this.bulletTimeToLive;
     }
 
 
@@ -73,7 +61,7 @@ public class BulletControll : MonoBehaviour
 
     void FixedUpdate() // 50 cals per sec
     {
-        this.gameObject.transform.Translate(this.velocety.x, this.velocety.y, 0);
+        this.gameObject.transform.Translate(this.velocity.x, this.velocity.y, 0);
 
 
         if (Time.time > this.killAt & this.isKillable){
@@ -82,7 +70,8 @@ public class BulletControll : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter2D(Collider2D Col) {
+    void OnTriggerEnter2D(Collider2D Col) 
+    {
     if (Col.tag == "Enemy"){
         Debug.Log("hit");
         
