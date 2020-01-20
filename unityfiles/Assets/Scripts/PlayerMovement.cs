@@ -6,25 +6,22 @@ using Object = UnityEngine.Object;
 
 public class PlayerMovement : MonoBehaviour {
 
-    public Rigidbody2D rigidBodyPlayer;
-    public float speed = 100;
-    public GameObject ground;
+    public CharacterController2D controller2D;
 
+    public float runSpeed = 40;
+    
+    public float horizontalMove = 7000;
+    public bool jump = false;
     void Update(){
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
-
-        Collision collision = new Collision();
-        //Debug.Log(horizontal);
-        //Vector2 tempVector = new Vector2(horizontal, vertical);
-        //tempVector = tempVector.normalized * speed * Time.deltaTime;
-        if (horizontal < 0 || horizontal > 0) {
-            rigidBodyPlayer.MovePosition(rigidBodyPlayer.transform.position + new Vector3(horizontal, vertical, this.transform.position.z) * Time.deltaTime);
+        horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
+        
+        if (Input.GetButtonDown("Jump")) {
+            jump = true;
         }
+    }
 
-        if (vertical > 0 || horizontal < 0) {
-            float jump = 1000;
-            rigidBodyPlayer.AddForce(Vector2.up * jump, ForceMode2D.Impulse);
-        }
+    private void FixedUpdate(){
+        controller2D.Move(horizontalMove * Time.fixedDeltaTime, false, jump);
+        jump = false;
     }
 }
