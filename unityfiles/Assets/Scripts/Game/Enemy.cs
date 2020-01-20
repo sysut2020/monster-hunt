@@ -20,9 +20,5 @@ public class Enemy : MonoBehaviour
         transform.Translate(new Vector2(0f,-0.05f));
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
 }

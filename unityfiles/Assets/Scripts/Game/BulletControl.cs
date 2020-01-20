@@ -64,7 +64,7 @@ public class BulletControl : MonoBehaviour
         this.gameObject.transform.Translate(this.velocity.x, this.velocity.y, 0);
 
 
-        if (Time.time > this.killAt & this.isKillable){
+        if (Time.time > this.killAt && this.isKillable){
             this.isKillable = false;
             this.KillSelf();
         }

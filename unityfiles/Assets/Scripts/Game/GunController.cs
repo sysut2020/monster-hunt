@@ -117,10 +117,7 @@ public class GunController : MonoBehaviour
 
 
         bullet.SetActive(false);
-        
 
-        //        Texture2D sTexture = (Texture2D)UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/Resources/Graphics/banana_PNG835.png", typeof(Texture2D));
-        //spriteRend.sprite = Sprite.Create(sTexture, new Rect(0,0,100 ,100), Vector2.zero);
 
 
     }
