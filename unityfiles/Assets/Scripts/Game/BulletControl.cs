@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 
-public class BulletControll : MonoBehaviour
+public class BulletControl : MonoBehaviour
 {
 
     // -- internal

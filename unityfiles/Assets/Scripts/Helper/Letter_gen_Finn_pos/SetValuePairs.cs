@@ -4,40 +4,40 @@ using UnityEngine;
 
 
 [System.Serializable]
-public class SettValuePairs 
+public class SetValuePairs 
 {
-    public List<SettValuePair> L_1;
-    public List<SettValuePair> L_2;
-    public List<SettValuePair> L_3;
-    public List<SettValuePair> L_4;
-    public List<SettValuePair> L_5;
-    public List<SettValuePair> L_6;
-    public List<SettValuePair> L_7;
-    public List<SettValuePair> L_8;
-    public List<SettValuePair> L_9;
+    public List<SetValuePair> L_1;
+    public List<SetValuePair> L_2;
+    public List<SetValuePair> L_3;
+    public List<SetValuePair> L_4;
+    public List<SetValuePair> L_5;
+    public List<SetValuePair> L_6;
+    public List<SetValuePair> L_7;
+    public List<SetValuePair> L_8;
+    public List<SetValuePair> L_9;
  
-    public List<SettValuePair> L_10;
-    public List<SettValuePair> L_11;
-    public List<SettValuePair> L_12;
-    public List<SettValuePair> L_13;
-    public List<SettValuePair> L_14;
-    public List<SettValuePair> L_15;
-    public List<SettValuePair> L_16;
-    public List<SettValuePair> L_17;
-    public List<SettValuePair> L_18;
-    public List<SettValuePair> L_19;
-    public List<SettValuePair> L_20;
-    public List<SettValuePair> L_21;
-    public List<SettValuePair> L_22;
-    public List<SettValuePair> L_23;
-    public List<SettValuePair> L_24;
-    public List<SettValuePair> L_25;
-    public List<SettValuePair> L_26;
-    public List<SettValuePair> L_27;
-    public List<SettValuePair> L_28;
-    public List<SettValuePair> L_29;
+    public List<SetValuePair> L_10;
+    public List<SetValuePair> L_11;
+    public List<SetValuePair> L_12;
+    public List<SetValuePair> L_13;
+    public List<SetValuePair> L_14;
+    public List<SetValuePair> L_15;
+    public List<SetValuePair> L_16;
+    public List<SetValuePair> L_17;
+    public List<SetValuePair> L_18;
+    public List<SetValuePair> L_19;
+    public List<SetValuePair> L_20;
+    public List<SetValuePair> L_21;
+    public List<SetValuePair> L_22;
+    public List<SetValuePair> L_23;
+    public List<SetValuePair> L_24;
+    public List<SetValuePair> L_25;
+    public List<SetValuePair> L_26;
+    public List<SetValuePair> L_27;
+    public List<SetValuePair> L_28;
+    public List<SetValuePair> L_29;
 
-    public List<SettValuePair> GetListFromIndex(int index)
+    public List<SetValuePair> GetListFromIndex(int index)
     {
         switch (index)
         {

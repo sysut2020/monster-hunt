@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class LetterFreq
+public class LetterFrequency
 {
     public List<string> letter;
     public List<float> weight;
@@ -11,7 +11,7 @@ public class LetterFreq
       
 
 
-    public string GetLetterByFreq()
+    public string GetLetterByFrequency()
     {
         var r = new System.Random();
         int val = r.Next(1001);

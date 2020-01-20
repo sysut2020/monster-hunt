@@ -11,7 +11,7 @@ public class GunController : MonoBehaviour
 
     [Header("Bullet properties")]
 
-    [Tooltip("velocety of bullet in units/(1/50) sec.")]
+    [Tooltip("velocity of bullet in units/(1/50) sec.")]
     [SerializeField]
     private Vector2 bulletVelocity;
 
@@ -19,19 +19,19 @@ public class GunController : MonoBehaviour
     [SerializeField] 
     private float bulletDamage;
 
-    [Tooltip("How long the bullet wil live if it dosent hit anything.")]
+    [Tooltip("How long the bullet will live if it doesn´t hit anything.")]
     [SerializeField] 
     private float bulletTtl;
 
-    [Tooltip("the 2d texture tu use on the bullet sprite.")]
+    [Tooltip("2d texture for bullet sprite.")]
     [SerializeField] 
-    private Texture2D bulletTexure;
+    private Texture2D bulletTexture;
 
     [Tooltip("the scale of the sprite used.")]
     [SerializeField] 
     private Vector2 spriteScale;
 
-    [Header("Fireing properties")]
+    [Header("Firing properties")]
 
     [Tooltip("Fire rate in shots/sec.")]
     [SerializeField] 
@@ -41,34 +41,34 @@ public class GunController : MonoBehaviour
     // -- internal
     private ArrayList activeBullets = new ArrayList();
     private ArrayList idleBullets = new ArrayList();
-    private bool isFirering;
-    private float nextBRT;      // bullet relase time
-    private float bulletDeltaT;
+    private bool isFiring;
+    private float nextBulletReleaseTime;      // bullet release time
+    private float bulletDeltaTime;
 
-    private GameObject bluprintBullet;
+    private GameObject blueprintBullet;
 
 
     // -- public
-     public void StartFirering()
+     public void startFiring()
     {
-        this.isFirering = true;
+        this.isFiring = true;
     }
 
-    public void StopFirering()
+    public void StopFiring()
     {
-        this.isFirering = false;
+        this.isFiring = false;
     }
 
     // generates a new bullet and fires it
-    void FireNewProjetile(){
-        GameObject bulletCopy = Instantiate(this.bluprintBullet);
+    void FireNewProjectile(){
+        GameObject bulletCopy = Instantiate(this.blueprintBullet);
         bulletCopy.transform.rotation = this.transform.rotation;
         bulletCopy.transform.position = this.transform.position;
         bulletCopy.SetActive(true);
 
         this.activeBullets.Add(bulletCopy);
 
-        this.nextBRT = Time.time + this.bulletDeltaT;
+        this.nextBulletReleaseTime = Time.time + this.bulletDeltaTime;
     }
 
     // reuses one of the inactive bullets and fires it
@@ -82,7 +82,7 @@ public class GunController : MonoBehaviour
 
         this.activeBullets.Add(bulletCopy);
 
-        this.nextBRT = Time.time + this.bulletDeltaT;
+        this.nextBulletReleaseTime = Time.time + this.bulletDeltaTime;
     }
 
     // -- Mono b
@@ -90,25 +90,25 @@ public class GunController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        this.nextBRT = Time.time;
-        this.bulletDeltaT = 1 / this.fireRate;
+        this.nextBulletReleaseTime = Time.time;
+        this.bulletDeltaTime = 1 / this.fireRate;
 
         // blue print bullet generation
         GameObject bullet = new GameObject();
-        this.bluprintBullet = bullet;
+        this.blueprintBullet = bullet;
         bullet.name = "Bullet";
 
-        SpriteRenderer spriteRend = bullet.AddComponent<SpriteRenderer>() as SpriteRenderer;
-        spriteRend.sprite = Sprite.Create(this.bulletTexure, new Rect(0,0,this.bulletTexure.width ,this.bulletTexure.height), Vector2.zero);
+        SpriteRenderer spriteRender = bullet.AddComponent<SpriteRenderer>() as SpriteRenderer;
+        spriteRender.sprite = Sprite.Create(this.bulletTexture, new Rect(0,0,this.bulletTexture.width ,this.bulletTexture.height), Vector2.zero);
         bullet.transform.localScale = this.spriteScale;
 
         BoxCollider2D boxCol = bullet.AddComponent<BoxCollider2D>() as BoxCollider2D;
 
-        BulletControll bulletControll = bullet.AddComponent<BulletControll>() as BulletControll;
+        BulletControl bulletControl = bullet.AddComponent<BulletControl>() as BulletControl;
 
-        bulletControll.Velocety = this.bulletVelocity;
-        bulletControll.Damage = this.bulletDamage;
-        bulletControll.Ttl = this.bulletTtl;
+        bulletControl.Velocety = this.bulletVelocity;
+        bulletControl.Damage = this.bulletDamage;
+        bulletControl.BulletTimeToLive = this.bulletTtl;
 
 
 
@@ -130,7 +130,7 @@ public class GunController : MonoBehaviour
     void Update()
     {
         // is it time to release a bullet
-        if (Time.time >= this.nextBRT){
+        if (Time.time >= this.nextBulletReleaseTime){
             // if yes is ther any bullets in the active bullet list that is inactive
             for (int i = this.activeBullets.Count; i > 0 ; i--)
             {
@@ -148,7 +148,7 @@ public class GunController : MonoBehaviour
                 this.FireExistingProjectile();
             } else
             {
-                this.FireNewProjetile();
+                this.FireNewProjectile();
             }
         }
     }

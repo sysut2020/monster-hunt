@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HealthController : MonoBehaviour
 {
-    //[Tooltip("the ammont of heth a given entety has.")]
+    [Tooltip("the ammont of heth a given entety has.")]
     [SerializeField] 
     private float entityHealth;
 

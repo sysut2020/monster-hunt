@@ -16,27 +16,24 @@ public class SimpleSpawner : MonoBehaviour
 
     // -- internal
     private float lastSpawn;
-    private GameObject enemyBluprint;
+    private GameObject enemyBlueprint;
     // Start is called before the first frame update
     void Start()
     {
         this.lastSpawn = Time.time;
         GameObject ebp = new GameObject();
-        this.enemyBluprint = ebp;
+        this.enemyBlueprint = ebp;
         ebp.name = "Enemy";
         ebp.tag = "Enemy";
 
 
-
-        SpriteRenderer spriteRend = ebp.AddComponent<SpriteRenderer>();
-        //Texture2D sTexture = (Texture2D)UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/Resources/Graphics/international-space-station.png", typeof(Texture2D));
-        spriteRend.sprite = Sprite.Create(this.enemyTexture, new Rect(0,0,this.enemyTexture.width ,this.enemyTexture.height), Vector2.zero);
-        //spriteRend.sprite = Sprite.Create(sTexture, new Rect(0,0,100 ,100), Vector2.zero);
+        SpriteRenderer spriteRender = ebp.AddComponent<SpriteRenderer>();
+        spriteRender.sprite = Sprite.Create(this.enemyTexture, new Rect(0,0,this.enemyTexture.width ,this.enemyTexture.height), Vector2.zero);
         ebp.transform.localScale = new Vector3(0.25f,0.25f,1);
 
         BoxCollider2D bc = ebp.AddComponent<BoxCollider2D>();
 
-        Enemy EnScript = ebp.AddComponent<Enemy>() as Enemy;
+        Enemy enemyScript = ebp.AddComponent<Enemy>() as Enemy;
 
         
         HealthController healthController = ebp.AddComponent<HealthController>();
@@ -49,7 +46,7 @@ public class SimpleSpawner : MonoBehaviour
     void Update()
     {
         if (Time.time > this.lastSpawn + this.spawnInterval){
-            GameObject EnemyCopy = Instantiate(this.enemyBluprint);
+            GameObject EnemyCopy = Instantiate(this.enemyBlueprint);
             EnemyCopy.transform.rotation = this.transform.rotation;
             EnemyCopy.transform.position = this.transform.position;
             EnemyCopy.SetActive(true);

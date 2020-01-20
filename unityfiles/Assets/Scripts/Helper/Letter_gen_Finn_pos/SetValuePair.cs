@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class SettValuePair
+public class SetValuePair
 {
-    public List<string> letter_sett;
+    public List<string> letterSet;
     public int value;
 
 }

@@ -6,35 +6,36 @@ using UnityEngine;
 
 
 
-public class Sudo_random_letter_generator : MonoBehaviour
+public class SudoRandomLetterGenerator : MonoBehaviour
 {
 
     // -- Config
     private int reduceWordSizeMin = 2;
     private int reduceWordSizeMax = 6;
-    private int startWordSertchAt = 2;
+    private int startWordSearchAt = 2;
 
 
 
 
-    private SettValuePairs allSettValuePairs;
-    private LetterFreq letterFreq;
+    private SetValuePairs allSettValuePairs;
+    private LetterFrequency letterFreq;
     void Start()
     {
        using (StreamReader r = new StreamReader("Assets/Scripts/Helper/Letter_gen_Finn_pos/letter_sett_lists/letter_frequensy_weight_100.json"))
         {
             string jsonText = r.ReadToEnd();
-            this.letterFreq = JsonUtility.FromJson<LetterFreq>(jsonText);
+            this.letterFreq = JsonUtility.FromJson<LetterFrequency>(jsonText);
 
         }
         
         using (StreamReader r = new StreamReader("Assets/Scripts/Helper/Letter_gen_Finn_pos/letter_sett_lists/score_sorted_sett_size_dict.json"))
         {
             string jsonText = r.ReadToEnd();
-            this.allSettValuePairs = JsonUtility.FromJson<SettValuePairs>(jsonText);
+            this.allSettValuePairs = JsonUtility.FromJson<SetValuePairs>(jsonText);
         }
 
-
+        /*
+        // the algorithm can be further optimized this is benshmarking
         float t1 = System.DateTime.Now.Millisecond;
         for (int i = 0; i < 100; i++)
         {
@@ -42,6 +43,7 @@ public class Sudo_random_letter_generator : MonoBehaviour
         }
         float rt = System.DateTime.Now.Millisecond - t1;
         print("avg run time per gen in ms=" + rt/100);
+        */
         
     }
 
@@ -58,10 +60,10 @@ public class Sudo_random_letter_generator : MonoBehaviour
     }
 
 
-    // cheks if a contains all elements in b
+    // Checks if A contains all elements in B
     bool IsAsubsettB(List<String> A, List<String> B)
     {
-        bool isSubsett = true;
+        bool isSubset = true;
 
         foreach (string letter in A)
         {
@@ -69,67 +71,67 @@ public class Sudo_random_letter_generator : MonoBehaviour
             int numInA = A.FindAll(aElement => aElement.Equals(letter)).Count;
             if (numInB > numInA)
             {
-                isSubsett = false;
+                isSubset = false;
                 break;
             }
         }
 
-        return isSubsett;
+        return isSubset;
     }
 
 
     // -- Algorithm
 
-    private List<String> letterSett = new List<String>();
-    private List<String> activeLetterSett = new List<String>();
+    private List<String> letterSet = new List<String>();
+    private List<String> activeLetterSet = new List<String>();
 
-    public List<String> LetterSett {get; internal set;}
+    public List<String> LetterSet {get; internal set;}
 
     public String GenerateLetter()
     {
 
-        List<SettValuePair> nexUsedSetts = new List<SettValuePair>();
+        List<SetValuePair> nextUsedSets = new List<SetValuePair>();
 
         // if to short return weighted random
-        if (this.activeLetterSett.Count <= 2)
+        if (this.activeLetterSet.Count <= 2)
         {
-            String l = this.letterFreq.GetLetterByFreq();
-            this.activeLetterSett.Add(l);
-            this.letterSett.Add(l);
+            String l = this.letterFreq.GetLetterByFrequency();
+            this.activeLetterSet.Add(l);
+            this.letterSet.Add(l);
             return l;
         }
 
         // try normal generation
 
-        nexUsedSetts = this.FindNextLetterSetts(this.activeLetterSett);
+        nextUsedSets = this.FindNextLetterSetts(this.activeLetterSet);
 
 
         // no normal found try find from reduced
-        if (nexUsedSetts.Count == 0)
+        if (nextUsedSets.Count == 0)
         {
-            nexUsedSetts = this.GetFromReduced();
+            nextUsedSets = this.GetFromReduced();
         } 
 
-        if (nexUsedSetts.Count > 0)
+        if (nextUsedSets.Count > 0)
         {
             // TODO:
             //      Find an algorithm for selecting words based on diffeculty
             //
             var rand = new System.Random();
-            int val = rand.Next(0, nexUsedSetts.Count);
-            SettValuePair usedSett = nexUsedSetts[val];
+            int val = rand.Next(0, nextUsedSets.Count);
+            SetValuePair usedSett = nextUsedSets[val];
 
             //print(this.RemoveAllOfAFromB(this.activeLetterSett, usedSett.letter_sett).Count);
-            String nextLetter = this.RemoveAllOfAFromB(this.activeLetterSett, usedSett.letter_sett)[0];
+            String nextLetter = this.RemoveAllOfAFromB(this.activeLetterSet, usedSett.letterSet)[0];
             
-            this.activeLetterSett.Add(nextLetter);
-            this.letterSett.Add(nextLetter);
+            this.activeLetterSet.Add(nextLetter);
+            this.letterSet.Add(nextLetter);
             return nextLetter;
         } else
         {
-            String l = this.letterFreq.GetLetterByFreq();
-            this.activeLetterSett.Add(l);
-            this.letterSett.Add(l);
+            String l = this.letterFreq.GetLetterByFrequency();
+            this.activeLetterSet.Add(l);
+            this.letterSet.Add(l);
             return l;
         }
         
@@ -139,13 +141,13 @@ public class Sudo_random_letter_generator : MonoBehaviour
 
     //   Trys to find the next letter given the provided letter stt
     //      returns none if no possible setts
-    List<SettValuePair> FindNextLetterSetts(List<string> letterSett)
+    List<SetValuePair> FindNextLetterSetts(List<string> letterSett)
     {
-        List<SettValuePair> possibleLetterSetts = new List<SettValuePair>();
+        List<SetValuePair> possibleLetterSetts = new List<SetValuePair>();
 
-        foreach (SettValuePair svp in this.allSettValuePairs.GetListFromIndex(letterSett.Count + 1))
+        foreach (SetValuePair svp in this.allSettValuePairs.GetListFromIndex(letterSett.Count + 1))
         {
-            if (this.IsAsubsettB(letterSett, svp.letter_sett)){
+            if (this.IsAsubsettB(letterSett, svp.letterSet)){
                 possibleLetterSetts.Add(svp);
             }
         }
@@ -153,30 +155,30 @@ public class Sudo_random_letter_generator : MonoBehaviour
 
     }
 
-    List<SettValuePair> GetFromReduced()
+    List<SetValuePair> GetFromReduced()
     {
-        int activeSetLen = this.activeLetterSett.Count;
+        int activeSetLen = this.activeLetterSet.Count;
         int tmpRedWordSize = this.reduceWordSizeMin;
 
-        List<SettValuePair> possibleLetterSetts = new List<SettValuePair>();
+        List<SetValuePair> possibleLetterSetts = new List<SetValuePair>();
 
         while (true)
         {
         
-            if (tmpRedWordSize >= activeSetLen - this.startWordSertchAt || tmpRedWordSize >= this.reduceWordSizeMax)
+            if (tmpRedWordSize >= activeSetLen - this.startWordSearchAt || tmpRedWordSize >= this.reduceWordSizeMax)
             {
                 return possibleLetterSetts;
             }
 
-            List<SettValuePair> possibleReductWords = this.GetPossibleReductions(tmpRedWordSize);
+            List<SetValuePair> possibleReductWords = this.GetPossibleReductions(tmpRedWordSize);
 
-            foreach (SettValuePair posR in possibleReductWords)
+            foreach (SetValuePair posR in possibleReductWords)
             {
-                List<String> tmpActiveSequence = this.RemoveAllOfAFromB(posR.letter_sett, this.activeLetterSett);
-                List<SettValuePair> possibleSetts = this.FindNextLetterSetts(tmpActiveSequence);
+                List<String> tmpActiveSequence = this.RemoveAllOfAFromB(posR.letterSet, this.activeLetterSet);
+                List<SetValuePair> possibleSetts = this.FindNextLetterSetts(tmpActiveSequence);
                 if (possibleSetts.Count > 0)
                 {
-                    this.activeLetterSett = tmpActiveSequence;
+                    this.activeLetterSet = tmpActiveSequence;
                     return possibleSetts;
                 }
 
@@ -187,12 +189,12 @@ public class Sudo_random_letter_generator : MonoBehaviour
         }
     }
 
-    List<SettValuePair> GetPossibleReductions(int reductionWordSize)
+    List<SetValuePair> GetPossibleReductions(int reductionWordSize)
     {
-        List<SettValuePair> possibleReductionSetts = new List<SettValuePair>();
-        foreach (SettValuePair svp in this.allSettValuePairs.GetListFromIndex(reductionWordSize))
+        List<SetValuePair> possibleReductionSetts = new List<SetValuePair>();
+        foreach (SetValuePair svp in this.allSettValuePairs.GetListFromIndex(reductionWordSize))
         {
-            if (this.IsAsubsettB(svp.letter_sett, this.activeLetterSett)){
+            if (this.IsAsubsettB(svp.letterSet, this.activeLetterSet)){
                 possibleReductionSetts.Add(svp);
             }
         } 
