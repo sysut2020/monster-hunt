@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
     //Character controller script 
-    public CharacterController2D controller2D;
+    public CharacterController2D characterController2D;
     public float runSpeed = 40;
     //Horizontal movement speed of the player
     public float horizontalMove = 7000;
@@ -24,7 +24,7 @@ public class PlayerMovement : MonoBehaviour {
 
     void FixedUpdate() {
         //Moves the player accordingly to the pressed arrow keys
-        controller2D.Move(horizontalMove * Time.fixedDeltaTime, false, jump);
+        characterController2D.Move(horizontalMove * Time.fixedDeltaTime, false, jump);
         jump = false;
     }
 }
