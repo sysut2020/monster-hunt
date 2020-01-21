@@ -5,7 +5,11 @@ using System.IO;
 using UnityEngine;
 
 
-
+/*
+    TODO:
+        - mulig lurt og kjør på en bakgrunstråd og cashe opp en del enheta der som kan brukes
+        - mulig kan optimaliser litt snitte atm på 2 ms not good not bad
+*/
 public class SudoRandomLetterGenerator : MonoBehaviour
 {
 
@@ -30,7 +34,7 @@ public class SudoRandomLetterGenerator : MonoBehaviour
     }
 
     // -- Config
-    private readonly int reduceWordSizeMin = 4;
+    private readonly int reduceWordSizeMin = 2;
     private readonly int reduceWordSizeMax = 6;
     private readonly int startWordSearchAt = 2;
 
@@ -38,7 +42,7 @@ public class SudoRandomLetterGenerator : MonoBehaviour
 
 
     private SetValuePairs allSettValuePairs;
-    private LetterFrequency letterFreq;
+    private LetterFrequency letterFrequency;
     
 
     // Maby have stert insted
@@ -47,7 +51,7 @@ public class SudoRandomLetterGenerator : MonoBehaviour
         using (StreamReader r = new StreamReader("Assets/Scripts/Helper/Letter_gen_Finn_pos/letter_sett_lists/letter_frequensy_weight_100.json"))
         {
             string jsonText = r.ReadToEnd();
-            this.letterFreq = JsonUtility.FromJson<LetterFrequency>(jsonText);
+            this.letterFrequency = JsonUtility.FromJson<LetterFrequency>(jsonText);
 
         }
         
@@ -59,14 +63,14 @@ public class SudoRandomLetterGenerator : MonoBehaviour
 
         /*
         // the algorithm can be further optimized this is bench marking
-        float t1 = System.DateTime.Now.Millisecond;
-        for (int i = 0; i < 100; i++)
+        DateTime t1 = System.DateTime.UtcNow;
+        for (int i = 0; i < 300; i++)
         {
             print(this.GenerateLetter());
         }
-        float rt = System.DateTime.Now.Millisecond - t1;
-        print("avg run time per gen in ms=" + rt/100);
-        */
+        float rt = System.DateTime.UtcNow.Subtract(t1).Milliseconds;
+        print("avg run time per gen in ms=" + rt/300);
+        //*/
         
     }
 
@@ -74,21 +78,28 @@ public class SudoRandomLetterGenerator : MonoBehaviour
     // --utillity funticions (aka shuld be in standard lib)
     List<string> RemoveAllOfAFromB(List<string> A, List<string> B)
     {
+        DateTime t1 = System.DateTime.UtcNow;
         //print("A count: " + A.Count);
         //print("B count: " + B.Count);
-        List<string> ret = new List<string>(B);
 
+        // tad faster
+        LinkedList<string> tmp = new LinkedList<string>(B);
         foreach (string item in A)
         {
-            ret.Remove(item);
+            tmp.Remove(item);
         }
-        return ret;  
+        List<string> rett = new List<string>(tmp);
+        //float rt = System.DateTime.UtcNow.Subtract(t1).Ticks;
+        //print("remove all a from b time tick=" + rt);
+        return rett;  
     }
 
 
     // Checks if A contains all elements in B
     bool IsAsubsettB(List<String> A, List<String> B)
     {
+        //DateTime t1 = System.DateTime.UtcNow;
+
         bool isSubset = true;
 
         foreach (string letter in A)
@@ -102,6 +113,8 @@ public class SudoRandomLetterGenerator : MonoBehaviour
                 break;
             }
         }
+        //float rt = System.DateTime.UtcNow.Subtract(t1).Ticks;
+        //print("AsubB run time ms=" + rt);
 
         return isSubset;
     }
@@ -120,9 +133,9 @@ public class SudoRandomLetterGenerator : MonoBehaviour
         List<SetValuePair> nextUsedSets = new List<SetValuePair>();
 
         // if to short return weighted random
-        if (this.activeLetterSet.Count <= 5)
+        if (this.activeLetterSet.Count <= 2)
         {
-            String l = this.letterFreq.GetLetterByFrequency();
+            String l = this.letterFrequency.GetLetterByFrequency();
             this.activeLetterSet.Add(l);
             this.letterSet.Add(l);
             return l;
@@ -181,7 +194,7 @@ public class SudoRandomLetterGenerator : MonoBehaviour
         } else
         {
 
-            String l = this.letterFreq.GetLetterByFrequency();
+            String l = this.letterFrequency.GetLetterByFrequency();
             this.activeLetterSet.Add(l);
             this.letterSet.Add(l);
             return l; 

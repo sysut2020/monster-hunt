@@ -40,7 +40,8 @@ public class HealthController : MonoBehaviour
         if (this.entityHealth <= 0f)
         {
             //Debug.Log("Entity killed");
-            print(SudoRandomLetterGenerator.Instance.GenerateLetter());// placeholder til grafikken e på plass
+            //print(SudoRandomLetterGenerator.Instance.GenerateLetter());// placeholder til grafikken e på plass
+            string l = SudoRandomLetterGenerator.Instance.GenerateLetter();
             Destroy(this.gameObject);
         }
     }

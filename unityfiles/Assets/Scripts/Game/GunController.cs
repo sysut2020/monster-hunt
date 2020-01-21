@@ -111,7 +111,7 @@ public class GunController : MonoBehaviour
         bulletControl.BulletTimeToLive = this.bulletTtl;
 
 
-
+        // for hit detection
         Rigidbody2D rigidB2d = bullet.AddComponent<Rigidbody2D>() as Rigidbody2D;
         rigidB2d.bodyType = RigidbodyType2D.Kinematic;
 
