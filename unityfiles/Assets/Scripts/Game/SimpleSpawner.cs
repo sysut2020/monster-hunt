@@ -20,6 +20,10 @@ public class SimpleSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // TODO FLYTT TIL SPIL INIT SCRIPT
+        SudoRandomLetterGenerator tmp = SudoRandomLetterGenerator.Instance;
+
+
         this.lastSpawn = Time.time;
         GameObject ebp = new GameObject();
         this.enemyBlueprint = ebp;
@@ -38,6 +42,7 @@ public class SimpleSpawner : MonoBehaviour
         
         HealthController healthController = ebp.AddComponent<HealthController>();
         healthController.EntityHealth = 5f;
+
 
         ebp.SetActive(false);
     }

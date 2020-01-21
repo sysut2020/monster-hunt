@@ -18,6 +18,7 @@ public class Enemy : MonoBehaviour
 
     void FixedUpdate(){
         transform.Translate(new Vector2(0f,-0.05f));
+        
     }
 
     

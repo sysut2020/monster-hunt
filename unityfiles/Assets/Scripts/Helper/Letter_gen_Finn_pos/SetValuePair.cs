@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class SetValuePair
 {
-    public List<string> letterSet;
+    public List<string> letter_sett; // Is json serialized no tutchy
     public int value;
 
 }

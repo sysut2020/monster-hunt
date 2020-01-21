@@ -8,6 +8,14 @@ public class HealthController : MonoBehaviour
     [SerializeField] 
     private float entityHealth;
 
+    private bool isDead = false;
+
+    public bool IsDead
+    {   
+        get{return this.isDead;} 
+        internal set{this.isDead = value;}
+    }
+
     // -- properties
 
     public float EntityHealth
@@ -16,24 +24,28 @@ public class HealthController : MonoBehaviour
         set{this.entityHealth = value;}
     }
 
-   
+    // -- public
+    public void ApplyDamage(float dmg){
+        // TODO: mulg debonce her 
+        this.entityHealth = this.entityHealth - dmg;
+        //Debug.Log(this.entityHealth);
+    }
 
-    // Update is called once per frame
+
+    
+
+    // -- unity
     void Update()
     {
         if (this.entityHealth <= 0f)
         {
-            Debug.Log("Entity killed");
+            //Debug.Log("Entity killed");
+            print(SudoRandomLetterGenerator.Instance.GenerateLetter());// placeholder til grafikken e på plass
             Destroy(this.gameObject);
         }
     }
 
-    public void ApplyDamage(float dmg){
-        // TODO: mulg debonce her 
-        this.entityHealth = this.entityHealth - dmg;
-        Debug.Log(this.entityHealth);
-    }
-
+    
 
     
 }

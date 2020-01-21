@@ -73,7 +73,6 @@ public class BulletControl : MonoBehaviour
     void OnTriggerEnter2D(Collider2D Col) 
     {
     if (Col.tag == "Enemy"){
-        Debug.Log("hit");
         
         HealthController enemy = (HealthController)Col.gameObject.GetComponent("HealthController");
         enemy.ApplyDamage(this.damage);
