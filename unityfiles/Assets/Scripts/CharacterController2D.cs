@@ -1,7 +1,7 @@
 using UnityEngine;
 /**
  * All credits given to Brackeys GitHub: https://github.com/Brackeys/2D-Movement
- * The in this project is only intended to use for educational purposes, not to be
+ * This project is only intended to use for educational purposes, not to be
  * sold or re-distriubted to make money.
  */
 public class CharacterController2D : MonoBehaviour {
