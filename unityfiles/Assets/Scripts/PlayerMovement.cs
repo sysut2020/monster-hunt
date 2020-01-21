@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour {
         set => characterController2D = value;
     }
 
-    private float runSpeed = 40;
+    [SerializeField] private float runSpeed = 40;
     public float RunSpeed{
         get => runSpeed;
         set => runSpeed = value;
