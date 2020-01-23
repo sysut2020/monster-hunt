@@ -112,6 +112,5 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-
-# Vs code
 **/.vscode/
+**/.idea/*
