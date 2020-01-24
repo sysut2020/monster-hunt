@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
+/// 
+/// JSON SERIALIZATION STUFF NO TOUCHY
+/// 
 [System.Serializable]
 public class SetValuePairs 
 {

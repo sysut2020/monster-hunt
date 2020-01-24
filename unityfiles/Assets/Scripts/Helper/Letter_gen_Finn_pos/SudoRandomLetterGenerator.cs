@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.Linq;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -6,20 +7,30 @@ using UnityEngine;
 
 
 /*
-    TODO:
-        - mulig lurt og kjør på en bakgrunstråd og cashe opp en del enheta der som kan brukes
-        - mulig kan optimaliser litt snitte atm på 2 ms not good not bad
+
+
+    current benchmark times 500avg= 258 010.4
+                                    301 961.3
+                                    155 282.7
+                                    235 651
+
 */
+
+
+/// <summary>
+/// Generates letters sudorandomly
+/// </summary>
 public class SudoRandomLetterGenerator : MonoBehaviour
 {
 
     private static SudoRandomLetterGenerator instance;
+
+    // This is sub optimal and shold be improved
     public static SudoRandomLetterGenerator Instance
     {
      get{
          if (instance == null)
          {
-
              instance = GameObject.FindObjectOfType<SudoRandomLetterGenerator>();
              
              if (instance == null)
@@ -33,8 +44,8 @@ public class SudoRandomLetterGenerator : MonoBehaviour
         }
     }
 
-    // -- Config
-    private readonly int reduceWordSizeMin = 2;
+    // -- Config -- //
+    private readonly int reduceWordSizeMin = 3;
     private readonly int reduceWordSizeMax = 6;
     private readonly int startWordSearchAt = 2;
 
@@ -48,6 +59,8 @@ public class SudoRandomLetterGenerator : MonoBehaviour
     // Maby have stert insted
     void Awake()
     {
+        
+        // redeads the letter freq 
         using (StreamReader r = new StreamReader("Assets/Scripts/Helper/Letter_gen_Finn_pos/letter_sett_lists/letter_frequensy_weight_100.json"))
         {
             string jsonText = r.ReadToEnd();
@@ -55,165 +68,124 @@ public class SudoRandomLetterGenerator : MonoBehaviour
 
         }
         
+        // redeads the letter setts 
         using (StreamReader r = new StreamReader("Assets/Scripts/Helper/Letter_gen_Finn_pos/letter_sett_lists/score_sorted_sett_size_dict.json"))
         {
             string jsonText = r.ReadToEnd();
             this.allSettValuePairs = JsonUtility.FromJson<SetValuePairs>(jsonText);
         }
-
-        /*
-        // the algorithm can be further optimized this is bench marking
-        DateTime t1 = System.DateTime.UtcNow;
-        for (int i = 0; i < 300; i++)
-        {
-            print(this.GenerateLetter());
-        }
-        float rt = System.DateTime.UtcNow.Subtract(t1).Milliseconds;
-        print("avg run time per gen in ms=" + rt/300);
-        //*/
         
+        
+        // bench marking 
+        // DateTime t1 = System.DateTime.UtcNow;
+        // for (int i = 0; i < 500; i++)
+        // {
+        //     this.GenerateLetter();
+        // }
+        // float rt = System.DateTime.UtcNow.Subtract(t1).Ticks;
+        // print("avg run time per gen in tics=" + rt/500);
     }
 
 
-    // --utillity funticions (aka shuld be in standard lib)
-    List<string> RemoveAllOfAFromB(List<string> A, List<string> B)
-    {
-        DateTime t1 = System.DateTime.UtcNow;
-        //print("A count: " + A.Count);
-        //print("B count: " + B.Count);
 
-        // tad faster
-        LinkedList<string> tmp = new LinkedList<string>(B);
-        foreach (string item in A)
-        {
-            tmp.Remove(item);
-        }
-        List<string> rett = new List<string>(tmp);
-        //float rt = System.DateTime.UtcNow.Subtract(t1).Ticks;
-        //print("remove all a from b time tick=" + rt);
-        return rett;  
-    }
+    // -- Algorithm -- //
+
+    private readonly List<String> letterSet = new List<String>();
+    private  List<String> activeLetterSet = new List<String>();
 
 
-    // Checks if A contains all elements in B
-    bool IsAsubsettB(List<String> A, List<String> B)
-    {
-        //DateTime t1 = System.DateTime.UtcNow;
-
-        bool isSubset = true;
-
-        foreach (string letter in A)
-        {
-            int numInB = B.FindAll(bElement => bElement.Equals(letter)).Count;
-            int numInA = A.FindAll(aElement => aElement.Equals(letter)).Count;
-            
-            if (numInB < numInA)
-            {
-                isSubset = false;
-                break;
-            }
-        }
-        //float rt = System.DateTime.UtcNow.Subtract(t1).Ticks;
-        //print("AsubB run time ms=" + rt);
-
-        return isSubset;
-    }
-
-
-    // -- Algorithm
-
-    private List<String> letterSet = new List<String>();
-    private List<String> activeLetterSet = new List<String>();
 
     public List<String> LetterSet {get; internal set;}
 
+    
+    /// <summary>
+    /// Adds a letter to the Active letter sett and the letterSet
+    /// sorts the active sett as well
+    /// </summary>
+    /// <param name="l">the letter to add to the letter set</param>
+    private void AddLetter(string l)
+    {
+
+        letterSet.Add(l);
+
+        activeLetterSet.Add(l);
+        activeLetterSet.Sort();
+
+    }
+
+
+
+    /// <summary>
+    /// Generates a letter that will in combination with the 
+    /// Erlier generated letters for on ore more words*
+    /// 
+    /// *if the algorithm cant find or reduce down to get a letter a random one will be picked
+    /// </summary>
+    /// <returns> the generated letter</returns>
     public String GenerateLetter()
     {
 
         List<SetValuePair> nextUsedSets = new List<SetValuePair>();
-
-        // if to short return weighted random
-        if (this.activeLetterSet.Count <= 2)
+        string[] activeAr = this.activeLetterSet.ToArray();
+        
+        if (this.activeLetterSet.Count >= this.startWordSearchAt)
         {
-            String l = this.letterFrequency.GetLetterByFrequency();
-            this.activeLetterSet.Add(l);
-            this.letterSet.Add(l);
-            return l;
-        }
-
-        // try normal generation
-
-        nextUsedSets = this.FindNextLetterSetts(this.activeLetterSet);
-
-
-        // no normal found try find from reduced
-        if (nextUsedSets.Count == 0)
-        {
-            nextUsedSets = this.GetFromReduced();
-        } 
-
-        if (nextUsedSets.Count > 0)
-        {
-            // TODO:
-            //      Find an algorithm for selecting words based on diffeculty
-            //
-            var rand = new System.Random();
-            int val = rand.Next(0, nextUsedSets.Count);
-            SetValuePair usedSett = nextUsedSets[val];
-
-            /*
-            // -- debug / optimizing
-            print($"of {nextUsedSets.Count} possible words num {val} was chosen");
-            // cor seq
-            string currSeq = "";
-            foreach (string Let in this.activeLetterSet){currSeq += Let;}
-            print($"curr seq {currSeq}");
-
-            if (nextUsedSets.Count < 5)
-            {
-                foreach (SetValuePair item in nextUsedSets)
-                {
-                    string tmpSett = "";
-                    foreach (string Let in item.letter_sett)
-                    {
-                        tmpSett += Let;
-                    }
-                    print($"Lettersett {tmpSett} with score {item.value} is subsett?: {this.IsAsubsettB(this.activeLetterSet, item.letter_sett)}" );
-                }
-            }
-            */
-
-           
-
-            //print(this.RemoveAllOfAFromB(this.activeLetterSet, usedSett.letter_sett).Count);
-            String nextLetter = this.RemoveAllOfAFromB(this.activeLetterSet, usedSett.letter_sett)[0];
             
-            this.activeLetterSet.Add(nextLetter);
-            this.letterSet.Add(nextLetter);
-            return nextLetter;
-        } else
-        {
+            // try normal generation
 
-            String l = this.letterFrequency.GetLetterByFrequency();
-            this.activeLetterSet.Add(l);
-            this.letterSet.Add(l);
-            return l; 
+            nextUsedSets = this.FindNextLetterSetts(activeAr);
+
+
+            // no normal found try find from reduced
+            if (nextUsedSets.Count == 0)
+            {
+                nextUsedSets = this.GetFromReduced();
+            } 
+
+
+            if (nextUsedSets.Count > 0)
+            {
+                // TODO:
+                //      Find an algorithm for selecting words based on diffeculty
+                //
+                activeAr = this.activeLetterSet.ToArray(); // if it has been reduced in reduce
+                var rand = new System.Random();
+                int val = rand.Next(0, nextUsedSets.Count);
+                SetValuePair usedSett = nextUsedSets[val];
+
+                String nextLetter = WUArrays.RemoveAllAFromB(activeAr, usedSett.letter_sett)[0];
+                
+                this.AddLetter(nextLetter);
+                return nextLetter;
+            } 
         }
+
+
+        // ether the lettersertch yelded no results or the word was to short
+        String l = this.letterFrequency.GetLetterByFrequency();
+        this.AddLetter(l);
+        return l; 
+
+        
         
         
     }
 
-
-    //   Trys to find the next letter given the provided letter stt
-    //      returns none if no possible setts
-    List<SetValuePair> FindNextLetterSetts(List<string> letterSett)
+    /// <summary>
+    /// Trys to find a letterset that is an subsett of length one bigger
+    /// than the lettersett provided.
+    /// If no sett is found an emty array is returned
+    /// </summary>
+    /// <param name="letterSett">the set to find candidate setts toc</param>
+    /// <returns>an array of canidate lettersets, can be emty if none are found</returns>
+    List<SetValuePair> FindNextLetterSetts(string[] letterSett)
     {
         
         List<SetValuePair> possibleLetterSetts = new List<SetValuePair>();
 
-        foreach (SetValuePair svp in this.allSettValuePairs.GetListFromIndex(letterSett.Count + 1))
+        foreach (SetValuePair svp in this.allSettValuePairs.GetListFromIndex(letterSett.Count() + 1))
         {
-            if (this.IsAsubsettB(letterSett, svp.letter_sett)){
+            if (WUArrays.IsASubsetB(letterSett, svp.letter_sett)){
                 possibleLetterSetts.Add(svp);
             }
         }
@@ -221,10 +193,20 @@ public class SudoRandomLetterGenerator : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Trys to get candidate setts from the active letter sett by
+    /// reducing it with different words, the extent of the trying 
+    /// is hardcoded
+    /// 
+    /// if a set is found the active letter sett is automaticly changed 
+    /// </summary>
+    /// <returns>a list of candidate sets, can be emty if none are found</returns>
     List<SetValuePair> GetFromReduced()
     {
         int activeSetLen = this.activeLetterSet.Count;
         int tmpRedWordSize = this.reduceWordSizeMin;
+        string[] activeAr = this.activeLetterSet.ToArray();
+        
 
         List<SetValuePair> possibleLetterSetts = new List<SetValuePair>();
 
@@ -245,11 +227,13 @@ public class SudoRandomLetterGenerator : MonoBehaviour
                 int currentTest = rand.Next(0, possibleReductWords.Count);
                 SetValuePair posR = possibleReductWords[currentTest];
 
-                List<String> tmpActiveSequence = this.RemoveAllOfAFromB(posR.letter_sett, this.activeLetterSet);
-                List<SetValuePair> possibleSetts = this.FindNextLetterSetts(tmpActiveSequence);
+                List<String> tmpActiveSequence = WUArrays.RemoveAllAFromB(posR.letter_sett, activeAr);
+                tmpActiveSequence.Sort();
+
+                List<SetValuePair> possibleSetts = this.FindNextLetterSetts(tmpActiveSequence.ToArray());
                 if (possibleSetts.Count > 0)
                 {
-                    // print($"Reduced letter sett by {tmpRedWordSize} caracters");
+                    //print($"Reduced letter sett by {tmpRedWordSize} caracters");
                     this.activeLetterSet = tmpActiveSequence;
                     return possibleSetts;
                 }
@@ -257,33 +241,24 @@ public class SudoRandomLetterGenerator : MonoBehaviour
                 possibleReductWords.RemoveAt(currentTest);
             }
 
-            /*
-            // begge disse skal fjenes senere for en faktisk algoritme (for vanskelighetsgrad stuff) så ikke fjern
-            foreach (SetValuePair posR in possibleReductWords)
-            {
-                List<String> tmpActiveSequence = this.RemoveAllOfAFromB(posR.letter_sett, this.activeLetterSet);
-                List<SetValuePair> possibleSetts = this.FindNextLetterSetts(tmpActiveSequence);
-                if (possibleSetts.Count > 0)
-                {
-                    print($"Reduced letter sett by {tmpRedWordSize} caracters");
-                    this.activeLetterSet = tmpActiveSequence;
-                    return possibleSetts;
-                }
-
-            }
-            */
-
             tmpRedWordSize += 1;
 
         }
     }
 
+    /// <summary>
+    /// returns a list of the possible reduction sets 
+    /// to the active set of size reductionWordSize
+    /// </summary>
+    /// <param name="reductionWordSize">the size of the reduction words</param>
+    /// <returns>the possible reduction setts</returns>
     List<SetValuePair> GetPossibleReductions(int reductionWordSize)
     {
         List<SetValuePair> possibleReductionSetts = new List<SetValuePair>();
+        string[] activeAr = this.activeLetterSet.ToArray();
         foreach (SetValuePair svp in this.allSettValuePairs.GetListFromIndex(reductionWordSize))
         {
-            if (this.IsAsubsettB(svp.letter_sett, this.activeLetterSet)){
+            if (WUArrays.IsASubsetB(svp.letter_sett, activeAr)){
                 possibleReductionSetts.Add(svp);
             }
         } 

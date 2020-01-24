@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// 
+/// JSON SERIALIZATION STUFF NO TOUCHY
+/// 
 [System.Serializable]
 public class SetValuePair
 {
-    public List<string> letter_sett; // Is json serialized no tutchy
+    public string[] letter_sett; // Is json serialized will Fail slowly and completely so super no touchy
     public int value;
 
 }
