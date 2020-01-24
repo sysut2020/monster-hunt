@@ -4,27 +4,28 @@ using UnityEngine;
 
 
 
-
+/// THIS CLASS IS FOR TESTING YOU SHOLD NOT SEE THIS
 public class SimpleSpawner : MonoBehaviour
 {
-    // -- inspector
+    // -- inspector -- //
     [SerializeField]
     private float spawnInterval;
 
     [SerializeField]
     private Texture2D enemyTexture;
 
-    // -- internal
+    [Tooltip("the enemy type.")]
+    [SerializeField]
+    private EnemyType enemyTypeToSpawn;
+
+    // -- internal -- //
     private float lastSpawn;
     private GameObject enemyBlueprint;
-    // Start is called before the first frame update
-    void Start()
+    
+
+    // -- private -- //
+    private void GenerateBlueprint()
     {
-        // TODO FLYTT TIL SPIL INIT SCRIPT
-        SudoRandomLetterGenerator tmp = SudoRandomLetterGenerator.Instance;
-
-
-        this.lastSpawn = Time.time;
         GameObject ebp = new GameObject();
         this.enemyBlueprint = ebp;
         ebp.name = "Enemy";
@@ -38,6 +39,13 @@ public class SimpleSpawner : MonoBehaviour
         BoxCollider2D bc = ebp.AddComponent<BoxCollider2D>();
 
         Enemy enemyScript = ebp.AddComponent<Enemy>() as Enemy;
+        // print(this.enemyTypeToSpawn);
+        // print(ebp.GetComponent<Enemy>().EnemyType);
+        enemyScript.EnemyType = this.enemyTypeToSpawn;
+        // print(this.enemyTypeToSpawn);
+        // print(this.enemyBlueprint.GetComponent<Enemy>().EnemyType);
+
+        IEnemyBehavior EBH = ebp.AddComponent<EBTestMoveDown>();
 
         
         HealthController healthController = ebp.AddComponent<HealthController>();
@@ -47,8 +55,20 @@ public class SimpleSpawner : MonoBehaviour
         ebp.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
+    // -- unity -- //
+    void Start()
+    {
+        // TODO FLYTT TIL SPIL INIT SCRIPT
+        SudoRandomLetterGenerator tmp = SudoRandomLetterGenerator.Instance;
+
+
+        this.lastSpawn = Time.time;
+
+        this.GenerateBlueprint();
+        
+    }
+
+        void Update()
     {
         if (Time.time > this.lastSpawn + this.spawnInterval){
             GameObject EnemyCopy = Instantiate(this.enemyBlueprint);
