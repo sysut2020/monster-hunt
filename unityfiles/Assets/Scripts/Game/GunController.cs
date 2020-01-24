@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
+/*
+TODO: implement support for scriptable objects (in this case bullet types)
+*/
 
 public class GunController : MonoBehaviour
 {
 
-    // -- inspector
+    // -- inspector -- //
 
     [Header("Bullet properties")]
 
@@ -38,7 +40,7 @@ public class GunController : MonoBehaviour
     private float fireRate;   
 
 
-    // -- internal
+    // -- internal -- //
     private ArrayList activeBullets = new ArrayList();
     private ArrayList idleBullets = new ArrayList();
     private bool isFiring;
@@ -48,19 +50,29 @@ public class GunController : MonoBehaviour
     private GameObject blueprintBullet;
 
 
-    // -- public
+    // -- public -- //
+    /// <summary>
+    /// Starts releasing bullets as fast as the 
+    /// fire rate allows
+    /// </summary>
      public void startFiring()
     {
         this.isFiring = true;
     }
 
+    /// <summary>
+    /// stops the firing
+    /// </summary>
     public void StopFiring()
     {
         this.isFiring = false;
     }
 
-    // generates a new bullet and fires it
-    void FireNewProjectile(){
+
+    /// <summary>
+    /// generates a new bullet and fires it
+    /// </summary>
+    private void FireNewProjectile(){
         GameObject bulletCopy = Instantiate(this.blueprintBullet);
         bulletCopy.transform.rotation = this.transform.rotation;
         bulletCopy.transform.position = this.transform.position;
@@ -71,8 +83,11 @@ public class GunController : MonoBehaviour
         this.nextBulletReleaseTime = Time.time + this.bulletDeltaTime;
     }
 
-    // reuses one of the inactive bullets and fires it
-    void FireExistingProjectile(){
+
+    /// <summary>
+    /// reuses one of the inactive bullets and fires it
+    /// </summary>
+    private void FireExistingProjectile(){
         GameObject bulletCopy = (GameObject)this.idleBullets[0];
         this.idleBullets.Remove(bulletCopy);
 
@@ -85,15 +100,11 @@ public class GunController : MonoBehaviour
         this.nextBulletReleaseTime = Time.time + this.bulletDeltaTime;
     }
 
-    // -- Mono b
-
-    // Start is called before the first frame update
-    void Start()
+    /// <summary>
+    /// generates a bullet blueprint for the 
+    /// </summary>
+    private void GenerateBulletBlueprint()
     {
-        this.nextBulletReleaseTime = Time.time;
-        this.bulletDeltaTime = 1 / this.fireRate;
-
-        // blue print bullet generation
         GameObject bullet = new GameObject();
         this.blueprintBullet = bullet;
         bullet.name = "Bullet";
@@ -117,22 +128,30 @@ public class GunController : MonoBehaviour
 
 
         bullet.SetActive(false);
+    }
+    // -- unity -- //
 
+    
+    void Start()
+    {
+        this.nextBulletReleaseTime = Time.time;
+        this.bulletDeltaTime = 1 / this.fireRate;
 
+        this.GenerateBulletBlueprint();
+        
 
     }
     
 
-    // Update is called once per frame
     void Update()
     {
         // is it time to release a bullet
         if (Time.time >= this.nextBulletReleaseTime){
-            // if yes is ther any bullets in the active bullet list that is inactive
+            // if yes is there any bullets in the active bullet list that is inactive
             for (int i = this.activeBullets.Count; i > 0 ; i--)
             {
                 GameObject g = (GameObject)this.activeBullets[i-1];
-                //det her kan umulig ver veldig effektivt
+                //TODO: probably shit solution somone try somthing better
                 if (!g.activeInHierarchy){
                     //if there is move them to the inactive list
                     this.activeBullets.Remove(g);
