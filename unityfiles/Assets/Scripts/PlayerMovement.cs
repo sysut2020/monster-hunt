@@ -1,7 +1,10 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
+[RequireComponent(typeof(CharacterController2D))]
 public class PlayerMovement : MonoBehaviour {
     //Character controller script 
+    
     private CharacterController2D characterController2D;
     public CharacterController2D CharacterController2D{
         get => characterController2D;
@@ -28,10 +31,15 @@ public class PlayerMovement : MonoBehaviour {
         set => jump = value;
     }
 
+    private void Start()
+    {
+        this.characterController2D = this.GetComponent<CharacterController2D>();
+    }
+
     void Update() {
         //Checks if the player is pressing the right of left arrow key
         horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
-        
+
         //Checks if the player is pressing up arrow key for jumping
         if (Input.GetButtonDown("Jump")) {
             jump = true;
