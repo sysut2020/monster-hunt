@@ -4,6 +4,12 @@ using UnityEngine;
 
 /*
 TODO: implement support for scriptable objects (in this case bullet types)
+
+will assume the current structure is 
+someGunName(with tag weapon)
+    -> (visual gun stuff)
+    -> Gun object with name gun
+
 */
 
 public class GunController : MonoBehaviour
@@ -37,15 +43,28 @@ public class GunController : MonoBehaviour
 
     [Tooltip("Fire rate in shots/sec.")]
     [SerializeField] 
-    private float fireRate;   
+    private float fireRate;  
+
+    // -- properties -- //
+
+    public float FireRate{
+        get {return fireRate;}
+        set {
+            this.fireRate = value;
+            this.bulletWaitTime = 1 / value;
+            // todo: it is possible for this to reference a object that does not exist
+            //          wont raise an error but wil 
+            this.fireRateTimer.Update("fRate", value);
+        }
+    } 
 
 
     // -- internal -- //
+    private Timers fireRateTimer = new Timers();
     private ArrayList activeBullets = new ArrayList();
     private ArrayList idleBullets = new ArrayList();
     private bool isFiring;
-    private float nextBulletReleaseTime;      // bullet release time
-    private float bulletDeltaTime;
+    private float bulletWaitTime;
 
     private GameObject blueprintBullet;
 
@@ -79,8 +98,6 @@ public class GunController : MonoBehaviour
         bulletCopy.SetActive(true);
 
         this.activeBullets.Add(bulletCopy);
-
-        this.nextBulletReleaseTime = Time.time + this.bulletDeltaTime;
     }
 
 
@@ -96,8 +113,6 @@ public class GunController : MonoBehaviour
         bulletCopy.SetActive(true);
 
         this.activeBullets.Add(bulletCopy);
-
-        this.nextBulletReleaseTime = Time.time + this.bulletDeltaTime;
     }
 
     /// <summary>
@@ -117,7 +132,7 @@ public class GunController : MonoBehaviour
 
         BulletControl bulletControl = bullet.AddComponent<BulletControl>() as BulletControl;
 
-        bulletControl.Velocety = this.bulletVelocity;
+        bulletControl.Velocity = this.bulletVelocity;
         bulletControl.Damage = this.bulletDamage;
         bulletControl.BulletTimeToLive = this.bulletTtl;
 
@@ -133,20 +148,17 @@ public class GunController : MonoBehaviour
 
     
     void Start()
-    {
-        this.nextBulletReleaseTime = Time.time;
-        this.bulletDeltaTime = 1 / this.fireRate;
-
+    {   
+        //TODO: Discuss system for timer naming conventions
+        this.fireRateTimer.Set("fRate", bulletWaitTime);
         this.GenerateBulletBlueprint();
-        
-
     }
     
 
     void Update()
     {
         // is it time to release a bullet
-        if (Time.time >= this.nextBulletReleaseTime){
+        if (fireRateTimer.Done("fRate", true)){
             // if yes is there any bullets in the active bullet list that is inactive
             for (int i = this.activeBullets.Count; i > 0 ; i--)
             {

@@ -2,7 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IDamageble 
-{
+/// <summary>
+/// Interface for any object that can receive damage
+/// </summary>
+public interface IDamageable {
+
+    /// <summary>
+    /// describes what to do when the character dies
+    /// </summary>
     void dead();
 }

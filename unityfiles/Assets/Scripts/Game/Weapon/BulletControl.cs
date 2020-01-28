@@ -19,7 +19,7 @@ public class BulletControl : MonoBehaviour
 
     // -- properties -- //
 
-    public Vector2 Velocety 
+    public Vector2 Velocity 
     {   
         get{return this.velocity;} 
         set{this.velocity = value;}
@@ -62,7 +62,7 @@ public class BulletControl : MonoBehaviour
 
     void Start()
     {
-        this.StartTtlTimer();   // to avoid potensial instant removal
+        this.StartTtlTimer();   // to avoid potential instant removal
         this.tag = "Bullet";
     }
 
