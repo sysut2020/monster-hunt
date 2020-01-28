@@ -5,12 +5,14 @@ using UnityEngine;
 /// <summary>
 /// How a type of enemy is supposed to act
 /// </summary>
-public interface IEnemyBehavior
-{
+public interface IEnemyBehavior: IDamageable {
     /// <summary>
     /// What the enemy wil do in a single frame update
     /// </summary>
-    void Act();
+    void Act ();
 
-    void OnDead();
+    /// <summary>
+    /// what the enemy wil do when it is dead
+    /// </summary>
+    void OnDead ();
 }
