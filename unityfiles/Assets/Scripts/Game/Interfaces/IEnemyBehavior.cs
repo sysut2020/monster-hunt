@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// How a type of enemy is supposed to act
 /// </summary>
-public interface IEnemyBehavior: IDamageable {
+public interface IEnemyBehavior {
     /// <summary>
     /// What the enemy wil do in a single frame update
     /// </summary>
