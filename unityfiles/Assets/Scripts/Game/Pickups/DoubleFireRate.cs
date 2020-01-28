@@ -42,6 +42,7 @@ public class DoubleFireRate : MonoBehaviour, IWeaponEffectPickup {
             DoubleFireRate ex = extender as DoubleFireRate;
             effectTimer.Set (timerId, millisecEffectDuration);
             activeMultipliers.Add (timerId, ex.unitMultiplier);
+            this.rollingNameAppend ++;
         }
     }
 
