@@ -8,7 +8,7 @@ public class CollectableSpawner : MonoBehaviour {
     [SerializeField] private int maximumSpawnItems = 5;
 
     // Collectable to spawn
-    private GameObject collectable = null;
+    [SerializeField] private GameObject collectable;
     public int MinimumSpawnItems {
         get { return minimumSpawnItems; }
         set { minimumSpawnItems = value; }
@@ -24,11 +24,12 @@ public class CollectableSpawner : MonoBehaviour {
         set { collectable = value; }
     }
 
-    public void SpawnCollectable() {
+    public void SpawnCollectable(Vector2 position) {
         int spawns = Random.Range(minimumSpawnItems, maximumSpawnItems);
         for (int i = 0; i < spawns; i++)
         {
             // todo spawn collectable
+            Instantiate(collectable, position, Quaternion.identity);
         }
     }
 }
