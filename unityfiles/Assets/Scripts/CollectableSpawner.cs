@@ -5,24 +5,23 @@ using UnityEngine;
 
 public class CollectableSpawner : MonoBehaviour {
     [SerializeField] private int minimumSpawnItems = 0;
-    private int maximumSpawnItems = 5;
+    [SerializeField] private int maximumSpawnItems = 5;
 
     // Collectable to spawn
     private GameObject collectable = null;
-
-    public int MaximumSpawnItems {
-        get { return maximumSpawnItems; }
-        set { maximumSpawnItems = value; }
-    }
-
     public int MinimumSpawnItems {
         get { return minimumSpawnItems; }
         set { minimumSpawnItems = value; }
     }
 
-    public GameObject Prefab {
-        get { return prefab; }
-        set { prefab = value; }
+    public int MaximumSpawnItems {
+        get { return maximumSpawnItems; }
+        set { maximumSpawnItems = value; }
+    }
+    
+    public GameObject Collectable {
+        get { return collectable; }
+        set { collectable = value; }
     }
 
     public void SpawnCollectable() {
