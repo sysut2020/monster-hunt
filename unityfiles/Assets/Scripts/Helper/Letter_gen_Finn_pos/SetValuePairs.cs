@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
+/// 
+/// JSON SERIALIZATION STUFF NO TOUCHY
+/// 
 [System.Serializable]
-public class SetValuePairs 
-{
+public class SetValuePairs {
     public List<SetValuePair> L_1;
     public List<SetValuePair> L_2;
     public List<SetValuePair> L_3;
@@ -15,7 +16,7 @@ public class SetValuePairs
     public List<SetValuePair> L_7;
     public List<SetValuePair> L_8;
     public List<SetValuePair> L_9;
- 
+
     public List<SetValuePair> L_10;
     public List<SetValuePair> L_11;
     public List<SetValuePair> L_12;
@@ -37,10 +38,8 @@ public class SetValuePairs
     public List<SetValuePair> L_28;
     public List<SetValuePair> L_29;
 
-    public List<SetValuePair> GetListFromIndex(int index)
-    {
-        switch (index)
-        {
+    public List<SetValuePair> GetListFromIndex (int index) {
+        switch (index) {
             case 1:
                 return L_1;
             case 2:
@@ -89,15 +88,8 @@ public class SetValuePairs
                 return L_23;
             default:
                 return L_24;
-                
-            
-                
-            
-
-                
 
         }
     }
-    
 
 }
