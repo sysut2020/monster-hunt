@@ -1,10 +1,9 @@
-﻿using System.Linq;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
-
 
 /*
 
@@ -16,31 +15,26 @@ using UnityEngine;
 
 */
 
-
 /// <summary>
-/// Generates letters sudorandomly
+/// Generates letters sudo randomly
 /// </summary>
-public class SudoRandomLetterGenerator : MonoBehaviour
-{
+public class SudoRandomLetterGenerator : MonoBehaviour {
 
     private static SudoRandomLetterGenerator instance;
 
-    // This is sub optimal and shold be improved
-    public static SudoRandomLetterGenerator Instance
-    {
-     get{
-         if (instance == null)
-         {
-             instance = GameObject.FindObjectOfType<SudoRandomLetterGenerator>();
-             
-             if (instance == null)
-             {
-                 GameObject gameObj = new GameObject("SudoRandomLetterGenerator");
-                 instance = gameObj.AddComponent<SudoRandomLetterGenerator>();
-             }
-         }
-     
-         return instance;
+    // This is sub optimal and should be improved
+    public static SudoRandomLetterGenerator Instance {
+        get {
+            if (instance == null) {
+                instance = GameObject.FindObjectOfType<SudoRandomLetterGenerator> ();
+
+                if (instance == null) {
+                    GameObject gameObj = new GameObject ("SudoRandomLetterGenerator");
+                    instance = gameObj.AddComponent<SudoRandomLetterGenerator> ();
+                }
+            }
+
+            return instance;
         }
     }
 
@@ -49,33 +43,24 @@ public class SudoRandomLetterGenerator : MonoBehaviour
     private readonly int reduceWordSizeMax = 6;
     private readonly int startWordSearchAt = 2;
 
-
-
-
     private SetValuePairs allSettValuePairs;
     private LetterFrequency letterFrequency;
-    
 
-    // Maby have stert insted
-    void Awake()
-    {
-        
+    void Awake () {
+
         // redeads the letter freq 
-        using (StreamReader r = new StreamReader("Assets/Scripts/Helper/Letter_gen_Finn_pos/letter_sett_lists/letter_frequensy_weight_100.json"))
-        {
-            string jsonText = r.ReadToEnd();
-            this.letterFrequency = JsonUtility.FromJson<LetterFrequency>(jsonText);
+        using (StreamReader r = new StreamReader ("Assets/Scripts/Helper/Letter_gen_Finn_pos/letter_sett_lists/letter_frequensy_weight_100.json")) {
+            string jsonText = r.ReadToEnd ();
+            this.letterFrequency = JsonUtility.FromJson<LetterFrequency> (jsonText);
 
         }
-        
+
         // redeads the letter setts 
-        using (StreamReader r = new StreamReader("Assets/Scripts/Helper/Letter_gen_Finn_pos/letter_sett_lists/score_sorted_sett_size_dict.json"))
-        {
-            string jsonText = r.ReadToEnd();
-            this.allSettValuePairs = JsonUtility.FromJson<SetValuePairs>(jsonText);
+        using (StreamReader r = new StreamReader ("Assets/Scripts/Helper/Letter_gen_Finn_pos/letter_sett_lists/score_sorted_sett_size_dict.json")) {
+            string jsonText = r.ReadToEnd ();
+            this.allSettValuePairs = JsonUtility.FromJson<SetValuePairs> (jsonText);
         }
-        
-        
+
         // bench marking 
         // DateTime t1 = System.DateTime.UtcNow;
         // for (int i = 0; i < 500; i++)
@@ -86,34 +71,26 @@ public class SudoRandomLetterGenerator : MonoBehaviour
         // print("avg run time per gen in tics=" + rt/500);
     }
 
-
-
     // -- Algorithm -- //
 
-    private readonly List<String> letterSet = new List<String>();
-    private  List<String> activeLetterSet = new List<String>();
+    private readonly List<String> letterSet = new List<String> ();
+    private List<String> activeLetterSet = new List<String> ();
 
+    public List<String> LetterSet { get; internal set; }
 
-
-    public List<String> LetterSet {get; internal set;}
-
-    
     /// <summary>
     /// Adds a letter to the Active letter sett and the letterSet
     /// sorts the active sett as well
     /// </summary>
     /// <param name="l">the letter to add to the letter set</param>
-    private void AddLetter(string l)
-    {
+    private void AddLetter (string l) {
 
-        letterSet.Add(l);
+        letterSet.Add (l);
 
-        activeLetterSet.Add(l);
-        activeLetterSet.Sort();
+        activeLetterSet.Add (l);
+        activeLetterSet.Sort ();
 
     }
-
-
 
     /// <summary>
     /// Generates a letter that will in combination with the 
@@ -122,53 +99,43 @@ public class SudoRandomLetterGenerator : MonoBehaviour
     /// *if the algorithm cant find or reduce down to get a letter a random one will be picked
     /// </summary>
     /// <returns> the generated letter</returns>
-    public String GenerateLetter()
-    {
+    public String GenerateLetter () {
 
-        List<SetValuePair> nextUsedSets = new List<SetValuePair>();
-        string[] activeAr = this.activeLetterSet.ToArray();
-        
-        if (this.activeLetterSet.Count >= this.startWordSearchAt)
-        {
-            
+        List<SetValuePair> nextUsedSets = new List<SetValuePair> ();
+        string[] activeAr = this.activeLetterSet.ToArray ();
+
+        if (this.activeLetterSet.Count >= this.startWordSearchAt) {
+
             // try normal generation
 
-            nextUsedSets = this.FindNextLetterSetts(activeAr);
-
+            nextUsedSets = this.FindNextLetterSetts (activeAr);
 
             // no normal found try find from reduced
-            if (nextUsedSets.Count == 0)
-            {
-                nextUsedSets = this.GetFromReduced();
-            } 
+            if (nextUsedSets.Count == 0) {
+                nextUsedSets = this.GetFromReduced ();
+            }
 
-
-            if (nextUsedSets.Count > 0)
-            {
+            if (nextUsedSets.Count > 0) {
                 // TODO:
                 //      Find an algorithm for selecting words based on diffeculty
                 //
-                activeAr = this.activeLetterSet.ToArray(); // if it has been reduced in reduce
-                var rand = new System.Random();
-                int val = rand.Next(0, nextUsedSets.Count);
+                activeAr = this.activeLetterSet.ToArray (); // if it has been reduced in reduce
+                var rand = new System.Random ();
+                int val = rand.Next (0, nextUsedSets.Count);
                 SetValuePair usedSett = nextUsedSets[val];
 
-                String nextLetter = WUArrays.RemoveAllAFromB(activeAr, usedSett.letter_sett)[0];
-                
-                this.AddLetter(nextLetter);
+                String nextLetter = WUArrays.RemoveAllAFromB (activeAr, usedSett.letter_sett) [0];
+
+                this.AddLetter (nextLetter);
                 return nextLetter;
-            } 
+            }
         }
 
-
         // ether the lettersertch yelded no results or the word was to short
-        String l = this.letterFrequency.GetLetterByFrequency();
-        this.AddLetter(l);
-        return l; 
+        String l = this.letterFrequency.GetLetterByFrequency ();
+        this.AddLetter (l);
+        return l;
 
-        
-        
-        
     }
 
     /// <summary>
@@ -178,15 +145,13 @@ public class SudoRandomLetterGenerator : MonoBehaviour
     /// </summary>
     /// <param name="letterSett">the set to find candidate setts toc</param>
     /// <returns>an array of canidate lettersets, can be emty if none are found</returns>
-    List<SetValuePair> FindNextLetterSetts(string[] letterSett)
-    {
-        
-        List<SetValuePair> possibleLetterSetts = new List<SetValuePair>();
+    List<SetValuePair> FindNextLetterSetts (string[] letterSett) {
 
-        foreach (SetValuePair svp in this.allSettValuePairs.GetListFromIndex(letterSett.Count() + 1))
-        {
-            if (WUArrays.IsASubsetB(letterSett, svp.letter_sett)){
-                possibleLetterSetts.Add(svp);
+        List<SetValuePair> possibleLetterSetts = new List<SetValuePair> ();
+
+        foreach (SetValuePair svp in this.allSettValuePairs.GetListFromIndex (letterSett.Count () + 1)) {
+            if (WUArrays.IsASubsetB (letterSett, svp.letter_sett)) {
+                possibleLetterSetts.Add (svp);
             }
         }
         return possibleLetterSetts;
@@ -201,44 +166,38 @@ public class SudoRandomLetterGenerator : MonoBehaviour
     /// if a set is found the active letter sett is automaticly changed 
     /// </summary>
     /// <returns>a list of candidate sets, can be emty if none are found</returns>
-    List<SetValuePair> GetFromReduced()
-    {
+    List<SetValuePair> GetFromReduced () {
         int activeSetLen = this.activeLetterSet.Count;
         int tmpRedWordSize = this.reduceWordSizeMin;
-        string[] activeAr = this.activeLetterSet.ToArray();
-        
+        string[] activeAr = this.activeLetterSet.ToArray ();
 
-        List<SetValuePair> possibleLetterSetts = new List<SetValuePair>();
+        List<SetValuePair> possibleLetterSetts = new List<SetValuePair> ();
 
-        var rand = new System.Random();
+        var rand = new System.Random ();
 
-        while (true)
-        {
-        
-            if (tmpRedWordSize >= activeSetLen - this.startWordSearchAt || tmpRedWordSize >= this.reduceWordSizeMax)
-            {
+        while (true) {
+
+            if (tmpRedWordSize >= activeSetLen - this.startWordSearchAt || tmpRedWordSize >= this.reduceWordSizeMax) {
                 return possibleLetterSetts;
             }
 
-            List<SetValuePair> possibleReductWords = this.GetPossibleReductions(tmpRedWordSize);
+            List<SetValuePair> possibleReductWords = this.GetPossibleReductions (tmpRedWordSize);
             int tmpCount = possibleReductWords.Count;
-            for (int i = 0; i < tmpCount; i++)
-            { 
-                int currentTest = rand.Next(0, possibleReductWords.Count);
+            for (int i = 0; i < tmpCount; i++) {
+                int currentTest = rand.Next (0, possibleReductWords.Count);
                 SetValuePair posR = possibleReductWords[currentTest];
 
-                List<String> tmpActiveSequence = WUArrays.RemoveAllAFromB(posR.letter_sett, activeAr);
-                tmpActiveSequence.Sort();
+                List<String> tmpActiveSequence = WUArrays.RemoveAllAFromB (posR.letter_sett, activeAr);
+                tmpActiveSequence.Sort ();
 
-                List<SetValuePair> possibleSetts = this.FindNextLetterSetts(tmpActiveSequence.ToArray());
-                if (possibleSetts.Count > 0)
-                {
+                List<SetValuePair> possibleSetts = this.FindNextLetterSetts (tmpActiveSequence.ToArray ());
+                if (possibleSetts.Count > 0) {
                     //print($"Reduced letter sett by {tmpRedWordSize} caracters");
                     this.activeLetterSet = tmpActiveSequence;
                     return possibleSetts;
                 }
 
-                possibleReductWords.RemoveAt(currentTest);
+                possibleReductWords.RemoveAt (currentTest);
             }
 
             tmpRedWordSize += 1;
@@ -252,16 +211,14 @@ public class SudoRandomLetterGenerator : MonoBehaviour
     /// </summary>
     /// <param name="reductionWordSize">the size of the reduction words</param>
     /// <returns>the possible reduction setts</returns>
-    List<SetValuePair> GetPossibleReductions(int reductionWordSize)
-    {
-        List<SetValuePair> possibleReductionSetts = new List<SetValuePair>();
-        string[] activeAr = this.activeLetterSet.ToArray();
-        foreach (SetValuePair svp in this.allSettValuePairs.GetListFromIndex(reductionWordSize))
-        {
-            if (WUArrays.IsASubsetB(svp.letter_sett, activeAr)){
-                possibleReductionSetts.Add(svp);
+    List<SetValuePair> GetPossibleReductions (int reductionWordSize) {
+        List<SetValuePair> possibleReductionSetts = new List<SetValuePair> ();
+        string[] activeAr = this.activeLetterSet.ToArray ();
+        foreach (SetValuePair svp in this.allSettValuePairs.GetListFromIndex (reductionWordSize)) {
+            if (WUArrays.IsASubsetB (svp.letter_sett, activeAr)) {
+                possibleReductionSetts.Add (svp);
             }
-        } 
+        }
         return possibleReductionSetts;
     }
 }
