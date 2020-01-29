@@ -10,5 +10,5 @@ public interface IDamageable {
     /// <summary>
     /// describes what to do when the character dies
     /// </summary>
-    void dead();
+    void Dead();
 }

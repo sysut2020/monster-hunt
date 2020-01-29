@@ -25,7 +25,7 @@ public class Enemy : MonoBehaviour, IDamageable {
     // -- public -- //
 
 
-    public void dead () {
+    public void Dead () {
         this.enemyBehavior.OnDead ();
     }
     // -- private -- //
