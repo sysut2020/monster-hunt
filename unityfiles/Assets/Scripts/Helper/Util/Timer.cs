@@ -1,35 +1,30 @@
 using System;
 
-
 /// <summary>
 /// Simple time object that can check if a given amount of time 
 /// has passed
 /// </summary>
-class Timer
-{
+class Timer {
 
     private float waitTime;
-    private DateTime completeTime = new DateTime();
+    private DateTime completeTime = new DateTime ();
 
     /// <summary>
     /// initiates the timer with the amount of millisecs to 
     ///     count
     /// </summary>
     /// <param name="millisec">The ammount of time to check if has passed</param>
-    public Timer(float millisec)
-    {
+    public Timer (float millisec) {
         waitTime = millisec;
-        this.Restart();
+        this.Restart ();
     }
 
     /// <summary>
     /// returns true if the timer is complete, else false
     /// </summary>
     /// <returns>returns true if the timer is complete, else false</returns>
-    public bool done()
-    {
-        if (completeTime.CompareTo(DateTime.Now) > 0)
-        {
+    public bool done () {
+        if (completeTime.CompareTo (DateTime.Now) > 0) {
             return true;
         }
         return false;
@@ -39,23 +34,22 @@ class Timer
     /// returns the time left in milliseconds
     /// </summary>
     /// <returns>the time left in milliseconds</returns>
-    public int TimeLeft(){
-        return this.completeTime.Subtract(DateTime.Now).Milliseconds;
+    public int TimeLeft () {
+        return this.completeTime.Subtract (DateTime.Now).Milliseconds;
     }
 
     /// <summary>
     /// resets the timer with a new time
     /// </summary>
     /// <param name="millisec"></param>
-    public void Update(float millisec){
-        completeTime.AddMilliseconds(waitTime);
+    public void Update (float millisec) {
+        completeTime.AddMilliseconds (waitTime);
     }
 
     /// <summary>
     /// restarts the timer
     /// </summary>
-    public void Restart()
-    {
-        completeTime.AddMilliseconds(waitTime);
+    public void Restart () {
+        completeTime.AddMilliseconds (waitTime);
     }
 }

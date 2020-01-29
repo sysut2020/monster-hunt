@@ -1,16 +1,13 @@
-using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
-
+using System.Linq;
 
 /// <summary>
 /// A object who keeps track of multiple timers.
 /// can set, check if done, remove, and reset timers
 /// </summary>
-public class Timers
-{
-    private Dictionary<string, Timer> timers = new Dictionary<string, Timer>();
-
+public class Timers {
+    private Dictionary<string, Timer> timers = new Dictionary<string, Timer> ();
 
     // -- properties -- //
 
@@ -20,8 +17,8 @@ public class Timers
     /// Removes the timer with the given timer id
     /// </summary>
     /// <param name="timerID">the id of the timer to remove</param>
-    public void Remove(string timerID){
-        timers.Remove(timerID);
+    public void Remove (string timerID) {
+        timers.Remove (timerID);
     }
 
     /// <summary>
@@ -31,12 +28,12 @@ public class Timers
     /// <param name="timerID">the id of the timer to update</param>
     /// <param name="newTimeInMillisec">the new time in millisec</param>
     /// <returns>true if successful false if not</returns>
-    public bool Update(string timerID, float newTimeInMillisec){
+    public bool Update (string timerID, float newTimeInMillisec) {
         bool suc = false;
-        if (timers.Keys.Contains(timerID)){
+        if (timers.Keys.Contains (timerID)) {
             Timer toUpdate = timers[timerID];
             suc = true;
-        } 
+        }
         return suc;
     }
 
@@ -47,13 +44,13 @@ public class Timers
     /// <param name="timerID"></param>
     /// <param name="waitTimeInMillisec">the time for the new timer to wait in millisec</param>
     /// <returns></returns>
-    public bool Set(string timerID, float waitTimeInMillisec){
+    public bool Set (string timerID, float waitTimeInMillisec) {
         bool suc = false;
-        if (!timers.Keys.Contains(timerID)){
-            Timer newTimer = new Timer(waitTimeInMillisec);
-            timers.Add(timerID, newTimer);
+        if (!timers.Keys.Contains (timerID)) {
+            Timer newTimer = new Timer (waitTimeInMillisec);
+            timers.Add (timerID, newTimer);
             suc = true;
-        } 
+        }
         return suc;
     }
 
@@ -61,12 +58,11 @@ public class Timers
     /// returns a list of the ids off all the completed timers
     /// </summary>
     /// <returns>a list of all the completed timers</returns>
-    public List<string> GetCompletedTimers(){
-        List<string> retList = new List<string>();
-        foreach (string key in this.timers.Keys)
-        {
-            if (this.timers[key].done()){
-                retList.Add(key);
+    public List<string> GetCompletedTimers () {
+        List<string> retList = new List<string> ();
+        foreach (string key in this.timers.Keys) {
+            if (this.timers[key].done ()) {
+                retList.Add (key);
             }
         }
         return retList;
@@ -78,8 +74,8 @@ public class Timers
     /// </summary>
     /// <param name="timerID">the timer id to check</param>
     /// <returns>true if a timer of the given id exists false if not</returns>
-    public bool Exists(string timerID){
-        return timers.Keys.Contains(timerID);
+    public bool Exists (string timerID) {
+        return timers.Keys.Contains (timerID);
     }
 
     /// <summary>
@@ -89,14 +85,14 @@ public class Timers
     /// </summary>
     /// <param name="timerID">the timer to get time left from</param>
     /// <returns>the time left in millisec</returns>
-    public int TimeLeft(string timerID){
+    public int TimeLeft (string timerID) {
         int ret = -1;
-        if (timers.Keys.Contains(timerID)){
-            ret = this.timers[timerID].TimeLeft();
-            if (ret < 0){
+        if (timers.Keys.Contains (timerID)) {
+            ret = this.timers[timerID].TimeLeft ();
+            if (ret < 0) {
                 ret = 0;
             }
-        } 
+        }
         return ret;
     }
 
@@ -111,7 +107,7 @@ public class Timers
     /// <param name="timerID">the id of the timer to check</param>
     /// <param name="restart">If the timer should be restarted</param>
     /// <returns>true if timer is done false if not</returns>
-    public bool Done(string timerID, bool restart) => this.isTimerDone(timerID, restart);
+    public bool Done (string timerID, bool restart) => this.isTimerDone (timerID, restart);
 
     /// <summary>
     /// Checks if a timer is complete returns true if it is false if not
@@ -120,7 +116,7 @@ public class Timers
     /// </summary>
     /// <param name="timerID">the id of the timer to check</param>
     /// <returns>true if timer is done false if not</returns>
-    public bool Done(string timerID) => this.isTimerDone(timerID, false);
+    public bool Done (string timerID) => this.isTimerDone (timerID, false);
 
     // -- private -- // 
 
@@ -133,23 +129,18 @@ public class Timers
     /// <param name="timerID">the id of the timer to check</param>
     /// <param name="restart">If the timer should be restarted</param>
     /// <returns>true if timer is done false if not</returns>
-    private bool isTimerDone(string timerID, bool restart)
-    {
+    private bool isTimerDone (string timerID, bool restart) {
         bool retObj = false;
-        if (timers.ContainsKey(timerID))
-        {
+        if (timers.ContainsKey (timerID)) {
             Timer t = timers[timerID];
-            if (t.done())
-            {
-                if (restart)
-                {
-                    t.Restart();
+            if (t.done ()) {
+                if (restart) {
+                    t.Restart ();
                 } else {
-                    timers.Remove(timerID);
+                    timers.Remove (timerID);
                 }
                 retObj = true;
-            } else
-            {
+            } else {
                 retObj = false;
             }
         }
