@@ -5,30 +5,52 @@ using UnityEngine;
  * sold or re-distriubted to make money.
  */
 public class CharacterController2D : MonoBehaviour {
+	
 	// Amount of force added when the player jumps.
-	[SerializeField] private float jumpForce = 400f;
+	[SerializeField] 
+	private float jumpForce = 400f;
+	
 	// Amount of maxSpeed applied to crouching movement. 1 = 100%
-	[Range(0, 1)][SerializeField] private float crouchSpeed = .36f;
+	[Range(0, 1)]
+	[SerializeField] 
+	private float crouchSpeed = .36f;
+	
 	// How much to smooth out the movement
-	[Range(0, .3f)][SerializeField] private float movementSmoothing = .05f;
+	[Range(0, .3f)]
+	[SerializeField] 
+	private float movementSmoothing = .05f;
+	
 	// Whether or not a player can steer while jumping;
-	[SerializeField] private bool airControl;
+	[SerializeField] 
+	private bool airControl;
+	
 	// A mask determining what is ground to the character
-	[SerializeField] private LayerMask whatIsGround;
+	[SerializeField]
+	 private LayerMask whatIsGround;
+	 
 	// A position marking where to check if the player is grounded.
-	[SerializeField] private Transform groundCheck;
+	[SerializeField]
+	 private Transform groundCheck;
+	 
 	// A position marking where to check for ceilings
-	[SerializeField] private Transform ceilingCheck;
+	[SerializeField]
+	 private Transform ceilingCheck;
+	 
 	// A collider that will be disabled when crouching
-	[SerializeField] private Collider2D crouchDisableCollider;
+	[SerializeField]
+	 private Collider2D crouchDisableCollider;
+	 
 
 	// Radius of the overlap circle to determine if grounded
 	const float GROUNDED_RADIUS = .2f;
+	
 	// Whether or not the player is grounded.
 	private bool grounded;
+	
 	// Radius of the overlap circle to determine if the player can stand up
 	const float CEILING_RADIUS = .2f;
 	private Rigidbody2D playerRigidbody2D;
+	
 	// For determining which way the player is currently facing.
 	private bool facingRight = true;
 	private Vector3 velocity = Vector3.zero;
