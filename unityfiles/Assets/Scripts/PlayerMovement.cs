@@ -18,7 +18,7 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     //Horizontal movement speed of the player
-    private float horizontalMove = 7000;
+    private float horizontalMove = 0;
     public float HorizontalMove{
         get => horizontalMove;
         set => horizontalMove = value;
