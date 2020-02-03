@@ -43,7 +43,7 @@ public class GunController : MonoBehaviour
 
     [Tooltip("Fire rate in shots/sec.")]
     [SerializeField] 
-    private float fireRate;  
+    private float fireRate = 1;  
 
     // -- properties -- //
 
@@ -51,10 +51,10 @@ public class GunController : MonoBehaviour
         get {return fireRate;}
         set {
             this.fireRate = value;
-            this.bulletWaitTime = 1 / value;
+            this.bulletWaitTime = 1000* value;
             // todo: it is possible for this to reference a object that does not exist
             //          wont raise an error but wil 
-            this.fireRateTimer.Update("fRate", value);
+            this.fireRateTimer.Update("fRate", bulletWaitTime);
         }
     } 
 
@@ -150,6 +150,8 @@ public class GunController : MonoBehaviour
     void Start()
     {   
         //TODO: Discuss system for timer naming conventions
+        this.FireRate = this.fireRate;
+        Debug.Log(bulletWaitTime);
         this.fireRateTimer.Set("fRate", bulletWaitTime);
         this.GenerateBulletBlueprint();
     }
@@ -157,8 +159,11 @@ public class GunController : MonoBehaviour
 
     void Update()
     {
+        bool d =fireRateTimer.Done("fRate", true);
+        print(fireRateTimer.TimeLeft("fRate"));
         // is it time to release a bullet
-        if (fireRateTimer.Done("fRate", true)){
+        if (d){
+            
             // if yes is there any bullets in the active bullet list that is inactive
             for (int i = this.activeBullets.Count; i > 0 ; i--)
             {

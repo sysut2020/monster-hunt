@@ -1,3 +1,8 @@
+
+using UnityEngine;
+
+
+using System.Diagnostics;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -89,6 +94,7 @@ public class Timers {
         int ret = -1;
         if (timers.Keys.Contains (timerID)) {
             ret = this.timers[timerID].TimeLeft ();
+            UnityEngine.Debug.Log(ret);
             if (ret < 0) {
                 ret = 0;
             }
