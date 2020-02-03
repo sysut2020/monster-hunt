@@ -12,7 +12,7 @@ using UnityEngine;
 /// </summary>
 public class Spawner : MonoBehaviour {
 
-    // -- editor
+    // -- editor -- //
     [Header ("spawning methods")]
     [Tooltip ("spawn on and one")]
     [SerializeField]
@@ -31,28 +31,21 @@ public class Spawner : MonoBehaviour {
     [SerializeField]
     private List<GameObject> enemyTypes = new List<GameObject> ();
 
-    // -- internal 
+    // -- internal -- //
 
     private List<GameObject> spawnPoints = new List<GameObject> ();
+    private Timers spawnTimer = new Timers();
 
-    /// <summary>
-    /// Gets a list off all the children of the current game object
-    /// </summary>
-    /// <returns> A list of the Game objects children  </returns>
-    List<GameObject> getGOChildren () {
-        List<GameObject> children = new List<GameObject> ();
+    // -- private -- // 
 
-        int numSpawnpoints = this.gameObject.transform.childCount;
+    //private void spawnEnemyOnPoint(int pointIndex, int enemyIndex){}
+    
 
-        for (int i = 0; i < numSpawnpoints; i++) {
-            children.Add (this.gameObject.transform.GetChild (i).gameObject);
-        }
 
-        return children;
-    }
-
-    // -- unity
+    // -- unity -- // 
     void Start () {
+
+        spawnPoints = (List<GameObject>) WUGameObjects.GetGOChildren(this.gameObject);
 
         foreach (GameObject item in spawnPoints) {
             GameObject EnemyCopy = Instantiate (enemyTypes[0]);
