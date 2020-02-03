@@ -6,6 +6,8 @@ using UnityEngine;
  */
 public class CharacterController2D : MonoBehaviour {
 	
+	// GunController gun = new GunController();
+
 	// Amount of force added when the player jumps.
 	[SerializeField] 
 	private float jumpForce = 400f;
@@ -70,6 +72,8 @@ public class CharacterController2D : MonoBehaviour {
 				grounded = true;
 			}
 		}
+		
+		// gun.Shoot();
 	}
 
 	public void Move(float movement, bool crouch, bool jump) {
