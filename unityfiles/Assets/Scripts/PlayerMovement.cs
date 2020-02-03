@@ -4,35 +4,41 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController2D))]
 public class PlayerMovement : MonoBehaviour {
     //Character controller script 
-    
+
     private CharacterController2D characterController2D;
-    public CharacterController2D CharacterController2D{
+    
+    // [SerializeField]
+    // private GunController gun;
+
+    public CharacterController2D CharacterController2D {
         get => characterController2D;
         set => characterController2D = value;
     }
 
     [SerializeField] private float runSpeed = 40;
-    public float RunSpeed{
+
+    public float RunSpeed {
         get => runSpeed;
         set => runSpeed = value;
     }
 
     //Horizontal movement speed of the player
     private float horizontalMove = 0;
-    public float HorizontalMove{
+
+    public float HorizontalMove {
         get => horizontalMove;
         set => horizontalMove = value;
     }
 
     //If the player is jumping or not
     private bool jump;
-    public bool Jump{
+
+    public bool Jump {
         get => jump;
         set => jump = value;
     }
 
-    private void Start()
-    {
+    private void Start() {
         this.characterController2D = this.GetComponent<CharacterController2D>();
     }
 
@@ -44,6 +50,11 @@ public class PlayerMovement : MonoBehaviour {
         if (Input.GetButtonDown("Jump")) {
             jump = true;
         }
+
+        // if (Input.GetButtonDown("Fire1")) {
+        //     Debug.Log("Shooting gun");
+        //     gun.Shoot();
+        // }
     }
 
     void FixedUpdate() {
