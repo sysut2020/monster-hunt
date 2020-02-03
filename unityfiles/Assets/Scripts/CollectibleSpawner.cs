@@ -14,14 +14,14 @@ public class CollectibleSpawner : MonoBehaviour {
     }
 
     [SerializeField]
-    private int minimumSpawnItems = 0;
+    private static int minimumSpawnItems = 1;
 
     [SerializeField]
-    private int maximumSpawnItems = 5;
+    private static int maximumSpawnItems = 5;
 
     // Collectible to spawn
     [SerializeField]
-    private GameObject collectible;
+    private static GameObject collectible;
 
     public int MinimumSpawnItems {
         get { return minimumSpawnItems; }
@@ -38,20 +38,26 @@ public class CollectibleSpawner : MonoBehaviour {
         set { collectible = value; }
     }
 
-    public void SpawnCollectible(Vector2 position) {
+    public static void SpawnCollectible(Vector2 position) {
+        Debug.Log("Spawn position should be" + position);
         int numberOfSpawnItems = Random.Range(minimumSpawnItems, maximumSpawnItems);
+ 
         for (int i = 0; i < numberOfSpawnItems; i++) {
             double randomNumber = Math.Ceiling(Random.value * 10);
 
             collectible = SetCollectibleType(randomNumber);
             // todo spawn collectable
-            Instantiate(collectible, position, Quaternion.identity);
+            collectible.transform.position = position;
+            //Instantiate(collectible, position, Quaternion.identity);
         }
     }
 
-    private GameObject SetCollectibleType(double randomNumber) {
+    private static GameObject SetCollectibleType(double randomNumber) {
         GameObject collectible = new GameObject();
+   
         collectible.tag = "Collectible";
+        
+        Debug.Log("The random number is " + randomNumber);
         
 
         switch (randomNumber) {
@@ -62,10 +68,12 @@ public class CollectibleSpawner : MonoBehaviour {
 
             case var n when (n > 2 && n < 8):
                 Debug.Log("I'm between 2 and 8");
+                collectible.name = "Coin";
                 break;
 
             case var n when (n > 8 && n <= 10):
                 Debug.Log("I'm between 8 and 10");
+                collectible.name = "Letter";
                 break;
 
             default:
