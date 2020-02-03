@@ -30,9 +30,6 @@ public class GunController : MonoBehaviour {
     [Tooltip("the scale of the sprite used.")] [SerializeField]
     private Vector2 spriteScale;
 
-    [Header("Firing properties")] [Tooltip("Fire rate in shots/sec.")] [SerializeField]
-    private float fireRate;
-
     [Tooltip("Fire rate in shots/sec.")]
     [SerializeField] 
     private float fireRate = 1;  
@@ -164,6 +161,7 @@ public class GunController : MonoBehaviour {
 
     void Start() {
         //TODO: Discuss system for timer naming conventions
+        this.FireRate = this.fireRate;
         this.fireRateTimer.Set("fRate", bulletWaitTime);
         this.GenerateBulletBlueprint();
         this.isFiring = true;
