@@ -30,7 +30,7 @@ public class CharacterController2D : MonoBehaviour {
 	const float CEILING_RADIUS = .2f; 
 	private Rigidbody2D playerRigidbody2D;
 	// For determining which way the player is currently facing.
-	private bool facingRight = true;  
+	private bool facingRight = true;
 	private Vector3 velocity = Vector3.zero;
 
 	private void Awake() {

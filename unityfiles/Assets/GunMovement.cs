@@ -14,9 +14,11 @@ public class GunMovement : MonoBehaviour {
         Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition + (Vector3.forward * 10f) - aimDirectionPoint.transform.position);
 
         float angle = AngleBetweenTwoPoints(transform.position, mouseWorldPosition);
-        
-        // We add 180 degrees to give the gun the right position
-        transform.rotation = Quaternion.Euler(new Vector3(0, 0,  angle + 180f));
+        Debug.Log(angle);
+        if (angle < -130 || angle > 150) {
+            // We add 180 degrees to give the gun the right position
+            transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle + 180f));
+        }
     }
     
     // Returns an angle between two vectors in degrees
