@@ -22,7 +22,7 @@ public class EBTestMoveDown : MonoBehaviour, IEnemyBehavior {
         this.velocity = enemy.EnemyType.speed;
     }
     public void Act () {
-        transform.Translate (new Vector2 (0f, velocity));
+        transform.Translate (new Vector2 (0f, 0f));
     }
 
     public void OnDead () {

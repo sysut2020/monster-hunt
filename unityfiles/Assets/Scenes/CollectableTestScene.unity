@@ -169,7 +169,7 @@ MonoBehaviour:
   bulletTtl: 5
   bulletTexture: {fileID: 2800000, guid: ce27df47f5e275f6f8b3594f7296b2e2, type: 3}
   spriteScale: {x: 10, y: 10}
-  fireRate: 10
+  fireRate: 1
 --- !u!114 &522627553
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -196,9 +196,11 @@ GameObject:
   - component: {fileID: 1248509463}
   - component: {fileID: 1248509466}
   - component: {fileID: 1248509467}
+  - component: {fileID: 1248509468}
+  - component: {fileID: 1248509469}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -361,7 +363,34 @@ MonoBehaviour:
   m_GameObject: {fileID: 1248509462}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b55557bcfe1afd0b19946846cb57d263, type: 3}
+  m_Script: {fileID: 11500000, guid: 5d77862b3809dc90aba1881e6210ac41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyType: {fileID: 11400000, guid: 412c8073747011a81b958f3cd51659b5, type: 2}
+--- !u!114 &1248509468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1248509462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa123975b622e0a1abc249c410039411, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entityHealth: 10
+  canRevive: 0
+--- !u!114 &1248509469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1248509462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b445d744ff4161b6a61e181d58557f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1447271819
