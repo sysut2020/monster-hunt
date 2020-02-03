@@ -77,6 +77,16 @@ public class Player : MonoBehaviour {
         this.playerInventory.AddLetter (letter);
     }
 
+    // public void changeActiveWeapon(){
+    //     foreach (IEffectPickup effect in this.PlayerInventory.ActivePickups.Reverse<IEffectPickup> ()) {
+    //         if (effect is IWeaponEffectPickup ) {
+    //             IWeaponEffectPickup weaponEffect = effect as IWeaponEffectPickup;
+    //             weaponEffect.OnChangeWeapon();
+    //         }
+    //     }
+    // }
+    
+
     // -- private -- // 
 
     /// <summary>
