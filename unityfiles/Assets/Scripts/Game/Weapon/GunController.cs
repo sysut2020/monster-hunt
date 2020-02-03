@@ -151,7 +151,7 @@ public class GunController : MonoBehaviour
     {   
         //TODO: Discuss system for timer naming conventions
         this.FireRate = this.fireRate;
-        Debug.Log(bulletWaitTime);
+        //Debug.Log(bulletWaitTime);
         this.fireRateTimer.Set("fRate", bulletWaitTime);
         this.GenerateBulletBlueprint();
     }
@@ -159,10 +159,9 @@ public class GunController : MonoBehaviour
 
     void Update()
     {
-        bool d =fireRateTimer.Done("fRate", true);
-        print(fireRateTimer.TimeLeft("fRate"));
+
         // is it time to release a bullet
-        if (d){
+        if (fireRateTimer.Done("fRate", true)){
             
             // if yes is there any bullets in the active bullet list that is inactive
             for (int i = this.activeBullets.Count; i > 0 ; i--)
