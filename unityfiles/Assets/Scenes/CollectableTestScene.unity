@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -120,6 +120,69 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &522627549
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 522627550}
+  - component: {fileID: 522627551}
+  - component: {fileID: 522627553}
+  m_Layer: 8
+  m_Name: Gun
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &522627550
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 522627549}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.88, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1525491281}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &522627551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 522627549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bfa685efc3f0d17c9051012c11ad0f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletVelocity: {x: 0.2, y: 0}
+  bulletDamage: 2
+  bulletTtl: 5
+  bulletTexture: {fileID: 2800000, guid: ce27df47f5e275f6f8b3594f7296b2e2, type: 3}
+  spriteScale: {x: 10, y: 10}
+  fireRate: 10
+--- !u!114 &522627553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 522627549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e73eb443c25347430a0a29d3667d25ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  availableWeapons: []
 --- !u!1 &1248509462
 GameObject:
   m_ObjectHideFlags: 0
@@ -213,7 +276,7 @@ SpriteShapeRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
+  m_DynamicOccludee: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -559,6 +622,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6195725565437346120, guid: 89094b3a5a84874c2b56a91ce764a1fb,
+        type: 3}
+      propertyPath: gun
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 6195725565437346133, guid: 89094b3a5a84874c2b56a91ce764a1fb,
         type: 3}
       propertyPath: m_Name
@@ -621,27 +689,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 89094b3a5a84874c2b56a91ce764a1fb, type: 3}
---- !u!1 &1525491271 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6195725565437346133, guid: 89094b3a5a84874c2b56a91ce764a1fb,
+--- !u!4 &1525491281 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6195725565437346135, guid: 89094b3a5a84874c2b56a91ce764a1fb,
     type: 3}
   m_PrefabInstance: {fileID: 1525491270}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1525491272
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1525491271}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed5f91fdc298f64b7a2937950f862e10, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletVelocity: {x: 0, y: 0}
-  bulletDamage: 2
-  bulletTtl: 0
-  bulletTexture: {fileID: 0}
-  spriteScale: {x: 0, y: 0}
-  fireRate: 1
