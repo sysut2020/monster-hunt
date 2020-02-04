@@ -107,11 +107,14 @@ public class CharacterController2D : MonoBehaviour {
 
 	private void Flip() {
 		// Switch the way the player is labelled as facing.
-		facingRight = !facingRight;
+		if (Input.GetAxisRaw("Horizontal") < 0) {
+			facingRight = false;
+			transform.rotation = Quaternion.Euler(new Vector3(0, 180f, 0));
+		}
 
-		// Multiply the player's x local scale by -1.
-		Vector3 theScale = transform.localScale;
-		theScale.x *= -1;
-		transform.localScale = theScale;
+		if (Input.GetAxisRaw("Horizontal") > 0) {
+			facingRight = true;
+			transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+		}
 	}
 }

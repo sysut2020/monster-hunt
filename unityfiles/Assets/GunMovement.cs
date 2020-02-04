@@ -15,7 +15,7 @@ public class GunMovement : MonoBehaviour {
 
         float angle = AngleBetweenTwoPoints(transform.position, mouseWorldPosition);
         Debug.Log(angle);
-        if (angle < -130 || angle > 150) {
+        if (angle < 0 || angle < -130) {
             // We add 180 degrees to give the gun the right position
             transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle + 180f));
         }
