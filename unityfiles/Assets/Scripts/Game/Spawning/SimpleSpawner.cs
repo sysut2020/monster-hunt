@@ -6,18 +6,18 @@ using UnityEngine;
 public class SimpleSpawner : MonoBehaviour {
     // -- inspector -- //
     [SerializeField]
-    private float spawnInterval;
+    private float spawnInterval = 1;
 
     [SerializeField]
-    private Texture2D enemyTexture;
+    private Texture2D enemyTexture = null;
 
     [Tooltip ("the enemy type.")]
     [SerializeField]
-    private EnemyType enemyTypeToSpawn;
+    private EnemyType enemyTypeToSpawn = null;
 
     // -- internal -- //
-    private float lastSpawn;
-    private GameObject enemyBlueprint;
+    private float lastSpawn = 0;
+    private GameObject enemyBlueprint = null;
 
     // -- private -- //
     private void GenerateBlueprint () {

@@ -21,23 +21,23 @@ public class GunController : MonoBehaviour
 
     [Tooltip("velocity of bullet in units/(1/50) sec.")]
     [SerializeField]
-    private Vector2 bulletVelocity;
+    private Vector2 bulletVelocity = Vector2.zero;
 
     [Tooltip("Damage inflicted by bullet.")]
     [SerializeField] 
-    private float bulletDamage;
+    private float bulletDamage = 0;
 
     [Tooltip("How long the bullet will live if it doesn´t hit anything.")]
     [SerializeField] 
-    private float bulletTtl;
+    private float bulletTtl = 0;
 
     [Tooltip("2d texture for bullet sprite.")]
     [SerializeField] 
-    private Texture2D bulletTexture;
+    private Texture2D bulletTexture = null;
 
     [Tooltip("the scale of the sprite used.")]
     [SerializeField] 
-    private Vector2 spriteScale;
+    private Vector2 spriteScale = Vector2.zero;
 
     [Header("Firing properties")]
 
