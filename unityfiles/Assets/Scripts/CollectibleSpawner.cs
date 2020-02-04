@@ -74,9 +74,11 @@ public class CollectibleSpawner : MonoBehaviour {
 
             case var n when (n > 8 && n <= 11):
                 Debug.Log("I'm between 8 and 10");
-                collectible = new GameObject(); // todo change to prefab
+                string letter = SudoRandomLetterGenerator.Instance.GenerateLetter();
 
-                collectible.name = "Letter";
+                collectible = new GameObject(); // todo change to prefab containing the letter
+
+                collectible.name = "Letter " + letter;
                 break;
 
             default:
