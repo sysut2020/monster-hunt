@@ -38,8 +38,21 @@ public class Spawner : MonoBehaviour {
 
     // -- private -- // 
 
-    // TODO: complete this one
-    //private void spawnEnemyOnPoint(int pointIndex, int enemyIndex){}
+    /// <summary>
+    /// Spawns a the enemy on index enemyIndex at the spawnpint
+    /// with the spawnpoint index
+    /// </summary>
+    /// <param name="pointIndex">the index of the point to spawn</param>
+    /// <param name="enemyIndex">the index of the enemy to spawn</param>
+    private void spawnEnemyOnPoint(int pointIndex, int enemyIndex){
+        if (WUInteger.IsInRange(pointIndex, 0, this.spawnPoints.Count) && WUInteger.IsInRange(enemyIndex, 0, this.enemyTypes.Count)){
+            GameObject spawnPoint = this.spawnPoints[pointIndex];
+            GameObject EnemyCopy = Instantiate (enemyTypes[enemyIndex]);
+            EnemyCopy.transform.rotation = spawnPoint.transform.rotation;
+            EnemyCopy.transform.position = spawnPoint.transform.position;
+            EnemyCopy.SetActive (true);
+        }
+    }
     
 
 
@@ -54,11 +67,6 @@ public class Spawner : MonoBehaviour {
             EnemyCopy.transform.position = item.transform.position;
             EnemyCopy.SetActive (true);
         }
-
-    }
-
-    // Update is called once per frame
-    void Update () {
 
     }
 }

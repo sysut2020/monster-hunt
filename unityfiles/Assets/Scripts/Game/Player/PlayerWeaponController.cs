@@ -27,6 +27,21 @@ public class PlayerWeaponController : MonoBehaviour {
     // -- public -- //
 
     /// <summary>
+    /// Starts to fire the weapon
+    /// </summary>
+    public void StartFiring() {this.activeGunController.StartFiring();}
+
+    /// <summary>
+    /// Stop fireing the weapon
+    /// </summary>
+    public void StopFiring() {this.activeGunController.StopFiring();}
+
+    /// <summary>
+    /// Fires a bullet if able (not on cooldown since last shot)
+    /// </summary>
+    public void FireOnce() {this.activeGunController.FireOnce();}
+
+    /// <summary>
     /// changes to the next weapon in the weapon list 
     /// if the end of the list is reached the index loops around
     /// </summary>
@@ -59,6 +74,9 @@ public class PlayerWeaponController : MonoBehaviour {
         
         return this.activeGunController;
     }
+
+
+    
 
 
 }

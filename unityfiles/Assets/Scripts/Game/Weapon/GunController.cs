@@ -79,7 +79,7 @@ public class GunController : MonoBehaviour
     /// Starts releasing bullets as fast as the 
     /// fire rate allows
     /// </summary>
-     public void startFiring()
+     public void StartFiring()
     {
         this.isFiring = true;
     }

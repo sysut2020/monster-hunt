@@ -86,7 +86,7 @@ public class Player : MonoBehaviour {
     public void ChangeToNextWeapon(){
         GunController newGunController = this.PlayerWeaponController.ChangeToNextWeapon();
         this.AlertPowerupsOnWeaponChange(newGunController);
-        }
+    }
 
 
     /// <summary>
@@ -97,7 +97,22 @@ public class Player : MonoBehaviour {
     public void ChangeToPrevWeapon(){
         GunController newGunController = this.PlayerWeaponController.ChangeToPrevWeapon();
         this.AlertPowerupsOnWeaponChange(newGunController);
-        }
+    }
+
+    /// <summary>
+    /// Starts to fire the weapon
+    /// </summary>
+    public void StartFiring() {this.PlayerWeaponController.StartFiring();}
+
+    /// <summary>
+    /// Stop fireing the weapon
+    /// </summary>
+    public void StopFiring() {this.PlayerWeaponController.StopFiring();}
+
+    /// <summary>
+    /// Fires a bullet if able (not on cooldown since last shot)
+    /// </summary>
+    public void FireOnce() {this.PlayerWeaponController.FireOnce();}
 
     // -- private -- // 
 
