@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEngine;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
@@ -53,21 +53,18 @@ public class CollectibleSpawner : MonoBehaviour {
 
         switch (randomNumber) {
             case var n when (n <= 2):
-                Debug.Log("I'm less than 2");
                 collectible = new GameObject(); // todo change to prefab
                 collectible.name = "PowerUP";
                 break;
 
             case var n when (n > 2 && n <= 8):
-                Debug.Log("I'm between 2 and 8");
-                Debug.Log("Spawning Coin");
                 var test = collectiblesToSpawn[0];
                 collectible = Instantiate(test);
                 collectible.name = "Coin";
+                Debug.Log("Spawning Coin", collectible);
                 break;
 
             case var n when (n > 8 && n <= 11):
-                Debug.Log("I'm between 8 and 10");
                 string letter = SudoRandomLetterGenerator.Instance.GenerateLetter();
 
                 collectible = new GameObject(); // todo change to prefab containing the letter
@@ -76,7 +73,6 @@ public class CollectibleSpawner : MonoBehaviour {
                 break;
 
             default:
-                Debug.Log("I'm out of range");
                 Debug.Log("Not spawining any thing");
                 break;
         }
