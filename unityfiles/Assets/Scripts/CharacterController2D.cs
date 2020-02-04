@@ -106,12 +106,13 @@ public class CharacterController2D : MonoBehaviour {
 
 
 	private void Flip() {
-		// Switch the way the player is labelled as facing.
+		// If character is moving to the left, rotate left
 		if (Input.GetAxisRaw("Horizontal") < 0) {
 			facingRight = false;
 			transform.rotation = Quaternion.Euler(new Vector3(0, 180f, 0));
 		}
-
+		
+		// If character is moving to the right, rotate right
 		if (Input.GetAxisRaw("Horizontal") > 0) {
 			facingRight = true;
 			transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));

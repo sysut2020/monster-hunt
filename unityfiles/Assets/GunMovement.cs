@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Mathematics;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GunMovement : MonoBehaviour {
     
@@ -12,9 +8,8 @@ public class GunMovement : MonoBehaviour {
     void Update() {
         // Creates a vector from the position that our aim are based of, to the mouse position
         Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition + (Vector3.forward * 10f) - aimDirectionPoint.transform.position);
-
         float angle = AngleBetweenTwoPoints(transform.position, mouseWorldPosition);
-        Debug.Log(angle);
+        
         if (angle < 0 || angle < -130) {
             // We add 180 degrees to give the gun the right position
             transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle + 180f));
