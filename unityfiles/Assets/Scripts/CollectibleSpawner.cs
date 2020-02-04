@@ -18,11 +18,6 @@ public class CollectibleSpawner : MonoBehaviour {
         }
     }
 
-    public class Collectible : Object {
-        public GameObject gameObject;
-        public float spawnChanseWeight;
-    }
-
     // Can be loaded with prefabs or other game objects that can be spawned
     [SerializeField]
     private GameObject[] collectiblesToSpawn;

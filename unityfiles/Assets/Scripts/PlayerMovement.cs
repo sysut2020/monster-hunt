@@ -6,16 +6,14 @@ public class PlayerMovement : MonoBehaviour {
     //Character controller script 
 
     private CharacterController2D characterController2D;
-    
-    // [SerializeField]
-    // private GunController gun;
 
     public CharacterController2D CharacterController2D {
         get => characterController2D;
         set => characterController2D = value;
     }
 
-    [SerializeField] private float runSpeed = 40;
+    [SerializeField]
+    private float runSpeed = 40;
 
     public float RunSpeed {
         get => runSpeed;
@@ -50,11 +48,6 @@ public class PlayerMovement : MonoBehaviour {
         if (Input.GetButtonDown("Jump")) {
             jump = true;
         }
-
-        // if (Input.GetButtonDown("Fire1")) {
-        //     Debug.Log("Shooting gun");
-        //     gun.Shoot();
-        // }
     }
 
     void FixedUpdate() {
