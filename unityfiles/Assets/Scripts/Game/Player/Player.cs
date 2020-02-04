@@ -77,17 +77,60 @@ public class Player : MonoBehaviour {
         this.playerInventory.AddLetter (letter);
     }
 
-    // public void changeActiveWeapon(){
-    //     foreach (IEffectPickup effect in this.PlayerInventory.ActivePickups.Reverse<IEffectPickup> ()) {
-    //         if (effect is IWeaponEffectPickup ) {
-    //             IWeaponEffectPickup weaponEffect = effect as IWeaponEffectPickup;
-    //             weaponEffect.OnChangeWeapon();
-    //         }
-    //     }
-    // }
     
+    /// <summary>
+    /// changes to the next weapon in the weapon list 
+    /// if the end of the list is reached the index loops around
+    /// </summary>
+    /// <returns>The weapon controller of the new active weapon</returns>
+    public void ChangeToNextWeapon(){
+        GunController newGunController = this.PlayerWeaponController.ChangeToNextWeapon();
+        this.AlertPowerupsOnWeaponChange(newGunController);
+    }
+
+
+    /// <summary>
+    /// changes to the prev weapon in the weapon list 
+    /// if the end of the list is reached the index loops around
+    /// </summary>
+    /// <returns>The weapon controller of the new active weapon</returns>
+    public void ChangeToPrevWeapon(){
+        GunController newGunController = this.PlayerWeaponController.ChangeToPrevWeapon();
+        this.AlertPowerupsOnWeaponChange(newGunController);
+    }
+
+    /// <summary>
+    /// Starts to fire the weapon
+    /// </summary>
+    public void StartFiring() {this.PlayerWeaponController.StartFiring();}
+
+    /// <summary>
+    /// Stop fireing the weapon
+    /// </summary>
+    public void StopFiring() {this.PlayerWeaponController.StopFiring();}
+
+    /// <summary>
+    /// Fires a bullet if able (not on cooldown since last shot)
+    /// </summary>
+    public void FireOnce() {this.PlayerWeaponController.FireOnce();}
 
     // -- private -- // 
+
+
+    /// <summary>
+    /// Alerts the power ups that the weapon has changed
+    /// </summary>
+    /// <param name="newGunC">The new gun controller to pass to the weapon</param>
+    private void AlertPowerupsOnWeaponChange(GunController newGunC){
+        foreach (IEffectPickup effect in this.PlayerInventory.ActivePickups.Reverse<IEffectPickup> ()) {
+            if (effect is IWeaponEffectPickup ) {
+                IWeaponEffectPickup weaponEffect = effect as IWeaponEffectPickup;
+                weaponEffect.OnChangeWeapon(newGunC);
+            }
+        }
+    }
+
+
 
     /// <summary>
     /// iterates through the active effects and checks if any one of them are done

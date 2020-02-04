@@ -28,16 +28,14 @@ public class SimpleSpawner : MonoBehaviour {
 
         SpriteRenderer spriteRender = ebp.AddComponent<SpriteRenderer> ();
         spriteRender.sprite = Sprite.Create (this.enemyTexture, new Rect (0, 0, this.enemyTexture.width, this.enemyTexture.height), Vector2.zero);
-        ebp.transform.localScale = new Vector3 (0.25f, 0.25f, 1);
+        ebp.transform.localScale = new Vector3 (0.025f, 0.025f, 1);
 
         BoxCollider2D bc = ebp.AddComponent<BoxCollider2D> ();
 
         Enemy enemyScript = ebp.AddComponent<Enemy> () as Enemy;
-        // print(this.enemyTypeToSpawn);
-        // print(ebp.GetComponent<Enemy>().EnemyType);
+
         enemyScript.EnemyType = this.enemyTypeToSpawn;
-        // print(this.enemyTypeToSpawn);
-        // print(this.enemyBlueprint.GetComponent<Enemy>().EnemyType);
+      
 
         IEnemyBehavior EBH = ebp.AddComponent<EBTestMoveDown> ();
 

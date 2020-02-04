@@ -14,9 +14,19 @@ using System.Linq;
 public class Timers {
     private Dictionary<string, Timer> timers = new Dictionary<string, Timer> ();
 
+    private int rollingUID = 0;
+
     // -- properties -- //
 
+    public string RollingUID{
+        get{
+            rollingUID += 1;
+            return $"TIMER_{this.rollingUID}";
+        }
+    }
+
     // -- public -- //
+
 
     /// <summary>
     /// Removes the timer with the given timer id
@@ -94,7 +104,6 @@ public class Timers {
         int ret = -1;
         if (timers.Keys.Contains (timerID)) {
             ret = this.timers[timerID].TimeLeft ();
-            //UnityEngine.Debug.Log(ret);
             if (ret < 0) {
                 ret = 0;
             }

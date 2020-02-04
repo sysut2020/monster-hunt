@@ -42,7 +42,6 @@ public class Enemy : MonoBehaviour, IDamageable {
 
         BoxCollider2D bc;
         bc = gameObject.AddComponent<BoxCollider2D> () as BoxCollider2D;
-        bc.isTrigger = true;
 
     }
 

@@ -10,10 +10,10 @@ class Timer {
     private DateTime completeTime = new DateTime ();
 
     /// <summary>
-    /// initiates the timer with the amount of millisecs to 
+    /// initiates the timer with the amount of millisecond to 
     ///     count
     /// </summary>
-    /// <param name="millisec">The ammount of time to check if has passed</param>
+    /// <param name="millisec">The amount of time to check if has passed</param>
     public Timer (float millisec) {
         waitTime = millisec;
         this.Restart ();
