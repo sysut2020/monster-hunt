@@ -23,12 +23,6 @@ public class CollectibleSpawner : MonoBehaviour {
         public float spawnChanseWeight;
     }
 
-    // enum Collectibles {
-    //     PowerUp,
-    //     Coin,
-    //     Letter
-    // }
-
     // Can be loaded with prefabs or other game objects that can be spawned
     [SerializeField]
     private GameObject[] collectiblesToSpawn;
