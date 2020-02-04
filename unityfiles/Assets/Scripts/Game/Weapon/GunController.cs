@@ -59,7 +59,7 @@ public class GunController : MonoBehaviour
 
 
     // -- internal -- //
-    private Timers fireRateTimer = new Timers();
+    private readonly Timers fireRateTimer = new Timers();
     private ArrayList activeBullets = new ArrayList();
     private ArrayList idleBullets = new ArrayList();
 

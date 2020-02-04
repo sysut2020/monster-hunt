@@ -34,10 +34,11 @@ public class Spawner : MonoBehaviour {
     // -- internal -- //
 
     private List<GameObject> spawnPoints = new List<GameObject> ();
-    private Timers spawnTimer = new Timers();
+    private readonly Timers spawnTimer = new Timers();
 
     // -- private -- // 
 
+    // TODO: complete this one
     //private void spawnEnemyOnPoint(int pointIndex, int enemyIndex){}
     
 
