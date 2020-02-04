@@ -22,7 +22,7 @@ public class CollectibleSpawner : MonoBehaviour {
         public GameObject gameObject;
         public float spawnChanseWeight;
     }
-    
+
     // enum Collectibles {
     //     PowerUp,
     //     Coin,
@@ -40,22 +40,22 @@ public class CollectibleSpawner : MonoBehaviour {
     private int maximumSpawnItems = 5;
 
     public void SpawnCollectible(Vector2 position) {
-        Debug.Log("Spawn position should be" + position);
         int numberOfSpawnItems = Random.Range(minimumSpawnItems, maximumSpawnItems);
 
         for (int i = 0; i < numberOfSpawnItems; i++) {
             double randomNumber = Math.Ceiling(Random.value * 10);
 
             GameObject collectible = SetCollectibleType(randomNumber);
-            // todo spawn collectable
-            collectible.transform.position = position;
+            if (collectible != null) {
+                collectible.SetActive(true);
+                collectible.tag = "Collectible";
+                collectible.transform.position = position;
+            }
         }
     }
 
     private GameObject SetCollectibleType(double randomNumber) {
-        GameObject collectible;
-
-        Debug.Log("The random number is " + randomNumber);
+        GameObject collectible = null;
 
         switch (randomNumber) {
             case var n when (n <= 2):
@@ -66,7 +66,7 @@ public class CollectibleSpawner : MonoBehaviour {
 
             case var n when (n > 2 && n <= 8):
                 Debug.Log("I'm between 2 and 8");
-                Debug.Log("spawning coin");
+                Debug.Log("Spawning Coin");
                 var test = collectiblesToSpawn[0];
                 collectible = Instantiate(test);
                 collectible.name = "Coin";
@@ -83,12 +83,10 @@ public class CollectibleSpawner : MonoBehaviour {
 
             default:
                 Debug.Log("I'm out of range");
-                collectible = new GameObject(); // todo change to prefab
+                Debug.Log("Not spawining any thing");
                 break;
         }
 
-        collectible.SetActive(true);
-        collectible.tag = "Collectible";
         return collectible;
     }
 }
