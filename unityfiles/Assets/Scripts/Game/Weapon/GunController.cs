@@ -63,9 +63,7 @@ public class GunController : MonoBehaviour
     private ArrayList activeBullets = new ArrayList();
     private ArrayList idleBullets = new ArrayList();
 
-    // REMOVE AFTER TESTING
     [SerializeField]
-    // REMOVE AFTER TESTING
     private bool isFiring;
     private float bulletWaitTime;
 
@@ -177,8 +175,16 @@ public class GunController : MonoBehaviour
     private void MaybeFire(){
         // is it time to release a bullet
         if (fireRateTimer.Done(this.timerUID, true)){
+            this.Fire();
             
-            // if yes is there any bullets in the active bullet list that is inactive
+        }
+    }
+
+    /// <summary>
+    /// Fires a projectile from the gun
+    /// </summary>
+    private void Fire(){
+        // if yes is there any bullets in the active bullet list that is inactive
             for (int i = this.activeBullets.Count; i > 0 ; i--)
             {
                 GameObject g = (GameObject)this.activeBullets[i-1];
@@ -197,8 +203,9 @@ public class GunController : MonoBehaviour
             {
                 this.FireNewProjectile();
             }
-        }
     }
+
+   
 
     // -- unity -- //
 
@@ -219,6 +226,17 @@ public class GunController : MonoBehaviour
             this.MaybeFire();
         }
         
+    }
+
+
+    // -- debug -- //
+
+     /// <summary>
+    /// Directly fire a projectile regardless of firerate
+    /// meant for debug only
+    /// </summary>
+    public void DEBUG_FIRE(){
+        this.Fire();
     }
 
     

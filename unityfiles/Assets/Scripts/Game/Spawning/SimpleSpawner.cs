@@ -21,28 +21,27 @@ public class SimpleSpawner : MonoBehaviour {
 
     // -- private -- //
     private void GenerateBlueprint () {
-        GameObject ebp = new GameObject ();
-        this.enemyBlueprint = ebp;
-        ebp.name = "Enemy";
-        ebp.tag = "Enemy";
+        this.enemyBlueprint = new GameObject ();
+        this.enemyBlueprint.name = "Enemy";
+        this.enemyBlueprint.tag = "Enemy";
 
-        SpriteRenderer spriteRender = ebp.AddComponent<SpriteRenderer> ();
+        SpriteRenderer spriteRender = this.enemyBlueprint.AddComponent<SpriteRenderer> ();
         spriteRender.sprite = Sprite.Create (this.enemyTexture, new Rect (0, 0, this.enemyTexture.width, this.enemyTexture.height), Vector2.zero);
-        ebp.transform.localScale = new Vector3 (0.025f, 0.025f, 1);
+        this.enemyBlueprint.transform.localScale = new Vector3 (0.025f, 0.025f, 1);
 
-        BoxCollider2D bc = ebp.AddComponent<BoxCollider2D> ();
+        BoxCollider2D bc = this.enemyBlueprint.AddComponent<BoxCollider2D> ();
 
-        Enemy enemyScript = ebp.AddComponent<Enemy> () as Enemy;
+        Enemy enemyScript = this.enemyBlueprint.AddComponent<Enemy> () as Enemy;
 
         enemyScript.EnemyType = this.enemyTypeToSpawn;
       
 
-        IEnemyBehavior EBH = ebp.AddComponent<EBTestMoveDown> ();
+        IEnemyBehavior EBH = this.enemyBlueprint.AddComponent<EBTestMoveDown> ();
 
-        HealthController healthController = ebp.AddComponent<HealthController> ();
+        HealthController healthController = this.enemyBlueprint.AddComponent<HealthController> ();
         healthController.EntityHealth = 5f;
 
-        ebp.SetActive (false);
+        this.enemyBlueprint.SetActive (false);
     }
 
     // -- unity -- //

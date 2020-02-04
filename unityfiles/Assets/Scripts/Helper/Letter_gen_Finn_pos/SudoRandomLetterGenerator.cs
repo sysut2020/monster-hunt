@@ -89,7 +89,7 @@ public class SudoRandomLetterGenerator {
 
     /// <summary>
     /// Generates a letter that will in combination with the 
-    /// Earlier generated letters for on ore more words*
+    /// Earlier generated letters for on or more words*
     /// 
     /// *if the algorithm cant find or reduce down to get a letter a random one will be picked
     /// </summary>
