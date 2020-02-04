@@ -368,6 +368,7 @@ GameObject:
   m_Component:
   - component: {fileID: 484512582}
   - component: {fileID: 484512583}
+  - component: {fileID: 484512584}
   m_Layer: 0
   m_Name: GunHand
   m_TagString: Untagged
@@ -400,10 +401,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 484512581}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62a303f3b57f07d41a314d783566bb94, type: 3}
+  m_Script: {fileID: 11500000, guid: 16196e0a4e79cff4ba26d0f04e3f1f94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   aimDirectionPoint: {fileID: 514176646}
+--- !u!114 &484512584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 484512581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed5f91fdc298f64b7a2937950f862e10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletVelocity: {x: 1, y: 1}
+  bulletDamage: 0
+  bulletTtl: 1
+  bulletTexture: {fileID: 2800000, guid: 4bbae20d6e90e064b84e0572cda06a79, type: 3}
+  spriteScale: {x: 2, y: 2}
+  fireRate: 10
 --- !u!1 &514176646
 GameObject:
   m_ObjectHideFlags: 0
