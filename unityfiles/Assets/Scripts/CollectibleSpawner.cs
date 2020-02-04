@@ -1,86 +1,92 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO.IsolatedStorage;
 using UnityEngine;
-using UnityEngine.Serialization;
+using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
 public class CollectibleSpawner : MonoBehaviour {
-    enum Collectibles {
-        PowerUp,
-        Coin,
-        Letter
-    }
+    private static CollectibleSpawner _instance;
 
-    [SerializeField]
-    private static int minimumSpawnItems = 1;
+    public static CollectibleSpawner Instance => _instance;
 
-    [SerializeField]
-    private static int maximumSpawnItems = 5;
 
-    // Collectible to spawn
-    [SerializeField]
-    private static GameObject collectible;
-
-    public int MinimumSpawnItems {
-        get { return minimumSpawnItems; }
-        set { minimumSpawnItems = value; }
-    }
-
-    public int MaximumSpawnItems {
-        get { return maximumSpawnItems; }
-        set { maximumSpawnItems = value; }
-    }
-
-    public GameObject Collectible {
-        get { return collectible; }
-        set { collectible = value; }
-    }
-
-    public static void SpawnCollectible(Vector2 position) {
-        Debug.Log("Spawn position should be" + position);
-        int numberOfSpawnItems = Random.Range(minimumSpawnItems, maximumSpawnItems);
- 
-        for (int i = 0; i < numberOfSpawnItems; i++) {
-            double randomNumber = Math.Ceiling(Random.value * 10);
-
-            collectible = SetCollectibleType(randomNumber);
-            // todo spawn collectable
-            collectible.transform.position = position;
-            //Instantiate(collectible, position, Quaternion.identity);
+    private void Awake() {
+        if (_instance != null && _instance != this) {
+            Destroy(this.gameObject);
+        } else {
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
         }
     }
 
-    private static GameObject SetCollectibleType(double randomNumber) {
-        GameObject collectible = new GameObject();
-   
-        collectible.tag = "Collectible";
-        
+    public class Collectible : Object {
+        public GameObject gameObject;
+        public float spawnChanseWeight;
+    }
+    
+    // enum Collectibles {
+    //     PowerUp,
+    //     Coin,
+    //     Letter
+    // }
+
+    // Can be loaded with prefabs or other game objects that can be spawned
+    [SerializeField]
+    private GameObject[] collectiblesToSpawn;
+
+    [SerializeField]
+    private int minimumSpawnItems = 1;
+
+    [SerializeField]
+    private int maximumSpawnItems = 5;
+
+    public void SpawnCollectible(Vector2 position) {
+        Debug.Log("Spawn position should be" + position);
+        int numberOfSpawnItems = Random.Range(minimumSpawnItems, maximumSpawnItems);
+
+        for (int i = 0; i < numberOfSpawnItems; i++) {
+            double randomNumber = Math.Ceiling(Random.value * 10);
+
+            GameObject collectible = SetCollectibleType(randomNumber);
+            // todo spawn collectable
+            collectible.transform.position = position;
+        }
+    }
+
+    private GameObject SetCollectibleType(double randomNumber) {
+        GameObject collectible;
+
         Debug.Log("The random number is " + randomNumber);
-        
 
         switch (randomNumber) {
-            case var n when (n < 2):
+            case var n when (n <= 2):
                 Debug.Log("I'm less than 2");
+                collectible = new GameObject(); // todo change to prefab
                 collectible.name = "PowerUP";
                 break;
 
-            case var n when (n > 2 && n < 8):
+            case var n when (n > 2 && n <= 8):
                 Debug.Log("I'm between 2 and 8");
+                Debug.Log("spawning coin");
+                var test = collectiblesToSpawn[0];
+                collectible = Instantiate(test);
                 collectible.name = "Coin";
                 break;
 
-            case var n when (n > 8 && n <= 10):
+            case var n when (n > 8 && n <= 11):
                 Debug.Log("I'm between 8 and 10");
+                collectible = new GameObject(); // todo change to prefab
+
                 collectible.name = "Letter";
                 break;
 
             default:
                 Debug.Log("I'm out of range");
+                collectible = new GameObject(); // todo change to prefab
                 break;
         }
 
+        collectible.SetActive(true);
+        collectible.tag = "Collectible";
         return collectible;
     }
 }
