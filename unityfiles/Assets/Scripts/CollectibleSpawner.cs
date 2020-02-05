@@ -74,10 +74,8 @@ public class CollectibleSpawner : MonoBehaviour {
                 break;
 
             case var n when (n > 2 && n <= 8):
-                collectible =
-                    Instantiate(
-                        collectiblesToSpawn[
-                            0]); // taking the collectible from the inspector and instantiate it in the scene
+                // taking the collectible from the inspector and instantiate it in the scene
+                collectible = Instantiate(collectiblesToSpawn[0]);
                 collectible.name = "Coin";
                 Debug.Log("Spawning Coin", collectible);
                 break;
