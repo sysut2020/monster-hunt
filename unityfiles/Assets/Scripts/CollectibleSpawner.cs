@@ -80,7 +80,7 @@ public class CollectibleSpawner : MonoBehaviour {
                 break;
 
             default:
-                Debug.Log("Not spawining any thing");
+                Debug.Log("Not spawning anything");
                 break;
         }
 
