@@ -25,25 +25,12 @@ public class EnemyPatrolBehaviour : StateMachineBehaviour {
     {
         bool playerFound = false;
         enemyFrontPoint = enemy.GetComponent<Enemy>().FrontPoint.position;
-        enemyRearPoint = enemy.GetComponent<Enemy>().RearPoint.position;
 
-        RaycastHit2D hitRight = Physics2D.Raycast(enemyFrontPoint, Vector2.right, maxVisionLength);
-        RaycastHit2D hitLeft = Physics2D.Raycast(enemyRearPoint, Vector2.left, maxVisionLength);
+        RaycastHit2D hitForward = Physics2D.Raycast(enemyFrontPoint, Vector2.right, maxVisionLength);
 
-        Debug.DrawRay(enemyFrontPoint, Vector2.right * 10, Color.green);
-        Debug.DrawRay(enemyRearPoint, Vector2.left * 10, Color.red);
-
-        if (hitLeft.collider != null)
+        if (hitForward.collider != null)
         {
-            if (hitLeft.transform.tag == "Player")
-            {
-                playerFound = true;
-            }
-        }
-
-        if (hitRight.collider != null)
-        {
-            if (hitRight.transform.tag == "Player")
+            if (hitForward.transform.tag == "Player")
             {
                 playerFound = true;
             }

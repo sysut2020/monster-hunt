@@ -14,12 +14,21 @@ public class EnemyFollowBehaviour : StateMachineBehaviour {
     [SerializeField]
     private float attackReach = 3;
 
+    [SerializeField]
+    private float visionLength = 10;
+
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         facingRight = animator.transform.parent.GetComponent<Enemy>().FacingRight;
         player = GameObject.FindGameObjectWithTag("Player").transform;
+    }
+
+    private void SearchForPlayer(Animator animator)
+    {
+        animator.SetBool("chase", false);
+        animator.SetBool("patrol", true);
     }
 
     private bool CheckIfEnemyMustTurn(Transform enemy)
@@ -38,6 +47,19 @@ public class EnemyFollowBehaviour : StateMachineBehaviour {
             enemy.position,
             player.position,
             speed * Time.deltaTime);
+    }
+
+    private bool LostPlayerOutOfSight(Transform enemy)
+    {
+        bool inSight = false;
+
+        if (Vector2.Distance(enemy.position, player.position) >= visionLength)
+        {
+            inSight = true;
+
+        }
+
+        return inSight;
     }
 
     private void FlipEnemy(Transform enemy)
@@ -59,14 +81,13 @@ public class EnemyFollowBehaviour : StateMachineBehaviour {
     {
         if (CheckIfEnemyMustTurn(enemy))
         {
-            Debug.Log("Enemy flipped");
             FlipEnemy(enemy);
         }
 
         MoveEnemyTowardsPlayer(enemy);
     }
 
-    private bool IsPlayerInReach(Transform enemy) 
+    private bool IsPlayerInAttackReach(Transform enemy) 
     {
         bool inReach = false;
         Vector2 enemyFront = enemy.GetComponent<Enemy>().FrontPoint.position;
@@ -88,13 +109,17 @@ public class EnemyFollowBehaviour : StateMachineBehaviour {
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
         
+        ChasePlayer(animator.transform.parent);
 
-        if (IsPlayerInReach(animator.transform.parent))
+        if (IsPlayerInAttackReach(animator.transform.parent))
         {
             AttackPlayer(animator);
         }
 
-        ChasePlayer(animator.transform.parent);
+        if (LostPlayerOutOfSight(animator.transform.parent))
+        {
+            SearchForPlayer(animator);
+        }
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
