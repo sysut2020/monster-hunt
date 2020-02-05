@@ -5,8 +5,19 @@ using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
 public class CollectibleSpawner : MonoBehaviour {
+    // Can be loaded with prefabs or other game objects that can be spawned
+    [SerializeField]
+    private GameObject[] collectiblesToSpawn;
+
+    [SerializeField]
+    private int minimumSpawnItems = 1;
+
+    [SerializeField]
+    private int maximumSpawnItems = 5;
+
     private static CollectibleSpawner instance;
 
+    // Singleton pattern implementation
     public static CollectibleSpawner Instance {
         get {
             if (instance == null) {
@@ -28,15 +39,6 @@ public class CollectibleSpawner : MonoBehaviour {
         }
     }
 
-    // Can be loaded with prefabs or other game objects that can be spawned
-    [SerializeField]
-    private GameObject[] collectiblesToSpawn;
-
-    [SerializeField]
-    private int minimumSpawnItems = 1;
-
-    [SerializeField]
-    private int maximumSpawnItems = 5;
 
     /// <summary>
     /// Spawns a collectible at a specific location
