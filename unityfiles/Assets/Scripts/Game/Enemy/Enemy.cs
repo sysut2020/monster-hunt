@@ -14,12 +14,38 @@ public class Enemy : MonoBehaviour, IDamageable {
     private HealthController healthController;
     private IEnemyBehavior enemyBehavior;
 
+    [Tooltip("The front point a raycast is sent from")]
+    [SerializeField]
+    private Transform frontPoint;
+
+    [Tooltip("The rear point a raycast is sent from")]
+    [SerializeField]
+    private Transform rearPoint;
+
+    [SerializeField]
+    private bool facingRight = true;
 
     // -- properties -- //
 
     public EnemyType EnemyType {
         get { return this.enemyType; }
         set { this.enemyType = value; }
+    }
+
+    public Transform FrontPoint
+    {
+        get { return this.frontPoint; }
+    }
+
+    public Transform RearPoint
+    {
+        get { return this.rearPoint; }
+    }
+
+    public bool FacingRight
+    {
+        get { return this.facingRight; }
+        set { this.facingRight = value; }
     }
 
     // -- public -- //
@@ -45,7 +71,7 @@ public class Enemy : MonoBehaviour, IDamageable {
     }
 
     void FixedUpdate () {
-        this.enemyBehavior.Act ();
+        //this.enemyBehavior.Act();
 
     }
 
