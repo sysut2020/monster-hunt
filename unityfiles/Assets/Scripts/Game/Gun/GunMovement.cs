@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using UnityEngine;
 
 public class GunMovement : MonoBehaviour {
     
-    // The point that we want our aim to be based of
-    [SerializeField] private GameObject aimDirectionPoint;
+    [SerializeField]
+    private Transform roatatePoint;
 
     private MouseHandler mouseHandler;
 
@@ -14,12 +14,14 @@ public class GunMovement : MonoBehaviour {
 
     void Update() {
         // Creates a vector from the position that our aim are based of, to the mouse position
-        Vector3 mouseWorldPosition = mouseHandler.MouseWorldPosition(aimDirectionPoint);
-        float angle = mouseHandler.AngleBetweenTwoPoints(transform.position, mouseWorldPosition);
+        Vector3 mouseWorldPosition = mouseHandler.MouseWorldPosition(roatatePoint.gameObject);
+        float angle = mouseHandler.AngleBetweenTwoPoints(roatatePoint.position, mouseWorldPosition);
         
-        if (angle < 0 || angle < -130) {
-            // We add 180 degrees to give the gun the right position
-            transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle + 180f));
+        if (angle < 90 && angle > -90) {
+            roatatePoint.eulerAngles = new Vector3(180, 0, -angle + 180);
+        } else {
+            roatatePoint.eulerAngles = new Vector3(0, 0, angle + 180);
         }
+
     }
 }
