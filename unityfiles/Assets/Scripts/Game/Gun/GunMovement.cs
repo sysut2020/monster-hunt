@@ -4,10 +4,14 @@ public class GunMovement : MonoBehaviour {
     
     // The point that we want our aim to be based of
     [SerializeField] private GameObject aimDirectionPoint;
+
+    private MouseHandler mouseHandler;
     
     void Update() {
+        mouseHandler = new MouseHandler();
+
         // Creates a vector from the position that our aim are based of, to the mouse position
-        Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition + (Vector3.forward * 10f) - aimDirectionPoint.transform.position);
+        Vector3 mouseWorldPosition = mouseHandler.MouseWorldPosition(aimDirectionPoint);
         float angle = AngleBetweenTwoPoints(transform.position, mouseWorldPosition);
         
         if (angle < 0 || angle < -130) {
