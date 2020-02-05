@@ -50,7 +50,7 @@ public class CollectibleSpawner : MonoBehaviour {
         for (int i = 0; i < numberOfSpawnItems; i++) {
             double randomNumber = Math.Ceiling(Random.value * 10);
 
-            GameObject collectible = SetCollectibleType(randomNumber);
+            GameObject collectible = GetCollectibleType(randomNumber);
             if (collectible != null) {
                 collectible.SetActive(true);
                 collectible.tag = "Collectible";
@@ -60,11 +60,11 @@ public class CollectibleSpawner : MonoBehaviour {
     }
 
     /// <summary>
-    /// Set the collectible type based on a random number. This should be on chanse
+    /// Get the collectible type based on a random number. This should be on chance
     /// </summary>
     /// <param name="randomNumber">The number corresponding to type</param>
     /// <returns>Random collectible</returns>
-    private GameObject SetCollectibleType(double randomNumber) {
+    private GameObject GetCollectibleType(double randomNumber) {
         GameObject collectible = null;
 
         switch (randomNumber) {
