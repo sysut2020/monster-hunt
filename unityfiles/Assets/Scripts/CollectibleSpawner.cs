@@ -38,6 +38,10 @@ public class CollectibleSpawner : MonoBehaviour {
     [SerializeField]
     private int maximumSpawnItems = 5;
 
+    /// <summary>
+    /// Spawns a collectible at a specific location
+    /// </summary>
+    /// <param name="position">The spawn location</param>
     public void SpawnCollectible(Vector2 position) {
         int numberOfSpawnItems = Random.Range(minimumSpawnItems, maximumSpawnItems);
 
@@ -53,6 +57,11 @@ public class CollectibleSpawner : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Set the collectible type based on a random number. This should be on chanse
+    /// </summary>
+    /// <param name="randomNumber">The number corresponding to type</param>
+    /// <returns>Random collectible</returns>
     private GameObject SetCollectibleType(double randomNumber) {
         GameObject collectible = null;
 
