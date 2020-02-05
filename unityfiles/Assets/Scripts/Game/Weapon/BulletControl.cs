@@ -2,23 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
+/*
+TODO: maybe blop this in an interface like the HC/enemy relation
+*/
 
 public class BulletControl : MonoBehaviour
 {
 
-    // -- internal
+    // -- internal -- // 
     [SerializeField] 
     private Vector2 velocity;
     [SerializeField]
-    private float bulletTimeToLive;                      // Time to live
+    private float bulletTimeToLive;
     [SerializeField]
     private float damage;
 
-    // -- properties
+    // -- properties -- //
 
-
-    public Vector2 Velocety 
+    public Vector2 Velocity 
     {   
         get{return this.velocity;} 
         set{this.velocity = value;}
@@ -37,52 +38,57 @@ public class BulletControl : MonoBehaviour
 
 
     private float killAt;
-    private bool isKillable;
+    private bool isActive;
 
 
-    // Starts the time to live timer
+    /// <summary>
+    /// Starts the time to live timer
+    /// 
+    /// </summary>
     public void StartTtlTimer(){
         this.killAt = Time.time + this.bulletTimeToLive;
     }
 
 
-    // disables the bullet
+    /// <summary>
+    /// Disables the game object so it can be 
+    /// collected in the local gun controller
+    /// </summary>
     void KillSelf(){
         this.gameObject.SetActive(false);
     }
 
-    // -- Mono b
+    // -- unity -- //
 
     void Start()
     {
-        this.StartTtlTimer();   // to avoid potensial instant removal
+        this.StartTtlTimer();   // to avoid potential instant removal
         this.tag = "Bullet";
     }
 
-    void FixedUpdate() // 50 cals per sec
+    void FixedUpdate() // 50 calls per sec
     {
         this.gameObject.transform.Translate(this.velocity.x, this.velocity.y, 0);
 
-
-        if (Time.time > this.killAt && this.isKillable){
-            this.isKillable = false;
+        if (Time.time > this.killAt && this.isActive){
+            this.isActive = false;
             this.KillSelf();
         }
     }
 
     void OnTriggerEnter2D(Collider2D Col) 
     {
-    if (Col.tag == "Enemy"){
-        
-        HealthController enemy = (HealthController)Col.gameObject.GetComponent("HealthController");
-        enemy.ApplyDamage(this.damage);
+        if (Col.tag == "Enemy"){
+            
+            HealthController enemy = (HealthController)Col.gameObject.GetComponent("HealthController");
+            enemy.ApplyDamage(this.damage);
 
-        this.KillSelf();
+            this.KillSelf();
         }
     }
 
     void OnEnable(){
-        this.isKillable = true;
+        this.isActive = true;
         this.StartTtlTimer();
     }
 

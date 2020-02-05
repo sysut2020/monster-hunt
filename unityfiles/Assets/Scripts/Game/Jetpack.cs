@@ -10,10 +10,12 @@ public class Jetpack : MonoBehaviour {
 
     // The force to add (x, y direction and magnitude)
     // Should be treated as newtons
-    public Vector2 force = new Vector2(0, 200);
+    [SerializeField]
+    private Vector2 force = new Vector2(0, 200);
 
     // The maximum velicity that can be achived.
-    public int maxYvelocity = 5;
+    [SerializeField]
+    private int maxYvelocity = 5;
 
     // The rigidbody that is added force to.
     [SerializeField]
