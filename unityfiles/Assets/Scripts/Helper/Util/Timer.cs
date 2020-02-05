@@ -10,10 +10,10 @@ class Timer {
     private DateTime completeTime = new DateTime ();
 
     /// <summary>
-    /// initiates the timer with the amount of millisecs to 
+    /// initiates the timer with the amount of millisecond to 
     ///     count
     /// </summary>
-    /// <param name="millisec">The ammount of time to check if has passed</param>
+    /// <param name="millisec">The amount of time to check if has passed</param>
     public Timer (float millisec) {
         waitTime = millisec;
         this.Restart ();
@@ -24,7 +24,7 @@ class Timer {
     /// </summary>
     /// <returns>returns true if the timer is complete, else false</returns>
     public bool done () {
-        if (completeTime.CompareTo (DateTime.Now) > 0) {
+        if (completeTime.CompareTo(DateTime.Now) < 0) {
             return true;
         }
         return false;
@@ -43,13 +43,13 @@ class Timer {
     /// </summary>
     /// <param name="millisec"></param>
     public void Update (float millisec) {
-        completeTime.AddMilliseconds (waitTime);
+        completeTime = DateTime.Now.AddMilliseconds(millisec);
     }
 
     /// <summary>
     /// restarts the timer
     /// </summary>
     public void Restart () {
-        completeTime.AddMilliseconds (waitTime);
+        completeTime = DateTime.Now.AddMilliseconds(waitTime);
     }
 }

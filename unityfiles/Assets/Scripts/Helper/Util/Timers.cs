@@ -1,3 +1,8 @@
+
+using UnityEngine;
+
+
+using System.Diagnostics;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +14,19 @@ using System.Linq;
 public class Timers {
     private Dictionary<string, Timer> timers = new Dictionary<string, Timer> ();
 
+    private int rollingUID = 0;
+
     // -- properties -- //
 
+    public string RollingUID{
+        get{
+            rollingUID += 1;
+            return $"TIMER_{this.rollingUID}";
+        }
+    }
+
     // -- public -- //
+
 
     /// <summary>
     /// Removes the timer with the given timer id

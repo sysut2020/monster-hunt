@@ -12,7 +12,7 @@ using UnityEngine;
 /// </summary>
 public class Spawner : MonoBehaviour {
 
-    // -- editor
+    // -- editor -- //
     [Header ("spawning methods")]
     [Tooltip ("spawn on and one")]
     [SerializeField]
@@ -31,28 +31,35 @@ public class Spawner : MonoBehaviour {
     [SerializeField]
     private List<GameObject> enemyTypes = new List<GameObject> ();
 
-    // -- internal 
+    // -- internal -- //
 
     private List<GameObject> spawnPoints = new List<GameObject> ();
+    private readonly Timers spawnTimer = new Timers();
+
+    // -- private -- // 
 
     /// <summary>
-    /// Gets a list off all the children of the current game object
+    /// Spawns a the enemy on index enemyIndex at the spawnpint
+    /// with the spawnpoint index
     /// </summary>
-    /// <returns> A list of the Game objects children  </returns>
-    List<GameObject> getGOChildren () {
-        List<GameObject> children = new List<GameObject> ();
-
-        int numSpawnpoints = this.gameObject.transform.childCount;
-
-        for (int i = 0; i < numSpawnpoints; i++) {
-            children.Add (this.gameObject.transform.GetChild (i).gameObject);
+    /// <param name="pointIndex">the index of the point to spawn</param>
+    /// <param name="enemyIndex">the index of the enemy to spawn</param>
+    private void spawnEnemyOnPoint(int pointIndex, int enemyIndex){
+        if (WUInteger.IsInRange(pointIndex, 0, this.spawnPoints.Count) && WUInteger.IsInRange(enemyIndex, 0, this.enemyTypes.Count)){
+            GameObject spawnPoint = this.spawnPoints[pointIndex];
+            GameObject EnemyCopy = Instantiate (enemyTypes[enemyIndex]);
+            EnemyCopy.transform.rotation = spawnPoint.transform.rotation;
+            EnemyCopy.transform.position = spawnPoint.transform.position;
+            EnemyCopy.SetActive (true);
         }
-
-        return children;
     }
+    
 
-    // -- unity
+
+    // -- unity -- // 
     void Start () {
+
+        spawnPoints = (List<GameObject>) WUGameObjects.GetGOChildren(this.gameObject);
 
         foreach (GameObject item in spawnPoints) {
             GameObject EnemyCopy = Instantiate (enemyTypes[0]);
@@ -60,11 +67,6 @@ public class Spawner : MonoBehaviour {
             EnemyCopy.transform.position = item.transform.position;
             EnemyCopy.SetActive (true);
         }
-
-    }
-
-    // Update is called once per frame
-    void Update () {
 
     }
 }
