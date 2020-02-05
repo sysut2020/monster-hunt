@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 /**
  * All credits given to Brackeys GitHub: https://github.com/Brackeys/2D-Movement
@@ -20,7 +21,9 @@ public class CharacterController2D : MonoBehaviour {
 	// A position marking where to check for ceilings
 	[SerializeField] public Transform ceilingCheck;
 	// A collider that will be disabled when crouching
-	[SerializeField] private Collider2D crouchDisableCollider;				
+	[SerializeField] private Collider2D crouchDisableCollider;
+	// The point that we want our aim to be based of
+	[SerializeField] private GameObject characterCenter;
 	
 	// Radius of the overlap circle to determine if grounded
 	const float GROUNDED_RADIUS = .2f; 
@@ -32,6 +35,13 @@ public class CharacterController2D : MonoBehaviour {
 	// For determining which way the player is currently facing.
 	private bool facingRight = true;
 	private Vector3 velocity = Vector3.zero;
+	private MouseHandler mouseHandler;
+	private Vector3 mouseWorldPosition;
+	private float angle;
+	
+	private void Start() {
+		mouseHandler = gameObject.AddComponent<MouseHandler>();
+	}
 
 	private void Awake() {
 		playerRigidbody2D = GetComponent<Rigidbody2D>();
@@ -39,6 +49,10 @@ public class CharacterController2D : MonoBehaviour {
 
 
 	private void FixedUpdate() {
+		mouseWorldPosition = mouseHandler.MouseWorldPosition(characterCenter);
+		angle = mouseHandler.AngleBetweenTwoPoints(transform.position, mouseWorldPosition);
+		Debug.Log(angle);
+		
 		grounded = false;
 
 		// The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
@@ -86,12 +100,12 @@ public class CharacterController2D : MonoBehaviour {
 			playerRigidbody2D.velocity = Vector3.SmoothDamp(playerRigidbody2D.velocity, targetVelocity, ref velocity, movementSmoothing);
 
 			// If the input is moving the player right and the player is facing left...
-			if (movement > 0 && !facingRight) {
+			if (!facingRight) {
 				// ... flip the player.
 				Flip();
 			}
 			// Otherwise if the input is moving the player left and the player is facing right...
-			else if (movement < 0 && facingRight) {
+			else if (facingRight) {
 				// ... flip the player.
 				Flip();
 			}
@@ -106,14 +120,13 @@ public class CharacterController2D : MonoBehaviour {
 
 
 	private void Flip() {
-		// If character is moving to the left, rotate left
-		if (Input.GetAxisRaw("Horizontal") < 0) {
+		// If the gun is facing to the right, flip character left
+		if (angle > -90 || angle < 90) {
 			facingRight = false;
 			transform.rotation = Quaternion.Euler(new Vector3(0, 180f, 0));
 		}
-		
-		// If character is moving to the right, rotate right
-		if (Input.GetAxisRaw("Horizontal") > 0) {
+		// If the gun is facing to the right, flip character right
+		if (angle < -90 || angle > 90) {
 			facingRight = true;
 			transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
 		}
