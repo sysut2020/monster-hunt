@@ -12,13 +12,10 @@ someGunName(with tag weapon)
 
 */
 
-public class GunController : MonoBehaviour
-{
-
+public class GunController : MonoBehaviour {
     // -- inspector -- //
 
     [Header("Bullet properties")]
-
     [Tooltip("velocity of bullet in units/(1/50) sec.")]
     [SerializeField]
     private Vector2 bulletVelocity = Vector2.zero;
@@ -37,23 +34,20 @@ public class GunController : MonoBehaviour
 
     [Tooltip("the scale of the sprite used.")]
     [SerializeField] 
-    private Vector2 spriteScale = Vector2.zero;
-
-    [Header("Firing properties")]
+    private Vector2 spriteScale;
 
     [Tooltip("Fire rate in shots/sec.")]
-    [SerializeField] 
-    private float fireRate = 1f;  
+    [SerializeField]
+    private float fireRate = 1f;
 
     // -- properties -- //
 
-    public float FireRate{
-        get {return fireRate;}
+    public float FireRate {
+        get { return fireRate; }
         set {
             this.fireRate = value;
             this.SetBulletWaitTime(value);
             this.fireRateTimer.Update(this.timerUID, this.bulletWaitTime);
-
         }
     }
 
@@ -65,6 +59,7 @@ public class GunController : MonoBehaviour
 
     [SerializeField]
     private bool isFiring;
+
     private float bulletWaitTime;
 
     private string timerUID;
@@ -77,23 +72,21 @@ public class GunController : MonoBehaviour
     /// Starts releasing bullets as fast as the 
     /// fire rate allows
     /// </summary>
-     public void StartFiring()
-    {
+    public void StartFiring() {
         this.isFiring = true;
     }
 
     /// <summary>
     /// stops the firing
     /// </summary>
-    public void StopFiring()
-    {
+    public void StopFiring() {
         this.isFiring = false;
     }
 
     /// <summary>
     /// Fires a bullet if able (not on cooldown since last shot)
     /// </summary>
-    public void FireOnce(){
+    public void FireOnce() {
         this.MaybeFire();
     }
 
@@ -103,7 +96,7 @@ public class GunController : MonoBehaviour
     /// <summary>
     /// generates a new bullet and fires it
     /// </summary>
-    private void FireNewProjectile(){
+    private void FireNewProjectile() {
         GameObject bulletCopy = Instantiate(this.blueprintBullet);
         bulletCopy.transform.rotation = this.transform.rotation;
         bulletCopy.transform.position = this.transform.position;
@@ -116,8 +109,8 @@ public class GunController : MonoBehaviour
     /// <summary>
     /// reuses one of the inactive bullets and fires it
     /// </summary>
-    private void FireExistingProjectile(){
-        GameObject bulletCopy = (GameObject)this.idleBullets[0];
+    private void FireExistingProjectile() {
+        GameObject bulletCopy = (GameObject) this.idleBullets[0];
         this.idleBullets.Remove(bulletCopy);
 
         bulletCopy.transform.rotation = this.transform.rotation;
@@ -130,14 +123,14 @@ public class GunController : MonoBehaviour
     /// <summary>
     /// generates a bullet blueprint for the 
     /// </summary>
-    private void GenerateBulletBlueprint()
-    {
+    private void GenerateBulletBlueprint() {
         GameObject bullet = new GameObject();
         this.blueprintBullet = bullet;
         bullet.name = "Bullet";
 
         SpriteRenderer spriteRender = bullet.AddComponent<SpriteRenderer>() as SpriteRenderer;
-        spriteRender.sprite = Sprite.Create(this.bulletTexture, new Rect(0,0,this.bulletTexture.width ,this.bulletTexture.height), Vector2.zero);
+        spriteRender.sprite = Sprite.Create(this.bulletTexture,
+            new Rect(0, 0, this.bulletTexture.width, this.bulletTexture.height), Vector2.zero);
         bullet.transform.localScale = this.spriteScale;
 
         BoxCollider2D boxCol = bullet.AddComponent<BoxCollider2D>() as BoxCollider2D;
@@ -164,15 +157,15 @@ public class GunController : MonoBehaviour
     /// Calculates and sets the bullet wait time
     /// </summary>
     /// <param name="fireRate"> the new fire rate</param>
-    private void SetBulletWaitTime(float fireRate){
-        this.bulletWaitTime = 1000/fireRate;
+    private void SetBulletWaitTime(float fireRate) {
+        this.bulletWaitTime = 1000 / fireRate;
     }
 
 
     /// <summary>
     /// Checks if it is time to fire if it is, it wil fire if not not 
     /// </summary>
-    private void MaybeFire(){
+    private void MaybeFire() {
         // is it time to release a bullet
         if (fireRateTimer.Done(this.timerUID, true)){
             this.Fire();
@@ -189,45 +182,41 @@ public class GunController : MonoBehaviour
             {
                 GameObject g = (GameObject)this.activeBullets[i-1];
                 //TODO: probably shit solution somone try somthing better
-                if (!g.activeInHierarchy){
+                if (!g.activeInHierarchy) {
                     //if there is move them to the inactive list
                     this.activeBullets.Remove(g);
                     this.idleBullets.Add(g);
                 }
             }
+
             // if there are any inactive bullets fire them if not make a new one
-            if (this.idleBullets.Count >= 1)
-            {
+            if (this.idleBullets.Count >= 1) {
                 this.FireExistingProjectile();
-            } else
-            {
+            } else {
                 this.FireNewProjectile();
             }
     }
+    // -- unity -- //
 
    
 
     // -- unity -- //
 
-    
-    void Start()
-    {   
+
+    void Start() {
         //TODO: Discuss system for timer naming conventions
         this.SetBulletWaitTime(this.fireRate);
         this.timerUID = this.fireRateTimer.RollingUID;
         this.fireRateTimer.Set(this.timerUID, bulletWaitTime);
         this.GenerateBulletBlueprint();
     }
-    
 
-    void Update()
-    {
-        if (isFiring){
+
+    void Update() {
+        if (isFiring) {
             this.MaybeFire();
         }
-        
     }
-
 
     // -- debug -- //
 
@@ -238,7 +227,4 @@ public class GunController : MonoBehaviour
     public void DEBUG_FIRE(){
         this.Fire();
     }
-
-    
-   
 }
