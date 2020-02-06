@@ -19,7 +19,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: {x: 0, y: 0, z: 56.463}
+        value: {x: 0, y: 0, z: 4.578}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
@@ -29,13 +29,13 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Rendering/bone_1/bone_2/bone_3/GameObject/bone_5/bone_6
+    path: Rendering/bone_1/bone_2/bone_3/Arms/bone_8
   - curve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: {x: 0, y: 0, z: -48.986004}
+        value: {x: 0, y: 0, z: -0.90200007}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
@@ -45,13 +45,13 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Rendering/bone_1/bone_2/bone_3/GameObject/bone_5
+    path: Rendering/bone_1/bone_2/bone_3/Arms/bone_8/bone_9/bone_10
   - curve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: {x: 0, y: 0, z: -22.11}
+        value: {x: 0, y: 0, z: 17.459002}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
@@ -61,13 +61,13 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Rendering/bone_1/bone_2/bone_3/GameObject/bone_8
+    path: Rendering/bone_1/bone_2/bone_3/Arms/bone_8/bone_9
   - curve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: {x: 0, y: 0, z: 19.632002}
+        value: {x: 0, y: 0, z: 9.531}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
@@ -77,13 +77,13 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Rendering/bone_1/bone_2/bone_3/GameObject/bone_8/bone_9
+    path: Rendering/bone_1/bone_2/bone_3/Arms/bone_5/bone_6
   - curve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: {x: 0, y: 0, z: 6.6190004}
+        value: {x: 0, y: 0, z: 0}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
@@ -93,13 +93,14 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Rendering/bone_1/bone_2/bone_3/GameObject/bone_8/bone_9/bone_10
+    path: Rendering/bone_1/bone_2/bone_3/Arms/bone_5
+  m_PositionCurves:
   - curve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: {x: 0, y: 0, z: -7.1080003}
+        value: {x: 2.444194, y: 0.0000003351394, z: 0}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
@@ -109,8 +110,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Rendering/bone_1/bone_2/bone_3/GameObject/bone_5/bone_6/bone_7
-  m_PositionCurves: []
+    path: Rendering/bone_1/bone_2/bone_3/Arms/bone_5/bone_6/bone_7
   m_ScaleCurves: []
   m_FloatCurves: []
   m_PPtrCurves: []
@@ -122,42 +122,42 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 1433408200
+      path: 861359942
+      attribute: 1
+      script: {fileID: 0}
+      typeID: 4
+      customType: 0
+      isPPtrCurve: 0
+    - serializedVersion: 2
+      path: 4109857909
       attribute: 4
       script: {fileID: 0}
       typeID: 4
       customType: 4
       isPPtrCurve: 0
     - serializedVersion: 2
-      path: 3954749149
+      path: 3959310021
       attribute: 4
       script: {fileID: 0}
       typeID: 4
       customType: 4
       isPPtrCurve: 0
     - serializedVersion: 2
-      path: 2500448864
+      path: 3505857864
       attribute: 4
       script: {fileID: 0}
       typeID: 4
       customType: 4
       isPPtrCurve: 0
     - serializedVersion: 2
-      path: 1590303368
+      path: 3679268104
       attribute: 4
       script: {fileID: 0}
       typeID: 4
       customType: 4
       isPPtrCurve: 0
     - serializedVersion: 2
-      path: 2034355913
-      attribute: 4
-      script: {fileID: 0}
-      typeID: 4
-      customType: 4
-      isPPtrCurve: 0
-    - serializedVersion: 2
-      path: 1582422154
+      path: 2319845576
       attribute: 4
       script: {fileID: 0}
       typeID: 4
@@ -201,7 +201,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.x
-    path: Rendering/bone_1/bone_2/bone_3/GameObject/bone_5/bone_6
+    path: Rendering/bone_1/bone_2/bone_3/Arms/bone_8
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -220,7 +220,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.y
-    path: Rendering/bone_1/bone_2/bone_3/GameObject/bone_5/bone_6
+    path: Rendering/bone_1/bone_2/bone_3/Arms/bone_8
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -228,7 +228,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 56.463
+        value: 4.578
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -239,7 +239,64 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.z
-    path: Rendering/bone_1/bone_2/bone_3/GameObject/bone_5/bone_6
+    path: Rendering/bone_1/bone_2/bone_3/Arms/bone_8
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 2.444194
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalPosition.x
+    path: Rendering/bone_1/bone_2/bone_3/Arms/bone_5/bone_6/bone_7
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0.0000003351394
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalPosition.y
+    path: Rendering/bone_1/bone_2/bone_3/Arms/bone_5/bone_6/bone_7
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalPosition.z
+    path: Rendering/bone_1/bone_2/bone_3/Arms/bone_5/bone_6/bone_7
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -258,7 +315,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.x
-    path: Rendering/bone_1/bone_2/bone_3/GameObject/bone_5
+    path: Rendering/bone_1/bone_2/bone_3/Arms/bone_8/bone_9/bone_10
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -277,7 +334,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.y
-    path: Rendering/bone_1/bone_2/bone_3/GameObject/bone_5
+    path: Rendering/bone_1/bone_2/bone_3/Arms/bone_8/bone_9/bone_10
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -285,7 +342,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -48.986004
+        value: -0.90200007
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -296,7 +353,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.z
-    path: Rendering/bone_1/bone_2/bone_3/GameObject/bone_5
+    path: Rendering/bone_1/bone_2/bone_3/Arms/bone_8/bone_9/bone_10
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -315,7 +372,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.x
-    path: Rendering/bone_1/bone_2/bone_3/GameObject/bone_8
+    path: Rendering/bone_1/bone_2/bone_3/Arms/bone_8/bone_9
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -334,7 +391,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.y
-    path: Rendering/bone_1/bone_2/bone_3/GameObject/bone_8
+    path: Rendering/bone_1/bone_2/bone_3/Arms/bone_8/bone_9
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -342,7 +399,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -22.11
+        value: 17.459002
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -353,7 +410,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.z
-    path: Rendering/bone_1/bone_2/bone_3/GameObject/bone_8
+    path: Rendering/bone_1/bone_2/bone_3/Arms/bone_8/bone_9
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -372,7 +429,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.x
-    path: Rendering/bone_1/bone_2/bone_3/GameObject/bone_8/bone_9
+    path: Rendering/bone_1/bone_2/bone_3/Arms/bone_5/bone_6
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -391,7 +448,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.y
-    path: Rendering/bone_1/bone_2/bone_3/GameObject/bone_8/bone_9
+    path: Rendering/bone_1/bone_2/bone_3/Arms/bone_5/bone_6
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -399,7 +456,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 19.632002
+        value: 9.531
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -410,7 +467,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.z
-    path: Rendering/bone_1/bone_2/bone_3/GameObject/bone_8/bone_9
+    path: Rendering/bone_1/bone_2/bone_3/Arms/bone_5/bone_6
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -429,7 +486,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.x
-    path: Rendering/bone_1/bone_2/bone_3/GameObject/bone_8/bone_9/bone_10
+    path: Rendering/bone_1/bone_2/bone_3/Arms/bone_5
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -448,26 +505,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.y
-    path: Rendering/bone_1/bone_2/bone_3/GameObject/bone_8/bone_9/bone_10
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 6.6190004
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: localEulerAnglesRaw.z
-    path: Rendering/bone_1/bone_2/bone_3/GameObject/bone_8/bone_9/bone_10
+    path: Rendering/bone_1/bone_2/bone_3/Arms/bone_5
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -485,46 +523,8 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: localEulerAnglesRaw.x
-    path: Rendering/bone_1/bone_2/bone_3/GameObject/bone_5/bone_6/bone_7
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: localEulerAnglesRaw.y
-    path: Rendering/bone_1/bone_2/bone_3/GameObject/bone_5/bone_6/bone_7
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: -7.1080003
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
     attribute: localEulerAnglesRaw.z
-    path: Rendering/bone_1/bone_2/bone_3/GameObject/bone_5/bone_6/bone_7
+    path: Rendering/bone_1/bone_2/bone_3/Arms/bone_5
     classID: 4
     script: {fileID: 0}
   m_EulerEditorCurves:
@@ -535,7 +535,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: Rendering/bone_1/bone_2/bone_3/GameObject/bone_5
+    path: Rendering/bone_1/bone_2/bone_3/Arms/bone_5
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -545,7 +545,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: Rendering/bone_1/bone_2/bone_3/GameObject/bone_5
+    path: Rendering/bone_1/bone_2/bone_3/Arms/bone_5
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -555,7 +555,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: Rendering/bone_1/bone_2/bone_3/GameObject/bone_5
+    path: Rendering/bone_1/bone_2/bone_3/Arms/bone_5
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -565,7 +565,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: Rendering/bone_1/bone_2/bone_3/GameObject/bone_5/bone_6
+    path: Rendering/bone_1/bone_2/bone_3/Arms/bone_8
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -575,7 +575,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: Rendering/bone_1/bone_2/bone_3/GameObject/bone_5/bone_6
+    path: Rendering/bone_1/bone_2/bone_3/Arms/bone_8
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -585,7 +585,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: Rendering/bone_1/bone_2/bone_3/GameObject/bone_5/bone_6
+    path: Rendering/bone_1/bone_2/bone_3/Arms/bone_8
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -595,7 +595,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: Rendering/bone_1/bone_2/bone_3/GameObject/bone_5/bone_6/bone_7
+    path: Rendering/bone_1/bone_2/bone_3/Arms/bone_8/bone_9
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -605,7 +605,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: Rendering/bone_1/bone_2/bone_3/GameObject/bone_5/bone_6/bone_7
+    path: Rendering/bone_1/bone_2/bone_3/Arms/bone_8/bone_9
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -615,7 +615,27 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: Rendering/bone_1/bone_2/bone_3/GameObject/bone_5/bone_6/bone_7
+    path: Rendering/bone_1/bone_2/bone_3/Arms/bone_8/bone_9
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalEulerAngles.x
+    path: Rendering/bone_1/bone_2/bone_3/Arms/bone_5/bone_6
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalEulerAngles.y
+    path: Rendering/bone_1/bone_2/bone_3/Arms/bone_5/bone_6
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -625,17 +645,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: Rendering/bone_1/bone_2/bone_3/GameObject/bone_8/bone_9
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalEulerAngles.y
-    path: Rendering/bone_1/bone_2/bone_3/GameObject/bone_8/bone_9
+    path: Rendering/bone_1/bone_2/bone_3/Arms/bone_5/bone_6
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -645,17 +655,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: Rendering/bone_1/bone_2/bone_3/GameObject/bone_8/bone_9
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalEulerAngles.x
-    path: Rendering/bone_1/bone_2/bone_3/GameObject/bone_8/bone_9/bone_10
+    path: Rendering/bone_1/bone_2/bone_3/Arms/bone_8/bone_9/bone_10
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -665,7 +665,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: Rendering/bone_1/bone_2/bone_3/GameObject/bone_8/bone_9/bone_10
+    path: Rendering/bone_1/bone_2/bone_3/Arms/bone_8/bone_9/bone_10
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -675,37 +675,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: Rendering/bone_1/bone_2/bone_3/GameObject/bone_8/bone_9/bone_10
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalEulerAngles.x
-    path: Rendering/bone_1/bone_2/bone_3/GameObject/bone_8
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalEulerAngles.y
-    path: Rendering/bone_1/bone_2/bone_3/GameObject/bone_8
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalEulerAngles.z
-    path: Rendering/bone_1/bone_2/bone_3/GameObject/bone_8
+    path: Rendering/bone_1/bone_2/bone_3/Arms/bone_8/bone_9/bone_10
     classID: 4
     script: {fileID: 0}
   m_HasGenericRootTransform: 0
