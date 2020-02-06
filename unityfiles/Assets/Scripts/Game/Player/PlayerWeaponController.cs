@@ -46,7 +46,7 @@ public class PlayerWeaponController : MonoBehaviour {
     /// if the end of the list is reached the index loops around
     /// </summary>
     /// <returns>The weapon controller of the new active weapon</returns>
-    public GunController ChangeToNextWeapon(){return this.ChangeWeapon(1);}
+    public GunController ChangeToNextWeapon() => this.ChangeWeapon(1);
 
 
     /// <summary>
@@ -54,11 +54,11 @@ public class PlayerWeaponController : MonoBehaviour {
     /// if the end of the list is reached the index loops around
     /// </summary>
     /// <returns>The weapon controller of the new active weapon</returns>
-    public GunController ChangeToPrevWeapon(){return this.ChangeWeapon(-1);}
+    public GunController ChangeToPrevWeapon() => this.ChangeWeapon(-1);
     // -- private -- //
 
     /// <summary>
-    /// Changes the current weapon the given number of posissions
+    /// Changes the current weapon the given number of positions
     /// If the current weapon passes one of the other indexes it loops around
     /// </summary>
     /// <param name="numChanges">the number of places in the weapon list to change the active weapon</param>

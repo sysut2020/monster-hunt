@@ -18,22 +18,22 @@ public class GunController : MonoBehaviour {
     [Header("Bullet properties")]
     [Tooltip("velocity of bullet in units/(1/50) sec.")]
     [SerializeField]
-    private Vector2 bulletVelocity;
+    private Vector2 bulletVelocity = Vector2.zero;
 
     [Tooltip("Damage inflicted by bullet.")]
-    [SerializeField]
-    private float bulletDamage;
+    [SerializeField] 
+    private float bulletDamage = 0;
 
     [Tooltip("How long the bullet will live if it doesn´t hit anything.")]
-    [SerializeField]
-    private float bulletTtl;
+    [SerializeField] 
+    private float bulletTtl = 0;
 
     [Tooltip("2d texture for bullet sprite.")]
-    [SerializeField]
-    private Texture2D bulletTexture;
+    [SerializeField] 
+    private Texture2D bulletTexture = null;
 
     [Tooltip("the scale of the sprite used.")]
-    [SerializeField]
+    [SerializeField] 
     private Vector2 spriteScale;
 
     [Tooltip("Fire rate in shots/sec.")]
@@ -57,9 +57,7 @@ public class GunController : MonoBehaviour {
     private ArrayList activeBullets = new ArrayList();
     private ArrayList idleBullets = new ArrayList();
 
-    // REMOVE AFTER TESTING
     [SerializeField]
-    // REMOVE AFTER TESTING
     private bool isFiring;
 
     private float bulletWaitTime;
@@ -169,10 +167,20 @@ public class GunController : MonoBehaviour {
     /// </summary>
     private void MaybeFire() {
         // is it time to release a bullet
-        if (fireRateTimer.Done(this.timerUID, true)) {
-            // if yes is there any bullets in the active bullet list that is inactive
-            for (int i = this.activeBullets.Count; i > 0; i--) {
-                GameObject g = (GameObject) this.activeBullets[i - 1];
+        if (fireRateTimer.Done(this.timerUID, true)){
+            this.Fire();
+            
+        }
+    }
+
+    /// <summary>
+    /// Fires a projectile from the gun
+    /// </summary>
+    private void Fire(){
+        // if yes is there any bullets in the active bullet list that is inactive
+            for (int i = this.activeBullets.Count; i > 0 ; i--)
+            {
+                GameObject g = (GameObject)this.activeBullets[i-1];
                 //TODO: probably shit solution somone try somthing better
                 if (!g.activeInHierarchy) {
                     //if there is move them to the inactive list
@@ -187,9 +195,10 @@ public class GunController : MonoBehaviour {
             } else {
                 this.FireNewProjectile();
             }
-        }
     }
     // -- unity -- //
+
+   
 
     // -- unity -- //
 
@@ -207,5 +216,15 @@ public class GunController : MonoBehaviour {
         if (isFiring) {
             this.MaybeFire();
         }
+    }
+
+    // -- debug -- //
+
+     /// <summary>
+    /// Directly fire a projectile regardless of firerate
+    /// meant for debug only
+    /// </summary>
+    public void DEBUG_FIRE(){
+        this.Fire();
     }
 }

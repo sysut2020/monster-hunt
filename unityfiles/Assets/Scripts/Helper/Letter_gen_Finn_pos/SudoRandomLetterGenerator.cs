@@ -18,36 +18,11 @@ using UnityEngine;
 /// <summary>
 /// Generates letters sudo randomly
 /// </summary>
-public class SudoRandomLetterGenerator : MonoBehaviour {
+public class SudoRandomLetterGenerator {
 
     private static SudoRandomLetterGenerator instance;
 
-    // This is sub optimal and should be improved
-    public static SudoRandomLetterGenerator Instance {
-        get {
-            if (instance == null) {
-                instance = GameObject.FindObjectOfType<SudoRandomLetterGenerator> ();
-
-                if (instance == null) {
-                    GameObject gameObj = new GameObject ("SudoRandomLetterGenerator");
-                    instance = gameObj.AddComponent<SudoRandomLetterGenerator> ();
-                }
-            }
-
-            return instance;
-        }
-    }
-
-    // -- Config -- //
-    private readonly int reduceWordSizeMin = 3;
-    private readonly int reduceWordSizeMax = 6;
-    private readonly int startWordSearchAt = 2;
-
-    private SetValuePairs allSettValuePairs;
-    private LetterFrequency letterFrequency;
-
-    void Awake () {
-
+    private SudoRandomLetterGenerator(){
         // redeads the letter freq 
         using (StreamReader r = new StreamReader ("Assets/Scripts/Helper/Letter_gen_Finn_pos/letter_sett_lists/letter_frequensy_weight_100.json")) {
             string jsonText = r.ReadToEnd ();
@@ -70,6 +45,26 @@ public class SudoRandomLetterGenerator : MonoBehaviour {
         // float rt = System.DateTime.UtcNow.Subtract(t1).Ticks;
         // print("avg run time per gen in tics=" + rt/500);
     }
+
+    // This is sub optimal and should be improved
+    public static SudoRandomLetterGenerator Instance {
+        get {
+            if (instance == null) {
+                instance = new SudoRandomLetterGenerator();
+            }
+
+            return instance;
+        }
+    }
+
+    // -- Config -- //
+    private readonly int reduceWordSizeMin = 3;
+    private readonly int reduceWordSizeMax = 6;
+    private readonly int startWordSearchAt = 2;
+
+    private SetValuePairs allSettValuePairs;
+    private LetterFrequency letterFrequency;
+
 
     // -- Algorithm -- //
 
@@ -94,7 +89,7 @@ public class SudoRandomLetterGenerator : MonoBehaviour {
 
     /// <summary>
     /// Generates a letter that will in combination with the 
-    /// Earlier generated letters for on ore more words*
+    /// Earlier generated letters for on or more words*
     /// 
     /// *if the algorithm cant find or reduce down to get a letter a random one will be picked
     /// </summary>
