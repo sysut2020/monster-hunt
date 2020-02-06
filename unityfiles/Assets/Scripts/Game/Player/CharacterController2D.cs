@@ -17,7 +17,7 @@ public class CharacterController2D : MonoBehaviour
 	[SerializeField]
 	private float movementSmoothing = .05f;
 
-	// Whether or not a player can steer while jumping;
+	// Whether or not a player can steer while jumping
 	[SerializeField]
 	private bool airControl;
 
