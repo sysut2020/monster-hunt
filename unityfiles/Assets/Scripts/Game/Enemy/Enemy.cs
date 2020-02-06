@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 public class Enemy : MonoBehaviour, IDamageable {
 
-    [Tooltip ("the enemy type.")]
+    [Tooltip("the enemy type.")]
     [SerializeField]
     private EnemyType enemyType;
 
@@ -22,55 +22,41 @@ public class Enemy : MonoBehaviour, IDamageable {
     [SerializeField]
     private Transform rearPoint;
 
-    [SerializeField]
-    private bool facingRight = true;
-
-    // -- properties -- //
-
     public EnemyType EnemyType {
         get { return this.enemyType; }
         set { this.enemyType = value; }
     }
 
-    public Transform FrontPoint
-    {
+    public Transform FrontPoint {
         get { return this.frontPoint; }
     }
 
-    public Transform RearPoint
-    {
+    public Transform RearPoint {
         get { return this.rearPoint; }
-    }
-
-    public bool FacingRight
-    {
-        get { return this.facingRight; }
-        set { this.facingRight = value; }
     }
 
     // -- public -- //
 
-
-    public void Dead () {
-        this.enemyBehavior.OnDead ();
+    public void Dead() {
+        this.enemyBehavior.OnDead();
     }
     // -- private -- //
 
     // -- unity -- // 
-    void Start () {
+    void Start() {
         this.tag = "Enemy";
 
-        this.healthController = this.gameObject.GetComponent<HealthController> ();
+        this.healthController = this.gameObject.GetComponent<HealthController>();
 
-        this.enemyBehavior = this.gameObject.GetComponent<IEnemyBehavior> ();
+        this.enemyBehavior = this.gameObject.GetComponent<IEnemyBehavior>();
 
         BoxCollider2D bc;
-        bc = gameObject.AddComponent<BoxCollider2D> () as BoxCollider2D;
+        bc = gameObject.AddComponent<BoxCollider2D>() as BoxCollider2D;
         bc.isTrigger = true;
 
     }
 
-    void FixedUpdate () {
+    void FixedUpdate() {
         //this.enemyBehavior.Act();
 
     }
