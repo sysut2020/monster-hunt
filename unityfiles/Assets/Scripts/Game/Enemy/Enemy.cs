@@ -7,11 +7,13 @@ using UnityEngine;
 /// </summary>
 public class Enemy : MonoBehaviour, IDamageable {
 
-    [Tooltip ("the enemy type.")]
+    [Tooltip ("A sciptable object representing the enemy type")]
     [SerializeField]
     private EnemyType enemyType;
 
     private HealthController healthController;
+    
+    [SerializeField]
     private IEnemyBehavior enemyBehavior;
 
 
