@@ -18,36 +18,11 @@ using UnityEngine;
 /// <summary>
 /// Generates letters sudo randomly
 /// </summary>
-public class SudoRandomLetterGenerator : MonoBehaviour {
+public class SudoRandomLetterGenerator {
 
     private static SudoRandomLetterGenerator instance;
 
-    // This is sub optimal and should be improved
-    public static SudoRandomLetterGenerator Instance {
-        get {
-            if (instance == null) {
-                instance = GameObject.FindObjectOfType<SudoRandomLetterGenerator> ();
-
-                if (instance == null) {
-                    GameObject gameObj = new GameObject ("SudoRandomLetterGenerator");
-                    instance = gameObj.AddComponent<SudoRandomLetterGenerator> ();
-                }
-            }
-
-            return instance;
-        }
-    }
-
-    // -- Config -- //
-    private readonly int reduceWordSizeMin = 3;
-    private readonly int reduceWordSizeMax = 6;
-    private readonly int startWordSearchAt = 2;
-
-    private SetValuePairs allSettValuePairs;
-    private LetterFrequency letterFrequency;
-
-    void Awake () {
-
+    private SudoRandomLetterGenerator(){
         // redeads the letter freq 
         using (StreamReader r = new StreamReader ("Assets/Scripts/Helper/Letter_gen_Finn_pos/letter_sett_lists/letter_frequensy_weight_100.json")) {
             string jsonText = r.ReadToEnd ();
@@ -70,6 +45,26 @@ public class SudoRandomLetterGenerator : MonoBehaviour {
         // float rt = System.DateTime.UtcNow.Subtract(t1).Ticks;
         // print("avg run time per gen in tics=" + rt/500);
     }
+
+    // This is sub optimal and should be improved
+    public static SudoRandomLetterGenerator Instance {
+        get {
+            if (instance == null) {
+                instance = new SudoRandomLetterGenerator();
+            }
+
+            return instance;
+        }
+    }
+
+    // -- Config -- //
+    private readonly int reduceWordSizeMin = 3;
+    private readonly int reduceWordSizeMax = 6;
+    private readonly int startWordSearchAt = 2;
+
+    private SetValuePairs allSettValuePairs;
+    private LetterFrequency letterFrequency;
+
 
     // -- Algorithm -- //
 
@@ -94,7 +89,7 @@ public class SudoRandomLetterGenerator : MonoBehaviour {
 
     /// <summary>
     /// Generates a letter that will in combination with the 
-    /// Erlier generated letters for on ore more words*
+    /// Earlier generated letters for on or more words*
     /// 
     /// *if the algorithm cant find or reduce down to get a letter a random one will be picked
     /// </summary>
@@ -117,7 +112,7 @@ public class SudoRandomLetterGenerator : MonoBehaviour {
 
             if (nextUsedSets.Count > 0) {
                 // TODO:
-                //      Find an algorithm for selecting words based on diffeculty
+                //      Find an algorithm for selecting words based on difficulty
                 //
                 activeAr = this.activeLetterSet.ToArray (); // if it has been reduced in reduce
                 var rand = new System.Random ();
@@ -131,7 +126,7 @@ public class SudoRandomLetterGenerator : MonoBehaviour {
             }
         }
 
-        // ether the lettersertch yelded no results or the word was to short
+        // ether the letter search yielded no results or the word was to short
         String l = this.letterFrequency.GetLetterByFrequency ();
         this.AddLetter (l);
         return l;
@@ -139,12 +134,12 @@ public class SudoRandomLetterGenerator : MonoBehaviour {
     }
 
     /// <summary>
-    /// Trys to find a letterset that is an subsett of length one bigger
+    /// try's to find a letterset that is an subsett of length one bigger
     /// than the lettersett provided.
-    /// If no sett is found an emty array is returned
+    /// If no sett is found an empty array is returned
     /// </summary>
     /// <param name="letterSett">the set to find candidate setts toc</param>
-    /// <returns>an array of canidate lettersets, can be emty if none are found</returns>
+    /// <returns>an array of candidate lettersets, can be empty if none are found</returns>
     List<SetValuePair> FindNextLetterSetts (string[] letterSett) {
 
         List<SetValuePair> possibleLetterSetts = new List<SetValuePair> ();
@@ -159,13 +154,13 @@ public class SudoRandomLetterGenerator : MonoBehaviour {
     }
 
     /// <summary>
-    /// Trys to get candidate setts from the active letter sett by
+    /// try's to get candidate setts from the active letter sett by
     /// reducing it with different words, the extent of the trying 
     /// is hardcoded
     /// 
-    /// if a set is found the active letter sett is automaticly changed 
+    /// if a set is found the active letter sett is automatically changed 
     /// </summary>
-    /// <returns>a list of candidate sets, can be emty if none are found</returns>
+    /// <returns>a list of candidate sets, can be empty if none are found</returns>
     List<SetValuePair> GetFromReduced () {
         int activeSetLen = this.activeLetterSet.Count;
         int tmpRedWordSize = this.reduceWordSizeMin;

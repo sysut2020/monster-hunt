@@ -7,6 +7,8 @@ TagManager:
   - Enemy
   - Bullet
   - Ground
+  - Collectible
+  - Gun
   layers:
   - Default
   - TransparentFX

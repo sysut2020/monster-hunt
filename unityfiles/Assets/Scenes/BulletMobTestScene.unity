@@ -488,12 +488,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 650713989}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f8ed555ae186d44fa12ea0eca3e18cd, type: 3}
+  m_Script: {fileID: 11500000, guid: 32f9874ab747a28849378e4d68ddb7ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnInterval: 0.5
-  enemyTexture: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
-  enemyTypeToSpawn: {fileID: 11400000, guid: dfd6a0b98390d776e966662c59a5d3e9, type: 2}
+  spawnInterval: 1
+  enemyTexture: {fileID: 2800000, guid: 86acfbe00216097f5828537f1db32cf7, type: 3}
+  enemyTypeToSpawn: {fileID: 11400000, guid: 5da4e2cafccfd4180817046a34e86077, type: 2}
 --- !u!212 &650713991
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -570,7 +570,7 @@ GameObject:
   - component: {fileID: 712837623}
   m_Layer: 0
   m_Name: Gun
-  m_TagString: Untagged
+  m_TagString: Gun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -584,15 +584,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 712837622}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed5f91fdc298f64b7a2937950f862e10, type: 3}
+  m_Script: {fileID: 11500000, guid: 9bfa685efc3f0d17c9051012c11ad0f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletVelocity: {x: 0.25, y: 0}
-  bulletDamage: 5
+  bulletVelocity: {x: 0.3, y: 0}
+  bulletDamage: 111
   bulletTtl: 5
-  bulletTexture: {fileID: 2800000, guid: 86acfbe00216097f5828537f1db32cf7, type: 3}
-  spriteScale: {x: 0.025, y: 0.025}
-  fireRate: 5
+  bulletTexture: {fileID: 28684132378477856, guid: 8f586378b4e144a9851e7b34d9b748ee,
+    type: 2}
+  spriteScale: {x: 0.1, y: 0.1}
+  fireRate: 2
+  isFiring: 0
 --- !u!212 &712837624
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -792,12 +794,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1106315481}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 713e78b0e534cd1c19d21940bdf749c3, type: 3}
+  m_Script: {fileID: 11500000, guid: da6ca9c89e2f8c7579b5f20c9b93a82f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnSingle: 0
-  chekIfSpace: 1
-  timeBetweenSpawns: 0
+  spawnSingle: 1
+  chekIfSpace: 0
+  timeBetweenSpawns: 1
   enemyTypes:
   - {fileID: 1562012250}
 --- !u!4 &1106315483
@@ -873,14 +875,16 @@ GameObject:
   - component: {fileID: 1562012254}
   - component: {fileID: 1562012253}
   - component: {fileID: 1562012252}
+  - component: {fileID: 1562012256}
   - component: {fileID: 1562012255}
+  - component: {fileID: 1562012257}
   m_Layer: 0
   m_Name: EnemyType1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1562012251
 Transform:
   m_ObjectHideFlags: 0
@@ -1000,10 +1004,36 @@ MonoBehaviour:
   m_GameObject: {fileID: 1562012250}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b55557bcfe1afd0b19946846cb57d263, type: 3}
+  m_Script: {fileID: 11500000, guid: fa123975b622e0a1abc249c410039411, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyType: {fileID: 0}
+  entityHealth: 1
+  canRevive: 0
+--- !u!114 &1562012256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1562012250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d77862b3809dc90aba1881e6210ac41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyType: {fileID: 11400000, guid: 5da4e2cafccfd4180817046a34e86077, type: 2}
+--- !u!114 &1562012257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1562012250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b445d744ff4161b6a61e181d58557f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1632104173
 GameObject:
   m_ObjectHideFlags: 0
