@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyAttackBehaviour : StateMachineBehaviour
-{
+/// <summary>
+/// Defining the attack behaviour of the enemy
+/// In this state, the enemy is doing its attack animation
+/// </summary>
+public class EnemyAttackBehaviour : StateMachineBehaviour {
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     //override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     //{
