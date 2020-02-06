@@ -8,10 +8,6 @@ using UnityEngine;
 /// </summary>
 public class EnemyPatrolBehaviour : StateMachineBehaviour {
 
-    // The front and rear vision points from enemy object
-    private Vector2 enemyFrontPoint;
-    private Vector2 enemyRearPoint;
-
     [SerializeField]
     private float speed = 1;
 
@@ -32,7 +28,7 @@ public class EnemyPatrolBehaviour : StateMachineBehaviour {
     /// <returns>True if player is visble to enemy, false if not visible</returns>
     private bool SearchForPlayer(Transform enemy) {
         bool playerFound = false;
-        enemyFrontPoint = enemy.GetComponent<Enemy>().FrontPoint.position;
+        Vector2 enemyFrontPoint = enemy.GetComponent<Enemy>().FrontPoint.position;
 
         // search for player based on rotation of object
         Vector2 direction = (enemy.rotation.eulerAngles.y < 90) ? Vector2.right : Vector2.left;
