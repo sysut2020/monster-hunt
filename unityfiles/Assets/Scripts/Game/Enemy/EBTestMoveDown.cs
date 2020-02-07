@@ -6,10 +6,8 @@ using UnityEngine;
 /// Enemy Behavior test move down
 /// test behavior that moves the enemy downwards
 /// </summary>
-
-[RequireComponent (typeof (Enemy))]
+[RequireComponent(typeof(Enemy))]
 public class EBTestMoveDown : MonoBehaviour, IEnemyBehavior {
-
     private Enemy enemy;
     private float velocity;
 
@@ -17,18 +15,20 @@ public class EBTestMoveDown : MonoBehaviour, IEnemyBehavior {
     /// Start is called on the frame when a script is enabled just before
     /// any of the Update methods is called the first time.
     /// </summary>
-    void Start () {
-        this.enemy = this.gameObject.GetComponent<Enemy> ();
+    void Start() {
+        this.enemy = this.gameObject.GetComponent<Enemy>();
         this.velocity = enemy.EnemyType.speed;
     }
-    public void Act () {
-        transform.Translate (new Vector2 (0f, velocity));
+
+    public void Act() {
+        transform.Translate(new Vector2(0f, 0f));
     }
 
-    public void OnDead () {
-        Destroy (this.gameObject);
-        string l = SudoRandomLetterGenerator.Instance.GenerateLetter ();
-        print (l);
+    public void OnDead() {
+        Vector2 position = transform.position;
+        Destroy(this.gameObject);
+        CollectibleSpawner.Instance.SpawnCollectible(position);
+        string l = SudoRandomLetterGenerator.Instance.GenerateLetter();
+        print(l);
     }
-
 }
