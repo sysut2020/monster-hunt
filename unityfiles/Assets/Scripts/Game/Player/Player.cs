@@ -15,6 +15,9 @@ public class Player : MonoBehaviour {
     private HealthController playerHealthController;
 
     private PlayerInventory playerInventory;
+    
+    private Animator animator; 
+
 
     private PlayerWeaponController playerWeaponController;
 
@@ -40,6 +43,10 @@ public class Player : MonoBehaviour {
     }
 
     // -- public -- //
+
+    private void Awake() {
+        animator = this.GetComponent<Animator>();
+    }
 
     /// <summary>
     /// Gives a pickup to the player
@@ -154,4 +161,14 @@ public class Player : MonoBehaviour {
         UpdateEffects ();
     }
 
+    /// <summary>
+    /// Checks for collisions with other objects
+    /// </summary>
+    /// <param name="other"></param>
+    private void OnTriggerEnter2D(Collider2D other) {
+        // If there is a collision with enemy play the damage animation
+        if (other.tag == "Enemy") {
+            animator.SetTrigger("Damage");
+        }
+    }
 }
