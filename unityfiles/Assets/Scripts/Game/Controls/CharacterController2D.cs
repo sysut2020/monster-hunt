@@ -49,7 +49,6 @@ public class CharacterController2D : MonoBehaviour {
 	private bool facingRight = true;
 	private Vector3 velocity = Vector3.zero;
 	private MousePosition mousePosition;
-	private GunAngle gunAngle;
 	private float angle;
 
 	private void Awake() {
@@ -93,25 +92,4 @@ public class CharacterController2D : MonoBehaviour {
 		}
 	}
 
-	private void Flip() {
-		// If the gun is facing to the right, flip character left
-		if (!facingRight) {
-			transform.rotation = Quaternion.Euler(new Vector3(0, 180f, 0));
-		}
-		// If the gun is facing to the right, flip character right
-		if (facingRight) {
-			transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
-		}
-	}
-
-	private void CheckFlipBoundary() {
-		// If the gun is facing to the left, make facingRight false 
-		if (angle > -90 || angle < 90) {
-			facingRight = false;
-		}
-		// If the gun is facing to the right, make facingRight true
-		if (angle < -90 || angle > 90) {
-			facingRight = true;
-		}
-	}
 }
