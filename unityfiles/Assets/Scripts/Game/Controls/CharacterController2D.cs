@@ -28,14 +28,9 @@ public class CharacterController2D : MonoBehaviour {
 	[SerializeField]
 	private Transform groundCheck;
 
-	// A position marking where to check for ceilings
-	[SerializeField]
-	private Transform ceilingCheck;
-
-	// A collider that will be disabled when crouching
-	[SerializeField] private Collider2D crouchDisableCollider;
 	// The point that we want our aim to be based of
-	[SerializeField] private GameObject characterCenter;
+	[SerializeField]
+	private GameObject characterCenter;
 
 	// Radius of the overlap circle to determine if grounded
 	const float GROUNDED_RADIUS = .2f;
@@ -45,26 +40,17 @@ public class CharacterController2D : MonoBehaviour {
 
 	private Rigidbody2D playerRigidbody2D;
 
-	// For determining which way the player is currently facing.
-	private bool facingRight = true;
 	private Vector3 velocity = Vector3.zero;
 	private MousePosition mousePosition;
-	private float angle;
 
 	private void Awake() {
 		playerRigidbody2D = GetComponent<Rigidbody2D>();
 		mousePosition = new MousePosition();
-		gunAngle = new GunAngle();
 	}
 
 	private void FixedUpdate() {
 		Vector3 mouseWorldPosition = mousePosition.MouseWorldPosition(characterCenter);
-		angle = gunAngle.GetGunAngle(transform.position, mouseWorldPosition);
-
 		grounded = false;
-
-		// The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
-		// This can be done using layers instead but Sample Assets will not overwrite your project settings.
 		Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheck.position, GROUNDED_RADIUS, whatIsGround);
 		for (int i = 0; i < colliders.Length; i++) {
 			if (colliders[i].gameObject != gameObject) {
@@ -73,21 +59,22 @@ public class CharacterController2D : MonoBehaviour {
 		}
 	}
 
-	public void Move(float movement, bool crouch, bool jump) {
-		//only control the player if grounded or airControl is turned on
+	/// <summary>
+	/// Moves the player with a force in direction given by movement parameter
+	/// </summary>
+	/// <param name="movement">x axis direction</param>
+	public void Move(float movement) {
 		if (grounded || airControl) {
-			// Move the character by finding the target velocity
-			Vector3 targetVelocity = new Vector2(movement * 10f, playerRigidbody2D.velocity.y);
-			// And then smoothing it out and applying it to the character
+			Vector3 targetVelocity = new Vector2(movement, playerRigidbody2D.velocity.y);
 			playerRigidbody2D.velocity = Vector3.SmoothDamp(playerRigidbody2D.velocity, targetVelocity, ref velocity, movementSmoothing);
-
-			CheckFlipBoundary();
-			Flip();
 		}
-		// If the player should jump...
-		if (grounded && jump) {
-			// Add a vertical force to the player.
-			grounded = false;
+	}
+
+	/// <summary>
+	/// Adds uppward force to the the rigidbody.
+	/// </summary>
+	public void Jump() {
+		if (grounded) {
 			playerRigidbody2D.AddForce(new Vector2(0f, jumpForce));
 		}
 	}
