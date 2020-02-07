@@ -5,13 +5,12 @@ using UnityEngine;
  * This project is only intended to use for educational purposes, not to be
  * sold or re-distriubted to make money.
  */
-public class CharacterController2D : MonoBehaviour
-{
+public class CharacterController2D : MonoBehaviour {
 
 	// Amount of force added when the player jumps.
 	[SerializeField]
 	private float jumpForce = 400f;
-	
+
 	// How much to smooth out the movement
 	[Range (0, .3f)]
 	[SerializeField]
@@ -45,25 +44,23 @@ public class CharacterController2D : MonoBehaviour
 	private bool grounded;
 
 	// Radius of the overlap circle to determine if the player can stand up
-	const float CEILING_RADIUS = .2f;
 	private Rigidbody2D playerRigidbody2D;
 
 	// For determining which way the player is currently facing.
 	private bool facingRight = true;
 	private Vector3 velocity = Vector3.zero;
 	private MousePosition mousePosition;
-	private GunAngle gunAngle;
 	private float angle;
-	
+
 	private void Awake () {
-		playerRigidbody2D = GetComponent<Rigidbody2D>();
-		mousePosition = new MousePosition();
-		gunAngle = new GunAngle();
+		playerRigidbody2D = GetComponent<Rigidbody2D> ();
+		mousePosition = new MousePosition ();
+		gunAngle = new GunAngle ();
 	}
 
 	private void FixedUpdate () {
 		Vector3 mouseWorldPosition = mousePosition.MouseWorldPosition (characterCenter);
-		angle = gunAngle.GetGunAngle(transform.position, mouseWorldPosition);
+		angle = gunAngle.GetGunAngle (transform.position, mouseWorldPosition);
 
 		grounded = false;
 
@@ -84,9 +81,9 @@ public class CharacterController2D : MonoBehaviour
 			Vector3 targetVelocity = new Vector2 (movement * 10f, playerRigidbody2D.velocity.y);
 			// And then smoothing it out and applying it to the character
 			playerRigidbody2D.velocity = Vector3.SmoothDamp (playerRigidbody2D.velocity, targetVelocity, ref velocity, movementSmoothing);
-			
-			CheckFlipBoundary();
-			Flip();
+
+			CheckFlipBoundary ();
+			Flip ();
 		}
 		// If the player should jump...
 		if (grounded && jump) {
@@ -96,25 +93,5 @@ public class CharacterController2D : MonoBehaviour
 		}
 	}
 
-	private void Flip () {
-		// If the gun is facing to the right, flip character left
-		if (!facingRight) {
-			transform.rotation = Quaternion.Euler (new Vector3 (0, 180f, 0));
-		}
-		// If the gun is facing to the right, flip character right
-		if (facingRight) {
-			transform.rotation = Quaternion.Euler (new Vector3 (0, 0, 0));
-		}
-	}
-
-	private void CheckFlipBoundary() {
-		// If the gun is facing to the left, make facingRight false 
-		if (angle > -90 || angle < 90) {
-			facingRight = false;
-		}
-		// If the gun is facing to the right, make facingRight true
-		if (angle < -90 || angle > 90) {
-			facingRight = true;
-		}
-	}
+	
 }
