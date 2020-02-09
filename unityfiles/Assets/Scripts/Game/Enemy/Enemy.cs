@@ -1,10 +1,11 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
 /// Describes an enemy
 /// </summary>
+[RequireComponent(typeof(HealthController))]
 public class Enemy : MonoBehaviour, IDamageable {
 
     [Tooltip("A sciptable object representing the enemy type")]
