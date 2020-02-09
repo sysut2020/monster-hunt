@@ -459,7 +459,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 6
-  attackReach: 2
+  attackReach: 1.3
   maxVisionLength: 12
 --- !u!1101 &7603916175191478044
 AnimatorStateTransition:
