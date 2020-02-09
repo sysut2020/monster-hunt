@@ -11,6 +11,13 @@ public class Enemy : MonoBehaviour, IDamageable {
     [SerializeField]
     private EnemyType enemyType;
 
+    private bool isAttacking = false;
+
+    public bool IsAttacking {
+        get { return this.isAttacking; }
+        set { this.isAttacking = value; }
+    }
+
     private HealthController healthController;
 
     [Tooltip("The front point a raycast is sent from")]

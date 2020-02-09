@@ -17,8 +17,20 @@ public class EnemyFollowBehaviour : StateMachineBehaviour {
     [SerializeField]
     private float maxVisionLength = 10;
 
+    private Enemy enemy;
+
+    private Transform parent;
+
+    bool attack = false;
+
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        this.player = GameObject.FindGameObjectWithTag("Player").transform;
+        this.parent = animator.transform.parent;
+        this.enemy = parent.GetComponent<Enemy>();
+        if (this.attack) {
+            this.attack = false;
+            this.enemy.IsAttacking = false;
+        }
     }
 
     private bool CheckIfEnemyMustTurn(Transform enemy) {
@@ -97,6 +109,8 @@ public class EnemyFollowBehaviour : StateMachineBehaviour {
     }
 
     private void AttackPlayer(Animator animator) {
+        this.attack = true;
+        enemy.IsAttacking = true;
         animator.SetTrigger("attack");
     }
 
@@ -112,14 +126,13 @@ public class EnemyFollowBehaviour : StateMachineBehaviour {
     /// it will go back to patrol state.
     /// </summary>
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-
-        if (IsPlayerInAttackReach(animator.transform.parent)) {
+        if (IsPlayerInAttackReach(parent)) {
             AttackPlayer(animator);
         } else {
-            ChasePlayer(animator.transform.parent);
+            ChasePlayer(parent);
         }
 
-        if (LostPlayerOutOfSight(animator.transform.parent)) {
+        if (LostPlayerOutOfSight(parent)) {
             SearchForPlayer(animator);
         }
     }
