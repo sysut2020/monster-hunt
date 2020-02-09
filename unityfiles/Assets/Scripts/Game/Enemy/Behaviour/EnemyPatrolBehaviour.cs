@@ -56,7 +56,7 @@ public class EnemyPatrolBehaviour : StateMachineBehaviour {
         if (SearchForPlayer(animator.transform.parent)) {
             StartChasingPlayer(animator);
         } else {
-
+            Patrol();
         }
     }
 
