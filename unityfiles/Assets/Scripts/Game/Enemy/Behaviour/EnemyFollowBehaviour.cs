@@ -101,7 +101,7 @@ public class EnemyFollowBehaviour : StateMachineBehaviour {
         bool inReach = false;
         Vector2 enemyFront = enemy.GetComponent<Enemy>().FrontPoint.position;
 
-        if (Vector2.Distance(enemyFront, player.position) < attackReach) {
+        if (Vector2.Distance(enemyFront, player.position) <= attackReach) {
             inReach = true;
         }
 
