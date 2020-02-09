@@ -357,9 +357,10 @@ GameObject:
   - component: {fileID: 2271420244141534156}
   - component: {fileID: 2271420244141534152}
   - component: {fileID: 1392957612}
+  - component: {fileID: 2399217038643513078}
   m_Layer: 0
   m_Name: Main character - with weapon
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -529,6 +530,19 @@ MonoBehaviour:
   massToAffect: {fileID: 2271420244141534157}
   flames: {fileID: 5286960567874303616}
   controllButton: 304
+--- !u!114 &2399217038643513078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2271420244141534145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1840690805adbb3cf95e3bb52fc1bd47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerLives: 3
 --- !u!1 &2279120330704540954
 GameObject:
   m_ObjectHideFlags: 0
@@ -2275,17 +2289,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5286960566639678669, guid: e83011bbd64a9e544b822085f3824b7e,
         type: 3}
-      propertyPath: InitialModule.startSpeed.scalar
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5286960566639678669, guid: e83011bbd64a9e544b822085f3824b7e,
-        type: 3}
       propertyPath: simulationSpeed
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5286960566639678669, guid: e83011bbd64a9e544b822085f3824b7e,
         type: 3}
-      propertyPath: looping
+      propertyPath: InitialModule.startSpeed.scalar
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5323014879115792262, guid: e83011bbd64a9e544b822085f3824b7e,
