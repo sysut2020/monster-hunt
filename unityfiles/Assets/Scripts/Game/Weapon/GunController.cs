@@ -60,6 +60,10 @@ public class GunController : MonoBehaviour {
     [SerializeField]
     private bool isFiring;
 
+    [SerializeField]
+    private GameObject firePoint;
+
+
     private float bulletWaitTime;
 
     private string timerUID;
@@ -98,8 +102,8 @@ public class GunController : MonoBehaviour {
     /// </summary>
     private void FireNewProjectile() {
         GameObject bulletCopy = Instantiate(this.blueprintBullet);
-        bulletCopy.transform.rotation = this.transform.rotation;
-        bulletCopy.transform.position = this.transform.position;
+        bulletCopy.transform.rotation = this.firePoint.transform.rotation;
+        bulletCopy.transform.position = this.firePoint.transform.position;
         bulletCopy.SetActive(true);
 
         this.activeBullets.Add(bulletCopy);
@@ -113,8 +117,8 @@ public class GunController : MonoBehaviour {
         GameObject bulletCopy = (GameObject) this.idleBullets[0];
         this.idleBullets.Remove(bulletCopy);
 
-        bulletCopy.transform.rotation = this.transform.rotation;
-        bulletCopy.transform.position = this.transform.position;
+        bulletCopy.transform.rotation = this.firePoint.transform.rotation;
+        bulletCopy.transform.position = this.firePoint.transform.position;
         bulletCopy.SetActive(true);
 
         this.activeBullets.Add(bulletCopy);

@@ -5,8 +5,8 @@ public class PlayerGunFollowsMouse : MonoBehaviour {
 
     [SerializeField]
     private Transform rotatePoint;
-
-    public Transform guuuuun;
+    [SerializeField]
+    private Transform FirePoint;
 
     /// <summary>
     /// The point that is used to check if mouse is on left/right side of
@@ -14,13 +14,11 @@ public class PlayerGunFollowsMouse : MonoBehaviour {
     [SerializeField]
     private Transform crossingPoint;
 
-    /// <summary>
-    /// The point that is used to check if mouse is on left/right side of
-    /// </summary>
-    [SerializeField]
-    private Transform qwe;
+   
 
     private MousePosition mousePosition;
+    private GunAngleStuff gunAngleStuff;
+
 
     float angle2;
 
@@ -30,17 +28,8 @@ public class PlayerGunFollowsMouse : MonoBehaviour {
 
     private void RotateGun() {
 
-        // float angle = VectorHelper.AngleBetweenVector2D(rotatePoint.position, Camera.main.ScreenToWorldPoint(Input.mousePosition));
-        float angle2 = Vector3.Angle(rotatePoint.position, Camera.main.ScreenToWorldPoint(Input.mousePosition));
-        float angle = Quaternion.Angle(rotatePoint.rotation, guuuuun.rotation);
-
-        Debug.Log(angle);
-        // rotatePoint.rotation = Quaternion.Angle();
-        if (angle < 90 && angle > -90) {
-            rotatePoint.eulerAngles = new Vector3(180, 0, angle);
-        } else {
-            rotatePoint.eulerAngles = new Vector3(0, 0, angle);
-        }
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        rotatePoint.transform.rotation = Quaternion.Euler(gunAngleStuff.GetAngle(mousePosition));
     }
 
     /// <summary>
@@ -61,23 +50,25 @@ public class PlayerGunFollowsMouse : MonoBehaviour {
     }
 
     private void FlipCharacter() {
+
+        // the body neeeds to rotate but not the arm. atm the arm flashes
+        // there are probably a solution to this issue
         this.crossingPoint.Rotate(0, 180, 0);
+        this.rotatePoint.Rotate(0,180,0);
     }
 
     // -- unity -- //
     private void Start() {
-        angle2 = Vector2.Angle(this.rotatePoint.position, this.guuuuun.transform.position);
         Debug.Log(angle2);
         mousePosition = new MousePosition();
+
+        this.gunAngleStuff = new GunAngleStuff(FirePoint.gameObject, rotatePoint.transform);
     }
 
-    void Update() {
-        Debug.DrawLine(this.rotatePoint.position, Camera.main.ScreenToWorldPoint(Input.mousePosition), Color.magenta);
-        // Creates a vector from the position that our aim are based of, to the mouse position
-        Vector3 mouseWorldPosition = mousePosition.MouseWorldPosition(rotatePoint.gameObject);
-        // float angle = VectorHelper.AngleBetweenVector2D(rotatePoint.position, mouseWorldPosition);
+    void FixedUpdate() {
         RotateGun();
         if (this.IsMouseOnOtherSideOfCrossing()) {
+            Debug.Log("FLIPPED");
             FlipCharacter();
         }
     }

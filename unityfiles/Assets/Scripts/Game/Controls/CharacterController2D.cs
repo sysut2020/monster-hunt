@@ -7,11 +7,9 @@ using UnityEngine;
  */
 public class CharacterController2D : MonoBehaviour {
 
-	// Amount of force added when the player jumps.
 	[SerializeField]
 	private float jumpForce = 400f;
 
-	// How much to smooth out the movement
 	[Range(0, .3f)]
 	[SerializeField]
 	private float movementSmoothing = .05f;
