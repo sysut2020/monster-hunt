@@ -21,13 +21,23 @@ public class Jetpack : MonoBehaviour {
     [SerializeField]
     private Rigidbody2D massToAffect;
 
+    [SerializeField]
+    private ParticleSystem flames;
+
     // The key to press to activate the jetpack force
     [SerializeField]
     private KeyCode controllButton;
 
+    private void Start() {
+        this.flames.Stop();
+    }
+
     private void Update() {
         if (Input.GetKey(controllButton)) {
             AddForce();
+            if (!this.flames.isEmitting) this.flames.Play();
+        } else if (this.flames.isEmitting) {
+            this.flames.Stop();
         }
     }
 
