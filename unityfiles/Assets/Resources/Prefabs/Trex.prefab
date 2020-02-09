@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1750531336199004117}
+  - component: {fileID: 1053206764895130931}
   m_Layer: 0
   m_Name: bone_10
   m_TagString: Untagged
@@ -30,6 +31,22 @@ Transform:
   m_Father: {fileID: 4736625665355947443}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 4.408}
+--- !u!58 &1053206764895130931
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 106462876390607567}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 5.52, y: 1.1}
+  serializedVersion: 2
+  m_Radius: 2.77
 --- !u!1 &167183335594026675
 GameObject:
   m_ObjectHideFlags: 0
@@ -235,9 +252,6 @@ GameObject:
   m_Component:
   - component: {fileID: 743488613924613080}
   - component: {fileID: 2544812447833089778}
-  - component: {fileID: 5873188439786188772}
-  - component: {fileID: 1028195771184271215}
-  - component: {fileID: 5508005846273527997}
   - component: {fileID: 5643518411346735198}
   m_Layer: 0
   m_Name: Trex
@@ -283,64 +297,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!61 &5873188439786188772
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 743488613924613082}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 1.0133433, y: -1.8197513}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.2178098, y: 0.4345007}
-  m_EdgeRadius: 0
---- !u!58 &1028195771184271215
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 743488613924613082}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 1.1169591, y: 0.32762003}
-  serializedVersion: 2
-  m_Radius: 2.196434
---- !u!70 &5508005846273527997
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 743488613924613082}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 3.84, y: 2.32}
-  m_Size: {x: 3.42, y: 1.76}
-  m_Direction: 1
 --- !u!114 &5643518411346735198
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -364,6 +320,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1672779461851765632}
+  - component: {fileID: 3447105034066489987}
   m_Layer: 0
   m_Name: bone_4
   m_TagString: Untagged
@@ -387,6 +344,30 @@ Transform:
   m_Father: {fileID: 4349701377638378562}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!68 &3447105034066489987
+EdgeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 874902037753958511}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.54, y: 2.04}
+  m_EdgeRadius: 0
+  m_Points:
+  - {x: -3.2288952, y: 3.5847735}
+  - {x: 2.9624438, y: 0.080905676}
+  - {x: 5.935474, y: 0.52610016}
+  - {x: 7.548641, y: 0.46037626}
+  - {x: 9.063612, y: -0.4089625}
+  - {x: 11.203066, y: -2.9447575}
+  - {x: 13.230441, y: -5.936244}
+  - {x: 13.881004, y: -8.156231}
 --- !u!1 &1040118610045841126
 GameObject:
   m_ObjectHideFlags: 0
@@ -1539,6 +1520,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7172128625851911693}
   - component: {fileID: 743488613807481071}
+  - component: {fileID: 7592950249517062874}
+  - component: {fileID: 8214744729901391877}
   m_Layer: 0
   m_Name: trex
   m_TagString: Untagged
@@ -1591,6 +1574,38 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!70 &7592950249517062874
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5958666549321440739}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 4.91, y: -9.35}
+  m_Size: {x: 6.14, y: 2.03}
+  m_Direction: 1
+--- !u!58 &8214744729901391877
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5958666549321440739}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 6.91, y: 1.5}
+  serializedVersion: 2
+  m_Radius: 11.42
 --- !u!1 &5974050445283610778
 GameObject:
   m_ObjectHideFlags: 0
