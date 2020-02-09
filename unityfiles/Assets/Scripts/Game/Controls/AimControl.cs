@@ -18,15 +18,17 @@ public class AimControl {
     /// <summary>
     /// The point where we want the aiming to be tracked
     /// </summary>
-    private GameObject FirePoint;
+    private readonly GameObject FirePoint;
 
     /// <summary>
     /// The point where the rotation is applied
     /// </summary>
-    private Transform RotationPoint;
+    private readonly Transform RotationPoint;
 
     private GameObject helperRotPoint;
     private GameObject helperAimPoint;
+
+    private bool debug = false;
 
     public AimControl(GameObject firePoint, Transform rotatePoint) {
         this.FirePoint = firePoint;
@@ -76,7 +78,7 @@ public class AimControl {
         Vector3 v_RP_GP_Prj_GPMP = (mousePoint + (norm_GP_Prj_GPMP - v_GP_MP)) - helperRotPoint.transform.position;
         z_angle = this.RadianToDegree(Math.Atan2(v_RP_GP_Prj_GPMP.y, v_RP_GP_Prj_GPMP.x));
 
-        if (true) {
+        if (debug) {
             Debug.DrawLine(Vector3.zero, norm_GP, Color.red);
             Debug.DrawLine(Vector3.zero, v_GP_MP, Color.green);
             Debug.DrawLine(Vector3.zero, Vector3.Project(v_GP_MP, norm_GP), Color.yellow);
@@ -86,6 +88,15 @@ public class AimControl {
         }
 
         return (isFlipped) ? new Vector3(180, 0, -z_angle) : new Vector3(0, 0, z_angle);
+
+    }
+
+    /// <summary>
+    /// Enables debugging
+    /// </summary>
+    /// <param name="debug">true to enable</param>
+    public void ToggleDebug(bool debug) {
+        this.debug = debug;
     }
 
     private double DegreeToRadian(double angle) {
