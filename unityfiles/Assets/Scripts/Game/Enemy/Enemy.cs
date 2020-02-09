@@ -7,47 +7,36 @@ using UnityEngine;
 /// </summary>
 public class Enemy : MonoBehaviour, IDamageable {
 
-    [Tooltip ("A sciptable object representing the enemy type")]
+    [Tooltip("A sciptable object representing the enemy type")]
     [SerializeField]
     private EnemyType enemyType;
 
     private HealthController healthController;
-    
+
+    [Tooltip("The front point a raycast is sent from")]
     [SerializeField]
-    private IEnemyBehavior enemyBehavior;
-
-
-    // -- properties -- //
+    private Transform frontPoint;
 
     public EnemyType EnemyType {
         get { return this.enemyType; }
         set { this.enemyType = value; }
     }
 
+    public Transform FrontPoint {
+        get { return this.frontPoint; }
+    }
+
     // -- public -- //
 
-
-    public void Dead () {
-        this.enemyBehavior.OnDead ();
+    public void Dead() {
+        // act dead
     }
     // -- private -- //
 
     // -- unity -- // 
-    void Start () {
+    void Start() {
         this.tag = "Enemy";
-
-        this.healthController = this.gameObject.GetComponent<HealthController> ();
-
-        this.enemyBehavior = this.gameObject.GetComponent<IEnemyBehavior> ();
-
-        BoxCollider2D bc;
-        bc = gameObject.AddComponent<BoxCollider2D> () as BoxCollider2D;
-
-    }
-
-    void FixedUpdate () {
-        this.enemyBehavior.Act ();
-
+        this.healthController = this.gameObject.GetComponent<HealthController>();
     }
 
 }
