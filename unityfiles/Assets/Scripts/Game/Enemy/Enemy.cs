@@ -39,6 +39,7 @@ public class Enemy : MonoBehaviour, IDamageable {
     public void Dead() {
         // act dead
         GameObject.Destroy(gameObject);
+        CollectibleSpawner.Instance.SpawnCollectible(this.transform.position);
     }
     // -- private -- //
 
