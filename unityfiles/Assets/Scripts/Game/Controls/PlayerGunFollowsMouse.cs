@@ -23,8 +23,8 @@ public class PlayerGunFollowsMouse : MonoBehaviour {
     // -- private -- //
 
     private void RotateGun() {
-        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        rotatePoint.transform.rotation = Quaternion.Euler(aimControl.GetAngle(mousePosition));
+        Vector3 currentMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        rotatePoint.transform.rotation = Quaternion.Euler(aimControl.GetAngle(currentMousePosition));
     }
 
     /// <summary>
