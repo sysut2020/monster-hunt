@@ -14,11 +14,8 @@ public class PlayerGunFollowsMouse : MonoBehaviour {
     [SerializeField]
     private Transform crossingPoint;
 
-   
-
     private MousePosition mousePosition;
-    private GunAngleStuff gunAngleStuff;
-
+    private AimControl aimControl;
 
     float angle2;
 
@@ -29,7 +26,7 @@ public class PlayerGunFollowsMouse : MonoBehaviour {
     private void RotateGun() {
 
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        rotatePoint.transform.rotation = Quaternion.Euler(gunAngleStuff.GetAngle(mousePosition));
+        rotatePoint.transform.rotation = Quaternion.Euler(aimControl.GetAngle(mousePosition));
     }
 
     /// <summary>
@@ -50,25 +47,18 @@ public class PlayerGunFollowsMouse : MonoBehaviour {
     }
 
     private void FlipCharacter() {
-
-        // the body neeeds to rotate but not the arm. atm the arm flashes
-        // there are probably a solution to this issue
         this.crossingPoint.Rotate(0, 180, 0);
-        this.rotatePoint.Rotate(0,180,0);
     }
 
     // -- unity -- //
     private void Start() {
-        Debug.Log(angle2);
         mousePosition = new MousePosition();
-
-        this.gunAngleStuff = new GunAngleStuff(FirePoint.gameObject, rotatePoint.transform);
+        this.aimControl = new AimControl(FirePoint.gameObject, rotatePoint.transform);
     }
 
     void FixedUpdate() {
         RotateGun();
         if (this.IsMouseOnOtherSideOfCrossing()) {
-            Debug.Log("FLIPPED");
             FlipCharacter();
         }
     }
