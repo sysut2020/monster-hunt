@@ -46,7 +46,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 5.52, y: 1.1}
   serializedVersion: 2
-  m_Radius: 2.77
+  m_Radius: 3.33
 --- !u!1 &167183335594026675
 GameObject:
   m_ObjectHideFlags: 0
@@ -288,7 +288,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 700
+  m_Mass: 3500
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -546,7 +546,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1918689602049206689}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.64, y: -0.99, z: 0}
+  m_LocalPosition: {x: 5.27, y: -0.089, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 743488613924613080}
@@ -1522,6 +1522,7 @@ GameObject:
   - component: {fileID: 743488613807481071}
   - component: {fileID: 7592950249517062874}
   - component: {fileID: 8214744729901391877}
+  - component: {fileID: 518270487896708746}
   m_Layer: 0
   m_Name: trex
   m_TagString: Untagged
@@ -1597,15 +1598,31 @@ CircleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5958666549321440739}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 9.89, y: 1.5}
+  serializedVersion: 2
+  m_Radius: 11.42
+--- !u!70 &518270487896708746
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5958666549321440739}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 6.91, y: 1.5}
-  serializedVersion: 2
-  m_Radius: 11.42
+  m_Offset: {x: 9.1, y: 1.39}
+  m_Size: {x: 29.48, y: 21.95}
+  m_Direction: 1
 --- !u!1 &5974050445283610778
 GameObject:
   m_ObjectHideFlags: 0
