@@ -6,11 +6,19 @@ using UnityEngine;
 /// <summary>
 /// Describes an enemy
 /// </summary>
+[RequireComponent(typeof(HealthController))]
 public class Enemy : MonoBehaviour, IDamageable {
 
     [Tooltip("A sciptable object representing the enemy type")]
     [SerializeField]
     private EnemyType enemyType;
+
+    private bool isAttacking = false;
+
+    public bool IsAttacking {
+        get { return this.isAttacking; }
+        set { this.isAttacking = value; }
+    }
 
     private HealthController healthController;
 
@@ -37,7 +45,8 @@ public class Enemy : MonoBehaviour, IDamageable {
 
     public void Dead() {
         // act dead
-        Destroy(this);
+        GameObject.Destroy(gameObject);
+        CollectibleSpawner.Instance.SpawnCollectible(this.transform.position);
     }
     // -- private -- //
 

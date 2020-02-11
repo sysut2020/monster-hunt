@@ -111,7 +111,7 @@ public class Player : MonoBehaviour {
         this.playerInventory.AddLetter(letter);
     }
 
-
+    
     /// <summary>
     /// changes to the next weapon in the weapon list 
     /// if the end of the list is reached the index loops around
@@ -121,7 +121,6 @@ public class Player : MonoBehaviour {
         GunController newGunController = this.PlayerWeaponController.ChangeToNextWeapon();
         this.AlertPowerupsOnWeaponChange(newGunController);
     }
-
 
     /// <summary>
     /// changes to the prev weapon in the weapon list 
@@ -155,7 +154,6 @@ public class Player : MonoBehaviour {
     }
 
     // -- private -- // 
-
 
     /// <summary>
     /// Alerts the power ups that the weapon has changed
@@ -213,12 +211,14 @@ public class Player : MonoBehaviour {
     /// Checks for collisions with other objects
     /// </summary>
     /// <param name="other"></param>
-    private void OnTriggerEnter2D(Collider2D other) {
-        // If there is a collision with enemy play the damage animation
-        if (other.tag == "Enemy") {
-            // todo I think this should cause healthController.ApplyDamage()
+    private void OnCollisionEnter2D(Collision2D other) {
+        var enemy = other.gameObject.GetComponent<Enemy>();
 
-            animator.SetTrigger(DAMAGE_STRING);
-        }
+        try {
+            if (enemy.IsAttacking) {
+                animator.SetTrigger(DAMAGE_STRING);                
+            }
+        } catch (System.Exception) { }
+
     }
 }
