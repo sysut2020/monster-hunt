@@ -6,8 +6,15 @@ using Random = UnityEngine.Random;
 
 public class CollectibleSpawner : MonoBehaviour {
     // Can be loaded with prefabs or other game objects that can be spawned
+    // [SerializeField]
+    // private GameObject[] collectiblesToSpawn;
+
     [SerializeField]
-    private GameObject[] collectiblesToSpawn;
+    private GameObject coinCollectable;
+    [SerializeField]
+    private LetterController letterCollectable;
+    [SerializeField]
+    private GameObject powerUpCollectable;
 
     [SerializeField]
     private int minimumSpawnItems = 1;
@@ -29,7 +36,6 @@ public class CollectibleSpawner : MonoBehaviour {
         }
     }
 
-
     private void Awake() {
         if (instance != null && instance != this) {
             Destroy(this.gameObject);
@@ -38,7 +44,6 @@ public class CollectibleSpawner : MonoBehaviour {
             DontDestroyOnLoad(gameObject);
         }
     }
-
 
     /// <summary>
     /// Spawns a collectible at a specific location
@@ -68,27 +73,24 @@ public class CollectibleSpawner : MonoBehaviour {
         GameObject collectible = null;
 
         switch (randomNumber) {
-            case var n when (n <= 2):
-                collectible = new GameObject(); // todo change to prefab
-                collectible.name = "PowerUP";
-                collectible.AddComponent<PowerUP>();
-                break;
+            case var n when(n <= 2):
+                collectible = Instantiate(powerUpCollectable);
+            collectible.name = "PowerUP";
+            break;
 
-            case var n when (n > 2 && n <= 8):
+            case var n when(n > 2 && n <= 8):
                 // taking the collectible from the inspector and instantiate it in the scene
-                collectible = new GameObject();
-                collectible.name = "Coin";
-                collectible.AddComponent<Coin>();
-                break;
+                collectible = Instantiate(coinCollectable);
+            collectible.name = "Coin";
+            break;
 
-            case var n when (n > 8 && n <= 11):
+            case var n when(n > 8 && n <= 11):
                 string letter = SudoRandomLetterGenerator.Instance.GenerateLetter();
-
-                collectible = new GameObject(); // todo change to prefab containing the letter
-
-                collectible.name = "Letter " + letter;
-                collectible.AddComponent<Letter>();
-                break;
+            LetterController le = Instantiate(letterCollectable);
+            collectible = le.gameObject;
+            le.SetLetter(letter);
+            collectible.name = "Letter " + letter;
+            break;
 
             default:
                 // no default behavior
