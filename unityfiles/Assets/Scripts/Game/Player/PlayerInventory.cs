@@ -32,15 +32,11 @@ public class PlayerInventory : MonoBehaviour {
     }
 
     private void Start() {
-        CollectibleEvents.onCoinPickup += AddMoney;
-        CollectibleEvents.onLetterPickup += AddLetter;
-        CollectibleEvents.onPowerupPickup += AddEffectPickup;
+        CollectibleEvents.CoinCollected += (sender, coin) => AddMoney(coin.CoinValue);
     }
 
     private void OnDestroy() {
-        CollectibleEvents.onCoinPickup -= AddMoney;
-        CollectibleEvents.onLetterPickup -= AddLetter;
-        CollectibleEvents.onPowerupPickup -= AddEffectPickup;
+        CollectibleEvents.CoinCollected -= (sender, coin) => AddMoney(coin.CoinValue);
     }
     // -- public -- //
 

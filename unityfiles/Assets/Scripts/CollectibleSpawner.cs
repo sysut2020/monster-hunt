@@ -75,22 +75,24 @@ public class CollectibleSpawner : MonoBehaviour {
         switch (randomNumber) {
             case var n when(n <= 2):
                 collectible = Instantiate(powerUpCollectable);
-            collectible.name = "PowerUP";
-            break;
+                collectible.name = "PowerUP";
+                break;
 
             case var n when(n > 2 && n <= 8):
                 // taking the collectible from the inspector and instantiate it in the scene
                 collectible = Instantiate(coinCollectable);
-            collectible.name = "Coin";
-            break;
+                collectible.name = "Coin";
+                collectible.AddComponent<Coin>();
+                break;
 
             case var n when(n > 8 && n <= 11):
                 string letter = SudoRandomLetterGenerator.Instance.GenerateLetter();
-            LetterController le = Instantiate(letterCollectable);
-            collectible = le.gameObject;
-            le.SetLetter(letter);
-            collectible.name = "Letter " + letter;
-            break;
+                LetterController le = Instantiate(letterCollectable);
+                collectible = le.gameObject;
+                le.SetLetter(letter);
+                collectible.name = "Letter " + letter;
+                collectible.AddComponent<Letter>();
+                break;
 
             default:
                 // no default behavior
