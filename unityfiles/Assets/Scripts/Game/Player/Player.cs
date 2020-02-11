@@ -9,6 +9,19 @@ using UnityEngine;
 /// </summary>
 public class Player : MonoBehaviour {
 
+    private static Player instance;
+
+    public static Player Instance {
+        get {
+            if (instance == null) {
+                GameObject player = new GameObject("Player");
+                player.AddComponent<Player>();
+            }
+
+            return instance;
+        }
+    }
+
     [SerializeField]
     private int playerLives;
 
@@ -28,7 +41,7 @@ public class Player : MonoBehaviour {
     }
 
     public HealthController PlayerHealthController {
-        get => playerHealthController;
+        get => playerHealthController; 
         internal set => this.playerHealthController = value;
     }
 
@@ -45,7 +58,21 @@ public class Player : MonoBehaviour {
     // -- public -- //
 
     private void Awake() {
+        CheckSingleton();
+
         animator = this.GetComponent<Animator>();
+    }
+
+    /// <summary>
+    /// Checks if there exist other instances of this class.
+    /// </summary>
+    private void CheckSingleton() {
+        if (instance != null && instance != this) {
+            Destroy(this.gameObject);
+        } else {
+            instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
     }
 
     /// <summary>
