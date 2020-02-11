@@ -12,7 +12,7 @@ public class PlayerInventory : MonoBehaviour {
     private int money;
 
     [SerializeField]
-    private List<String> collectedLetters;
+    private List<Letter> collectedLetters;
     private List<IEffectPickup> activePickups;
 
     // -- properties -- //
@@ -21,7 +21,7 @@ public class PlayerInventory : MonoBehaviour {
         internal set => this.money = value;
     }
 
-    public List<String> CollectedLetters {
+    public List<Letter> CollectedLetters {
         get => collectedLetters;
         internal set => this.collectedLetters = value;
     }
@@ -52,7 +52,7 @@ public class PlayerInventory : MonoBehaviour {
     /// adds the provided letter
     /// </summary>
     /// <param name="letter">the letter to add</param>
-    public void AddLetter (String letter) {
+    public void AddLetter (Letter letter) {
         this.collectedLetters.Add (letter);
     }
 
