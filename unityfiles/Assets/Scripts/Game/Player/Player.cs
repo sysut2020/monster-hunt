@@ -9,6 +9,7 @@ using UnityEngine;
 /// </summary>
 public class Player : MonoBehaviour {
 
+    private const string DAMAGE_STRING = "Damage";
     private static Player instance;
 
     public static Player Instance {
@@ -23,8 +24,6 @@ public class Player : MonoBehaviour {
     }
 
     [SerializeField]
-    private int playerLives;
-
     private HealthController playerHealthController;
 
     private PlayerInventory playerInventory;
@@ -35,10 +34,6 @@ public class Player : MonoBehaviour {
     private PlayerWeaponController playerWeaponController;
 
     // -- properties -- //
-    public int PlayerLives {
-        get => playerLives;
-        set => playerLives = value;
-    }
 
     public HealthController PlayerHealthController {
         get => playerHealthController; 
@@ -195,7 +190,9 @@ public class Player : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D other) {
         // If there is a collision with enemy play the damage animation
         if (other.tag == "Enemy") {
-            animator.SetTrigger("Damage");
+            // todo I think this should cause healthController.ApplyDamage()
+            
+            animator.SetTrigger(DAMAGE_STRING);
         }
     }
 }
