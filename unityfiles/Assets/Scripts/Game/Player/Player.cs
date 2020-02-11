@@ -40,7 +40,7 @@ public class Player : MonoBehaviour {
     // -- properties -- //
 
     public HealthController PlayerHealthController {
-        get => playerHealthController; 
+        get => playerHealthController;
         internal set => this.playerHealthController = value;
     }
 
@@ -189,8 +189,24 @@ public class Player : MonoBehaviour {
     /// <summary>
     /// Update is called every frame, if the MonoBehaviour is enabled.
     /// </summary>
-    void Update () {
-        UpdateEffects ();
+    void Update() {
+        // UpdateEffects ();
+
+        // todo remove this when done testing    
+        if (Input.GetKeyDown(KeyCode.F)) {
+            playerHealthController.ApplyDamage(1f);
+            animator.SetTrigger(DAMAGE_STRING);
+            Debug.Log("Taking away health");
+        }
+
+        CheckIsDead();
+    }
+
+    private void CheckIsDead() {
+        if (playerHealthController.EntityHealth < 0) {
+            OnPlayerDead?.Invoke();
+            gameObject.SetActive(false);
+        }
     }
 
     /// <summary>
@@ -201,7 +217,7 @@ public class Player : MonoBehaviour {
         // If there is a collision with enemy play the damage animation
         if (other.tag == "Enemy") {
             // todo I think this should cause healthController.ApplyDamage()
-            
+
             animator.SetTrigger(DAMAGE_STRING);
         }
     }
