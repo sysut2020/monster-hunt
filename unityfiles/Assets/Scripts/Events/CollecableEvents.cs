@@ -1,4 +1,4 @@
-public class CollectableEvents {
+public class CollectibleEvents {
 
 	public delegate void OnCoinPickup(int value);
 	public static event OnCoinPickup onCoinPickup;
@@ -13,9 +13,9 @@ public class CollectableEvents {
 	}
 	
 
-	public delegate void OnLetterPickup(Letter letter);
+	public delegate void OnLetterPickup(string letter);
 	public static event OnLetterPickup onLetterPickup;
-	public static void InvokeLetterPickup(Letter letter) {
+	public static void InvokeLetterPickup(string letter) {
 		onLetterPickup?.Invoke(letter);
 	}
 
