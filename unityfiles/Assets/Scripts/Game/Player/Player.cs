@@ -7,6 +7,7 @@ using UnityEngine;
 /// <summary>
 /// this class describes the player
 /// </summary>
+[RequireComponent(typeof(HealthController))]
 public class Player : MonoBehaviour {
 
     private const string DAMAGE_STRING = "Damage";
