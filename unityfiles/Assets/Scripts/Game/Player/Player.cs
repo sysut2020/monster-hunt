@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -9,8 +7,9 @@ using UnityEngine;
 /// </summary>
 [RequireComponent(typeof(HealthController))]
 public class Player : MonoBehaviour {
-
     private const string DAMAGE_STRING = "Damage";
+
+
     private static Player instance;
 
     public static Player Instance {
@@ -28,8 +27,12 @@ public class Player : MonoBehaviour {
     private HealthController playerHealthController;
 
     private PlayerInventory playerInventory;
-    
-    private Animator animator; 
+
+    private Animator animator;
+
+    public delegate void PlayerDeadHandler();
+
+    public static event PlayerDeadHandler OnPlayerDead;
 
 
     private PlayerWeaponController playerWeaponController;
