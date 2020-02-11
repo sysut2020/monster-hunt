@@ -1,16 +1,18 @@
- using System;
- using UnityEngine;
- using UnityEngine.Experimental.PlayerLoop;
+using System;
+using UnityEngine;
+using UnityEngine.Experimental.PlayerLoop;
 
- public class GameManager : MonoBehaviour {
+public class GameManager : MonoBehaviour {
     private static GameManager instance;
-    
+
     [SerializeField]
     private GameObject gameOverCanvas;
 
     [SerializeField]
     private LevelDetails levelDetails;
-    
+
+    private int numberOfEnemies = 0;
+
     public static GameManager Instance {
         get {
             if (instance == null) {
@@ -25,14 +27,14 @@
     private void Awake() {
         if (instance != null && instance != this) {
             Destroy(this.gameObject);
-        }  else {
+        } else {
             instance = this;
             DontDestroyOnLoad(gameObject);
         }
     }
 
     private void Start() {
-        
+        numberOfEnemies = levelDetails.numberOfEnemies;
     }
 
     private void OnEnable() {
@@ -41,9 +43,12 @@
         Player.OnPlayerDead += ShowGameOver;
     }
 
+    /// <summary>
+    /// Decrements the number of enemies by one and then checks if there is any left
+    /// </summary>
     public void DecrementEnemies() {
-        levelDetails.numberOfEnemies--;
-        if (levelDetails.numberOfEnemies <= 0) {
+        numberOfEnemies--;
+        if (numberOfEnemies <= 0) {
             OnEndGame?.Invoke();
         }
     }
@@ -51,13 +56,13 @@
     private void OnDestroy() {
         // todo unsubscribe from OnPlayerDead, OnTimeOut, OnAllEnemiesDead
         // maybe that this also should be done on disable
+        Enemy.OnEnemyDead -= DecrementEnemies;
         Player.OnPlayerDead -= ShowGameOver;
     }
 
     public void ShowGameOver() {
         // todo show game over
-        gameOverCanvas.SetActive(true);   
-        Debug.Log("Player died");
+        gameOverCanvas.SetActive(true);
     }
 
 
