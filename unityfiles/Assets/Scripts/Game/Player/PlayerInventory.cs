@@ -30,6 +30,18 @@ public class PlayerInventory : MonoBehaviour {
         get => activePickups;
         internal set => this.activePickups = value;
     }
+
+    private void Start() {
+        CollectableEvents.onCoinPickup += AddMoney;
+        CollectableEvents.onLetterPickup += AddLetter;
+        CollectableEvents.onPowerupPickup += AddEffectPickup;
+    }
+
+    private void OnDestroy() {
+        CollectableEvents.onCoinPickup -= AddMoney;
+        CollectableEvents.onLetterPickup -= AddLetter;
+        CollectableEvents.onPowerupPickup -= AddEffectPickup;
+    }
     // -- public -- //
 
     /// <summary>
@@ -53,15 +65,15 @@ public class PlayerInventory : MonoBehaviour {
     /// </summary>
     /// <param name="letter">the letter to add</param>
     public void AddLetter (Letter letter) {
-        this.collectedLetters.Add (letter);
+        this.collectedLetters.Add(letter);
     }
 
     /// <summary>
     /// adds the provided amount of money
     /// </summary>
     /// <param name="toAdd">the amount of money to add</param>
-    public void AddMoney (int toAdd) {
-        this.money += toAdd;
+    public void AddMoney (int value) {
+        this.money += value;
     }
 
     // -- private -- // 

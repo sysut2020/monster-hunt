@@ -71,12 +71,14 @@ public class CollectibleSpawner : MonoBehaviour {
             case var n when (n <= 2):
                 collectible = new GameObject(); // todo change to prefab
                 collectible.name = "PowerUP";
+                collectible.AddComponent<PowerUP>();
                 break;
 
             case var n when (n > 2 && n <= 8):
                 // taking the collectible from the inspector and instantiate it in the scene
-                collectible = Instantiate(collectiblesToSpawn[0]);
+                collectible = new GameObject();
                 collectible.name = "Coin";
+                collectible.AddComponent<Coin>();
                 break;
 
             case var n when (n > 8 && n <= 11):
@@ -85,6 +87,7 @@ public class CollectibleSpawner : MonoBehaviour {
                 collectible = new GameObject(); // todo change to prefab containing the letter
 
                 collectible.name = "Letter " + letter;
+                collectible.AddComponent<Letter>();
                 break;
 
             default:

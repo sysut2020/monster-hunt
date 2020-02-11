@@ -1,18 +1,18 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Letter : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+public class Letter : MonoBehaviour {
+    private string letterString;
+    public string LetterString {
+        get => letterString;
+        set => letterString = value;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    private void OnCollisionEnter2D(Collision2D collision) {
+        if (collision.gameObject.CompareTag("Player")) {
+            CollectableEvents.InvokeLetterPickup(this);
+        }
     }
 }

@@ -69,14 +69,6 @@ public class Player : MonoBehaviour {
     }
 
     /// <summary>
-    /// Gives money to the player
-    /// </summary>
-    /// <param name="money">the amount of money to give the player</param>
-    public void GiveMoney (int money) {
-        this.PlayerInventory.AddMoney (money);
-    }
-
-    /// <summary>
     /// Gives a letter to the player
     /// </summary>
     /// <param name="letter">the letter to give to the player</param>        

@@ -2,17 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PowerUP : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+public class PowerUP : MonoBehaviour {
+    private IEffectPickup effectPickup;
+    public IEffectPickup EffectPickup {
+        get => effectPickup;
+        set => effectPickup = value;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
+    
 }
