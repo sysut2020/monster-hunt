@@ -203,7 +203,7 @@ public class Player : MonoBehaviour {
     }
 
     private void CheckIsDead() {
-        if (playerHealthController.EntityHealth < 0) {
+        if (playerHealthController.EntityHealth <= 0) {
             OnPlayerDead?.Invoke();
             gameObject.SetActive(false);
         }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -26,10 +27,17 @@ public class Enemy : MonoBehaviour, IDamageable {
         get { return this.frontPoint; }
     }
 
+    private void Update() {
+        if (Input.GetKeyDown(KeyCode.K)) {
+            Dead();
+        }
+    }
+
     // -- public -- //
 
     public void Dead() {
         // act dead
+        Destroy(this);
     }
     // -- private -- //
 
@@ -39,4 +47,9 @@ public class Enemy : MonoBehaviour, IDamageable {
         this.healthController = this.gameObject.GetComponent<HealthController>();
     }
 
+    private void OnDestroy() {
+        OnEnemyDead?.Invoke();
+    }
+
+    public static event Action OnEnemyDead;
 }

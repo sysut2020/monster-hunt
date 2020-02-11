@@ -1,10 +1,16 @@
-using UnityEngine;
+ using System;
+ using UnityEngine;
+ using UnityEngine.Experimental.PlayerLoop;
 
-public class GameManager : MonoBehaviour {
+ public class GameManager : MonoBehaviour {
     private static GameManager instance;
-
+    
     [SerializeField]
     private GameObject gameOverCanvas;
+
+    [SerializeField]
+    private LevelDetails levelDetails;
+    
     public static GameManager Instance {
         get {
             if (instance == null) {
@@ -15,7 +21,7 @@ public class GameManager : MonoBehaviour {
             return instance;
         }
     }
-    
+
     private void Awake() {
         if (instance != null && instance != this) {
             Destroy(this.gameObject);
@@ -25,9 +31,21 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    private void Start() {
+        
+    }
+
     private void OnEnable() {
         // todo subscribe to OnPlayerDead, OnTimeOut, OnAllEnemiesDead
+        Enemy.OnEnemyDead += DecrementEnemies;
         Player.OnPlayerDead += ShowGameOver;
+    }
+
+    public void DecrementEnemies() {
+        levelDetails.numberOfEnemies--;
+        if (levelDetails.numberOfEnemies <= 0) {
+            OnEndGame?.Invoke();
+        }
     }
 
     private void OnDestroy() {
