@@ -72,7 +72,7 @@ public class Player : MonoBehaviour {
     /// Gives a letter to the player
     /// </summary>
     /// <param name="letter">the letter to give to the player</param>        
-    public void GiveLetter (Letter letter) {
+    public void GiveLetter (string letter) {
         this.playerInventory.AddLetter (letter);
     }
 
