@@ -21,19 +21,19 @@ public class GunController : MonoBehaviour {
     private Vector2 bulletVelocity = Vector2.zero;
 
     [Tooltip("Damage inflicted by bullet.")]
-    [SerializeField] 
+    [SerializeField]
     private float bulletDamage = 0;
 
     [Tooltip("How long the bullet will live if it doesn´t hit anything.")]
-    [SerializeField] 
+    [SerializeField]
     private float bulletTtl = 0;
 
     [Tooltip("2d texture for bullet sprite.")]
-    [SerializeField] 
+    [SerializeField]
     private Texture2D bulletTexture = null;
 
     [Tooltip("the scale of the sprite used.")]
-    [SerializeField] 
+    [SerializeField]
     private Vector2 spriteScale;
 
     [Tooltip("Fire rate in shots/sec.")]
@@ -51,7 +51,6 @@ public class GunController : MonoBehaviour {
         }
     }
 
-
     // -- internal -- //
     private readonly Timers fireRateTimer = new Timers();
     private ArrayList activeBullets = new ArrayList();
@@ -63,13 +62,11 @@ public class GunController : MonoBehaviour {
     [SerializeField]
     private GameObject firePoint;
 
-
     private float bulletWaitTime;
 
     private string timerUID;
 
     private GameObject blueprintBullet;
-
 
     // -- public -- //
     /// <summary>
@@ -96,7 +93,6 @@ public class GunController : MonoBehaviour {
 
     // -- private -- //
 
-
     /// <summary>
     /// generates a new bullet and fires it
     /// </summary>
@@ -108,7 +104,6 @@ public class GunController : MonoBehaviour {
 
         this.activeBullets.Add(bulletCopy);
     }
-
 
     /// <summary>
     /// reuses one of the inactive bullets and fires it
@@ -140,22 +135,18 @@ public class GunController : MonoBehaviour {
         BoxCollider2D boxCol = bullet.AddComponent<BoxCollider2D>() as BoxCollider2D;
         boxCol.isTrigger = true;
 
-
         BulletControl bulletControl = bullet.AddComponent<BulletControl>() as BulletControl;
 
         bulletControl.Velocity = this.bulletVelocity;
         bulletControl.Damage = this.bulletDamage;
         bulletControl.BulletTimeToLive = this.bulletTtl;
 
-
         // for hit detection
         Rigidbody2D rigidB2d = bullet.AddComponent<Rigidbody2D>() as Rigidbody2D;
         rigidB2d.bodyType = RigidbodyType2D.Kinematic;
 
-
         bullet.SetActive(false);
     }
-
 
     /// <summary>
     /// Calculates and sets the bullet wait time
@@ -165,47 +156,42 @@ public class GunController : MonoBehaviour {
         this.bulletWaitTime = 1000 / fireRate;
     }
 
-
     /// <summary>
     /// Checks if it is time to fire if it is, it wil fire if not not 
     /// </summary>
     private void MaybeFire() {
         // is it time to release a bullet
-        if (fireRateTimer.Done(this.timerUID, true)){
+        if (fireRateTimer.Done(this.timerUID, true)) {
             this.Fire();
-            
+
         }
     }
 
     /// <summary>
     /// Fires a projectile from the gun
     /// </summary>
-    private void Fire(){
+    private void Fire() {
         // if yes is there any bullets in the active bullet list that is inactive
-            for (int i = this.activeBullets.Count; i > 0 ; i--)
-            {
-                GameObject g = (GameObject)this.activeBullets[i-1];
-                //TODO: probably shit solution somone try somthing better
-                if (!g.activeInHierarchy) {
-                    //if there is move them to the inactive list
-                    this.activeBullets.Remove(g);
-                    this.idleBullets.Add(g);
-                }
+        for (int i = this.activeBullets.Count; i > 0; i--) {
+            GameObject g = (GameObject) this.activeBullets[i - 1];
+            //TODO: probably shit solution somone try somthing better
+            if (!g.activeInHierarchy) {
+                //if there is move them to the inactive list
+                this.activeBullets.Remove(g);
+                this.idleBullets.Add(g);
             }
+        }
 
-            // if there are any inactive bullets fire them if not make a new one
-            if (this.idleBullets.Count >= 1) {
-                this.FireExistingProjectile();
-            } else {
-                this.FireNewProjectile();
-            }
+        // if there are any inactive bullets fire them if not make a new one
+        if (this.idleBullets.Count >= 1) {
+            this.FireExistingProjectile();
+        } else {
+            this.FireNewProjectile();
+        }
     }
     // -- unity -- //
 
-   
-
     // -- unity -- //
-
 
     void Start() {
         //TODO: Discuss system for timer naming conventions
@@ -215,8 +201,10 @@ public class GunController : MonoBehaviour {
         this.GenerateBulletBlueprint();
     }
 
-
     void Update() {
+        if (Input.GetMouseButtonDown(0)) {
+            this.MaybeFire();
+        }
         if (isFiring) {
             this.MaybeFire();
         }
@@ -224,11 +212,11 @@ public class GunController : MonoBehaviour {
 
     // -- debug -- //
 
-     /// <summary>
+    /// <summary>
     /// Directly fire a projectile regardless of firerate
     /// meant for debug only
     /// </summary>
-    public void DEBUG_FIRE(){
+    public void DEBUG_FIRE() {
         this.Fire();
     }
 }
