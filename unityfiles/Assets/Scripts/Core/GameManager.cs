@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour {
 
     //-- Events --//
 
-    public delegate void OnEndGame();
+    public delegate void EndGameHandler();
 
-    public event OnEndGame OnEndGame;
+    public event EndGameHandler OnEndGame;
 }
