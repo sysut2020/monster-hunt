@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Rnd = System.Random;
 using UnityEngine;
 
 /// <summary>
@@ -18,6 +17,12 @@ public class EnemyPatrolBehaviour : StateMachineBehaviour {
         animator.SetBool("chase", true);
         animator.SetBool("patrol", false);
     }
+
+    float lastPatrolChange = 0f;
+
+    float patrolTime = 2;
+
+    Transform parentTransform;
 
     /// <summary>
     /// Utilizes its vision to detect if a player is in front of the enemy.
@@ -50,6 +55,29 @@ public class EnemyPatrolBehaviour : StateMachineBehaviour {
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
         if (SearchForPlayer(animator.transform.parent)) {
             StartChasingPlayer(animator);
+        } else {
+            Patrol();
         }
     }
+
+    override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
+        this.parentTransform = animator.transform.parent;
+    }
+
+    /// <summary>
+    /// Patrol movement, selects a random patrol time, and speed
+    /// on each patrol trip
+    /// </summary>
+    private void Patrol() {
+        float currentTime = Time.time;
+        if (currentTime - lastPatrolChange > patrolTime) {
+            this.parentTransform.Rotate(0, 180, 0);
+            lastPatrolChange = currentTime;
+            Rnd rnd = new Rnd();
+            this.speed = rnd.Next(15, 25) / 10;
+            this.patrolTime = this.speed = rnd.Next(20, 41) / 10;
+        }
+        this.parentTransform.Translate(Vector3.right * Time.deltaTime * speed);
+    }
+
 }
