@@ -60,10 +60,18 @@ public class Player : MonoBehaviour {
         CheckSingleton();
 
         animator = this.GetComponent<Animator>();
-        GameManager.OnEndGame += EndGame;
+        SubscribeToEvents();
     }
 
     private void OnDestroy() {
+        UnsubscribeFromEvents();
+    }
+    
+    private void SubscribeToEvents() {
+        GameManager.OnEndGame += EndGame;
+    }
+
+    private void UnsubscribeFromEvents() {
         GameManager.OnEndGame -= EndGame;
     }
 
