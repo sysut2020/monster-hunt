@@ -5,11 +5,7 @@ using UnityEngine;
 /// <summary>
 /// this class describes the player
 /// </summary>
-[RequireComponent(typeof(HealthController))]
-public class Player : MonoBehaviour {
-    private const string DAMAGE_STRING = "Damage";
-
-
+public class Player : MonoBehaviour, IDamageable {
     private static Player instance;
 
     public static Player Instance {
@@ -169,6 +165,11 @@ public class Player : MonoBehaviour {
     public void FireOnce() {
         this.PlayerWeaponController.FireOnce();
     }
+    
+    public void Dead() {
+        OnPlayerDead?.Invoke();
+        gameObject.SetActive(false);
+    }
 
     // -- private -- // 
 
@@ -202,22 +203,6 @@ public class Player : MonoBehaviour {
     // -- unity -- //
 
     /// <summary>
-    /// Update is called every frame, if the MonoBehaviour is enabled.
-    /// </summary>
-    void Update() {
-        // UpdateEffects ();
-
-        CheckIsDead();
-    }
-
-    private void CheckIsDead() {
-        if (playerHealthController.EntityHealth <= 0) {
-            OnPlayerDead?.Invoke();
-            gameObject.SetActive(false);
-        }
-    }
-
-    /// <summary>
     /// Checks for collisions with other objects
     /// </summary>
     /// <param name="other"></param>
@@ -226,7 +211,7 @@ public class Player : MonoBehaviour {
 
         try {
             if (enemy.IsAttacking) {
-                animator.SetTrigger(DAMAGE_STRING);                
+                animator.SetTrigger(AnimationTriggers.DAMAGE);                
             }
         } catch (System.Exception) { }
 
