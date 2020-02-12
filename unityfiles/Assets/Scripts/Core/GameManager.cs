@@ -3,6 +3,9 @@ using UnityEngine;
 using UnityEngine.Experimental.PlayerLoop;
 
 public class GameManager : MonoBehaviour {
+    private const int MAIN_MENU_SCENE_INDEX = 0;
+
+    
     private static GameManager instance;
 
     [SerializeField]
@@ -45,11 +48,13 @@ public class GameManager : MonoBehaviour {
 
     /// <summary>
     /// Decrements the number of enemies by one and then checks if there is any left
+    /// If there are none left it will fire the OnEndGame event, and then show the MainMenu
     /// </summary>
     public void DecrementEnemies() {
         numberOfEnemies--;
         if (numberOfEnemies <= 0) {
             OnEndGame?.Invoke();
+            ShowMainMenu();
         }
     }
 
@@ -60,9 +65,13 @@ public class GameManager : MonoBehaviour {
         Player.OnPlayerDead -= ShowGameOver;
     }
 
-    public void ShowGameOver() {
+    private void ShowGameOver() {
         // todo show game over
         gameOverCanvas.SetActive(true);
+    }
+    
+    private void ShowMainMenu() {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(MAIN_MENU_SCENE_INDEX);
     }
 
 
@@ -70,5 +79,5 @@ public class GameManager : MonoBehaviour {
 
     public delegate void EndGameHandler();
 
-    public event EndGameHandler OnEndGame;
+    public static event EndGameHandler OnEndGame;
 }
