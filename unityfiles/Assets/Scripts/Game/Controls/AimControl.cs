@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.Xml.Linq;
+using System;
 
 using UnityEngine;
 
@@ -71,29 +72,14 @@ public class AimControl {
         Vector3 angle = (isFlipped) ? new Vector3(180, 0, -z_angle): new Vector3(0, 0, z_angle);
         helperRotPoint.transform.rotation = Quaternion.Euler(angle);
 
-
         Vector3 v_GP_MP = mousePoint - helperAimPoint.transform.position;
         Vector3 norm_GP = helperAimPoint.transform.right;
         Vector3 norm_GP_Prj_GPMP = Vector3.Project(v_GP_MP, norm_GP);
 
         Vector3 v_RP_GP_Prj_GPMP = (mousePoint - (norm_GP_Prj_GPMP - v_GP_MP)) - helperRotPoint.transform.position;
         
-        //z_angle = this.RadianToDegree(Math.Atan2(v_RP_GP_Prj_GPMP.y, v_RP_GP_Prj_GPMP.x));
-
         Vector3 v_RP_GP = helperAimPoint.transform.position - helperRotPoint.transform.position;
-        Vector3 V2 = norm_GP_Prj_GPMP + v_RP_GP;
-
-
-        Vector3 SuperV2 = helperRotPoint.transform.position - V2;
-        
-        Debug.Log(Vector3.Angle(SuperV2,mousePoint)-90);
-        //z_angle -= Vector3.Angle(SuperV2,mousePoint)-90;
-        //z_angle = this.RadianToDegree(Math.Atan2(V2.y, V2.x));
-
-        // float ang2 = this.RadianToDegree(Math.Atan2(V2.y, V2.x));
-        // float deltaAng =ang2 - z_angle;
-        // z_angle -= deltaAng;
-
+        Vector3 V2 = (norm_GP_Prj_GPMP + v_RP_GP);
 
         float r = new Vector2(v_RP_MP.x,v_RP_MP.y).magnitude;
 
@@ -109,39 +95,44 @@ public class AimControl {
 
         float D = x1*y2-x2*y1;
 
-        //Debug.Log($"TEST 1: {dy} ## 2: {Mathf.Abs(dy)}");
+        float xcord = 0;
+        float ycord = 0;
 
+        float toSqr = Mathf.Pow(r,2)*Mathf.Pow(dr,2)-Mathf.Pow(D,2);
 
-        
-        
+        if (toSqr > 0){
+            float sgnX = (dy <0) ? -1:1;
+            float xcord1 = (D*dy + sgnX*dx*Mathf.Sqrt(toSqr))/Mathf.Pow(dr,2);
+            float xcord2 = (D*dy - sgnX*dx*Mathf.Sqrt(toSqr))/Mathf.Pow(dr,2);
 
-        float sgnX = (dy <0) ? -1:1;
-        float xcord1 = (D*dy + sgnX*dx*Mathf.Sqrt(Mathf.Pow(r,2)*Mathf.Pow(dr,2)-Mathf.Pow(D,2)))/Mathf.Pow(dr,2);
-        float xcord2 = (D*dy - sgnX*dx*Mathf.Sqrt(Mathf.Pow(r,2)*Mathf.Pow(dr,2)-Mathf.Pow(D,2)))/Mathf.Pow(dr,2);
+            float ycord1 = (-D*dx + Mathf.Abs(dy)*Mathf.Sqrt(toSqr))/Mathf.Pow(dr,2);
+            float ycord2 = (-D*dx - Mathf.Abs(dy)*Mathf.Sqrt(toSqr))/Mathf.Pow(dr,2);
+            
+            Vector2 v_mp_pos1 = new Vector2(V2.x, V2.y) - new Vector2(xcord1, ycord1);
+            Vector2 v_mp_pos2 = new Vector2(V2.x, V2.y) - new Vector2(xcord2, ycord2);
 
+            if (v_mp_pos1.magnitude > v_mp_pos2.magnitude){
+                xcord = xcord2;
+                ycord = ycord2;
+            } else {
+                xcord = xcord1;
+                ycord = ycord1;
+            }
 
-        float ycord1 = (-D*dx + Mathf.Abs(dy)*Mathf.Sqrt(Mathf.Pow(r,2)*Mathf.Pow(dr,2)-Mathf.Pow(D,2)))/Mathf.Pow(dr,2);
-        float ycord2 = (-D*dx - Mathf.Abs(dy)*Mathf.Sqrt(Mathf.Pow(r,2)*Mathf.Pow(dr,2)-Mathf.Pow(D,2)))/Mathf.Pow(dr,2);
-        
-
-
-
-        
-
-    
-
-        //z_angle -= this.RadianToDegree(Math.Atan2(ycord1, xcord1));
-        Debug.Log($"Z ANG     {z_angle}");
-
-        float ang2 = this.RadianToDegree(Math.Atan2(ycord1, xcord1));
-        float deltaAng =ang2 - z_angle;
-        z_angle -= deltaAng;
-
-
-        
+            float ang2 = this.RadianToDegree(Math.Atan2(ycord, xcord));
+            float deltaAng =ang2 - z_angle;
+            z_angle -= deltaAng;
+        } else {
+            float ang2 = this.RadianToDegree(Math.Atan2(V2.y, V2.x));
+            float deltaAng =ang2 - z_angle;
+            z_angle -= deltaAng;
+        }
 
         if (debug) {
-            Debug.Log($"MOUSE  X    {mousePoint.x - helperRotPoint.transform.position.x}  Y   {mousePoint.y -helperRotPoint.transform.position.y}");
+            Debug.Log($"Z ANG     {z_angle}");
+            Debug.Log($"XCORD   {xcord}  YCORD   {ycord}");
+            Debug.Log($"the math   {Mathf.Pow(r,2)*Mathf.Pow(dr,2)-Mathf.Pow(D,2)}");
+            //Debug.Log($"MOUSE  X    {mousePoint.x - helperRotPoint.transform.position.x}  Y   {mousePoint.y -helperRotPoint.transform.position.y}");
 
             Debug.DrawLine(helperRotPoint.transform.position,helperRotPoint.transform.position+ V2, Color.red);
             Debug.DrawLine(Vector3.zero, V2, Color.red);
