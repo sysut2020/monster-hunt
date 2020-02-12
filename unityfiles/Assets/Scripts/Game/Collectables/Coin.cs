@@ -10,8 +10,8 @@ public class Coin : MonoBehaviour {
         set => coinValue = value;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision) {
-        if (collision.gameObject.CompareTag("Player")) {
+    private void Start() {
+        if (GameObject.Find("Coin")) {
             CollectibleEvents.CoinCollected.Invoke(this, this);
         }
     }

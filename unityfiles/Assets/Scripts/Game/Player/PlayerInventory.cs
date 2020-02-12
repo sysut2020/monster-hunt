@@ -33,10 +33,12 @@ public class PlayerInventory : MonoBehaviour {
 
     private void Start() {
         CollectibleEvents.CoinCollected += (sender, coin) => AddMoney(coin.CoinValue);
+        CollectibleEvents.LetterCollected += (sender, letter) => AddLetter(letter.LetterString);
     }
 
     private void OnDestroy() {
         CollectibleEvents.CoinCollected -= (sender, coin) => AddMoney(coin.CoinValue);
+        CollectibleEvents.LetterCollected -= (sender, letter) => AddLetter(letter.LetterString);
     }
     // -- public -- //
 
@@ -60,7 +62,7 @@ public class PlayerInventory : MonoBehaviour {
     /// adds the provided letter
     /// </summary>
     /// <param name="letter">the letter to add</param>
-    public void AddLetter (string letter) {
+    public void AddLetter(string letter) {
         this.collectedLetters.Add(letter);
     }
 
@@ -68,7 +70,7 @@ public class PlayerInventory : MonoBehaviour {
     /// adds the provided amount of money
     /// </summary>
     /// <param name="toAdd">the amount of money to add</param>
-    public void AddMoney (int value) {
+    public void AddMoney(int value) {
         this.money += value;
     }
 

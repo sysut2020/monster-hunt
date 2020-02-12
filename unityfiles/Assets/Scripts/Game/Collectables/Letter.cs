@@ -10,9 +10,9 @@ public class Letter : MonoBehaviour {
         set => letterString = value;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision) {
-        if (collision.gameObject.CompareTag("Player")) {
-            
+    private void Start() {
+        if (GameObject.Find("Letter " + letterString)) {
+            CollectibleEvents.LetterCollected.Invoke(this, this);
         }
     }
 }

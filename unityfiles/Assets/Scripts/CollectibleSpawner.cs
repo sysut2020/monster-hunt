@@ -89,9 +89,10 @@ public class CollectibleSpawner : MonoBehaviour {
                 string letter = SudoRandomLetterGenerator.Instance.GenerateLetter();
                 LetterController le = Instantiate(letterCollectable);
                 collectible = le.gameObject;
+                Letter letterToAddToCharacter = collectible.AddComponent<Letter>();
+                letterToAddToCharacter.LetterString = letter;
                 le.SetLetter(letter);
                 collectible.name = "Letter " + letter;
-                collectible.AddComponent<Letter>();
                 break;
 
             default:
