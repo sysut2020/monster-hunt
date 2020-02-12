@@ -34,13 +34,7 @@ public class Enemy : MonoBehaviour, IDamageable {
     public Transform FrontPoint {
         get { return this.frontPoint; }
     }
-
-    private void Update() {
-        if (Input.GetKeyDown(KeyCode.K)) {
-            Dead();
-        }
-    }
-
+    
     // -- public -- //
 
     public void Dead() {
