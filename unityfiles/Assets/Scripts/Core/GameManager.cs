@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour {
 
     private void Start() {
         // Finds out how many enemies are in the level
-        numberOfEnemies = levelDetails.numberOfEnemies;
+        numberOfEnemies = levelDetails.NumberOfEnemies;
     }
 
     private void OnEnable() {
