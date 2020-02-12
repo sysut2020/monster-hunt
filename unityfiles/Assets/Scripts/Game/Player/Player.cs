@@ -26,9 +26,9 @@ public class Player : MonoBehaviour, IDamageable {
 
     private Animator animator;
 
-    public delegate void PlayerDeadHandler();
+    public delegate void EventHandler();
 
-    public static event PlayerDeadHandler OnPlayerDead;
+    public static event EventHandler OnPlayerDead;
 
 
     private PlayerWeaponController playerWeaponController;
