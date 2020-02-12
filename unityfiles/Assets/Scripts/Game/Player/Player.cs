@@ -60,6 +60,15 @@ public class Player : MonoBehaviour {
         CheckSingleton();
 
         animator = this.GetComponent<Animator>();
+        GameManager.OnEndGame += EndGame;
+    }
+
+    private void OnDestroy() {
+        GameManager.OnEndGame -= EndGame;
+    }
+
+    private void EndGame() {
+        Destroy(gameObject);
     }
 
     /// <summary>
