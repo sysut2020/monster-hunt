@@ -199,13 +199,6 @@ public class Player : MonoBehaviour {
     void Update() {
         // UpdateEffects ();
 
-        // todo remove this when done testing    
-        if (Input.GetKeyDown(KeyCode.F)) {
-            playerHealthController.ApplyDamage(1f);
-            animator.SetTrigger(DAMAGE_STRING);
-            Debug.Log("Taking away health");
-        }
-
         CheckIsDead();
     }
 

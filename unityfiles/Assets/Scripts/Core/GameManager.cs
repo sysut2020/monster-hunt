@@ -66,7 +66,6 @@ public class GameManager : MonoBehaviour {
     }
 
     private void ShowGameOver() {
-        // todo show game over
         gameOverCanvas.SetActive(true);
     }
     
