@@ -4,7 +4,6 @@ using UnityEngine.Experimental.PlayerLoop;
 
 public class GameManager : MonoBehaviour {
     private const int MAIN_MENU_SCENE_INDEX = 0;
-
     
     private static GameManager instance;
 
@@ -16,6 +15,9 @@ public class GameManager : MonoBehaviour {
 
     private int numberOfEnemies = 0;
 
+    /// <summary>
+    /// Setting up singleton pattern
+    /// </summary>
     public static GameManager Instance {
         get {
             if (instance == null) {
@@ -37,10 +39,19 @@ public class GameManager : MonoBehaviour {
     }
 
     private void Start() {
+        // Finds out how many enemies are in the level
         numberOfEnemies = levelDetails.numberOfEnemies;
     }
 
     private void OnEnable() {
+        SubscribeToEvents();
+    }
+    
+    private void OnDestroy() {
+        UnsubscribeFromEvents();
+    }
+
+    private void SubscribeToEvents() {
         // todo subscribe to OnPlayerDead, OnTimeOut, OnAllEnemiesDead
         Enemy.OnEnemyDead += DecrementEnemies;
         Player.OnPlayerDead += ShowGameOver;
@@ -58,7 +69,7 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    private void OnDestroy() {
+    private void UnsubscribeFromEvents() {
         // todo unsubscribe from OnPlayerDead, OnTimeOut, OnAllEnemiesDead
         // maybe that this also should be done on disable
         Enemy.OnEnemyDead -= DecrementEnemies;
@@ -68,7 +79,7 @@ public class GameManager : MonoBehaviour {
     private void ShowGameOver() {
         gameOverCanvas.SetActive(true);
     }
-    
+
     private void ShowMainMenu() {
         UnityEngine.SceneManagement.SceneManager.LoadScene(MAIN_MENU_SCENE_INDEX);
     }
