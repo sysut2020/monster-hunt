@@ -1,5 +1,9 @@
+using System.Numerics;
 using System;
 using UnityEngine;
+using Vector3 = UnityEngine.Vector3;
+using Quaternion = UnityEngine.Quaternion;
+
 
 public class PlayerGunFollowsMouse : MonoBehaviour {
 
@@ -24,6 +28,7 @@ public class PlayerGunFollowsMouse : MonoBehaviour {
 
     private void RotateGun() {
         Vector3 currentMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //Vector3 _ = aimControl.GetAngle(currentMousePosition);
         rotatePoint.transform.rotation = Quaternion.Euler(aimControl.GetAngle(currentMousePosition));
     }
 
@@ -51,6 +56,9 @@ public class PlayerGunFollowsMouse : MonoBehaviour {
     private void Start() {
         mousePosition = new MousePosition();
         this.aimControl = new AimControl(aimPoint.gameObject, rotatePoint.transform);
+
+        // REMOVE
+        //rotatePoint.transform.rotation = Quaternion.Euler(new Vector3(0,0,0));
     }
 
     void FixedUpdate() {

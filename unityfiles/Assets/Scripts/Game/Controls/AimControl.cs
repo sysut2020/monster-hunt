@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Numerics;
+
 using UnityEngine;
 
 using Vector3 = UnityEngine.Vector3;
@@ -78,32 +76,83 @@ public class AimControl {
         Vector3 norm_GP = helperAimPoint.transform.right;
         Vector3 norm_GP_Prj_GPMP = Vector3.Project(v_GP_MP, norm_GP);
 
-        Vector3 norm_RPMP_Prj_GPMP = Vector3.Project(v_GP_MP, v_RP_MP.normalized);
         Vector3 v_RP_GP_Prj_GPMP = (mousePoint - (norm_GP_Prj_GPMP - v_GP_MP)) - helperRotPoint.transform.position;
         
-        z_angle = this.RadianToDegree(Math.Atan2(v_RP_GP_Prj_GPMP.y, v_RP_GP_Prj_GPMP.x));
+        //z_angle = this.RadianToDegree(Math.Atan2(v_RP_GP_Prj_GPMP.y, v_RP_GP_Prj_GPMP.x));
 
-        //z_angle = this.RadianToDegree(Math.Atan2(norm_GP_Prj_GPMP.y, norm_GP_Prj_GPMP.x));
-        //Debug.Log($"DEBUG ZANG {z_angle}");
-        //float additional = this.RadianToDegree(Math.Acos((new Vector2(v_GP_MP.x, v_GP_MP.y).magnitude/new Vector2(norm_GP_Prj_GPMP.x, norm_GP_Prj_GPMP.y).magnitude) % 1) );
-        //Debug.Log($"DEBUG additional {additional}");
+        Vector3 v_RP_GP = helperAimPoint.transform.position - helperRotPoint.transform.position;
+        Vector3 V2 = norm_GP_Prj_GPMP + v_RP_GP;
 
-        // Debug.Log($"DEBUG Hosss {v_GP_MP.magnitude}");
-        // Debug.Log($"DEBUG A {v_GP_MP.x} {v_GP_MP.y} {v_GP_MP.z}");
 
-        // Debug.Log($"DEBUG mot {norm_GP_Prj_GPMP.magnitude}");
-        // Debug.Log($"DEBUG B {norm_GP_Prj_GPMP.x} {norm_GP_Prj_GPMP.y} {norm_GP_Prj_GPMP.z}");
+        Vector3 SuperV2 = helperRotPoint.transform.position - V2;
+        
+        Debug.Log(Vector3.Angle(SuperV2,mousePoint)-90);
+        //z_angle -= Vector3.Angle(SuperV2,mousePoint)-90;
+        //z_angle = this.RadianToDegree(Math.Atan2(V2.y, V2.x));
+
+        // float ang2 = this.RadianToDegree(Math.Atan2(V2.y, V2.x));
+        // float deltaAng =ang2 - z_angle;
+        // z_angle -= deltaAng;
+
+
+        float r = new Vector2(v_RP_MP.x,v_RP_MP.y).magnitude;
+
+        float x1 = v_RP_GP.x;
+        float y1 = v_RP_GP.y;
+
+        float x2 = V2.x;
+        float y2 = V2.y;
+
+        float dx = x2-x1;
+        float dy = y2-y1;
+        float dr = Mathf.Sqrt(Mathf.Pow(dx,2)+Mathf.Pow(dy,2));
+
+        float D = x1*y2-x2*y1;
+
+        //Debug.Log($"TEST 1: {dy} ## 2: {Mathf.Abs(dy)}");
+
+
+        
         
 
-        Debug.Log($"DEBUG ZANG2 {z_angle}");
+        float sgnX = (dy <0) ? -1:1;
+        float xcord1 = (D*dy + sgnX*dx*Mathf.Sqrt(Mathf.Pow(r,2)*Mathf.Pow(dr,2)-Mathf.Pow(D,2)))/Mathf.Pow(dr,2);
+        float xcord2 = (D*dy - sgnX*dx*Mathf.Sqrt(Mathf.Pow(r,2)*Mathf.Pow(dr,2)-Mathf.Pow(D,2)))/Mathf.Pow(dr,2);
+
+
+        float ycord1 = (-D*dx + Mathf.Abs(dy)*Mathf.Sqrt(Mathf.Pow(r,2)*Mathf.Pow(dr,2)-Mathf.Pow(D,2)))/Mathf.Pow(dr,2);
+        float ycord2 = (-D*dx - Mathf.Abs(dy)*Mathf.Sqrt(Mathf.Pow(r,2)*Mathf.Pow(dr,2)-Mathf.Pow(D,2)))/Mathf.Pow(dr,2);
+        
+
+
+
+        
+
+    
+
+        //z_angle -= this.RadianToDegree(Math.Atan2(ycord1, xcord1));
+        Debug.Log($"Z ANG     {z_angle}");
+
+        float ang2 = this.RadianToDegree(Math.Atan2(ycord1, xcord1));
+        float deltaAng =ang2 - z_angle;
+        z_angle -= deltaAng;
+
+
+        
 
         if (debug) {
-            Debug.DrawLine(Vector3.zero, norm_GP_Prj_GPMP, Color.red);
-            Debug.DrawLine(Vector3.zero, v_GP_MP, Color.green);
-            // Debug.DrawLine(Vector3.zero, Vector3.Project(v_GP_MP, norm_GP), Color.yellow);
+            Debug.Log($"MOUSE  X    {mousePoint.x - helperRotPoint.transform.position.x}  Y   {mousePoint.y -helperRotPoint.transform.position.y}");
+
+            Debug.DrawLine(helperRotPoint.transform.position,helperRotPoint.transform.position+ V2, Color.red);
+            Debug.DrawLine(Vector3.zero, V2, Color.red);
+
+            Debug.DrawLine(helperRotPoint.transform.position,helperRotPoint.transform.position+ v_RP_GP, Color.green);
+            //Debug.DrawLine(helperRotPoint.transform.position,helperRotPoint.transform.position+ new Vector3(xcord1,ycord,0), Color.yellow);
+            Debug.DrawLine(helperRotPoint.transform.position,helperRotPoint.transform.position+v_RP_GP_Prj_GPMP, Color.blue);
             // Debug.DrawLine(mousePoint,mousePoint + (norm_GP_Prj_GPMP - v_GP_MP), Color.blue);
             Debug.DrawLine(RotationPoint.position, Camera.main.ScreenToWorldPoint(Input.mousePosition), Color.magenta);
 
+            Debug.DrawRay(RotationPoint.transform.position, RotationPoint.transform.right * 100, Color.gray);
             Debug.DrawRay(FirePoint.transform.position, FirePoint.transform.right * 100, Color.cyan);
             //Debug.DrawRay(FirePoint.transform.position, helperAimPoint.transform.right * 100, Color.white);
         }
