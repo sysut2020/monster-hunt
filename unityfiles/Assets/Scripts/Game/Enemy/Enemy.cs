@@ -1,6 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+
+public class EnemyEventArgs: EventArgs{
+    public GameObject EnemyGO {get; set;}
+    public EnemyType EnemyType {get; set;}
+}
+
+public static class EnemyEvents{
+    public static event EventHandler<EnemyEventArgs> EnemySpawnEvent;
+    public static event EventHandler<EnemyEventArgs> EnemyKilledEvent;
+}
 
 /// <summary>
 /// Describes an enemy
@@ -12,26 +23,29 @@ public class Enemy : MonoBehaviour, IDamageable {
     [SerializeField]
     private EnemyType enemyType;
 
-    private bool isAttacking = false;
-
-    public bool IsAttacking {
-        get { return this.isAttacking; }
-        set { this.isAttacking = value; }
-    }
-
-    private HealthController healthController;
-
     [Tooltip("The front point a raycast is sent from")]
     [SerializeField]
     private Transform frontPoint;
 
+    private bool isAttacking = false;
+    private HealthController healthController;
+
+    
+
+    // -- properties -- //
+
+    public bool IsAttacking {
+        get => this.isAttacking;
+        set => this.isAttacking = value;
+    }
+
     public EnemyType EnemyType {
-        get { return this.enemyType; }
-        set { this.enemyType = value; }
+        get => this.enemyType; 
+        set => this.enemyType = value; 
     }
 
     public Transform FrontPoint {
-        get { return this.frontPoint; }
+        get =>  this.frontPoint; 
     }
 
     // -- public -- //
