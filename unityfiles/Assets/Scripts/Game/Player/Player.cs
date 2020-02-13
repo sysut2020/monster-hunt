@@ -1,30 +1,39 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 /// <summary>
 /// this class describes the player
 /// </summary>
-public class Player : MonoBehaviour {
+public class Player : MonoBehaviour, IDamageable {
+    private static Player instance;
+
+    public static Player Instance {
+        get {
+            if (instance == null) {
+                GameObject player = new GameObject("Player");
+                player.AddComponent<Player>();
+            }
+
+            return instance;
+        }
+    }
 
     [SerializeField]
-    private int playerLives;
-
     private HealthController playerHealthController;
 
     private PlayerInventory playerInventory;
 
     private Animator animator;
 
+    public delegate void EventHandler();
+
+    public static event EventHandler OnPlayerDead;
+
+
     private PlayerWeaponController playerWeaponController;
 
     // -- properties -- //
-    public int PlayerLives {
-        get => playerLives;
-        set => playerLives = value;
-    }
 
     public HealthController PlayerHealthController {
         get => playerHealthController;
@@ -44,7 +53,38 @@ public class Player : MonoBehaviour {
     // -- public -- //
 
     private void Awake() {
+        CheckSingleton();
+
         animator = this.GetComponent<Animator>();
+        SubscribeToEvents();
+    }
+
+    private void OnDestroy() {
+        UnsubscribeFromEvents();
+    }
+    
+    private void SubscribeToEvents() {
+        GameManager.OnEndGame += EndGame;
+    }
+
+    private void UnsubscribeFromEvents() {
+        GameManager.OnEndGame -= EndGame;
+    }
+
+    private void EndGame() {
+        Destroy(gameObject);
+    }
+
+    /// <summary>
+    /// Checks if there exist other instances of this class.
+    /// </summary>
+    private void CheckSingleton() {
+        if (instance != null && instance != this) {
+            Destroy(this.gameObject);
+        } else {
+            instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
     }
 
     /// <summary>
@@ -120,9 +160,8 @@ public class Player : MonoBehaviour {
 
         try {
             if (enemy.IsAttacking) {
-                animator.SetTrigger("Damage");
+                animator.SetTrigger(AnimationTriggers.DAMAGE);                
             }
-
         } catch (System.Exception) { }
 
     }

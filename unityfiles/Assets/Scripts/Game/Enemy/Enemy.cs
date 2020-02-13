@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
@@ -47,7 +48,7 @@ public class Enemy : MonoBehaviour, IDamageable {
     public Transform FrontPoint {
         get =>  this.frontPoint; 
     }
-
+    
     // -- public -- //
 
     public void Dead() {
@@ -63,4 +64,9 @@ public class Enemy : MonoBehaviour, IDamageable {
         this.healthController = this.gameObject.GetComponent<HealthController>();
     }
 
+    private void OnDestroy() {
+        OnEnemyDead?.Invoke();
+    }
+
+    public static event Action OnEnemyDead;
 }
