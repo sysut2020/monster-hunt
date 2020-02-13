@@ -11,4 +11,9 @@ public class EnemyType : ScriptableObject {
 
     public float speed;
 
+    public float letterDropChance;
+    public float coinDropChance;
+    public float powerUpDropChance;
+
+
 }
