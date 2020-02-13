@@ -33,8 +33,33 @@ public class Spawner : MonoBehaviour {
 
     // -- internal -- //
 
+    private static Spawner instance;
+
+    public static Spawner Instance{
+        get {
+            if (instance == null) {
+                instance = new Spawner();
+            }
+
+            return instance;
+        }
+    }
+
     private List<GameObject> spawnPoints = new List<GameObject> ();
     private readonly Timers spawnTimer = new Timers();
+
+    // -- Public -- //
+    public void SpawnOnAll(){
+        print("SPAWNING");
+        spawnPoints = (List<GameObject>) WUGameObjects.GetGOChildren(this.gameObject);
+
+        foreach (GameObject item in spawnPoints) {
+            GameObject EnemyCopy = Instantiate (enemyTypes[0]);
+            EnemyCopy.transform.rotation = item.transform.rotation;
+            EnemyCopy.transform.position = item.transform.position;
+            EnemyCopy.SetActive (true);
+        }
+    }
 
     // -- private -- // 
 
@@ -57,16 +82,7 @@ public class Spawner : MonoBehaviour {
 
 
     // -- unity -- // 
-    void Start () {
-
-        spawnPoints = (List<GameObject>) WUGameObjects.GetGOChildren(this.gameObject);
-
-        foreach (GameObject item in spawnPoints) {
-            GameObject EnemyCopy = Instantiate (enemyTypes[0]);
-            EnemyCopy.transform.rotation = item.transform.rotation;
-            EnemyCopy.transform.position = item.transform.position;
-            EnemyCopy.SetActive (true);
-        }
-
+    private void Awake(){
+        instance = this;
     }
 }

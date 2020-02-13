@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Xml.Linq;
 using System;
 using System.Linq;
 using UnityEngine;
@@ -19,7 +21,7 @@ public class Player : MonoBehaviour, IDamageable {
     [SerializeField]
     private HealthController playerHealthController;
 
-    private PlayerInventory playerInventory;
+    private PlayerInventory playerInventory = new PlayerInventory();
 
     private Animator animator;
 
@@ -133,7 +135,9 @@ public class Player : MonoBehaviour, IDamageable {
     /// if they are the effect is cleaned out and removed
     /// </summary>
     private void UpdateEffects() {
-        foreach (IEffectPowerUp effect in this.playerInventory.ActivePickups.Reverse<IEffectPowerUp>()) {
+        List<IEffectPowerUp> tmp = this.playerInventory.ActivePickups;
+        tmp.Reverse<IEffectPowerUp>();
+        foreach (IEffectPowerUp effect in tmp) {
             if (effect.IsEffectFinished()) {
                 effect.Cleanup();
                 this.playerInventory.RemoveEffectPickup(effect);
@@ -149,7 +153,7 @@ public class Player : MonoBehaviour, IDamageable {
     /// Update is called every frame, if the MonoBehaviour is enabled.
     /// </summary>
     void Update() {
-        UpdateEffects();
+        //UpdateEffects();
     }
 
 

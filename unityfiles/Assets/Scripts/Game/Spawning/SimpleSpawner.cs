@@ -15,9 +15,27 @@ public class SimpleSpawner : MonoBehaviour {
     [SerializeField]
     private EnemyType enemyTypeToSpawn = null;
 
-    // -- internal -- //
     private float lastSpawn = 0;
     private GameObject enemyBlueprint = null;
+
+    // -- singelton -- //
+
+    
+    private static SimpleSpawner instance;
+
+    public static SimpleSpawner Instance{
+        get {
+            if (instance == null) {
+                instance = new SimpleSpawner();
+            }
+
+            return instance;
+        }
+    }
+
+    private void Awake(){
+        instance = (SimpleSpawner.Instance != null)? new SimpleSpawner(): SimpleSpawner.Instance;
+    }
 
     // -- private -- //
     private void GenerateBlueprint () {
@@ -36,7 +54,7 @@ public class SimpleSpawner : MonoBehaviour {
         enemyScript.EnemyType = this.enemyTypeToSpawn;
       
 
-        IEnemyBehavior EBH = this.enemyBlueprint.AddComponent<EBTestMoveDown> ();
+        //IEnemyBehavior EBH = this.enemyBlueprint.AddComponent<EBTestMoveDown> ();
 
         HealthController healthController = this.enemyBlueprint.AddComponent<HealthController> ();
         healthController.EntityHealth = 5f;
