@@ -3,7 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerWeaponController : MonoBehaviour {
+/// <summary>
+/// event args for the weapon change event. 
+/// can hold info about the new gun controller
+/// </summary>
+public class WeaponChangedEventArgs: EventArgs{
+    public GunController NewGunController {get; set;}
+}
+
+public class PlayerWeaponController: MonoBehaviour {
 
     [SerializeField]
     private List<GameObject> availableWeapons;
@@ -73,6 +81,11 @@ public class PlayerWeaponController : MonoBehaviour {
     /// </summary>
     /// <returns>The weapon controller of the new active weapon</returns>
     public GunController ChangeToPrevWeapon() => this.ChangeWeapon(-1);
+
+    // -- events -- //
+
+    public event EventHandler<WeaponChangedEventArgs> WeaponChangedEvent;
+    
     // -- private -- //
 
     /// <summary>
@@ -89,6 +102,11 @@ public class PlayerWeaponController : MonoBehaviour {
             this.currentWeaponIndex = newIndex;
             this.ActiveGunController = WUGameObjects.GetChildWithTagLike(this.availableWeapons[newIndex], "gun")[0].GetComponent<GunController>();
         }
+        WeaponChangedEventArgs args = new WeaponChangedEventArgs();
+        args.NewGunController = this.ActiveGunController;
+
+        WeaponChangedEvent?.Invoke(this, args);
+
         
         return this.activeGunController;
     }

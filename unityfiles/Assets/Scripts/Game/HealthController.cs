@@ -13,10 +13,6 @@ public class HealthController : MonoBehaviour {
     [SerializeField]
     private float entityHealth = 1;
 
-    [Tooltip ("Can the entity be healed after death")]
-    [SerializeField]
-    private bool canRevive = false;
-
     private bool isDead = false;
 
     private IDamageable damageable;
@@ -47,7 +43,6 @@ public class HealthController : MonoBehaviour {
     /// </summary>
     /// <param name="dmg">The amount of damage given to the entity</param>
     public void ApplyDamage (float dmg) {
-        // TODO: Possible debonce
         this.entityHealth = this.entityHealth - dmg;
 
         this.CheckIfDead ();
@@ -59,9 +54,8 @@ public class HealthController : MonoBehaviour {
     /// </summary>
     /// <param name="healing">The amount of health given to the entity</param>
     public void ApplyHealing (float healing) {
-        // TODO: Possible debonce 
 
-        if (!this.isDead || canRevive) {
+        if (!this.isDead) {
             this.entityHealth = this.entityHealth + healing;
         }
     }
