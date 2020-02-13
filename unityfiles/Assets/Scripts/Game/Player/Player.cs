@@ -2,22 +2,19 @@ using System;
 using System.Linq;
 using UnityEngine;
 
+public class PlayerEventArgs: EventArgs{
+    public GameObject PlayerGO {get; set;}
+    public EnemyType PlayerMoney {get; set;}
+    public EnemyType PlayerLetters {get; set;}
+}
+
+
+
 /// <summary>
 /// this class describes the player
 /// </summary>
 public class Player : MonoBehaviour, IDamageable {
-    private static Player instance;
-
-    public static Player Instance {
-        get {
-            if (instance == null) {
-                GameObject player = new GameObject("Player");
-                player.AddComponent<Player>();
-            }
-
-            return instance;
-        }
-    }
+    
 
     [SerializeField]
     private HealthController playerHealthController;
@@ -32,6 +29,21 @@ public class Player : MonoBehaviour, IDamageable {
 
 
     private PlayerWeaponController playerWeaponController;
+
+    // -- singelton -- //
+
+    private static Player instance;
+
+    public static Player Instance {
+        get {
+            if (instance == null) {
+                GameObject player = new GameObject("Player");
+                player.AddComponent<Player>();
+            }
+
+            return instance;
+        }
+    }
 
     // -- properties -- //
 
@@ -52,28 +64,9 @@ public class Player : MonoBehaviour, IDamageable {
 
     // -- public -- //
 
-    private void Awake() {
-        CheckSingleton();
-
-        animator = this.GetComponent<Animator>();
-        SubscribeToEvents();
-    }
-
-    private void OnDestroy() {
-        UnsubscribeFromEvents();
-    }
     
-    private void SubscribeToEvents() {
-        GameManager.OnEndGame += EndGame;
-    }
 
-    private void UnsubscribeFromEvents() {
-        GameManager.OnEndGame -= EndGame;
-    }
-
-    private void EndGame() {
-        Destroy(gameObject);
-    }
+    
 
     /// <summary>
     /// Checks if there exist other instances of this class.
@@ -107,24 +100,32 @@ public class Player : MonoBehaviour, IDamageable {
         }
     }
 
-    /// <summary>
-    /// Gives money to the player
-    /// </summary>
-    /// <param name="money">the amount of money to give the player</param>
-    public void GiveMoney(int money) {
-        this.PlayerInventory.AddMoney(money);
+    public void Dead(){
+        PlayerEventArgs args = new PlayerEventArgs();
+        // TODO: fill args
+        PlayerKilledEvent?.Invoke(this, args);
+    }
+    // -- events -- //
+
+    public static event EventHandler<PlayerEventArgs> PlayerKilledEvent;
+    private void SubscribeToEvents() {
+        LevelManager.CleanUpEvent += c_CleanupEvent;
     }
 
-    /// <summary>
-    /// Gives a letter to the player
-    /// </summary>
-    /// <param name="letter">the letter to give to the player</param>        
-    public void GiveLetter(String letter) {
-        this.playerInventory.AddLetter(letter);
+    private void UnsubscribeFromEvents() {
+        LevelManager.CleanUpEvent -= c_CleanupEvent;
     }
 
+    private void c_CleanupEvent(){
+        this.UnsubscribeFromEvents();
+        Destroy(gameObject);
+    }
+
+    private void c_CleanupEvent(object o, EventArgs _) => this.c_CleanupEvent();
 
     // -- private -- // 
+
+  
 
     
     /// <summary>
@@ -151,18 +152,22 @@ public class Player : MonoBehaviour, IDamageable {
         UpdateEffects();
     }
 
-    /// <summary>
-    /// Checks for collisions with other objects
-    /// </summary>
-    /// <param name="other"></param>
-    private void OnCollisionEnter2D(Collision2D other) {
-        var enemy = other.gameObject.GetComponent<Enemy>();
 
-        try {
+    private void Awake() {
+        CheckSingleton();
+
+        animator = this.GetComponent<Animator>();
+        SubscribeToEvents();
+    }
+
+
+    void OnTriggerEnter2D(Collider2D Col) {
+
+        if (Col.TryGetComponent(out Enemy enemy)) {
             if (enemy.IsAttacking) {
                 animator.SetTrigger(AnimationTriggers.DAMAGE);                
             }
-        } catch (System.Exception) { }
-
+        }
     }
+
 }
