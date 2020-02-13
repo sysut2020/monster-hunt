@@ -12,6 +12,24 @@ public class PlayerWeaponController : MonoBehaviour {
     private int currentWeaponIndex;
 
     private GunController activeGunController;
+    
+
+    // -- singelton -- //
+    private static PlayerWeaponController instance;
+
+    public static PlayerWeaponController Instance{
+        get {
+            if (instance == null) {
+                instance = new PlayerWeaponController();
+            }
+
+            return instance;
+        }
+    }
+
+    private void Awake(){
+        instance = (PlayerWeaponController.Instance != null)? new PlayerWeaponController(): PlayerWeaponController.Instance;
+    }
 
     // -- properties -- //
     public List<GameObject> AvailableWeapons {

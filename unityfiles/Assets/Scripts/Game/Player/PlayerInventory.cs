@@ -14,6 +14,18 @@ public class PlayerInventory : MonoBehaviour {
     [SerializeField]
     private List<String> collectedLetters;
     private List<IEffectPickup> activePickups;
+    // -- singelton -- //
+    private static PlayerInventory instance;
+
+    public static PlayerInventory Instance{
+        get {
+            if (instance == null) {
+                instance = new PlayerInventory();
+            }
+
+            return instance;
+        }
+    }
 
     // -- properties -- //
     public int Money {
