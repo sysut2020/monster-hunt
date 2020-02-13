@@ -7,7 +7,8 @@ public class MainMenu : MonoBehaviour
     public void PlayGame()
     {
         Debug.Log("Starting the main game");
-        SceneManager.Instance.ChangeScene(1); // changes to scene nr. 1
+        GameManager.Instance.GameStateChange("TEST_LEVEL");
+        //SceneManager.Instance.ChangeScene(1); // changes to scene nr. 1
     }
 
     public void QuitGame()
