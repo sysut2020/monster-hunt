@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// interface describes a pickup that affects the gun in som way
 /// </summary>
-public interface IWeaponEffectPickup : IEffectPickup {
+public interface IWeaponEffectPowerUp : IEffectPowerUp {
 
     /// <summary>
     /// Describes how to react when the active weapon is changed
