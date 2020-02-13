@@ -9,11 +9,6 @@ public class EnemyEventArgs: EventArgs{
     public EnemyType EnemyType {get; set;}
 }
 
-public static class EnemyEvents{
-    public static event EventHandler<EnemyEventArgs> EnemySpawnEvent;
-    public static event EventHandler<EnemyEventArgs> EnemyKilledEvent;
-}
-
 /// <summary>
 /// Describes an enemy
 /// </summary>
@@ -56,17 +51,27 @@ public class Enemy : MonoBehaviour, IDamageable {
         GameObject.Destroy(gameObject);
         CollectibleSpawner.Instance.SpawnCollectible(this.transform.position);
     }
+    // -- events -- //
+    public static event EventHandler<EnemyEventArgs> EnemySpawnEvent;
+    public static event EventHandler<EnemyEventArgs> EnemyKilledEvent;
+
     // -- private -- //
 
     // -- unity -- // 
     void Start() {
         this.tag = "Enemy";
         this.healthController = this.gameObject.GetComponent<HealthController>();
+
+        EnemyEventArgs args = new EnemyEventArgs();
+        args.EnemyGO = this.gameObject;
+        args.EnemyType = this.enemyType;
+        EnemySpawnEvent?.Invoke(this, args);
     }
 
     private void OnDestroy() {
-        OnEnemyDead?.Invoke();
+        EnemyEventArgs args = new EnemyEventArgs();
+        args.EnemyType = this.enemyType;
+        EnemyKilledEvent?.Invoke(this, args);
     }
 
-    public static event Action OnEnemyDead;
 }
