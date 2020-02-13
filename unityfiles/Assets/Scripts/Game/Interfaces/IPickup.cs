@@ -1,25 +1,23 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-
-
+using System;
+using UnityEngine;
 
 /// <summary>
-/// Interface describes an pickup in the game world
+/// Describes the different kind of powerups
 /// </summary>
 public interface IPickup{
 
     /// <summary>
-    /// apply the effect to the player
+    /// Describes how the Pickup should spawn 
     /// </summary>
-    /// <param name="player">the player to apply the effect to</param>
-    void ApplyEffect(Player player);
+    /// <param name="spawnPos">The Possision to spawn the Pickup</param>
+    void Spawn(Transform spawnPos);
+
 
     /// <summary>
-    /// returns the name of the pickup
+    /// Describes how the pickups effect should be applied. ie.
+    ///     give money shoot faster, usually this will call some event
     /// </summary>
-    /// <returns>name of the pickup</returns>
-    string GetPickupName();
+    void Activate();
 
 }
 
