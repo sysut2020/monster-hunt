@@ -20,7 +20,7 @@ using UnityEngine;
 /// </summary>
 public class SudoRandomLetterGenerator {
 
-    private static SudoRandomLetterGenerator instance;
+    
 
     private SudoRandomLetterGenerator(){
         // redeads the letter freq 
@@ -46,7 +46,9 @@ public class SudoRandomLetterGenerator {
         // print("avg run time per gen in tics=" + rt/500);
     }
 
-    // This is sub optimal and should be improved
+
+    // -- singelton -- //
+    private static SudoRandomLetterGenerator instance;
     public static SudoRandomLetterGenerator Instance {
         get {
             if (instance == null) {
