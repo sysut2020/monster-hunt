@@ -3,6 +3,9 @@ using UnityEngine;
 using UnityEngine.Experimental.PlayerLoop;
 
 
+public class StateChangeEventArgs: EventArgs{
+    public String NewState {get; set;}
+}
 
 
 
@@ -13,16 +16,17 @@ public class GameManager : MonoBehaviour {
 
     
 
-    [SerializeField]
-    private LevelDetails levelDetails;
+    
 
 
 
     private const int MAIN_MENU_SCENE_INDEX = 0;
+    private const int TEST_LEVEL_SCENE_INDEX = 1;
     
     private static GameManager instance;
 
-    private int numberOfEnemies = 0;
+    private String currentState = "";
+
 
     // -- properties -- //
 
@@ -46,28 +50,38 @@ public class GameManager : MonoBehaviour {
     /// Decrements the number of enemies by one and then checks if there is any left
     /// If there are none left it will fire the OnEndGame event, and then show the MainMenu
     /// </summary>
-    public void DecrementEnemies() {
-        numberOfEnemies--;
-        if (numberOfEnemies <= 0) {
-            OnEndGame?.Invoke();
-            ShowMainMenu();
-        }
-    }
+    // public void DecrementEnemies() {
+    //     numberOfEnemies--;
+    //     if (numberOfEnemies <= 0) {
+    //         OnEndGame?.Invoke();
+    //         ShowMainMenu();
+    //     }
+    // }
 
     // -- events -- //    
+
+    /// <summary>
+    /// This event tells the listeners the game state has changed
+    /// </summary>
+    public static event EventHandler<StateChangeEventArgs> GameStateChangeEvent;
+
     private void SubscribeToEvents() {
         // todo subscribe to OnPlayerDead, OnTimeOut, OnAllEnemiesDead
-        Enemy.OnEnemyDead += DecrementEnemies;
-        Player.OnPlayerDead += ShowGameOver;        
+        LevelManager.LevelStateChangeEvent += c_LevelStateChangeEvent;
+           
     }
-
     
-
     private void UnsubscribeFromEvents() {
         // todo unsubscribe from OnPlayerDead, OnTimeOut, OnAllEnemiesDead
         // maybe that this also should be done on disable
-        Enemy.OnEnemyDead -= DecrementEnemies;
-        Player.OnPlayerDead -= ShowGameOver;
+        LevelManager.LevelStateChangeEvent -= c_LevelStateChangeEvent;
+        
+    }
+
+    private void c_LevelStateChangeEvent(object o, StateChangeEventArgs args){
+        if (args.NewState == "EXIT"){
+            this.GameStateChange("MAIN_MENU");
+        }
     }
 
     
@@ -85,8 +99,44 @@ public class GameManager : MonoBehaviour {
 
     private void Start() {
         // Finds out how many enemies are in the level
-        numberOfEnemies = levelDetails.NumberOfEnemies;
+        //numberOfEnemies = levelDetails.NumberOfEnemies;
     }
+
+
+    
+
+    public void GameStateChange(String NewState){
+
+        this.currentState = NewState;
+        StateChangeEventArgs args = new StateChangeEventArgs();
+        args.NewState = NewState;
+        GameStateChangeEvent?.Invoke(this, args);
+
+        switch (NewState)
+        {
+            case "MAIN_MENU":
+                Debug.Log($"New state : MAIN_MENU");
+                UnityEngine.SceneManagement.SceneManager.LoadScene(MAIN_MENU_SCENE_INDEX);
+                break;
+
+            case "TEST_LEVEL":
+                Debug.Log($"New state : TEST_LEVEL");
+                SceneManager.Instance.ChangeScene(TEST_LEVEL_SCENE_INDEX);
+                break;
+
+            default:
+                Debug.Log("UNKNOWN GAME STATE");
+                break;
+        }
+
+        
+    }
+
+
+
+
+
+    // -- unity -- //
 
     private void OnEnable() {
         SubscribeToEvents();
@@ -95,27 +145,5 @@ public class GameManager : MonoBehaviour {
     private void OnDestroy() {
         UnsubscribeFromEvents();
     }
-
-    
-
-    private void GameStateChange(String NewState){
-        switch (NewState)
-        {
-            case "MAIN_MENU":
-                Debug.Log($"New state : MAIN_MENU");
-                UnityEngine.SceneManagement.SceneManager.LoadScene(MAIN_MENU_SCENE_INDEX);
-                break;
-
-            default:
-                Debug.Log("UNKNOWN GAME STATE");
-                break;
-        }
-    }
-
-
-
-
-
-    //-- Events --//
 
 }
