@@ -5,10 +5,10 @@ using System;
 /// </summary>
 public class CollectableEvents {
 
-	// public static EventHandler<Coin> CoinCollected;
+	public static EventHandler<Coin> OnCoinCollected;
 
-	// public static EventHandler<PowerupClass> PowerupCollected;
+	public static EventHandler<PowerUP> OnPowerupCollected;
 
-	public static EventHandler<LetterController> LetterCollected;
+	public static EventHandler<LetterController> OnLetterCollected;
 
 }

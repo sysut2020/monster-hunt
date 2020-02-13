@@ -12,7 +12,7 @@ public class PlayerInventory : MonoBehaviour {
     private int money;
 
     [SerializeField]
-    private List<String> collectedLetters;
+    private List<string> collectedLetters;
     private List<IEffectPickup> activePickups;
 
     // -- properties -- //
@@ -21,7 +21,7 @@ public class PlayerInventory : MonoBehaviour {
         internal set => this.money = value;
     }
 
-    public List<String> CollectedLetters {
+    public List<string> CollectedLetters {
         get => collectedLetters;
         internal set => this.collectedLetters = value;
     }
@@ -29,6 +29,18 @@ public class PlayerInventory : MonoBehaviour {
     public List<IEffectPickup> ActivePickups {
         get => activePickups;
         internal set => this.activePickups = value;
+    }
+
+    private void Start() {
+        CollectibleEvents.onCoinPickup += AddMoney;
+        CollectibleEvents.onLetterPickup += AddLetter;
+        CollectibleEvents.onPowerupPickup += AddEffectPickup;
+    }
+
+    private void OnDestroy() {
+        CollectibleEvents.onCoinPickup -= AddMoney;
+        CollectibleEvents.onLetterPickup -= AddLetter;
+        CollectibleEvents.onPowerupPickup -= AddEffectPickup;
     }
     // -- public -- //
 
@@ -52,16 +64,16 @@ public class PlayerInventory : MonoBehaviour {
     /// adds the provided letter
     /// </summary>
     /// <param name="letter">the letter to add</param>
-    public void AddLetter (String letter) {
-        this.collectedLetters.Add (letter);
+    public void AddLetter (string letter) {
+        this.collectedLetters.Add(letter);
     }
 
     /// <summary>
     /// adds the provided amount of money
     /// </summary>
     /// <param name="toAdd">the amount of money to add</param>
-    public void AddMoney (int toAdd) {
-        this.money += toAdd;
+    public void AddMoney (int value) {
+        this.money += value;
     }
 
     // -- private -- // 
