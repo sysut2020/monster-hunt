@@ -8,7 +8,7 @@ using Vector2 = UnityEngine.Vector2;
 using Quaternion = UnityEngine.Quaternion;
 
 /// <summary>
-/// Calulcates the angle between an objects aim point and the rotate
+/// Calculates the angle between an objects aim point and the rotate
 /// point where the rotation of aiming is applied, and calculates an offset, so
 /// we can get the correct rotation angle.
 /// </summary>
@@ -66,18 +66,20 @@ public class AimControl {
     /// <param name="mousePoint">the point to aim at</param>
     /// <returns>angle that points towars mousepoint</returns>
     public Vector3 GetAngle(Vector3 mousePoint) {
+        // rotates the helper gun point towards the mouse
         Vector3 v_RP_MP = mousePoint - RotationPoint.transform.position;
         float z_angle = this.RadianToDegree(Math.Atan2(v_RP_MP.y, v_RP_MP.x));
         bool isFlipped = (z_angle < 90 && z_angle > -90) ? false : true;
         Vector3 angle = (isFlipped) ? new Vector3(180, 0, -z_angle): new Vector3(0, 0, z_angle);
         helperRotPoint.transform.rotation = Quaternion.Euler(angle);
 
+        // finds the vector projected from the shooting direction on the vector from the helper GP to the MP 
         Vector3 v_GP_MP = mousePoint - helperAimPoint.transform.position;
         Vector3 norm_GP = helperAimPoint.transform.right;
         Vector3 norm_GP_Prj_GPMP = Vector3.Project(v_GP_MP, norm_GP);
 
-        Vector3 v_RP_GP_Prj_GPMP = (mousePoint - (norm_GP_Prj_GPMP - v_GP_MP)) - helperRotPoint.transform.position;
-        
+        // finds the point where a line from the helper GP to the point found in the block above
+        // wold intersect a circle centered at the RP with a radius of the distance between the RP and MP
         Vector3 v_RP_GP = helperAimPoint.transform.position - helperRotPoint.transform.position;
         Vector3 V2 = (norm_GP_Prj_GPMP + v_RP_GP);
 
@@ -95,34 +97,39 @@ public class AimControl {
 
         float D = x1*y2-x2*y1;
 
-        float xcord = 0;
-        float ycord = 0;
+        float xCord = 0;
+        float yCord = 0;
 
         float toSqr = Mathf.Pow(r,2)*Mathf.Pow(dr,2)-Mathf.Pow(D,2);
 
+        // to avoid sqrt(-num) only use the "correct" coordinates for x,y when the squared block is
+        // bigger then 0
         if (toSqr > 0){
             float sgnX = (dy <0) ? -1:1;
-            float xcord1 = (D*dy + sgnX*dx*Mathf.Sqrt(toSqr))/Mathf.Pow(dr,2);
-            float xcord2 = (D*dy - sgnX*dx*Mathf.Sqrt(toSqr))/Mathf.Pow(dr,2);
+            float xCord1 = (D*dy + sgnX*dx*Mathf.Sqrt(toSqr))/Mathf.Pow(dr,2);
+            float xCord2 = (D*dy - sgnX*dx*Mathf.Sqrt(toSqr))/Mathf.Pow(dr,2);
 
-            float ycord1 = (-D*dx + Mathf.Abs(dy)*Mathf.Sqrt(toSqr))/Mathf.Pow(dr,2);
-            float ycord2 = (-D*dx - Mathf.Abs(dy)*Mathf.Sqrt(toSqr))/Mathf.Pow(dr,2);
+            float yCord1 = (-D*dx + Mathf.Abs(dy)*Mathf.Sqrt(toSqr))/Mathf.Pow(dr,2);
+            float yCord2 = (-D*dx - Mathf.Abs(dy)*Mathf.Sqrt(toSqr))/Mathf.Pow(dr,2);
             
-            Vector2 v_mp_pos1 = new Vector2(V2.x, V2.y) - new Vector2(xcord1, ycord1);
-            Vector2 v_mp_pos2 = new Vector2(V2.x, V2.y) - new Vector2(xcord2, ycord2);
+            Vector2 v_mp_pos1 = new Vector2(V2.x, V2.y) - new Vector2(xCord1, yCord1);
+            Vector2 v_mp_pos2 = new Vector2(V2.x, V2.y) - new Vector2(xCord2, yCord2);
 
+            // if checks which one of the two fond points is closest and uses that one
+            // the other point wold be on the other intersection point for the ray on the circle 
             if (v_mp_pos1.magnitude > v_mp_pos2.magnitude){
-                xcord = xcord2;
-                ycord = ycord2;
+                xCord = xCord2;
+                yCord = yCord2;
             } else {
-                xcord = xcord1;
-                ycord = ycord1;
+                xCord = xCord1;
+                yCord = yCord1;
             }
 
-            float ang2 = this.RadianToDegree(Math.Atan2(ycord, xcord));
+            float ang2 = this.RadianToDegree(Math.Atan2(yCord, xCord));
             float deltaAng =ang2 - z_angle;
             z_angle -= deltaAng;
         } else {
+            // use the v2 as the gun angle, technically not correct but it works
             float ang2 = this.RadianToDegree(Math.Atan2(V2.y, V2.x));
             float deltaAng =ang2 - z_angle;
             z_angle -= deltaAng;
@@ -130,22 +137,19 @@ public class AimControl {
 
         if (debug) {
             Debug.Log($"Z ANG     {z_angle}");
-            Debug.Log($"XCORD   {xcord}  YCORD   {ycord}");
+            Debug.Log($"X CORD   {xCord}  Y CORD   {yCord}");
             Debug.Log($"the math   {Mathf.Pow(r,2)*Mathf.Pow(dr,2)-Mathf.Pow(D,2)}");
-            //Debug.Log($"MOUSE  X    {mousePoint.x - helperRotPoint.transform.position.x}  Y   {mousePoint.y -helperRotPoint.transform.position.y}");
+            Debug.Log($"MOUSE  X    {mousePoint.x - helperRotPoint.transform.position.x}  Y   {mousePoint.y -helperRotPoint.transform.position.y}");
 
             Debug.DrawLine(helperRotPoint.transform.position,helperRotPoint.transform.position+ V2, Color.red);
             Debug.DrawLine(Vector3.zero, V2, Color.red);
 
             Debug.DrawLine(helperRotPoint.transform.position,helperRotPoint.transform.position+ v_RP_GP, Color.green);
-            //Debug.DrawLine(helperRotPoint.transform.position,helperRotPoint.transform.position+ new Vector3(xcord1,ycord,0), Color.yellow);
-            Debug.DrawLine(helperRotPoint.transform.position,helperRotPoint.transform.position+v_RP_GP_Prj_GPMP, Color.blue);
-            // Debug.DrawLine(mousePoint,mousePoint + (norm_GP_Prj_GPMP - v_GP_MP), Color.blue);
             Debug.DrawLine(RotationPoint.position, Camera.main.ScreenToWorldPoint(Input.mousePosition), Color.magenta);
 
             Debug.DrawRay(RotationPoint.transform.position, RotationPoint.transform.right * 100, Color.gray);
             Debug.DrawRay(FirePoint.transform.position, FirePoint.transform.right * 100, Color.cyan);
-            //Debug.DrawRay(FirePoint.transform.position, helperAimPoint.transform.right * 100, Color.white);
+            Debug.DrawRay(FirePoint.transform.position, helperAimPoint.transform.right * 100, Color.white);
         }
 
         return (isFlipped) ? new Vector3(180, 0, -z_angle) : new Vector3(0, 0, z_angle);
@@ -160,10 +164,20 @@ public class AimControl {
         this.debug = debug;
     }
 
+    /// <summary>
+    /// Converts degrees to radians
+    /// </summary>
+    /// <param name="angle">the angle to convert</param>
+    /// <returns>the angle in radians</returns>
     private double DegreeToRadian(double angle) {
         return (Math.PI * angle / 180.0);
     }
 
+    /// <summary>
+    /// Converts radians to degrees
+    /// </summary>
+    /// <param name="angle">the angle to convert</param>
+    /// <returns>the angle in degrees</returns>
     private float RadianToDegree(double angle) {
         return (float) (angle * (180.0 / Math.PI));
     }
