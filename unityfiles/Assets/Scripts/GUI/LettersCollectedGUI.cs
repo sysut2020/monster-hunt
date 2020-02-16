@@ -20,7 +20,7 @@ public class LettersCollectedGUI : MonoBehaviour {
 
     private void Awake() {
         if (letterCounter == null) throw new MissingComponentException("Missing text component");
-        CollectableEvents.LetterCollected += OnNewLetter;
+        CollectableEvents.OnLetterCollected += OnNewLetter;
         SetLetterText();
     }
 
@@ -28,7 +28,7 @@ public class LettersCollectedGUI : MonoBehaviour {
         this.letterCounter.SetText($"{currentLetterCount} / {lettersToCollect}");
     }
 
-    private void OnNewLetter(object sender, LetterController letter) {
+    private void OnNewLetter(object sender, LetterCollectedArgs letter) {
         this.currentLetterCount++;
         this.SetLetterText();
     }
@@ -43,6 +43,6 @@ public class LettersCollectedGUI : MonoBehaviour {
     }
 
     private void OnDestroy() {
-        CollectableEvents.LetterCollected -= OnNewLetter;
+        CollectableEvents.OnLetterCollected -= OnNewLetter;
     }
 }
