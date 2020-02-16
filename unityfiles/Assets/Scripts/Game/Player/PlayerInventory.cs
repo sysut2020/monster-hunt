@@ -32,15 +32,15 @@ public class PlayerInventory : MonoBehaviour {
     }
 
     private void Start() {
-        CollectableEvents.OnCoinCollected += AddMoney;
-        CollectableEvents.OnLetterCollected += AddLetter;
-        CollectableEvents.OnPowerupCollected += AddEffectPickup;
+        CollectableEvents.OnCoinCollected += OnCoinCollected;
+        CollectableEvents.OnLetterCollected += OnLetterCollected;
+        CollectableEvents.OnPowerupCollected += OnEffectPickup;
     }
 
     private void OnDestroy() {
-        CollectableEvents.OnCoinCollected -= AddMoney;
-        CollectableEvents.OnLetterCollected -= AddLetter;
-        CollectableEvents.OnPowerupCollected -= AddEffectPickup;
+        CollectableEvents.OnCoinCollected -= OnCoinCollected;
+        CollectableEvents.OnLetterCollected -= OnLetterCollected;
+        CollectableEvents.OnPowerupCollected -= OnEffectPickup;
     }
     // -- public -- //
 
@@ -48,8 +48,17 @@ public class PlayerInventory : MonoBehaviour {
     /// Adds the given effect pickup
     /// </summary>
     /// <param name="effect">the pickup to add</param>
-    public void AddEffectPickup(object sender, PowerUpCollectedArgs effect) {
-        this.activePickups.Add(effect.Effect);
+    public void AddEffectPickup(IEffectPickup effect) {
+        this.activePickups.Add(effect);
+    }
+
+    /// <summary>
+    /// Effect collected event subscriber function, adds effect to invetory
+    /// </summary>
+    /// <param name="sender">object that triggered event</param>
+    /// <param name="effect">the effect to add to inventory</param>
+    private void OnEffectPickup(object sender, PowerUpCollectedArgs effect) {
+        this.AddEffectPickup(effect.Effect);
     }
 
     /// <summary>
@@ -64,16 +73,34 @@ public class PlayerInventory : MonoBehaviour {
     /// adds the provided letter
     /// </summary>
     /// <param name="letter">the letter to add</param>
-    public void AddLetter(object sender, LetterCollectedArgs letter) {
-        this.collectedLetters.Add(letter.Letter);
+    public void AddLetter(string letter) {
+        this.collectedLetters.Add(letter);
+    }
+
+    /// <summary>
+    /// Letter collected subscriber function, adds letter to invetory
+    /// </summary>
+    /// <param name="sender">object that triggered event</param>
+    /// <param name="letter">the letter to add to inventory</param>
+    private void OnLetterCollected(object sender, LetterCollectedArgs letter) {
+        this.AddLetter(letter.Letter);
     }
 
     /// <summary>
     /// adds the provided amount of money
     /// </summary>
     /// <param name="toAdd">the amount of money to add</param>
-    public void AddMoney(object sender, CoinCollectedArgs coin) {
-        this.money += coin.Amount;
+    public void AddMoney(int amount) {
+        this.money += amount;
+    }
+
+    /// <summary>
+    /// Coin collected event subscriber function, adds coin amount to invetory
+    /// </summary>
+    /// <param name="sender">object that triggered event</param>
+    /// <param name="coin">the coin to add to inventory</param>
+    private void OnCoinCollected(object sender, CoinCollectedArgs coin) {
+        this.AddMoney(coin.Amount);
     }
 
     // -- private -- // 
