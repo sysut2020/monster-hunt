@@ -12,7 +12,9 @@ public class Letter : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision) {
         if (collision.gameObject.CompareTag("Player")) {
-            CollectibleEvents.InvokeLetterPickup(LetterString);
+            var args = new LetterCollectedArgs();
+            args.Letter = this.letterString;
+            CollectableEvents.OnLetterCollected?.Invoke(this, args);
         }
     }
 }
