@@ -7,10 +7,10 @@ using UnityEngine;
 /// </summary>
 public class Singleton<T> : MonoBehaviour where T : MonoBehaviour {
 	// Check to see if we're about to be destroyed.
-	private static bool m_ShuttingDown = false;
+	private static bool isShuttingDown = false;
 
 	// Thread safety lock
-	private static object m_Lock = new object();
+	private static object threadLock = new object();
 
 	// Current instance of the object
 	private static T instance;
@@ -20,13 +20,13 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour {
 	/// </summary>
 	public static T Instance {
 		get {
-			if (m_ShuttingDown) {
+			if (isShuttingDown) {
 				Debug.LogWarning("[Singleton] Instance '" + typeof(T) +
 					"' already destroyed. Returning null.");
 				return null;
 			}
 			// Thread safety
-			lock(m_Lock) {
+			lock(threadLock) {
 				if (instance == null) {
 					instance = (T) FindObjectOfType(typeof(T));
 					if (instance == null) {
@@ -42,10 +42,10 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour {
 	}
 
 	private void OnApplicationQuit() {
-		m_ShuttingDown = true;
+		isShuttingDown = true;
 	}
 
 	private void OnDestroy() {
-		m_ShuttingDown = true;
+		isShuttingDown = true;
 	}
 }
