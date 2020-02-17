@@ -71,18 +71,6 @@ public class Player : MonoBehaviour, IDamageable {
     
 
     /// <summary>
-    /// Checks if there exist other instances of this class.
-    /// </summary>
-    private void CheckSingleton() {
-        if (instance != null && instance != this) {
-            Destroy(this.gameObject);
-        } else {
-            instance = this;
-            DontDestroyOnLoad(this.gameObject);
-        }
-    }
-
-    /// <summary>
     /// Gives a pickup to the player
     /// </summary>
     /// <param name="pickup">the pickup to give to the player</param>
@@ -111,19 +99,19 @@ public class Player : MonoBehaviour, IDamageable {
 
     public static event EventHandler<PlayerEventArgs> PlayerKilledEvent;
     private void SubscribeToEvents() {
-        LevelManager.CleanUpEvent += c_CleanupEvent;
+        LevelManager.CleanUpEvent += (object o, EventArgs _) => this.c_CleanupEvent();
+;
     }
 
     private void UnsubscribeFromEvents() {
-        LevelManager.CleanUpEvent -= c_CleanupEvent;
+        LevelManager.CleanUpEvent -= (object o, EventArgs _) => this.c_CleanupEvent();
+;
     }
 
     private void c_CleanupEvent(){
         this.UnsubscribeFromEvents();
         Destroy(gameObject);
     }
-
-    private void c_CleanupEvent(object o, EventArgs _) => this.c_CleanupEvent();
 
     // -- private -- // 
 
@@ -135,14 +123,17 @@ public class Player : MonoBehaviour, IDamageable {
     /// if they are the effect is cleaned out and removed
     /// </summary>
     private void UpdateEffects() {
-        List<IEffectPowerUp> tmp = this.playerInventory.ActivePickups;
-        tmp.Reverse<IEffectPowerUp>();
-        foreach (IEffectPowerUp effect in tmp) {
-            if (effect.IsEffectFinished()) {
-                effect.Cleanup();
-                this.playerInventory.RemoveEffectPickup(effect);
+        if (this.playerInventory.ActivePickups.Count > 0){
+            List<IEffectPowerUp> tmp = this.playerInventory.ActivePickups;
+            tmp.Reverse<IEffectPowerUp>();
+            foreach (IEffectPowerUp effect in tmp) {
+                if (effect.IsEffectFinished()) {
+                    effect.Cleanup();
+                    this.playerInventory.RemoveEffectPickup(effect);
             }
         }
+        }
+        
     }
 
     
@@ -153,20 +144,19 @@ public class Player : MonoBehaviour, IDamageable {
     /// Update is called every frame, if the MonoBehaviour is enabled.
     /// </summary>
     void Update() {
-        //UpdateEffects();
+        UpdateEffects();
     }
 
 
     private void Awake() {
-        CheckSingleton();
-
-        animator = this.GetComponent<Animator>();
+        if (!this.TryGetComponent<Animator>(out this.animator)){
+            Debug.LogError("PLAYER ANIMATOR NOT FOUND");
+        }
         SubscribeToEvents();
     }
 
 
     void OnTriggerEnter2D(Collider2D Col) {
-
         if (Col.TryGetComponent(out Enemy enemy)) {
             if (enemy.IsAttacking) {
                 animator.SetTrigger(AnimationTriggers.DAMAGE);                

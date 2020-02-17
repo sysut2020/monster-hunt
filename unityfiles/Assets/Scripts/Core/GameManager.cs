@@ -4,7 +4,7 @@ using UnityEngine.Experimental.PlayerLoop;
 
 
 public class StateChangeEventArgs: EventArgs{
-    public String NewState {get; set;}
+    public STATE NewState {get; set;}
 }
 
 
@@ -12,52 +12,21 @@ public class StateChangeEventArgs: EventArgs{
 /// <summary>
 /// The manager for the whole game main task is to start and stop scenes and levels
 /// </summary>
-public class GameManager : MonoBehaviour {
-
-    
-
-    
-
-
+public class GameManager : Singleton<GameManager> {
 
     private const int MAIN_MENU_SCENE_INDEX = 0;
     private const int TEST_LEVEL_SCENE_INDEX = 1;
     
     private static GameManager instance;
 
-    private String currentState = "";
+    private STATE currentState;
 
 
     // -- properties -- //
 
-    /// <summary>
-    /// Setting up singleton pattern
-    /// </summary>
-    public static GameManager Instance {
-        get {
-            if (instance == null) {
-                GameObject gameObject = new GameObject("GameManager");
-                gameObject.AddComponent<GameManager>();
-            }
-
-            return instance;
-        }
-    }
-
     // -- public -- //
 
-    /// <summary>
-    /// Decrements the number of enemies by one and then checks if there is any left
-    /// If there are none left it will fire the OnEndGame event, and then show the MainMenu
-    /// </summary>
-    // public void DecrementEnemies() {
-    //     numberOfEnemies--;
-    //     if (numberOfEnemies <= 0) {
-    //         OnEndGame?.Invoke();
-    //         ShowMainMenu();
-    //     }
-    // }
-
+ 
     // -- events -- //    
 
     /// <summary>
@@ -65,12 +34,19 @@ public class GameManager : MonoBehaviour {
     /// </summary>
     public static event EventHandler<StateChangeEventArgs> GameStateChangeEvent;
 
+
+    /// <summary>
+    /// Subscribes to the relevant events for this class
+    /// </summary>
     private void SubscribeToEvents() {
         // todo subscribe to OnPlayerDead, OnTimeOut, OnAllEnemiesDead
         LevelManager.LevelStateChangeEvent += c_LevelStateChangeEvent;
            
     }
     
+    /// <summary>
+    /// Subscribes to the relevant events for this class
+    /// </summary>
     private void UnsubscribeFromEvents() {
         // todo unsubscribe from OnPlayerDead, OnTimeOut, OnAllEnemiesDead
         // maybe that this also should be done on disable
@@ -78,56 +54,56 @@ public class GameManager : MonoBehaviour {
         
     }
 
+    /// <summary>
+    /// This function is fiered when the LevelStateChangeEvent is invoked
+    /// This function will trigger on the following level states:
+    /// 
+    /// STATE.EXIT: 
+    ///     the level is done and the game state should be changed to MAIN_MENU
+    /// </summary>
+    /// <param name="o">the object calling (this should always be the level manager)</param>
+    /// <param name="args">the event args containing the new state</param>
     private void c_LevelStateChangeEvent(object o, StateChangeEventArgs args){
-        if (args.NewState == "EXIT"){
-            this.GameStateChange("MAIN_MENU");
+        if (args.NewState == STATE.EXIT){
+            this.GameStateChange(STATE.MAIN_MENU);
         }
     }
 
     
 
     // -- private -- //
-
-    private void Awake() {
-        if (instance != null && instance != this) {
-            Destroy(this.gameObject);
-        } else {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-    }
-
-    private void Start() {
-        // Finds out how many enemies are in the level
-        //numberOfEnemies = levelDetails.NumberOfEnemies;
-    }
-
-
     
-
-    public void GameStateChange(String NewState){
+    /// <summary>
+    /// Changes the game state 
+    /// </summary>
+    /// <param name="NewState">The new game state</param>
+    public void GameStateChange(STATE NewState){
 
         this.currentState = NewState;
         StateChangeEventArgs args = new StateChangeEventArgs();
         args.NewState = NewState;
-        GameStateChangeEvent?.Invoke(this, args);
+        
 
         switch (NewState)
         {
-            case "MAIN_MENU":
-                Debug.Log($"New state : MAIN_MENU");
+            case STATE.MAIN_MENU:
                 UnityEngine.SceneManagement.SceneManager.LoadScene(MAIN_MENU_SCENE_INDEX);
                 break;
 
-            case "TEST_LEVEL":
-                Debug.Log($"New state : TEST_LEVEL");
+            case STATE.TEST_LEVEL:
                 SceneManager.Instance.ChangeScene(TEST_LEVEL_SCENE_INDEX);
                 break;
 
+            case STATE.EXIT_GAME:
+                Application.Quit();
+                break;
+
             default:
-                Debug.Log("UNKNOWN GAME STATE");
+                Debug.Log("🌮🌮🌮🌮  UNKNOWN GAME STATE  🌮🌮🌮🌮");
                 break;
         }
+
+        GameStateChangeEvent?.Invoke(this, args);
 
         
     }

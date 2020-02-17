@@ -2,15 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// -- properties -- //
-// -- public -- //
-// -- private -- // 
 
 /// <summary>
 /// Responsible for Spawning enemys.
 /// 
 /// </summary>
-public class Spawner : MonoBehaviour {
+public class Spawner : Singleton<Spawner> {
+
+    // TODO: Make spawner more flexible
 
     // -- editor -- //
     [Header ("spawning methods")]
@@ -31,24 +30,18 @@ public class Spawner : MonoBehaviour {
     [SerializeField]
     private List<GameObject> enemyTypes = new List<GameObject> ();
 
-    // -- internal -- //
 
-    private static Spawner instance;
-
-    public static Spawner Instance{
-        get {
-            if (instance == null) {
-                instance = new Spawner();
-            }
-
-            return instance;
-        }
-    }
 
     private List<GameObject> spawnPoints = new List<GameObject> ();
     private readonly Timers spawnTimer = new Timers();
 
     // -- Public -- //
+
+
+    /// <summary>
+    /// Spawn a copy of the mob given to the spawner at all 
+    /// of the spawners GO children locations
+    /// </summary>
     public void SpawnOnAll(){
         print("SPAWNING");
         spawnPoints = (List<GameObject>) WUGameObjects.GetGOChildren(this.gameObject);
@@ -82,7 +75,5 @@ public class Spawner : MonoBehaviour {
 
 
     // -- unity -- // 
-    private void Awake(){
-        instance = this;
-    }
+
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 
 
 /// <summary>
-/// The temporary data needed while playing throgh the level
+/// The temporary data needed while playing through the level
 /// </summary>
 class PlayThroughData{
     public int EnemysKilled {get; set;}
@@ -13,7 +13,7 @@ class PlayThroughData{
 /// <summary>
 /// A manager for a level in the game 
 /// </summary>
-public class LevelManager : MonoBehaviour {
+public class LevelManager : Singleton<LevelManager> {
     [SerializeField]
     private GameObject gameOverCanvas;
 
@@ -21,34 +21,15 @@ public class LevelManager : MonoBehaviour {
     [SerializeField]
     private LevelDetails levelDetails;
 
-    private int numberOfEnemies = 0;
-
 
     private Timers levelTimer = new Timers();
-    private String currentState = "WAITING";
+    private string LEVEL_TIMER_ID;
+    private STATE currentState; // may need default here in that case find out the starting state
 
     private PlayThroughData playThroughData;
     
 
 
-    // -- singelton -- //
-
-    
-    private static LevelManager instance;
-
-    public static LevelManager Instance{
-        get {
-            if (instance == null) {
-                instance = new LevelManager();
-            }
-
-            return instance;
-        }
-    }
-
-    private void Awake(){
-        instance = (LevelManager.Instance != null)? new LevelManager(): LevelManager.Instance;
-    }
 
     // -- properties -- //
 
@@ -63,88 +44,101 @@ public class LevelManager : MonoBehaviour {
     public static event EventHandler<StateChangeEventArgs> LevelStateChangeEvent;
 
     /// <summary>
-    /// This event tells the listeners they are about to be deleted and shold relese 
+    /// This event tells the listeners they are about to be deleted and should relese 
     /// all subscribed events
     /// </summary>
     public static event EventHandler CleanUpEvent;
 
-
+    /// <summary>
+    /// Subscribes to the relevant events for this class
+    /// </summary>
     private void SubscribeToEvents(){
-        CleanUpEvent             += UnsubscribeFromEvents;
+        CleanUpEvent             += (object __, EventArgs _) => this.UnsubscribeFromEvents();
+
         Player.PlayerKilledEvent += c_PlayerKilledEvent;
         Enemy.EnemyKilledEvent   += c_EnemyKilledEvent;
-        GameManager.GameStateChangeEvent += c_GameStateChangeEvent;
     }
 
+    /// <summary>
+    /// Subscribes to the relevant events for this class
+    /// </summary>
     private void UnsubscribeFromEvents(){
-        CleanUpEvent -= UnsubscribeFromEvents;
+        CleanUpEvent -= (object __, EventArgs _) => this.UnsubscribeFromEvents();;
 
         Player.PlayerKilledEvent -= c_PlayerKilledEvent;
         Enemy.EnemyKilledEvent   -= c_EnemyKilledEvent;
-        GameManager.GameStateChangeEvent -= c_GameStateChangeEvent;
     }
 
+    /// <summary>
+    /// This function is fiered when the PlayerKilled is invoked
+    /// Ends the level
+    /// </summary>
+    /// <param name="o">the object calling</param>
+    /// <param name="args">the event args</param>
     private void c_PlayerKilledEvent(object o, EventArgs _){
-        LevelStateChange("GAME_OVER");
+        LevelStateChange(STATE.GAME_OVER);
     }
 
+    /// <summary>
+    /// This function is fiered when the EnemyKilled is invoked
+    /// Increses the enemy killed counter by one
+    /// </summary>
+    /// <param name="o">the object calling</param>
+    /// <param name="args">the event args</param>
     private void c_EnemyKilledEvent(object o, EnemyEventArgs args){
         playThroughData.EnemysKilled += 1;
         if (this.levelDetails.NumberOfEnemies <= playThroughData.EnemysKilled){
-            this.LevelStateChange("EXIT");
+            this.LevelStateChange(STATE.EXIT);
         }
     }
 
-    private void c_GameStateChangeEvent(object o, StateChangeEventArgs args){
-        if (args.NewState == "TEST_LEVEL"){
-                this.LevelStateChange("HUNTING");
-        }
-    }
-    
+ 
 
-    private void LevelStateChange(String NewState){
+    /// <summary>
+    /// Changes the level state 
+    /// </summary>
+    /// <param name="NewState">The new level state</param>
+    private void LevelStateChange(STATE NewState){
 
         this.currentState = NewState;
         StateChangeEventArgs args = new StateChangeEventArgs();
         args.NewState = NewState;
-        LevelStateChangeEvent?.Invoke(this, args);
+        
         
         switch (NewState)
         {
             /// The game is over show game over screen
-            case "WAITING":
-                Debug.Log($"New state : WAITING");
-                
-                break;
-            /// The game is over show game over screen
-            case "GAME_OVER":
-                Debug.Log($"New state : GAME_OVER");
+            case STATE.GAME_OVER:
                 gameOverCanvas.SetActive(true);
                 break;
 
             /// Start the main mode spawn the player and start the level
-            case "HUNTING":
-                Debug.Log($"New state : HUNTING");
-                Spawner.Instance.SpawnOnAll();
-                Player.Instance.gameObject.transform.position = new Vector3(levelDetails.spawnPoint.x,levelDetails.spawnPoint.y, 0);
-
+            case STATE.HUNTING:                
                 break;
 
             /// Exit the game and go to main menu
-            case "EXIT":
-                Debug.Log($"New state : EXIT");
+            case STATE.EXIT:
                 break;
 
             default:
-                Debug.Log("UNKNOWN LEVEL STATE");
+                Debug.Log("🌮🌮🌮🌮  UNKNOWN LEVEL STATE  🌮🌮🌮🌮");
                 break;
         }
+
+        LevelStateChangeEvent?.Invoke(this, args);
     }
 
 
-    private void UnsubscribeFromEvents(object o, EventArgs _) => this.UnsubscribeFromEvents();
-
     // -- private -- //
+
+
+    // TODO: maybe remove?
+    /// <summary>
+    /// spawns all the enemys and inits the player
+    /// </summary>
+    private void InitLevel(){
+        Spawner.Instance?.SpawnOnAll();
+    }
 
     
 
@@ -157,13 +151,8 @@ public class LevelManager : MonoBehaviour {
         CleanUpEvent?.Invoke(this, EventArgs.Empty);
     }
 
-    private void InitScene(){
-        CleanUpEvent?.Invoke(this, EventArgs.Empty);
-    }
-
-
     private void startLevelTime(){
-        this.levelTimer.Set("LEVEL_TIME", this.levelDetails.Time);
+        this.levelTimer.Set(LEVEL_TIMER_ID, this.levelDetails.Time);
         
     }
 
@@ -174,13 +163,15 @@ public class LevelManager : MonoBehaviour {
 
     private void Start(){
         this.playThroughData = new PlayThroughData();
+        LEVEL_TIMER_ID = this.levelTimer.RollingUID;
         this.startLevelTime();
-        this.LevelStateChange("HUNTING");
+
+        this.LevelStateChange(STATE.HUNTING);
     }
     private void Update(){
 
-        if (this.levelTimer.Done("LEVEL_TIME")){
-            this.LevelStateChange("EXIT");
+        if (this.levelTimer.Done(LEVEL_TIMER_ID)){
+            this.LevelStateChange(STATE.EXIT);
         }
     }
 
