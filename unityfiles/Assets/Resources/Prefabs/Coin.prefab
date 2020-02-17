@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 873529673959969178}
   - component: {fileID: 6695628985083171927}
   - component: {fileID: -4711362037692335834}
+  - component: {fileID: 3505604175949116411}
   m_Layer: 0
   m_Name: Coin
   m_TagString: Collectible
@@ -156,3 +157,15 @@ MonoBehaviour:
   - {fileID: 8664072895757744029}
   - {fileID: 0}
   time: 5
+--- !u!114 &3505604175949116411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8664072895757744031}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e49ded2947e8205458fd19bbd62ae3cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

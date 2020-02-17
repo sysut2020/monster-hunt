@@ -4,7 +4,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CollectablesCollectionAnimation : MonoBehaviour {
+    
+    // To make it work you only need two nodes:
+    //    The source node
+    //    The destination node
     [SerializeField] private Transform[] wayPointArray;
+    //The time it will take for the collectible to complete the animation
     [SerializeField] private float time;
     
     // When a collectible is spawn, it will create a path to the collection point and then follow that path.
