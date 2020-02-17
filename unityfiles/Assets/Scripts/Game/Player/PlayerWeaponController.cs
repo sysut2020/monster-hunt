@@ -11,7 +11,7 @@ public class WeaponChangedEventArgs: EventArgs{
     public GunController NewGunController {get; set;}
 }
 
-public class PlayerWeaponController: MonoBehaviour {
+public class PlayerWeaponController: Singleton<PlayerWeaponController> {
 
     [SerializeField]
     private List<GameObject> availableWeapons;
@@ -21,24 +21,7 @@ public class PlayerWeaponController: MonoBehaviour {
 
     private GunController activeGunController;
     
-
-    // -- singelton -- //
-    private static PlayerWeaponController instance;
-
-    public static PlayerWeaponController Instance{
-        get {
-            if (instance == null) {
-                instance = new PlayerWeaponController();
-            }
-
-            return instance;
-        }
-    }
-
-    private void Awake(){
-        instance = (PlayerWeaponController.Instance != null)? new PlayerWeaponController(): PlayerWeaponController.Instance;
-    }
-
+    
     // -- properties -- //
     public List<GameObject> AvailableWeapons {
         get => availableWeapons;
