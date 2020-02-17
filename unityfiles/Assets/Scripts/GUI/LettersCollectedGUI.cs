@@ -16,6 +16,9 @@ public class LettersCollectedGUI : MonoBehaviour {
 
     private int currentLetterCount = 0;
 
+    /// <summary>
+    /// How many letters to collect 
+    /// </summary>
     private int lettersToCollect = 0;
 
     private void Awake() {
