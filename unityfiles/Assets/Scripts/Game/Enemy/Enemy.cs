@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
+
 
 public class EnemyEventArgs: EventArgs{
     public GameObject EnemyGO {get; set;}
@@ -46,8 +46,10 @@ public class Enemy : MonoBehaviour, IDamageable {
     
     // -- public -- //
 
+    /// <summary>
+    /// Handles what to do when the enemy is killed
+    /// </summary>
     public void Dead() {
-        // act dead
         GameObject.Destroy(gameObject);
         CollectibleSpawner.Instance.SpawnCollectible(this.transform.position);
     }

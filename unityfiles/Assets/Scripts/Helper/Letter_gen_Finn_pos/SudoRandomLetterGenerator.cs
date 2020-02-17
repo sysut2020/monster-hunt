@@ -16,21 +16,25 @@ using UnityEngine;
 */
 
 /// <summary>
-/// Generates letters sudo randomly
+/// Generates letters sudo randomly. This means that every new letter should
+/// in combination with the previously selected letters always form one or more words
+/// 
 /// </summary>
 public class SudoRandomLetterGenerator {
 
     
-
+    /// <summary>
+    /// Constructor reading the needed files from disk
+    /// </summary>
     private SudoRandomLetterGenerator(){
-        // redeads the letter freq 
+        // reads the letter freq 
         using (StreamReader r = new StreamReader ("Assets/Scripts/Helper/Letter_gen_Finn_pos/letter_sett_lists/letter_frequensy_weight_100.json")) {
             string jsonText = r.ReadToEnd ();
             this.letterFrequency = JsonUtility.FromJson<LetterFrequency> (jsonText);
 
         }
 
-        // redeads the letter setts 
+        // reads the letter setts 
         using (StreamReader r = new StreamReader ("Assets/Scripts/Helper/Letter_gen_Finn_pos/letter_sett_lists/score_sorted_sett_size_dict.json")) {
             string jsonText = r.ReadToEnd ();
             this.allSettValuePairs = JsonUtility.FromJson<SetValuePairs> (jsonText);
