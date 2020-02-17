@@ -27,7 +27,7 @@ public class AimControl {
     private GameObject helperRotPoint;
     private GameObject helperAimPoint;
 
-    private bool debug = true;
+    private bool debug = false;
 
     public AimControl(GameObject firePoint, Transform rotatePoint) {
         this.FirePoint = firePoint;
