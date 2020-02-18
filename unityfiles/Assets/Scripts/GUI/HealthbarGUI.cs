@@ -15,7 +15,7 @@ public class HealthbarGUI : MonoBehaviour {
     /// <summary>
     /// Maximum health so we know what is maximum
     /// </summary>
-    private float maxHealth = 0;
+    private float maxHealth = 20;
 
     public float MaxHealth {
         get { return this.maxHealth; }
@@ -52,13 +52,21 @@ public class HealthbarGUI : MonoBehaviour {
     private void Awake() {
         if (this.healthpool == null) throw new MissingComponentException("Please provide an image for the healthpool");
         this.SetupHealthpool();
+        PlayerHealthController.OnPlayerHealthUpdate += OnHealthUpdate;
+
     }
 
     private void UpdateHealthPool() {
         this.healthpool.fillAmount = this.CurrentHealth / this.MaxHealth;
     }
 
+    private void OnHealthUpdate(object _, PlayerHealthUpdateArgs args) {
+        this.MaxHealth = args.MaxHealth;
+        this.CurrentHealth = args.CurrentHealth;
+        this.UpdateHealthPool();
+    }
+
     private void OnDestroy() {
-        // NEEDED LATER FOR EVENTS
+        PlayerHealthController.OnPlayerHealthUpdate -= OnHealthUpdate;
     }
 }
