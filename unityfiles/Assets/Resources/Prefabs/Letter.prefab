@@ -496,8 +496,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wayPointArray:
   - {fileID: 4993117160344158719}
-  - {fileID: 0}
-  time: 5
+  - {fileID: 2200349336157705357, guid: 471297cd75b6a1848a59ec7730420648, type: 3}
+  time: 3
 --- !u!114 &2709097042343801514
 MonoBehaviour:
   m_ObjectHideFlags: 0
