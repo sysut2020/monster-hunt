@@ -2,15 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// -- properties -- //
-// -- public -- //
-// -- private -- // 
 
 /// <summary>
 /// Responsible for Spawning enemys.
 /// 
 /// </summary>
-public class Spawner : MonoBehaviour {
+public class Spawner : Singleton<Spawner> {
+
+    // TODO: Make spawner more flexible
 
     // -- editor -- //
     [Header ("spawning methods")]
@@ -31,10 +30,29 @@ public class Spawner : MonoBehaviour {
     [SerializeField]
     private List<GameObject> enemyTypes = new List<GameObject> ();
 
-    // -- internal -- //
+
 
     private List<GameObject> spawnPoints = new List<GameObject> ();
     private readonly Timers spawnTimer = new Timers();
+
+    // -- Public -- //
+
+
+    /// <summary>
+    /// Spawn a copy of the mob given to the spawner at all 
+    /// of the spawners GO children locations
+    /// </summary>
+    public void SpawnOnAll(){
+        print("SPAWNING");
+        spawnPoints = (List<GameObject>) WUGameObjects.GetGOChildren(this.gameObject);
+
+        foreach (GameObject item in spawnPoints) {
+            GameObject EnemyCopy = Instantiate (enemyTypes[0]);
+            EnemyCopy.transform.rotation = item.transform.rotation;
+            EnemyCopy.transform.position = item.transform.position;
+            EnemyCopy.SetActive (true);
+        }
+    }
 
     // -- private -- // 
 
@@ -57,16 +75,5 @@ public class Spawner : MonoBehaviour {
 
 
     // -- unity -- // 
-    void Start () {
 
-        spawnPoints = (List<GameObject>) WUGameObjects.GetGOChildren(this.gameObject);
-
-        foreach (GameObject item in spawnPoints) {
-            GameObject EnemyCopy = Instantiate (enemyTypes[0]);
-            EnemyCopy.transform.rotation = item.transform.rotation;
-            EnemyCopy.transform.position = item.transform.position;
-            EnemyCopy.SetActive (true);
-        }
-
-    }
 }

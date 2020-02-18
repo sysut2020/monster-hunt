@@ -1,31 +1,53 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Linq;
+using System;
 using System.Linq;
 using UnityEngine;
+
+public class PlayerEventArgs: EventArgs{
+    public GameObject PlayerGO {get; set;}
+    public EnemyType PlayerMoney {get; set;}
+    public EnemyType PlayerLetters {get; set;}
+}
+
+
 
 /// <summary>
 /// this class describes the player
 /// </summary>
-public class Player : MonoBehaviour {
+public class Player : MonoBehaviour, IDamageable {
+    
 
     [SerializeField]
-    private int playerLives;
-
     private HealthController playerHealthController;
 
-    private PlayerInventory playerInventory;
-    
-    private Animator animator; 
+    private PlayerInventory playerInventory = new PlayerInventory();
+
+    private Animator animator;
+
+    public delegate void EventHandler();
+
+    public static event EventHandler OnPlayerDead;
 
 
     private PlayerWeaponController playerWeaponController;
 
-    // -- properties -- //
-    public int PlayerLives {
-        get => playerLives;
-        set => playerLives = value;
+    // -- singelton -- //
+
+    private static Player instance;
+
+    public static Player Instance {
+        get {
+            if (instance == null) {
+                GameObject player = new GameObject("Player");
+                player.AddComponent<Player>();
+            }
+
+            return instance;
+        }
     }
+
+    // -- properties -- //
 
     public HealthController PlayerHealthController {
         get => playerHealthController;
@@ -44,131 +66,102 @@ public class Player : MonoBehaviour {
 
     // -- public -- //
 
-    private void Awake() {
-        animator = this.GetComponent<Animator>();
-    }
+    
+
+    
 
     /// <summary>
     /// Gives a pickup to the player
     /// </summary>
     /// <param name="pickup">the pickup to give to the player</param>
-    public void GivePickup (IPickup pickup) {
+    public void GivePickup(IPowerUp pickup) {
         // activate
-        pickup.ApplyEffect (this);
+        pickup.ApplyEffect(this);
         // if effect is persistent give it to the watcher
-        if (pickup is IEffectPickup) {
-            IEffectPickup equalTypeEffect = playerInventory.ActivePickups.Find (effect => effect.GetPickupName ().Equals (pickup.GetPickupName ()));
+        if (pickup is IEffectPowerUp) {
+            IEffectPowerUp equalTypeEffect = playerInventory.ActivePickups.Find(effect => effect.GetPickupName().Equals(pickup.GetPickupName()));
             if (equalTypeEffect != null) {
                 // if it exists extend the existing
-                equalTypeEffect.ExtendEffect (equalTypeEffect);
+                equalTypeEffect.ExtendEffect(equalTypeEffect);
             } else {
                 // else just bop it on the end
-                this.PlayerInventory.AddEffectPickup (pickup as IEffectPickup);
+                this.PlayerInventory.AddEffectPickup(pickup as IEffectPowerUp);
             }
         }
     }
 
-    /// <summary>
-    /// Gives money to the player
-    /// </summary>
-    /// <param name="money">the amount of money to give the player</param>
-    public void GiveMoney (int money) {
-        this.PlayerInventory.AddMoney (money);
+    public void Dead(){
+        PlayerEventArgs args = new PlayerEventArgs();
+        // TODO: fill args
+        PlayerKilledEvent?.Invoke(this, args);
+    }
+    // -- events -- //
+
+    public static event EventHandler<PlayerEventArgs> PlayerKilledEvent;
+    private void SubscribeToEvents() {
+        LevelManager.CleanUpEvent += (object o, EventArgs _) => this.c_CleanupEvent();
+;
     }
 
-    /// <summary>
-    /// Gives a letter to the player
-    /// </summary>
-    /// <param name="letter">the letter to give to the player</param>        
-    public void GiveLetter (String letter) {
-        this.playerInventory.AddLetter (letter);
+    private void UnsubscribeFromEvents() {
+        LevelManager.CleanUpEvent -= (object o, EventArgs _) => this.c_CleanupEvent();
+;
     }
 
-    
-    /// <summary>
-    /// changes to the next weapon in the weapon list 
-    /// if the end of the list is reached the index loops around
-    /// </summary>
-    /// <returns>The weapon controller of the new active weapon</returns>
-    public void ChangeToNextWeapon(){
-        GunController newGunController = this.PlayerWeaponController.ChangeToNextWeapon();
-        this.AlertPowerupsOnWeaponChange(newGunController);
+    private void c_CleanupEvent(){
+        this.UnsubscribeFromEvents();
+        Destroy(gameObject);
     }
-
-
-    /// <summary>
-    /// changes to the prev weapon in the weapon list 
-    /// if the end of the list is reached the index loops around
-    /// </summary>
-    /// <returns>The weapon controller of the new active weapon</returns>
-    public void ChangeToPrevWeapon(){
-        GunController newGunController = this.PlayerWeaponController.ChangeToPrevWeapon();
-        this.AlertPowerupsOnWeaponChange(newGunController);
-    }
-
-    /// <summary>
-    /// Starts to fire the weapon
-    /// </summary>
-    public void StartFiring() {this.PlayerWeaponController.StartFiring();}
-
-    /// <summary>
-    /// Stop fireing the weapon
-    /// </summary>
-    public void StopFiring() {this.PlayerWeaponController.StopFiring();}
-
-    /// <summary>
-    /// Fires a bullet if able (not on cooldown since last shot)
-    /// </summary>
-    public void FireOnce() {this.PlayerWeaponController.FireOnce();}
 
     // -- private -- // 
 
+  
 
-    /// <summary>
-    /// Alerts the power ups that the weapon has changed
-    /// </summary>
-    /// <param name="newGunC">The new gun controller to pass to the weapon</param>
-    private void AlertPowerupsOnWeaponChange(GunController newGunC){
-        foreach (IEffectPickup effect in this.PlayerInventory.ActivePickups.Reverse<IEffectPickup> ()) {
-            if (effect is IWeaponEffectPickup ) {
-                IWeaponEffectPickup weaponEffect = effect as IWeaponEffectPickup;
-                weaponEffect.OnChangeWeapon(newGunC);
-            }
-        }
-    }
-
-
-
+    
     /// <summary>
     /// iterates through the active effects and checks if any one of them are done
     /// if they are the effect is cleaned out and removed
     /// </summary>
-    private void UpdateEffects () {
-        foreach (IEffectPickup effect in this.PlayerInventory.ActivePickups.Reverse<IEffectPickup> ()) {
-            if (effect.IsEffectFinished ()) {
-                effect.Cleanup ();
-                this.playerInventory.RemoveEffectPickup (effect);
+    private void UpdateEffects() {
+        if (this.playerInventory.ActivePickups.Count > 0){
+            List<IEffectPowerUp> tmp = this.playerInventory.ActivePickups;
+            tmp.Reverse<IEffectPowerUp>();
+            foreach (IEffectPowerUp effect in tmp) {
+                if (effect.IsEffectFinished()) {
+                    effect.Cleanup();
+                    this.playerInventory.RemoveEffectPickup(effect);
             }
         }
+        }
+        
     }
+
+    
 
     // -- unity -- //
 
     /// <summary>
     /// Update is called every frame, if the MonoBehaviour is enabled.
     /// </summary>
-    void Update () {
-        UpdateEffects ();
+    void Update() {
+        UpdateEffects();
     }
 
-    /// <summary>
-    /// Checks for collisions with other objects
-    /// </summary>
-    /// <param name="other"></param>
-    private void OnTriggerEnter2D(Collider2D other) {
-        // If there is a collision with enemy play the damage animation
-        if (other.tag == "Enemy") {
-            animator.SetTrigger("Damage");
+
+    private void Awake() {
+        if (!this.TryGetComponent<Animator>(out this.animator)){
+            Debug.LogError("PLAYER ANIMATOR NOT FOUND");
+        }
+        SubscribeToEvents();
+    }
+
+
+    void OnTriggerEnter2D(Collider2D Col) {
+        if (Col.TryGetComponent(out Enemy enemy)) {
+            if (enemy.IsAttacking) {
+                animator.SetTrigger(AnimationTriggers.DAMAGE);                
+            }
         }
     }
+
 }

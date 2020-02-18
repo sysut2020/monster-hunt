@@ -16,21 +16,25 @@ using UnityEngine;
 */
 
 /// <summary>
-/// Generates letters sudo randomly
+/// Generates letters sudo randomly. This means that every new letter should
+/// in combination with the previously selected letters always form one or more words
+/// 
 /// </summary>
 public class SudoRandomLetterGenerator {
 
-    private static SudoRandomLetterGenerator instance;
-
+    
+    /// <summary>
+    /// Constructor reading the needed files from disk
+    /// </summary>
     private SudoRandomLetterGenerator(){
-        // redeads the letter freq 
+        // reads the letter freq 
         using (StreamReader r = new StreamReader ("Assets/Scripts/Helper/Letter_gen_Finn_pos/letter_sett_lists/letter_frequensy_weight_100.json")) {
             string jsonText = r.ReadToEnd ();
             this.letterFrequency = JsonUtility.FromJson<LetterFrequency> (jsonText);
 
         }
 
-        // redeads the letter setts 
+        // reads the letter setts 
         using (StreamReader r = new StreamReader ("Assets/Scripts/Helper/Letter_gen_Finn_pos/letter_sett_lists/score_sorted_sett_size_dict.json")) {
             string jsonText = r.ReadToEnd ();
             this.allSettValuePairs = JsonUtility.FromJson<SetValuePairs> (jsonText);
@@ -46,7 +50,9 @@ public class SudoRandomLetterGenerator {
         // print("avg run time per gen in tics=" + rt/500);
     }
 
-    // This is sub optimal and should be improved
+
+    // -- singelton -- //
+    private static SudoRandomLetterGenerator instance;
     public static SudoRandomLetterGenerator Instance {
         get {
             if (instance == null) {
