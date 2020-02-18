@@ -3,10 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-public class EnemyEventArgs: EventArgs{
-    public GameObject EnemyGO {get; set;}
-    public EnemyType EnemyType {get; set;}
+public class EnemyEventArgs : EventArgs {
+    public Vector3 Position { get; set; }
+    public EnemyType EnemyType { get; set; }
 }
 
 /// <summary>
@@ -26,8 +25,6 @@ public class Enemy : MonoBehaviour, IDamageable {
     private bool isAttacking = false;
     private HealthController healthController;
 
-    
-
     // -- properties -- //
 
     public bool IsAttacking {
@@ -36,22 +33,21 @@ public class Enemy : MonoBehaviour, IDamageable {
     }
 
     public EnemyType EnemyType {
-        get => this.enemyType; 
-        set => this.enemyType = value; 
+        get => this.enemyType;
+        set => this.enemyType = value;
     }
 
     public Transform FrontPoint {
-        get =>  this.frontPoint; 
+        get => this.frontPoint;
     }
-    
+
     // -- public -- //
 
     /// <summary>
     /// Handles what to do when the enemy is killed
     /// </summary>
     public void Dead() {
-        GameObject.Destroy(gameObject);
-        CollectibleSpawner.Instance.SpawnCollectible(this.transform.position);
+        Destroy(this.gameObject);
     }
     // -- events -- //
     public static event EventHandler<EnemyEventArgs> EnemySpawnEvent;
@@ -63,9 +59,8 @@ public class Enemy : MonoBehaviour, IDamageable {
     void Start() {
         this.tag = "Enemy";
         this.healthController = this.gameObject.GetComponent<HealthController>();
-
         EnemyEventArgs args = new EnemyEventArgs();
-        args.EnemyGO = this.gameObject;
+        args.Position = this.gameObject.transform.position;
         args.EnemyType = this.enemyType;
         EnemySpawnEvent?.Invoke(this, args);
     }
@@ -73,6 +68,7 @@ public class Enemy : MonoBehaviour, IDamageable {
     private void OnDestroy() {
         EnemyEventArgs args = new EnemyEventArgs();
         args.EnemyType = this.enemyType;
+        args.Position = this.transform.position;
         EnemyKilledEvent?.Invoke(this, args);
     }
 
