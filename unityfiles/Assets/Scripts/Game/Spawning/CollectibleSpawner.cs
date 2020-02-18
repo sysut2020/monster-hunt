@@ -72,7 +72,6 @@ public class CollectibleSpawner : MonoBehaviour {
         EnemyType e = args.EnemyType;
         float a = e.CoinDropChance + e.LetterDropChance + e.PowerUpDropChance;
         double randomNumber = Random.Range(0, a);
-        Debug.Log(randomNumber);
         switch (randomNumber) {
             case var n when(n <= e.PowerUpDropChance):
                 collectible = Instantiate(powerUpCollectable.gameObject);
