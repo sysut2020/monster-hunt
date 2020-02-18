@@ -46,15 +46,11 @@ public class PlayerInventory {
     }
 
     private void Start() {
-        Coin.OnCoinCollected += OnCoinCollected;
-        Letter.OnLetterCollected += OnLetterCollected;
-        CollectableEvents.OnPowerupCollected += OnEffectPickup;
+        CoinCollectable.OnCoinCollected += OnCoinCollected;
     }
 
     private void OnDestroy() {
-        Coin.OnCoinCollected -= OnCoinCollected;
-        Letter.OnLetterCollected -= OnLetterCollected;
-        CollectableEvents.OnPowerupCollected -= OnEffectPickup;
+        CoinCollectable.OnCoinCollected -= OnCoinCollected;
     }
     // -- public -- //
 

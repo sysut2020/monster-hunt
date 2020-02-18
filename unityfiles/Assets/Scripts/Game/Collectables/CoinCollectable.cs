@@ -10,20 +10,20 @@ public class CoinCollectedArgs : EventArgs {
     public int Amount { get; set; }
 }
 
-public class Coin : MonoBehaviour {
+public class CoinCollectable : Collectable {
     public static event EventHandler<CoinCollectedArgs> OnCoinCollected;
+
+    [SerializeField]
     private int coinValue = 1;
-    public int CoinValue {
-        get => coinValue;
-        set => coinValue = value;
+
+    private void Start() {
+        this.FindPosition<CoinsCollecedGUI>();
     }
+
     private void OnDestroy() {
         var args = new CoinCollectedArgs();
         args.Amount = this.coinValue;
-        this.TriggerCoinCollected(args);
-    }
-
-    private void TriggerCoinCollected(CoinCollectedArgs args) {
         OnCoinCollected?.Invoke(this, args);
     }
+
 }

@@ -28,7 +28,7 @@ public class CoinsCollecedGUI : MonoBehaviour {
 
     private void Awake() {
         if (coinCounter == null) throw new MissingComponentException("Missing text component");
-        Coin.OnCoinCollected += OnNewCoin;
+        CoinCollectable.OnCoinCollected += OnNewCoin;
         coinGUIObject = new GameObject("World coin pos");
         SetCoinamountText();
         TryGetComponent<RectTransform>(out myRectTransform);
@@ -57,7 +57,7 @@ public class CoinsCollecedGUI : MonoBehaviour {
     }
 
     private void OnDestroy() {
-        Coin.OnCoinCollected -= OnNewCoin;
+        CoinCollectable.OnCoinCollected -= OnNewCoin;
     }
 
     public static Transform TryGetTransform() {
