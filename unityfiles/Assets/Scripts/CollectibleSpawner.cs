@@ -89,7 +89,7 @@ public class CollectibleSpawner : MonoBehaviour {
                 LetterController letterController = Instantiate(letterCollectable);
                 collectible = letterController.gameObject;
                 // We need to tell the Letter's event handler, what its assigned letter is
-                Letter letterToAddToInventory = this.gameObject.GetComponent<Letter>();
+                Letter letterToAddToInventory = collectible.GetComponent<Letter>();
                 letterToAddToInventory.LetterString = letter;
                 letterController.SetLetter(letter);
                 collectible.name = "Letter " + letter;
