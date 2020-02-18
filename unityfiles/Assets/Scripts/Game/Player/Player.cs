@@ -1,30 +1,39 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 /// <summary>
 /// this class describes the player
 /// </summary>
-public class Player : MonoBehaviour {
+public class Player : MonoBehaviour, IDamageable {
+    private static Player instance;
+
+    public static Player Instance {
+        get {
+            if (instance == null) {
+                GameObject player = new GameObject("Player");
+                player.AddComponent<Player>();
+            }
+
+            return instance;
+        }
+    }
 
     [SerializeField]
-    private int playerLives;
-
     private HealthController playerHealthController;
 
     private PlayerInventory playerInventory;
 
     private Animator animator;
 
+    public delegate void EventHandler();
+
+    public static event EventHandler OnPlayerDead;
+
+
     private PlayerWeaponController playerWeaponController;
 
     // -- properties -- //
-    public int PlayerLives {
-        get => playerLives;
-        set => playerLives = value;
-    }
 
     public HealthController PlayerHealthController {
         get => playerHealthController;
@@ -44,7 +53,38 @@ public class Player : MonoBehaviour {
     // -- public -- //
 
     private void Awake() {
+        CheckSingleton();
+
         animator = this.GetComponent<Animator>();
+        SubscribeToEvents();
+    }
+
+    private void OnDestroy() {
+        UnsubscribeFromEvents();
+    }
+    
+    private void SubscribeToEvents() {
+        GameManager.OnEndGame += EndGame;
+    }
+
+    private void UnsubscribeFromEvents() {
+        GameManager.OnEndGame -= EndGame;
+    }
+
+    private void EndGame() {
+        Destroy(gameObject);
+    }
+
+    /// <summary>
+    /// Checks if there exist other instances of this class.
+    /// </summary>
+    private void CheckSingleton() {
+        if (instance != null && instance != this) {
+            Destroy(this.gameObject);
+        } else {
+            instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
     }
 
     /// <summary>
@@ -56,7 +96,8 @@ public class Player : MonoBehaviour {
         pickup.ApplyEffect(this);
         // if effect is persistent give it to the watcher
         if (pickup is IEffectPickup) {
-            IEffectPickup equalTypeEffect = playerInventory.ActivePickups.Find(effect => effect.GetPickupName().Equals(pickup.GetPickupName()));
+            IEffectPickup equalTypeEffect =
+                playerInventory.ActivePickups.Find(effect => effect.GetPickupName().Equals(pickup.GetPickupName()));
             if (equalTypeEffect != null) {
                 // if it exists extend the existing
                 equalTypeEffect.ExtendEffect(equalTypeEffect);
@@ -83,6 +124,7 @@ public class Player : MonoBehaviour {
         this.playerInventory.AddLetter(letter);
     }
 
+    
     /// <summary>
     /// changes to the next weapon in the weapon list 
     /// if the end of the list is reached the index loops around
@@ -106,17 +148,28 @@ public class Player : MonoBehaviour {
     /// <summary>
     /// Starts to fire the weapon
     /// </summary>
-    public void StartFiring() { this.PlayerWeaponController.StartFiring(); }
+    public void StartFiring() {
+        this.PlayerWeaponController.StartFiring();
+    }
 
     /// <summary>
     /// Stop fireing the weapon
     /// </summary>
-    public void StopFiring() { this.PlayerWeaponController.StopFiring(); }
+    public void StopFiring() {
+        this.PlayerWeaponController.StopFiring();
+    }
 
     /// <summary>
     /// Fires a bullet if able (not on cooldown since last shot)
     /// </summary>
-    public void FireOnce() { this.PlayerWeaponController.FireOnce(); }
+    public void FireOnce() {
+        this.PlayerWeaponController.FireOnce();
+    }
+    
+    public void Dead() {
+        OnPlayerDead?.Invoke();
+        gameObject.SetActive(false);
+    }
 
     // -- private -- // 
 
@@ -132,6 +185,7 @@ public class Player : MonoBehaviour {
             }
         }
     }
+
 
     /// <summary>
     /// iterates through the active effects and checks if any one of them are done
@@ -149,13 +203,6 @@ public class Player : MonoBehaviour {
     // -- unity -- //
 
     /// <summary>
-    /// Update is called every frame, if the MonoBehaviour is enabled.
-    /// </summary>
-    void Update() {
-        // UpdateEffects();
-    }
-
-    /// <summary>
     /// Checks for collisions with other objects
     /// </summary>
     /// <param name="other"></param>
@@ -164,9 +211,8 @@ public class Player : MonoBehaviour {
 
         try {
             if (enemy.IsAttacking) {
-                animator.SetTrigger("Damage");
+                animator.SetTrigger(AnimationTriggers.DAMAGE);                
             }
-
         } catch (System.Exception) { }
 
     }

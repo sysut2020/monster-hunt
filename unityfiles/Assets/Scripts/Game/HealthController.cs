@@ -74,7 +74,7 @@ public class HealthController : MonoBehaviour {
     /// if not set it to false
     /// </summary>
     private void CheckIfDead () {
-        if (this.entityHealth <= 0f) {
+        if (this.entityHealth <= 0f && damageable != null) {
             this.damageable.Dead ();
             this.IsDead = true;
 

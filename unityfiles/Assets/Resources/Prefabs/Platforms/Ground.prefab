@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1263180002746614683}
   - component: {fileID: 1263180002746614681}
   - component: {fileID: 1263180002746614680}
+  - component: {fileID: 755268084}
   m_Layer: 0
   m_Name: platform 3
   m_TagString: Untagged
@@ -42,10 +43,11 @@ SpriteShapeRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
+  m_DynamicOccludee: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -137,11 +139,35 @@ MonoBehaviour:
   m_AdaptiveUV: 1
   m_StretchUV: 0
   m_WorldSpaceUV: 0
+  m_CornerAngleThreshold: 30
   m_ColliderDetail: 16
   m_ColliderOffset: 0
   m_UpdateCollider: 1
   m_OptimizeCollider: 1
   m_OptimizeGeometry: 1
+  m_EnableTangents: 0
+--- !u!68 &755268084
+EdgeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1263180002746614682}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_EdgeRadius: 0.42
+  m_Points:
+  - {x: -12.19007, y: 12.164049}
+  - {x: -12.19007, y: 12.164049}
+  - {x: -2.1489646, y: 12.213337}
+  - {x: 7.220566, y: 13.108274}
+  - {x: 17.584618, y: 11.646295}
+  - {x: 18.010403, y: 11.586232}
 --- !u!1 &1263180002749817827
 GameObject:
   m_ObjectHideFlags: 0
@@ -189,6 +215,7 @@ SpriteShapeRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -280,11 +307,13 @@ MonoBehaviour:
   m_AdaptiveUV: 1
   m_StretchUV: 0
   m_WorldSpaceUV: 0
+  m_CornerAngleThreshold: 30
   m_ColliderDetail: 16
   m_ColliderOffset: 0
   m_UpdateCollider: 1
   m_OptimizeCollider: 1
   m_OptimizeGeometry: 1
+  m_EnableTangents: 0
 --- !u!68 &1263180002749817831
 EdgeCollider2D:
   m_ObjectHideFlags: 0
@@ -355,6 +384,7 @@ SpriteShapeRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -446,11 +476,13 @@ MonoBehaviour:
   m_AdaptiveUV: 1
   m_StretchUV: 0
   m_WorldSpaceUV: 0
+  m_CornerAngleThreshold: 30
   m_ColliderDetail: 16
   m_ColliderOffset: 0
   m_UpdateCollider: 1
   m_OptimizeCollider: 1
   m_OptimizeGeometry: 1
+  m_EnableTangents: 0
 --- !u!68 &1263180003125035208
 EdgeCollider2D:
   m_ObjectHideFlags: 0
@@ -483,6 +515,7 @@ GameObject:
   - component: {fileID: 1263180003310470187}
   - component: {fileID: 1263180003310470185}
   - component: {fileID: 1263180003310470184}
+  - component: {fileID: 1933787645}
   m_Layer: 0
   m_Name: platform 1
   m_TagString: Untagged
@@ -518,6 +551,7 @@ SpriteShapeRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -609,11 +643,35 @@ MonoBehaviour:
   m_AdaptiveUV: 1
   m_StretchUV: 0
   m_WorldSpaceUV: 0
+  m_CornerAngleThreshold: 30
   m_ColliderDetail: 16
   m_ColliderOffset: 0
   m_UpdateCollider: 1
   m_OptimizeCollider: 1
   m_OptimizeGeometry: 1
+  m_EnableTangents: 0
+--- !u!68 &1933787645
+EdgeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1263180003310470186}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_EdgeRadius: 0.42
+  m_Points:
+  - {x: -4.396725, y: 15.946408}
+  - {x: -4.396725, y: 15.946408}
+  - {x: -4.3162103, y: 10.20043}
+  - {x: 2.5216894, y: 8.782599}
+  - {x: 20.64314, y: 9.259672}
+  - {x: 21.072992, y: 9.270988}
 --- !u!1 &1263180003744437442
 GameObject:
   m_ObjectHideFlags: 0
@@ -625,6 +683,7 @@ GameObject:
   - component: {fileID: 1263180003744437443}
   - component: {fileID: 1263180003744437441}
   - component: {fileID: 1263180003744437440}
+  - component: {fileID: 2056463190}
   m_Layer: 0
   m_Name: platform 2
   m_TagString: Untagged
@@ -660,6 +719,7 @@ SpriteShapeRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -751,11 +811,49 @@ MonoBehaviour:
   m_AdaptiveUV: 1
   m_StretchUV: 0
   m_WorldSpaceUV: 0
+  m_CornerAngleThreshold: 30
   m_ColliderDetail: 16
   m_ColliderOffset: 0
   m_UpdateCollider: 1
   m_OptimizeCollider: 1
   m_OptimizeGeometry: 1
+  m_EnableTangents: 0
+--- !u!68 &2056463190
+EdgeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1263180003744437442}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_EdgeRadius: 0.42
+  m_Points:
+  - {x: -32.55067, y: 15.743987}
+  - {x: -32.55067, y: 15.743987}
+  - {x: -6.7027526, y: 15.867784}
+  - {x: -6.58099, y: 10.200452}
+  - {x: -6.3637953, y: 10.153626}
+  - {x: -5.737648, y: 10.032664}
+  - {x: -4.7226386, y: 9.862931}
+  - {x: -3.3421001, y: 9.670497}
+  - {x: -1.6193665, y: 9.481431}
+  - {x: 0.42223114, y: 9.321802}
+  - {x: 2.7593637, y: 9.217674}
+  - {x: 5.368699, y: 9.195122}
+  - {x: 8.226905, y: 9.280207}
+  - {x: 11.31065, y: 9.499002}
+  - {x: 14.596605, y: 9.877577}
+  - {x: 18.061436, y: 10.441999}
+  - {x: 21.681808, y: 11.218336}
+  - {x: 25.434393, y: 12.23266}
+  - {x: 29.295742, y: 13.510996}
+  - {x: 29.704067, y: 13.646178}
 --- !u!1 &1263180004143560903
 GameObject:
   m_ObjectHideFlags: 0
