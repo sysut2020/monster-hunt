@@ -90,8 +90,8 @@ public class PlayerInventory : MonoBehaviour {
     /// adds the provided amount of money
     /// </summary>
     /// <param name="toAdd">the amount of money to add</param>
-    public void AddMoney(int amount) {
-        this.money += amount;
+    public void AddMoney (int value) {
+        this.money += value;
     }
 
     /// <summary>
