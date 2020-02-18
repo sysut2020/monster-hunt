@@ -33,13 +33,13 @@ public class PlayerInventory : MonoBehaviour {
 
     private void Start() {
         Coin.OnCoinCollected += OnCoinCollected;
-        CollectableEvents.OnLetterCollected += OnLetterCollected;
+        Letter.OnLetterCollected += OnLetterCollected;
         CollectableEvents.OnPowerupCollected += OnEffectPickup;
     }
 
     private void OnDestroy() {
         Coin.OnCoinCollected -= OnCoinCollected;
-        CollectableEvents.OnLetterCollected -= OnLetterCollected;
+        Letter.OnLetterCollected -= OnLetterCollected;
         CollectableEvents.OnPowerupCollected -= OnEffectPickup;
     }
     // -- public -- //

@@ -29,13 +29,13 @@ public class LettersCollectedGUI : MonoBehaviour {
 
     private void Awake() {
         if (letterCounter == null) throw new MissingComponentException("Missing text component");
-        CollectableEvents.OnLetterCollected += OnNewLetter;
+        Letter.OnLetterCollected += OnNewLetter;
         SetLetterText();
-        
+
         letterGUIObject = new GameObject("World letter position");
         TryGetComponent<RectTransform>(out myRectTransform);
     }
-    
+
     /// <summary>
     /// Used to convert the GUI position of the letter GUI tab at the games camera,
     /// to its position in game.
@@ -66,7 +66,7 @@ public class LettersCollectedGUI : MonoBehaviour {
     }
 
     private void OnDestroy() {
-        CollectableEvents.OnLetterCollected -= OnNewLetter;
+        Letter.OnLetterCollected -= OnNewLetter;
     }
 
     public static Transform TryGetTransform() {
