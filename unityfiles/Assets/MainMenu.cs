@@ -6,13 +6,12 @@ public class MainMenu : MonoBehaviour
 {
     public void PlayGame()
     {
-        Debug.Log("Starting the main game");
-        SceneManager.Instance.ChangeScene(1); // changes to scene nr. 1
+        GameManager.Instance.GameStateChange(GAME_STATE.TEST_LEVEL);
     }
 
     public void QuitGame()
     {
-        Debug.Log("Quiting game");
-        Application.Quit();
+        GameManager.Instance.GameStateChange(GAME_STATE.EXIT);
+        
     }
 }
