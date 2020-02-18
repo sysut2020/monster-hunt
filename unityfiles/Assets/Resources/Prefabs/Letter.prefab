@@ -443,7 +443,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4993117160344158718}
-  m_BodyType: 0
+  m_BodyType: 2
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -494,10 +494,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ceefacf8d2ab68149b37a279e02e60ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wayPointArray:
-  - {fileID: 4993117160344158719}
-  - {fileID: 2200349336157705357, guid: 471297cd75b6a1848a59ec7730420648, type: 3}
-  time: 3
+  animationSpeed: 0.2
 --- !u!114 &2709097042343801514
 MonoBehaviour:
   m_ObjectHideFlags: 0

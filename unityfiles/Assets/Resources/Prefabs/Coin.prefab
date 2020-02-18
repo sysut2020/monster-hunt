@@ -153,9 +153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ceefacf8d2ab68149b37a279e02e60ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wayPointArray:
-  - {fileID: 8664072895757744029}
-  time: 3
+  animationSpeed: 0.2
 --- !u!114 &3505604175949116411
 MonoBehaviour:
   m_ObjectHideFlags: 0
