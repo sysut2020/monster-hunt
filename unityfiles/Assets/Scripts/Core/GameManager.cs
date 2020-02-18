@@ -2,9 +2,11 @@ using System;
 using UnityEngine;
 using UnityEngine.Experimental.PlayerLoop;
 
-
-public class StateChangeEventArgs: EventArgs{
-    public STATE NewState {get; set;}
+/// <summary>
+/// The event data for the game state changed events 
+/// </summary>
+public class GameStateChangeEventArgs: EventArgs{
+    public GAME_STATE NewState {get; set;}
 }
 
 
@@ -17,9 +19,7 @@ public class GameManager : Singleton<GameManager> {
     private const int MAIN_MENU_SCENE_INDEX = 0;
     private const int TEST_LEVEL_SCENE_INDEX = 1;
     
-    private static GameManager instance;
-
-    private STATE currentState;
+    private GAME_STATE currentState;
 
 
     // -- properties -- //
@@ -32,7 +32,7 @@ public class GameManager : Singleton<GameManager> {
     /// <summary>
     /// This event tells the listeners the game state has changed
     /// </summary>
-    public static event EventHandler<StateChangeEventArgs> GameStateChangeEvent;
+    public static event EventHandler<GameStateChangeEventArgs> GameStateChangeEvent;
 
 
     /// <summary>
@@ -63,9 +63,9 @@ public class GameManager : Singleton<GameManager> {
     /// </summary>
     /// <param name="o">the object calling (this should always be the level manager)</param>
     /// <param name="args">the event args containing the new state</param>
-    private void c_LevelStateChangeEvent(object o, StateChangeEventArgs args){
-        if (args.NewState == STATE.EXIT){
-            this.GameStateChange(STATE.MAIN_MENU);
+    private void c_LevelStateChangeEvent(object o, LevelStateChangeEventArgs args){
+        if (args.NewState == LEVEL_STATE.EXIT){
+            this.GameStateChange(GAME_STATE.MAIN_MENU);
         }
     }
 
@@ -77,24 +77,24 @@ public class GameManager : Singleton<GameManager> {
     /// Changes the game state 
     /// </summary>
     /// <param name="NewState">The new game state</param>
-    public void GameStateChange(STATE NewState){
+    public void GameStateChange(GAME_STATE NewState){
 
         this.currentState = NewState;
-        StateChangeEventArgs args = new StateChangeEventArgs();
+        GameStateChangeEventArgs args = new GameStateChangeEventArgs();
         args.NewState = NewState;
         
 
         switch (NewState)
         {
-            case STATE.MAIN_MENU:
+            case GAME_STATE.MAIN_MENU:
                 UnityEngine.SceneManagement.SceneManager.LoadScene(MAIN_MENU_SCENE_INDEX);
                 break;
 
-            case STATE.TEST_LEVEL:
+            case GAME_STATE.TEST_LEVEL:
                 SceneManager.Instance.ChangeScene(TEST_LEVEL_SCENE_INDEX);
                 break;
 
-            case STATE.EXIT_GAME:
+            case GAME_STATE.EXIT:
                 Application.Quit();
                 break;
 

@@ -3,6 +3,13 @@ using UnityEngine;
 
 
 /// <summary>
+/// The event data for the game state changed events 
+/// </summary>
+public class LevelStateChangeEventArgs: EventArgs{
+    public LEVEL_STATE NewState {get; set;}
+}
+
+/// <summary>
 /// The temporary data needed while playing through the level
 /// </summary>
 class PlayThroughData{
@@ -24,7 +31,7 @@ public class LevelManager : Singleton<LevelManager> {
 
     private Timers levelTimer = new Timers();
     private string LEVEL_TIMER_ID;
-    private STATE currentState; // may need default here in that case find out the starting state
+    private LEVEL_STATE currentState; // may need default here in that case find out the starting state
 
     private PlayThroughData playThroughData;
     
@@ -41,7 +48,7 @@ public class LevelManager : Singleton<LevelManager> {
     /// <summary>
     /// This event tells the listeners the level state has changed
     /// </summary>
-    public static event EventHandler<StateChangeEventArgs> LevelStateChangeEvent;
+    public static event EventHandler<LevelStateChangeEventArgs> LevelStateChangeEvent;
 
     /// <summary>
     /// This event tells the listeners they are about to be deleted and should relese 
@@ -76,7 +83,7 @@ public class LevelManager : Singleton<LevelManager> {
     /// <param name="o">the object calling</param>
     /// <param name="args">the event args</param>
     private void c_PlayerKilledEvent(object o, EventArgs _){
-        LevelStateChange(STATE.GAME_OVER);
+        LevelStateChange(LEVEL_STATE.GAME_OVER);
     }
 
     /// <summary>
@@ -88,7 +95,7 @@ public class LevelManager : Singleton<LevelManager> {
     private void c_EnemyKilledEvent(object o, EnemyEventArgs args){
         playThroughData.EnemysKilled += 1;
         if (this.levelDetails.NumberOfEnemies <= playThroughData.EnemysKilled){
-            this.LevelStateChange(STATE.EXIT);
+            this.LevelStateChange(LEVEL_STATE.EXIT);
         }
     }
 
@@ -98,26 +105,26 @@ public class LevelManager : Singleton<LevelManager> {
     /// Changes the level state 
     /// </summary>
     /// <param name="NewState">The new level state</param>
-    private void LevelStateChange(STATE NewState){
+    private void LevelStateChange(LEVEL_STATE NewState){
 
         this.currentState = NewState;
-        StateChangeEventArgs args = new StateChangeEventArgs();
+        LevelStateChangeEventArgs args = new LevelStateChangeEventArgs();
         args.NewState = NewState;
         
         
         switch (NewState)
         {
             /// The game is over show game over screen
-            case STATE.GAME_OVER:
+            case LEVEL_STATE.GAME_OVER:
                 gameOverCanvas.SetActive(true);
                 break;
 
             /// Start the main mode spawn the player and start the level
-            case STATE.HUNTING:                
+            case LEVEL_STATE.HUNTING:                
                 break;
 
             /// Exit the game and go to main menu
-            case STATE.EXIT:
+            case LEVEL_STATE.EXIT:
                 break;
 
             default:
@@ -166,12 +173,12 @@ public class LevelManager : Singleton<LevelManager> {
         LEVEL_TIMER_ID = this.levelTimer.RollingUID;
         this.startLevelTime();
 
-        this.LevelStateChange(STATE.HUNTING);
+        this.LevelStateChange(LEVEL_STATE.HUNTING);
     }
     private void Update(){
 
         if (this.levelTimer.Done(LEVEL_TIMER_ID)){
-            this.LevelStateChange(STATE.EXIT);
+            this.LevelStateChange(LEVEL_STATE.EXIT);
         }
     }
 

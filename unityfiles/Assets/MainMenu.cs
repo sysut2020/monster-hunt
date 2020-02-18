@@ -6,12 +6,12 @@ public class MainMenu : MonoBehaviour
 {
     public void PlayGame()
     {
-        GameManager.Instance.GameStateChange(STATE.TEST_LEVEL);
+        GameManager.Instance.GameStateChange(GAME_STATE.TEST_LEVEL);
     }
 
     public void QuitGame()
     {
-        GameManager.Instance.GameStateChange(STATE.EXIT_GAME);
+        GameManager.Instance.GameStateChange(GAME_STATE.EXIT);
         
     }
 }
