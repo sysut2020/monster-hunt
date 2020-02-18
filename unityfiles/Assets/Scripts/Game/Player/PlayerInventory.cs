@@ -47,10 +47,12 @@ public class PlayerInventory {
 
     private void Start() {
         CoinCollectable.OnCoinCollected += OnCoinCollected;
+        LetterCollectable.OnLetterCollected += OnLetterCollected;
     }
 
     private void OnDestroy() {
         CoinCollectable.OnCoinCollected -= OnCoinCollected;
+        LetterCollectable.OnLetterCollected -= OnLetterCollected;
     }
     // -- public -- //
 
