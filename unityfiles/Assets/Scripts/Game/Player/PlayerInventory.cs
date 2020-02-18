@@ -32,13 +32,15 @@ public class PlayerInventory : MonoBehaviour {
     }
 
     private void Start() {
-        CollectibleEvents.CoinCollected += (sender, coin) => AddMoney(coin.CoinValue);
-        CollectibleEvents.LetterCollected += (sender, letter) => AddLetter(letter.LetterString);
+        CollectableEvents.OnCoinCollected += OnCoinCollected;
+        CollectableEvents.OnLetterCollected += OnLetterCollected;
+        CollectableEvents.OnPowerupCollected += OnEffectPickup;
     }
 
     private void OnDestroy() {
-        CollectibleEvents.CoinCollected -= (sender, coin) => AddMoney(coin.CoinValue);
-        CollectibleEvents.LetterCollected -= (sender, letter) => AddLetter(letter.LetterString);
+        CollectableEvents.OnCoinCollected -= OnCoinCollected;
+        CollectableEvents.OnLetterCollected -= OnLetterCollected;
+        CollectableEvents.OnPowerupCollected -= OnEffectPickup;
     }
     // -- public -- //
 
@@ -46,16 +48,25 @@ public class PlayerInventory : MonoBehaviour {
     /// Adds the given effect pickup
     /// </summary>
     /// <param name="effect">the pickup to add</param>
-    public void AddEffectPickup (IEffectPickup effect) {
-        this.activePickups.Add (effect);
+    public void AddEffectPickup(IEffectPickup effect) {
+        this.activePickups.Add(effect);
+    }
+
+    /// <summary>
+    /// Effect collected event subscriber function, adds effect to invetory
+    /// </summary>
+    /// <param name="sender">object that triggered event</param>
+    /// <param name="effect">the effect to add to inventory</param>
+    private void OnEffectPickup(object sender, PowerUpCollectedArgs effect) {
+        this.AddEffectPickup(effect.Effect);
     }
 
     /// <summary>
     /// removes the the given effect pickup
     /// </summary>
     /// <param name="effect">the pickup to remove</param>
-    public void RemoveEffectPickup (IEffectPickup effect) {
-        this.activePickups.Remove (effect);
+    public void RemoveEffectPickup(IEffectPickup effect) {
+        this.activePickups.Remove(effect);
     }
 
     /// <summary>
@@ -67,11 +78,29 @@ public class PlayerInventory : MonoBehaviour {
     }
 
     /// <summary>
+    /// Letter collected subscriber function, adds letter to invetory
+    /// </summary>
+    /// <param name="sender">object that triggered event</param>
+    /// <param name="letter">the letter to add to inventory</param>
+    private void OnLetterCollected(object sender, LetterCollectedArgs letter) {
+        this.AddLetter(letter.Letter);
+    }
+
+    /// <summary>
     /// adds the provided amount of money
     /// </summary>
     /// <param name="toAdd">the amount of money to add</param>
-    public void AddMoney(int value) {
+    public void AddMoney (int value) {
         this.money += value;
+    }
+
+    /// <summary>
+    /// Coin collected event subscriber function, adds coin amount to invetory
+    /// </summary>
+    /// <param name="sender">object that triggered event</param>
+    /// <param name="coin">the coin to add to inventory</param>
+    private void OnCoinCollected(object sender, CoinCollectedArgs coin) {
+        this.AddMoney(coin.Amount);
     }
 
     // -- private -- // 

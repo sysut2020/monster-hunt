@@ -11,9 +11,11 @@ public class Letter : MonoBehaviour {
     }
 
     private void Start() {
-        // If a Letter exists, it will tell the collectible events handler, that it exists
         if (GameObject.Find("Letter " + letterString)) {
             CollectibleEvents.LetterCollected.Invoke(this, this);
+            var args = new LetterCollectedArgs();
+            args.Letter = this.letterString;
+            CollectableEvents.OnLetterCollected?.Invoke(this, args);
         }
     }
 }

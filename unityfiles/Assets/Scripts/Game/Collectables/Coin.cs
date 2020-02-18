@@ -11,10 +11,10 @@ public class Coin : MonoBehaviour {
     }
 
     private void Start() {
-        // If a coin exists, it will tell the collectible events handler,
-        // that it exist
         if (GameObject.Find("Coin")) {
-            CollectibleEvents.CoinCollected.Invoke(this, this);
+            var args = new CoinCollectedArgs();
+            args.Amount = this.coinValue;
+            CollectableEvents.OnCoinCollected?.Invoke(this, args);
         }
     }
 }
