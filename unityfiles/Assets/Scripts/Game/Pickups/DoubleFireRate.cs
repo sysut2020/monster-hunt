@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DoubleFireRate : MonoBehaviour, IWeaponEffectPickup {
+public class DoubleFireRate : MonoBehaviour, IWeaponEffectPowerUp {
 
     private string pickupName = "doubleFireRate";
 
@@ -36,7 +36,7 @@ public class DoubleFireRate : MonoBehaviour, IWeaponEffectPickup {
         this.ExtendEffect (this);
     }
 
-    public void ExtendEffect (IEffectPickup extender) {
+    public void ExtendEffect (IEffectPowerUp extender) {
         if (extender is DoubleFireRate) {
             string timerId = $"fireRate_{this.rollingNameAppend}";
             DoubleFireRate ex = extender as DoubleFireRate;

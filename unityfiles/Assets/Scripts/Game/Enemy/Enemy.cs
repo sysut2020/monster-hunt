@@ -3,6 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+public class EnemyEventArgs: EventArgs{
+    public GameObject EnemyGO {get; set;}
+    public EnemyType EnemyType {get; set;}
+}
+
 /// <summary>
 /// Describes an enemy
 /// </summary>
@@ -13,46 +19,61 @@ public class Enemy : MonoBehaviour, IDamageable {
     [SerializeField]
     private EnemyType enemyType;
 
-    private bool isAttacking = false;
-
-    public bool IsAttacking {
-        get { return this.isAttacking; }
-        set { this.isAttacking = value; }
-    }
-
-    private HealthController healthController;
-
     [Tooltip("The front point a raycast is sent from")]
     [SerializeField]
     private Transform frontPoint;
 
+    private bool isAttacking = false;
+    private HealthController healthController;
+
+    
+
+    // -- properties -- //
+
+    public bool IsAttacking {
+        get => this.isAttacking;
+        set => this.isAttacking = value;
+    }
+
     public EnemyType EnemyType {
-        get { return this.enemyType; }
-        set { this.enemyType = value; }
+        get => this.enemyType; 
+        set => this.enemyType = value; 
     }
 
     public Transform FrontPoint {
-        get { return this.frontPoint; }
+        get =>  this.frontPoint; 
     }
     
     // -- public -- //
 
+    /// <summary>
+    /// Handles what to do when the enemy is killed
+    /// </summary>
     public void Dead() {
-        // act dead
         GameObject.Destroy(gameObject);
         CollectibleSpawner.Instance.SpawnCollectible(this.transform.position);
     }
+    // -- events -- //
+    public static event EventHandler<EnemyEventArgs> EnemySpawnEvent;
+    public static event EventHandler<EnemyEventArgs> EnemyKilledEvent;
+
     // -- private -- //
 
     // -- unity -- // 
     void Start() {
         this.tag = "Enemy";
         this.healthController = this.gameObject.GetComponent<HealthController>();
+
+        EnemyEventArgs args = new EnemyEventArgs();
+        args.EnemyGO = this.gameObject;
+        args.EnemyType = this.enemyType;
+        EnemySpawnEvent?.Invoke(this, args);
     }
 
     private void OnDestroy() {
-        OnEnemyDead?.Invoke();
+        EnemyEventArgs args = new EnemyEventArgs();
+        args.EnemyType = this.enemyType;
+        EnemyKilledEvent?.Invoke(this, args);
     }
 
-    public static event Action OnEnemyDead;
 }

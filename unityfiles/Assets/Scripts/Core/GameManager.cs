@@ -1,46 +1,105 @@
 using System;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour {
+/// <summary>
+/// The event data for the game state changed events 
+/// </summary>
+public class GameStateChangeEventArgs : EventArgs {
+    public GAME_STATE NewState { get; set; }
+}
+
+/// <summary>
+/// The manager for the whole game main task is to start and stop scenes and levels
+/// </summary>
+public class GameManager : Singleton<GameManager> {
+
     private const int MAIN_MENU_SCENE_INDEX = 0;
+    private const int TEST_LEVEL_SCENE_INDEX = 1;
 
-    private static GameManager instance;
+    private GAME_STATE currentState;
 
-    [SerializeField]
-    private GameObject gameOverCanvas;
+    // -- properties -- //
 
-    [SerializeField]
-    private LevelDetails levelDetails;
+    // -- public -- //
 
-    private int numberOfEnemies = 0;
+    // -- events -- //    
 
     /// <summary>
-    /// Setting up singleton pattern
+    /// This event tells the listeners the game state has changed
     /// </summary>
-    public static GameManager Instance {
-        get {
-            if (instance == null) {
-                GameObject gameObject = new GameObject("GameManager");
-                gameObject.AddComponent<GameManager>();
-            }
+    public static event EventHandler<GameStateChangeEventArgs> GameStateChangeEvent;
 
-            return instance;
+    /// <summary>
+    /// Subscribes to the relevant events for this class
+    /// </summary>
+    private void SubscribeToEvents() {
+        // todo subscribe to OnPlayerDead, OnTimeOut, OnAllEnemiesDead
+        LevelManager.LevelStateChangeEvent += c_LevelStateChangeEvent;
+
+    }
+
+    /// <summary>
+    /// Subscribes to the relevant events for this class
+    /// </summary>
+    private void UnsubscribeFromEvents() {
+        // todo unsubscribe from OnPlayerDead, OnTimeOut, OnAllEnemiesDead
+        // maybe that this also should be done on disable
+        LevelManager.LevelStateChangeEvent -= c_LevelStateChangeEvent;
+
+    }
+
+    /// <summary>
+    /// This function is fiered when the LevelStateChangeEvent is invoked
+    /// This function will trigger on the following level states:
+    /// 
+    /// STATE.EXIT: 
+    ///     the level is done and the game state should be changed to MAIN_MENU
+    /// </summary>
+    /// <param name="o">the object calling (this should always be the level manager)</param>
+    /// <param name="args">the event args containing the new state</param>
+    private void c_LevelStateChangeEvent(object o, LevelStateChangeEventArgs args) {
+        if (args.NewState == LEVEL_STATE.EXIT) {
+            this.GameStateChange(GAME_STATE.MAIN_MENU);
         }
     }
 
-    private void Awake() {
-        if (instance != null && instance != this) {
-            Destroy(this.gameObject);
-        } else {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
+    // -- private -- //
+
+    /// <summary>
+    /// Changes the game state 
+    /// </summary>
+    /// <param name="NewState">The new game state</param>
+    public void GameStateChange(GAME_STATE NewState) {
+
+        this.currentState = NewState;
+        GameStateChangeEventArgs args = new GameStateChangeEventArgs();
+        args.NewState = NewState;
+
+        switch (NewState) {
+            case GAME_STATE.MAIN_MENU:
+                UnityEngine.SceneManagement.SceneManager.LoadScene(MAIN_MENU_SCENE_INDEX);
+                break;
+
+            case GAME_STATE.TEST_LEVEL:
+                SceneManager.Instance.ChangeScene(TEST_LEVEL_SCENE_INDEX);
+                break;
+
+            case GAME_STATE.EXIT:
+                Application.Quit();
+                break;
+
+            default:
+                Debug.Log("🌮🌮🌮🌮  UNKNOWN GAME STATE  🌮🌮🌮🌮");
+                break;
         }
+
+        GameStateChangeEvent?.Invoke(this, args);
+
     }
 
-    private void Start() {
-        // Finds out how many enemies are in the level
-        numberOfEnemies = levelDetails.NumberOfEnemies;
-    }
+    //-- Events --//
+
+    // -- unity -- //
 
     private void OnEnable() {
         SubscribeToEvents();
@@ -50,42 +109,4 @@ public class GameManager : MonoBehaviour {
         UnsubscribeFromEvents();
     }
 
-    private void SubscribeToEvents() {
-        // todo subscribe to OnPlayerDead, OnTimeOut, OnAllEnemiesDead
-        Enemy.OnEnemyDead += DecrementEnemies;
-        Player.OnPlayerDead += ShowGameOver;
-    }
-
-    /// <summary>
-    /// Decrements the number of enemies by one and then checks if there is any left
-    /// If there are none left it will fire the OnEndGame event, and then show the MainMenu
-    /// </summary>
-    public void DecrementEnemies() {
-        numberOfEnemies--;
-        if (numberOfEnemies <= 0) {
-            OnEndGame?.Invoke();
-            ShowMainMenu();
-        }
-    }
-
-    private void UnsubscribeFromEvents() {
-        // todo unsubscribe from OnPlayerDead, OnTimeOut, OnAllEnemiesDead
-        // maybe that this also should be done on disable
-        Enemy.OnEnemyDead -= DecrementEnemies;
-        Player.OnPlayerDead -= ShowGameOver;
-    }
-
-    private void ShowGameOver() {
-        gameOverCanvas.SetActive(true);
-    }
-
-    private void ShowMainMenu() {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(MAIN_MENU_SCENE_INDEX);
-    }
-
-    //-- Events --//
-
-    public delegate void EndGameHandler();
-
-    public static event EndGameHandler OnEndGame;
 }

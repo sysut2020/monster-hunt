@@ -1,8 +1,9 @@
-using System;
 using UnityEngine;
+using Vector3 = UnityEngine.Vector3;
+using Quaternion = UnityEngine.Quaternion;
+
 
 public class PlayerGunFollowsMouse : MonoBehaviour {
-
     [SerializeField]
     private Transform rotatePoint;
 
@@ -41,6 +42,7 @@ public class PlayerGunFollowsMouse : MonoBehaviour {
         } else if ((mousePositionX < crossingPointX) && mouseOnRightSide) {
             mouseOnRightSide = false;
         }
+
         return crossed != this.mouseOnRightSide;
     }
 
@@ -53,10 +55,11 @@ public class PlayerGunFollowsMouse : MonoBehaviour {
         this.aimControl = new AimControl(aimPoint.gameObject, rotatePoint.transform);
     }
 
-    void FixedUpdate() {
+    private void Update() {
         RotateGun();
         if (this.IsMouseOnOtherSideOfCrossing()) {
             FlipCharacter();
         }
+        
     }
 }
