@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,14 +17,15 @@ public class CollectablesCollectionAnimation : MonoBehaviour {
     // When a collectible is spawn, it will create a path to the collection point and then follow that path.
     // When the collectible is done following the path, its sprite will get disabled
     public void Start() {
-        pos= CoinsCollecedGUI.TryGetTransform();
+        pos = CoinsCollecedGUI.TryGetTransform();
     }
-    
-   
 
     private void FixedUpdate() {
-        Vector3 e = Vector3.MoveTowards(this.transform.position, pos.position, 0.2f);
-       this.transform.position = e;
-    }
+        Vector3 newPosition = Vector3.MoveTowards(this.transform.position, pos.position, 0.2f);
+        if ((this.transform.position - pos.position).magnitude < 0.5f) {
+            GameObject.Destroy(this.gameObject);
+        } else {
+            this.transform.position = newPosition;
+        }
     }
 }
