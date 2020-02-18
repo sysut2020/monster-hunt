@@ -32,13 +32,13 @@ public class PlayerInventory : MonoBehaviour {
     }
 
     private void Start() {
-        CollectableEvents.OnCoinCollected += OnCoinCollected;
+        Coin.OnCoinCollected += OnCoinCollected;
         CollectableEvents.OnLetterCollected += OnLetterCollected;
         CollectableEvents.OnPowerupCollected += OnEffectPickup;
     }
 
     private void OnDestroy() {
-        CollectableEvents.OnCoinCollected -= OnCoinCollected;
+        Coin.OnCoinCollected -= OnCoinCollected;
         CollectableEvents.OnLetterCollected -= OnLetterCollected;
         CollectableEvents.OnPowerupCollected -= OnEffectPickup;
     }
@@ -90,7 +90,7 @@ public class PlayerInventory : MonoBehaviour {
     /// adds the provided amount of money
     /// </summary>
     /// <param name="toAdd">the amount of money to add</param>
-    public void AddMoney (int value) {
+    public void AddMoney(int value) {
         this.money += value;
     }
 

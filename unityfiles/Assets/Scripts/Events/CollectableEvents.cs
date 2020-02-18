@@ -5,20 +5,12 @@ using System;
 /// </summary>
 public class CollectableEvents {
 
-	public static EventHandler<CoinCollectedArgs> OnCoinCollected;
-
 	public static EventHandler<PowerUpCollectedArgs> OnPowerupCollected;
 
 	public static EventHandler<LetterCollectedArgs> OnLetterCollected;
 
 }
 
-/// <summary>
-/// Arguments for coin colected event
-/// </summary>
-public class CoinCollectedArgs : EventArgs {
-	public int Amount { get; set; }
-}
 /// <summary>
 /// Arguments for powerup collected event
 /// </summary>
