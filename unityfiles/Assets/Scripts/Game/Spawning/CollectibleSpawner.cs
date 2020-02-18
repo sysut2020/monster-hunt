@@ -5,16 +5,17 @@ using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
 public class CollectibleSpawner : MonoBehaviour {
+
     // Can be loaded with prefabs or other game objects that can be spawned
     // [SerializeField]
     // private GameObject[] collectiblesToSpawn;
 
     [SerializeField]
-    private GameObject coinCollectable;
+    private Collectable coinCollectable;
     [SerializeField]
-    private LetterController letterCollectable;
+    private Collectable letterCollectable;
     [SerializeField]
-    private GameObject powerUpCollectable;
+    private Collectable powerUpCollectable;
 
     [SerializeField]
     private int minimumSpawnItems = 1;
@@ -22,44 +23,40 @@ public class CollectibleSpawner : MonoBehaviour {
     [SerializeField]
     private int maximumSpawnItems = 5;
 
-    private static CollectibleSpawner instance;
-
-    // Singleton pattern implementation
-    public static CollectibleSpawner Instance {
-        get {
-            if (instance == null) {
-                GameObject gameObject = new GameObject("CollectibleSpawner");
-                gameObject.AddComponent<CollectibleSpawner>();
-            }
-
-            return instance;
-        }
+    private void Awake() {
+        SubscribeToEvents();
+    }
+    private void OnDestroy() {
+        UnsubscribeFromEvents();
     }
 
-    private void Awake() {
-        if (instance != null && instance != this) {
-            Destroy(this.gameObject);
-        } else {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
+    /// <summary>
+    /// Subscribes to the relevant events for this class
+    /// </summary>
+    private void SubscribeToEvents() {
+        Enemy.EnemyKilledEvent += SpawnCollectible;
+    }
+
+    /// <summary>
+    /// Subscribes to the relevant events for this class
+    /// </summary>
+    private void UnsubscribeFromEvents() {
+        Enemy.EnemyKilledEvent -= SpawnCollectible;
     }
 
     /// <summary>
     /// Spawns a collectible at a specific location
     /// </summary>
     /// <param name="position">The spawn location</param>
-    public void SpawnCollectible(Vector2 position) {
+    public void SpawnCollectible(object _, EnemyEventArgs args) {
         int numberOfSpawnItems = Random.Range(minimumSpawnItems, maximumSpawnItems);
 
         for (int i = 0; i < numberOfSpawnItems; i++) {
-            double randomNumber = Math.Ceiling(Random.value * 10);
-
-            GameObject collectible = GetCollectibleType(randomNumber);
+            GameObject collectible = GetCollectibleType(args);
             if (collectible != null) {
                 collectible.SetActive(true);
                 collectible.tag = "Collectible";
-                collectible.transform.position = position;
+                collectible.transform.position = args.Position;
             }
         }
     }
@@ -69,35 +66,24 @@ public class CollectibleSpawner : MonoBehaviour {
     /// </summary>
     /// <param name="randomNumber">The number corresponding to type</param>
     /// <returns>Random collectible</returns>
-    private GameObject GetCollectibleType(double randomNumber) {
+    private GameObject GetCollectibleType(EnemyEventArgs args) {
         GameObject collectible = null;
 
+        EnemyType e = args.EnemyType;
+        float a = e.CoinDropChance + e.LetterDropChance + e.PowerUpDropChance;
+        double randomNumber = Random.Range(0, a);
+        Debug.Log(randomNumber);
         switch (randomNumber) {
-            case var n when(n <= 2):
-                collectible = Instantiate(powerUpCollectable);
-                collectible.name = "PowerUP";
-                break;
-
-            case var n when(n > 2 && n <= 8):
-                // taking the collectible from the inspector and instantiate it in the scene
-                collectible = Instantiate(coinCollectable);
-                collectible.name = "Coin";
-                break;
-
-            case var n when(n > 8 && n <= 11):
-                string letter = SudoRandomLetterGenerator.Instance.GenerateLetter();
-                LetterController letterController = Instantiate(letterCollectable);
-                collectible = letterController.gameObject;
-                // We need to tell the Letter's event handler, what its assigned letter is
-                Letter letterToAddToInventory = collectible.GetComponent<Letter>();
-                letterToAddToInventory.LetterString = letter;
-                letterController.SetLetter(letter);
-                collectible.name = "Letter " + letter;
-                break;
-
+            case var n when(n <= e.PowerUpDropChance):
+                collectible = Instantiate(powerUpCollectable.gameObject);
+            break;
+            case var n when(n < (e.CoinDropChance + e.CoinDropChance)):
+                collectible = Instantiate(coinCollectable.gameObject);
+            break;
             default:
-                // no default behavior
+                collectible = Instantiate(letterCollectable.gameObject);
                 break;
+
         }
 
         return collectible;
