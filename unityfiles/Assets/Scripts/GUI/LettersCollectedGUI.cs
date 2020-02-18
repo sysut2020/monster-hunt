@@ -16,6 +16,12 @@ public class LettersCollectedGUI : MonoBehaviour {
 
     private int currentLetterCount = 0;
 
+    private static Vector3 resultPosition;
+
+    private static RectTransform myRectTransform;
+
+    private static GameObject letterGUIObject;
+
     /// <summary>
     /// How many letters to collect 
     /// </summary>
@@ -25,6 +31,20 @@ public class LettersCollectedGUI : MonoBehaviour {
         if (letterCounter == null) throw new MissingComponentException("Missing text component");
         CollectableEvents.OnLetterCollected += OnNewLetter;
         SetLetterText();
+        
+        letterGUIObject = new GameObject("World letter position");
+        TryGetComponent<RectTransform>(out myRectTransform);
+    }
+    
+    /// <summary>
+    /// Used to convert the GUI position of the letter GUI tab at the games camera,
+    /// to its position in game.
+    /// </summary>
+    private void FixedUpdate() {
+        Vector2 vectorRectTransformPosition = myRectTransform.transform.position;
+        RectTransformUtility.ScreenPointToWorldPointInRectangle(myRectTransform, vectorRectTransformPosition,
+            FindObjectOfType<Camera>(), out resultPosition);
+        letterGUIObject.transform.position = resultPosition;
     }
 
     private void SetLetterText() {
@@ -47,5 +67,9 @@ public class LettersCollectedGUI : MonoBehaviour {
 
     private void OnDestroy() {
         CollectableEvents.OnLetterCollected -= OnNewLetter;
+    }
+
+    public static Transform TryGetTransform() {
+        return letterGUIObject.transform;
     }
 }

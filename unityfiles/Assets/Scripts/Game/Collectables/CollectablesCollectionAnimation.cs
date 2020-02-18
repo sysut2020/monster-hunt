@@ -4,6 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CollectablesCollectionAnimation : MonoBehaviour {
+    
+    // The speed of moving collectibles to inventory animation 
+    [SerializeField] private float animationSpeed;
+    // The GUI position of the coin tab
+    private Transform coinGUIPosition;
+    // The GUI position of the letter tab
+    private Transform letterGUIPosition;
 
     /// <summary>
     /// The speed it will use to fly to the location
@@ -26,5 +33,10 @@ public class CollectablesCollectionAnimation : MonoBehaviour {
         } else {
             this.transform.position = newPosition;
         }
+
+        if (Vector2.Distance(this.transform.position, letterGUIPosition.position) < 1.5f) {
+            this.gameObject.SetActive(false);
+        }
     }
+    
 }

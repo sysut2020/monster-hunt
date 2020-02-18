@@ -17,25 +17,27 @@ public class CoinsCollecedGUI : MonoBehaviour {
     /// </summary>
     [SerializeField]
     TMP_Text coinCounter;
-
-    public Camera MainCam;
-    private static Vector3 result;
-
+    
     private int collectedCoins = 0;
+    
+    private static Vector3 convertedPosition;
 
-    public static RectTransform myRect;
+    private static RectTransform myRectTransform;
 
-    private static GameObject go;
+    private static GameObject coinGUIObject;
 
     private void Awake() {
         if (coinCounter == null) throw new MissingComponentException("Missing text component");
         Coin.OnCoinCollected += OnNewCoin;
         go = new GameObject("World coin pos");
         SetCoinamountText();
-        TryGetComponent<RectTransform>(out myRect);
-        Debug.Log(myRect.position);
+        TryGetComponent<RectTransform>(out myRectTransform);
     }
-
+    
+    /// <summary>
+    /// Used to convert the GUI position of the coin GUI tab at the games camera,
+    /// to its position in game.
+    /// </summary>
     private void FixedUpdate() {
         Vector2 myV2 = myRect.transform.position;
         RectTransformUtility.ScreenPointToWorldPointInRectangle(myRect,
@@ -43,6 +45,7 @@ public class CoinsCollecedGUI : MonoBehaviour {
             FindObjectOfType<Camera>(),
             out result);
         go.transform.position = result;
+        coinGUIObject.transform.position = convertedPosition;
     }
 
     private void SetCoinamountText() {
@@ -59,6 +62,6 @@ public class CoinsCollecedGUI : MonoBehaviour {
     }
 
     public static Transform TryGetTransform() {
-        return go.transform;
+        return coinGUIObject.transform;
     }
 }
