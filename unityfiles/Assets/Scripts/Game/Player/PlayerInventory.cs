@@ -71,8 +71,8 @@ public class PlayerInventory {
     /// </summary>
     /// <param name="sender">object that triggered event</param>
     /// <param name="effect">the effect to add to inventory</param>
-    private void OnEffectPickup(object sender, PowerUpCollectedArgs effect) {
-        this.AddEffectPickup(effect.Effect);
+    private void OnEffectPickup(object sender, PowerUpCollectedArgs args) {
+        throw new NotImplementedException();
     }
 
     /// <summary>
