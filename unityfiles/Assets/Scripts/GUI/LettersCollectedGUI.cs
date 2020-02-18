@@ -35,7 +35,11 @@ public class LettersCollectedGUI : MonoBehaviour {
         letterGUIObject = new GameObject("World letter position");
         TryGetComponent<RectTransform>(out myRectTransform);
     }
-
+    
+    /// <summary>
+    /// Used to convert the GUI position of the letter GUI tab at the games camera,
+    /// to its position in game.
+    /// </summary>
     private void FixedUpdate() {
         Vector2 vectorRectTransformPosition = myRectTransform.transform.position;
         RectTransformUtility.ScreenPointToWorldPointInRectangle(myRectTransform, vectorRectTransformPosition,

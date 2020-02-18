@@ -18,10 +18,10 @@ public class CoinsCollecedGUI : MonoBehaviour {
     [SerializeField]
     TMP_Text coinCounter;
     
-    private static Vector3 resultPosition;
-    
     private int collectedCoins = 0;
-   
+    
+    private static Vector3 convertedPosition;
+
     private static RectTransform myRectTransform;
 
     private static GameObject coinGUIObject;
@@ -33,11 +33,15 @@ public class CoinsCollecedGUI : MonoBehaviour {
         SetCoinamountText();
         TryGetComponent<RectTransform>(out myRectTransform);
     }
-
+    
+    /// <summary>
+    /// Used to convert the GUI position of the coin GUI tab at the games camera,
+    /// to its position in game.
+    /// </summary>
     private void FixedUpdate() {
         Vector2 vectorRectTransformPosition = myRectTransform.transform.position;
-        RectTransformUtility.ScreenPointToWorldPointInRectangle(myRectTransform, vectorRectTransformPosition, FindObjectOfType<Camera>(), out resultPosition);
-        coinGUIObject.transform.position = resultPosition;
+        RectTransformUtility.ScreenPointToWorldPointInRectangle(myRectTransform, vectorRectTransformPosition, FindObjectOfType<Camera>(), out convertedPosition);
+        coinGUIObject.transform.position = convertedPosition;
     }
 
 
