@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -26,15 +26,5 @@ public class CollectablesCollectionAnimation : MonoBehaviour {
         Vector3 e = Vector3.MoveTowards(this.transform.position, pos.position, 0.2f);
        this.transform.position = e;
     }
-
-    private void OnAnimationComplete() {
-        if (this.gameObject == GameObject.Find("Coin")){
-            this.gameObject.GetComponent<SpriteRenderer>().enabled = false;
-        }
-
-        if (this.gameObject == GameObject.Find("Letter")){
-            this.gameObject.GetComponent<LetterController>().enabled = false;
-        }
     }
 }
-    
