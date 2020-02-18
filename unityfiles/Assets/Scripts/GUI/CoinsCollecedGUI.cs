@@ -31,7 +31,7 @@ public class CoinsCollecedGUI : MonoBehaviour {
         Coin.OnCoinCollected += OnNewCoin;
         go = new GameObject("World coin pos");
         SetCoinamountText();
-        TryGetComponent<RectTransform>(out myRectTransform);
+        TryGetComponent<RectTransform>(out myRect);
     }
     
     /// <summary>

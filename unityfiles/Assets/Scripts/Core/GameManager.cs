@@ -1,10 +1,9 @@
 using System;
 using UnityEngine;
-using UnityEngine.Experimental.PlayerLoop;
 
 public class GameManager : MonoBehaviour {
     private const int MAIN_MENU_SCENE_INDEX = 0;
-    
+
     private static GameManager instance;
 
     [SerializeField]
@@ -46,7 +45,7 @@ public class GameManager : MonoBehaviour {
     private void OnEnable() {
         SubscribeToEvents();
     }
-    
+
     private void OnDestroy() {
         UnsubscribeFromEvents();
     }
@@ -83,7 +82,6 @@ public class GameManager : MonoBehaviour {
     private void ShowMainMenu() {
         UnityEngine.SceneManagement.SceneManager.LoadScene(MAIN_MENU_SCENE_INDEX);
     }
-
 
     //-- Events --//
 
