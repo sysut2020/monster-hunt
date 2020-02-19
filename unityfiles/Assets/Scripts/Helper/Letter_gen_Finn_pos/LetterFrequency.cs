@@ -10,11 +10,9 @@ public class LetterFrequency {
     public List<string> letter;
     public List<float> weight;
 
-    public string GetLetterByFrequency () {
-        var r = new System.Random ();
-        int val = r.Next (1001);
-
-        //Debug.Log(val);
+    public string GetLetterByFrequency() {
+        var r = new System.Random();
+        int val = r.Next(1001);
 
         for (int i = 0; i < weight.Count; i++) {
             if (weight[i] >= val) {

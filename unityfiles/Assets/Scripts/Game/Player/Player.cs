@@ -137,13 +137,10 @@ public class Player : MonoBehaviour, IDamageable {
     }
 
     void OnTriggerEnter2D(Collider2D Col) {
-        Debug.Log("TRIGGER");
         Enemy enemy = Col.gameObject.GetComponentInParent<Enemy>();
         if (enemy != null) {
-            Debug.Log(enemy);
             if (enemy.IsAttacking) {
                 animator.SetTrigger(AnimationTriggers.DAMAGE);
-                Debug.Log("ENEMY ATTACKING");
                 this.PlayerHealthController.ApplyDamage(2);
             }
         }
