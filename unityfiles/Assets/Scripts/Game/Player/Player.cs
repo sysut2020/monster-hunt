@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerEventArgs : EventArgs {
@@ -107,16 +109,16 @@ public class Player : MonoBehaviour, IDamageable {
     /// if they are the effect is cleaned out and removed
     /// </summary>
     private void UpdateEffects() {
-        // if (this.playerInventory.ActivePickups.Count > 0){
-        //     List<IEffectPowerUp> tmp = this.playerInventory.ActivePickups;
-        //     tmp.Reverse<IEffectPowerUp>();
-        //     foreach (IEffectPowerUp effect in tmp) {
-        //         if (effect.IsEffectFinished()) {
-        //             effect.Cleanup();
-        //             this.playerInventory.RemoveEffectPickup(effect);
-        //     }
-        // }
-        // }
+        if (this.playerInventory.ActivePickups.Count > 0) {
+            List<IEffectPowerUp> tmp = this.playerInventory.ActivePickups;
+            tmp.Reverse<IEffectPowerUp>();
+            foreach (IEffectPowerUp effect in tmp) {
+                if (effect.IsEffectFinished()) {
+                    effect.Cleanup();
+                    this.playerInventory.RemoveEffectPickup(effect);
+                }
+            }
+        }
 
     }
 
