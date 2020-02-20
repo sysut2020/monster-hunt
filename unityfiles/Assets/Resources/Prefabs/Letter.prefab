@@ -437,6 +437,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: caec2e4df2ee646ddad2cd28360de347, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  letterComponent: {fileID: 0}
 --- !u!50 &-8197550770122325574
 Rigidbody2D:
   serializedVersion: 4
@@ -493,11 +494,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 4993117160344158718}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceefacf8d2ab68149b37a279e02e60ec, type: 3}
+  m_Script: {fileID: 11500000, guid: 72516aa2d6f934db4a826085bd25c200, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animationSpeed: 0.2
-  speed: 0
+  speed: 1
+  selfDestroyDistance: 0.6
 --- !u!114 &2709097042343801514
 MonoBehaviour:
   m_ObjectHideFlags: 0

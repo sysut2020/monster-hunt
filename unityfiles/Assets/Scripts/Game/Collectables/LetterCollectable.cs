@@ -15,6 +15,8 @@ public class LetterCollectable : Collectable {
     [SerializeField]
     private TMP_Text letterComponent;
 
+    private MoveToGuiElement moveToGuiElement;
+
     public string LetterString {
         get => letterComponent.text;
     }
@@ -25,9 +27,11 @@ public class LetterCollectable : Collectable {
         LetterCollectable.OnLetterCollected?.Invoke(this, letterEventArgs);
     }
 
-    private void Start() {
-        this.FindPosition<LettersCollectedGUI>();
+    private void Awake() {
         this.letterComponent.SetText(SudoRandomLetterGenerator.Instance.GenerateLetter());
+        if (TryGetComponent(out moveToGuiElement)) {
+            moveToGuiElement.FindTarget<LettersCollectedGUI>();
+        }
     }
 
 }

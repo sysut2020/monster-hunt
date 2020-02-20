@@ -13,11 +13,15 @@ public class CoinCollectedArgs : EventArgs {
 public class CoinCollectable : Collectable {
     public static event EventHandler<CoinCollectedArgs> OnCoinCollected;
 
+    private MoveToGuiElement moveToGuiElement;
+
     [SerializeField]
     private int coinValue = 1;
 
-    private void Start() {
-        this.FindPosition<CoinsCollecedGUI>();
+    private void Awake() {
+        if (TryGetComponent(out moveToGuiElement)) {
+            moveToGuiElement.FindTarget<CoinsCollecedGUI>();
+        }
     }
 
     private void OnDestroy() {
