@@ -128,7 +128,7 @@ public class Player : MonoBehaviour, IDamageable {
     /// Update is called every frame, if the MonoBehaviour is enabled.
     /// </summary>
     void Update() {
-        UpdateEffects();
+
     }
 
     private void Awake() {
