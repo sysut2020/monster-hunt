@@ -10,11 +10,13 @@ public class LivesGUI : MonoBehaviour {
     [SerializeField]
     private Transform lifeObject;
 
-    private List<Transform> lifesObjects = new List<Transform>();
+    readonly List<Transform> lifesObjects = new List<Transform>();
 
     // Start is called before the first frame update
     void Start() {
-        if (this.lifeObject == null) throw new MissingReferenceException("Please provide a reference to a life object to display.");
+        if (this.lifeObject == null){
+            throw new MissingReferenceException("Please provide a reference to a life object to display.");
+        }
         this.GenerateLifeObject(3);
     }
 

@@ -19,9 +19,7 @@ public class LettersCollectedGUI : MonoBehaviour {
     private static Vector3 resultPosition;
 
     private static RectTransform myRectTransform;
-
-    private static GameObject letterGUIObject;
-
+    
     /// <summary>
     /// How many letters to collect 
     /// </summary>
@@ -58,9 +56,4 @@ public class LettersCollectedGUI : MonoBehaviour {
     private void OnDestroy() {
         LetterCollectable.OnLetterCollected -= OnNewLetter;
     }
-
-    public static Transform TryGetTransform() {
-        return letterGUIObject.transform;
-    }
-
 }
