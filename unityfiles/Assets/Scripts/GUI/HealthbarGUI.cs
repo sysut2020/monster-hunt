@@ -50,7 +50,9 @@ public class HealthbarGUI : MonoBehaviour {
     }
 
     private void Awake() {
-        if (this.healthpool == null) throw new MissingComponentException("Please provide an image for the healthpool");
+        if (this.healthpool == null){
+            throw new MissingComponentException("Please provide an image for the healthpool");
+        }
         this.SetupHealthpool();
         PlayerHealthController.OnPlayerHealthUpdate += OnHealthUpdate;
 

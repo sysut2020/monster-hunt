@@ -5,11 +5,7 @@ using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
 public class CollectibleSpawner : MonoBehaviour {
-
-    // Can be loaded with prefabs or other game objects that can be spawned
-    // [SerializeField]
-    // private GameObject[] collectiblesToSpawn;
-
+    
     [SerializeField]
     private Collectable coinCollectable;
     [SerializeField]

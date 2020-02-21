@@ -28,17 +28,11 @@ public class LettersCollectedGUI : MonoBehaviour {
     private int lettersToCollect = 0;
 
     private void Awake() {
-        if (letterCounter == null) throw new MissingComponentException("Missing text component");
+        if (letterCounter == null){
+            throw new MissingComponentException("Missing text component");
+        }
         LetterCollectable.OnLetterCollected += OnNewLetter;
         SetLetterText();
-    }
-
-    /// <summary>
-    /// Used to convert the GUI position of the letter GUI tab at the games camera,
-    /// to its position in game.
-    /// </summary>
-    private void FixedUpdate() {
-
     }
 
     private void SetLetterText() {
@@ -55,7 +49,9 @@ public class LettersCollectedGUI : MonoBehaviour {
     /// </summary>
     /// <param name="size">number of letters to collect >= 0</param>
     public void SetLettersToCollectCount(int count) {
-        if (count < 0) throw new ArgumentOutOfRangeException("Count cant be negative");
+        if (count < 0){
+            throw new ArgumentOutOfRangeException("Count cant be negative");
+        }
         this.lettersToCollect = count;
     }
 

@@ -15,7 +15,9 @@ public class CoinsCollecedGUI : MonoBehaviour {
     private int collectedCoins = 0;
 
     private void Awake() {
-        if (coinCounter == null) throw new MissingComponentException("Missing text component");
+        if (coinCounter == null){
+            throw new MissingComponentException("Missing text component");
+        }
         CoinCollectable.OnCoinCollected += OnNewCoin;
         SetCoinamountText();
     }
