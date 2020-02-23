@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System.Collections.ObjectModel;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -74,7 +75,11 @@ public class BulletControl : MonoBehaviour {
         if (Col.TryGetComponent(out HealthController enemyHealth)) {
             enemyHealth.ApplyDamage(this.damage);
         }
-        this.KillSelf();
+
+        if (!Col.TryGetComponent(out BulletControl _)){
+            this.KillSelf();
+        }
+        
     }
 
     void OnEnable() {
