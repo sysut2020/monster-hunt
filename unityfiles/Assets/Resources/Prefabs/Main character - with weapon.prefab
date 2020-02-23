@@ -489,7 +489,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d8977159cd36984f8c90ea5c94416ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runSpeed: 600
+  runSpeed: 450
   horizontalMove: 0
 --- !u!50 &2271420244141534157
 Rigidbody2D:
@@ -1761,9 +1761,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bfa685efc3f0d17c9051012c11ad0f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletVelocity: {x: 30, y: 0}
-  bulletDamage: 15
-  bulletTtl: 10
+  bulletVelocity: {x: 35, y: 0}
+  bulletDamage: 4
+  bulletTtl: 1
   bulletTexture: {fileID: 2800000, guid: af3a162f75f529ef8a0ff2814b526730, type: 3}
   spriteScale: {x: 0.3, y: 0.3}
   fireRate: 3
