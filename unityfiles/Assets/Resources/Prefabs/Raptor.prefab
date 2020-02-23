@@ -192,7 +192,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d77862b3809dc90aba1881e6210ac41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyType: {fileID: 11400000, guid: 412c8073747011a81b958f3cd51659b5, type: 2}
+  enemyType: {fileID: 11400000, guid: ca2aa788c52524f4dbb4519145825191, type: 2}
   frontPoint: {fileID: 8585172573557834231}
 --- !u!50 &8585172573794392776
 Rigidbody2D:
