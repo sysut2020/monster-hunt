@@ -58,10 +58,11 @@ public class BulletControl : MonoBehaviour {
         this.tag = "Bullet";
     }
 
-    void FixedUpdate() // 50 calls per sec
-    {
-        this.gameObject.transform.Translate(this.velocity.x, this.velocity.y, 0);
-
+    void Update() {
+        Vector2 localVelocity = new Vector2(
+            this.Velocity.x, this.Velocity.y
+        ) * Time.deltaTime;
+        this.gameObject.transform.Translate(localVelocity.x, localVelocity.y, 0);
         if (Time.time > this.killAt && this.isActive) {
             this.isActive = false;
             this.KillSelf();
