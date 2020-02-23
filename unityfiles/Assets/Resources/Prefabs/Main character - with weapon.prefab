@@ -1761,11 +1761,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bfa685efc3f0d17c9051012c11ad0f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletVelocity: {x: 2, y: 0}
+  bulletVelocity: {x: 30, y: 0}
   bulletDamage: 15
   bulletTtl: 10
   bulletTexture: {fileID: 2800000, guid: af3a162f75f529ef8a0ff2814b526730, type: 3}
-  spriteScale: {x: 1, y: 1}
+  spriteScale: {x: 0.3, y: 0.3}
   fireRate: 3
   isFiring: 0
   firePoint: {fileID: 6330146263558019838}
