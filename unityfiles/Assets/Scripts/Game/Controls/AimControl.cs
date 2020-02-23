@@ -24,6 +24,8 @@ public class AimControl {
     /// </summary>
     private readonly Transform RotationPoint;
 
+    private Vector2 chekVec = Vector2.zero;
+
     private GameObject helperRotPoint;
     private GameObject helperAimPoint;
 
@@ -56,7 +58,6 @@ public class AimControl {
     }
 
     private void c_WeaponChangedEvent(object _, WeaponChangedEventArgs args){
-        Debug.Log("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBbb");
         CreateHelperObjects();
     }
 
@@ -68,7 +69,6 @@ public class AimControl {
         RotationPoint.rotation = new Quaternion();
 
 
-        Debug.Log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 
         if (helperRotPoint == null){
             helperRotPoint = new GameObject();
@@ -120,6 +120,14 @@ public class AimControl {
     /// <param name="mousePoint">the point to aim at</param>
     /// <returns>angle that points towars mousepoint</returns>
     public Vector3 GetAngle(Vector3 mousePoint) {
+        Vector2 newChekVec = RotationPoint.transform.position-FirePoint.transform.position;
+
+        if (Mathf.Floor(chekVec.magnitude*10) != Mathf.Floor(newChekVec.magnitude*10)){
+            this.chekVec = newChekVec;
+            CreateHelperObjects();
+        }
+
+
         // rotates the helper gun point towards the mouse
         Vector3 v_RP_MP = mousePoint - RotationPoint.transform.position;
         float z_angle = this.RadianToDegree(Math.Atan2(v_RP_MP.y, v_RP_MP.x));
