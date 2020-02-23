@@ -92,6 +92,14 @@ public class LevelManager : Singleton<LevelManager> {
     }
 
     /// <summary>
+    /// Changes the level state to the provided state
+    /// </summary>
+    /// <param name="state">state to change too</param>
+    public void ChangeLevelState(LEVEL_STATE state) {
+        LevelManager.Instance.LevelStateChange(state);
+    }
+
+    /// <summary>
     /// Changes the level state 
     /// </summary>
     /// <param name="NewState">The new level state</param>
@@ -100,7 +108,6 @@ public class LevelManager : Singleton<LevelManager> {
         this.currentState = NewState;
         LevelStateChangeEventArgs args = new LevelStateChangeEventArgs();
         args.NewState = NewState;
-
         switch (NewState) {
             /// The game is over show game over screen
             case LEVEL_STATE.GAME_OVER:
@@ -114,6 +121,10 @@ public class LevelManager : Singleton<LevelManager> {
 
                 /// Exit the game and go to main menu
             case LEVEL_STATE.EXIT:
+                break;
+
+            case LEVEL_STATE.RELOAD:
+                SceneManager.Instance.RestartCurrentScene();
                 break;
 
             default:

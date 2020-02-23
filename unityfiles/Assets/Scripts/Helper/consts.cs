@@ -39,6 +39,10 @@ public enum LEVEL_STATE {
     /// <summary>
     /// Start the hunting mode in game
     /// </summary>
-    HUNTING
+    HUNTING,
+    /// <summary>
+    /// Reloads the current scene
+    /// </summary>
+    RELOAD
 }
 
