@@ -72,8 +72,10 @@ public class BulletControl : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D Col) {
 
-        if (Col.TryGetComponent(out HealthController enemyHealth)) {
-            enemyHealth.ApplyDamage(this.damage);
+        if (!Col.TryGetComponent(out PlayerHealthController ph)) {
+            if (Col.TryGetComponent(out HealthController enemyHealth)) {
+                enemyHealth.ApplyDamage(this.damage);
+            }
         }
 
         if (!Col.TryGetComponent(out BulletControl _)){

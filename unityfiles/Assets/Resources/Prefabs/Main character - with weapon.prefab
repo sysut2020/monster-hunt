@@ -338,8 +338,8 @@ MonoBehaviour:
   - {fileID: 5865627695508265292}
   - {fileID: 7622949708836151336}
   m_Bounds:
-    m_Center: {x: 2.7631807, y: -0.040424228, z: 0}
-    m_Extent: {x: 0.9614104, y: 0.4824747, z: 0}
+    m_Center: {x: 0.14428651, y: 6.3497434, z: 0}
+    m_Extent: {x: 0.66751397, y: 0.46598482, z: 0}
   m_UseBatching: 1
 --- !u!1 &2235447927362504716
 GameObject:
@@ -392,6 +392,7 @@ GameObject:
   - component: {fileID: 2399217038643513078}
   - component: {fileID: 4570665202509030192}
   - component: {fileID: 7673223311210071034}
+  - component: {fileID: 599571110}
   m_Layer: 0
   m_Name: Main character - with weapon
   m_TagString: Player
@@ -576,7 +577,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1840690805adbb3cf95e3bb52fc1bd47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerHealthController: {fileID: 0}
+  playerHealthController: {fileID: 599571110}
 --- !u!114 &4570665202509030192
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -591,6 +592,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   availableWeapons:
   - {fileID: 11400000, guid: 8a8a26b3dd73e27888c44f15ef10ec40, type: 2}
+  - {fileID: 11400000, guid: e01a1fa953e827fadb2a5a02af6a247d, type: 2}
   gunHand: {fileID: 0}
   firePoint: {fileID: 1188382279302573764}
   weaponGO: {fileID: 3148745271448591983}
@@ -609,6 +611,19 @@ MonoBehaviour:
   rotatePoint: {fileID: 6478352376615690822}
   aimPoint: {fileID: 4872127687993064249}
   crossingPoint: {fileID: 6394018647851918217}
+--- !u!114 &599571110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2271420244141534145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 634bfa48c37eb474c9e80021877793e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entityHealth: 25
 --- !u!1 &2279120330704540954
 GameObject:
   m_ObjectHideFlags: 0
@@ -774,8 +789,8 @@ MonoBehaviour:
   - {fileID: 3979061525024017565}
   - {fileID: 393525829638646213}
   m_Bounds:
-    m_Center: {x: 2.818244, y: 0.11651197, z: 0}
-    m_Extent: {x: 1.0402536, y: 0.45318913, z: 0}
+    m_Center: {x: 6.735859, y: 4.254309, z: 0}
+    m_Extent: {x: 0.83146477, y: 0.36142218, z: 0}
   m_UseBatching: 1
 --- !u!1 &2579054145453077277
 GameObject:
@@ -1031,8 +1046,8 @@ MonoBehaviour:
   - {fileID: 6992587819665678640}
   - {fileID: 2686381908028772330}
   m_Bounds:
-    m_Center: {x: 1.7933334, y: -0.37776423, z: 0}
-    m_Extent: {x: 3.094939, y: 1.6655904, z: 0}
+    m_Center: {x: 0.03256023, y: -0.0007984638, z: 0}
+    m_Extent: {x: 1.3162202, y: 2.3566394, z: 0}
   m_UseBatching: 1
 --- !u!1 &3978303516939876040
 GameObject:
@@ -1134,8 +1149,8 @@ MonoBehaviour:
   - {fileID: 4515146535385052853}
   - {fileID: 6806255296308911505}
   m_Bounds:
-    m_Center: {x: 3.3585525, y: 0.60492516, z: 0}
-    m_Extent: {x: 0.9579116, y: 1.357161, z: 0}
+    m_Center: {x: -2.2380974, y: 0.29227477, z: 0}
+    m_Extent: {x: 1.0857756, y: 0.7664567, z: 0}
   m_UseBatching: 1
 --- !u!1 &4122484063772175254
 GameObject:
@@ -1238,8 +1253,8 @@ MonoBehaviour:
   - {fileID: 7622949708836151336}
   - {fileID: 5296981364036213909}
   m_Bounds:
-    m_Center: {x: 1.9700922, y: 0.22386158, z: 0}
-    m_Extent: {x: 3.1071422, y: 1.2764107, z: 0}
+    m_Center: {x: -0.01837635, y: 2.5278215, z: 0}
+    m_Extent: {x: 2.3998399, y: 1.3817554, z: 0}
   m_UseBatching: 1
 --- !u!1 &4333415795565745167
 GameObject:
@@ -1341,8 +1356,8 @@ MonoBehaviour:
   - {fileID: 9146359802326062871}
   - {fileID: 7940051175813227213}
   m_Bounds:
-    m_Center: {x: 3.4832835, y: 0.69885826, z: 0}
-    m_Extent: {x: 1.0220653, y: 1.4345887, z: 0}
+    m_Center: {x: -0.08321476, y: 0.42322677, z: 0}
+    m_Extent: {x: 1.150589, y: 0.8130274, z: 0}
   m_UseBatching: 1
 --- !u!1 &4619374970571211269
 GameObject:
@@ -1535,8 +1550,8 @@ MonoBehaviour:
   - {fileID: 6806255296308911505}
   - {fileID: 4631473986094417478}
   m_Bounds:
-    m_Center: {x: 3.2419796, y: 0.035135627, z: 0}
-    m_Extent: {x: 4.5310526, y: 1.2542558, z: 0}
+    m_Center: {x: -2.1597073, y: 0.29871464, z: 0}
+    m_Extent: {x: 0.9980085, y: 3.6223722, z: 0}
   m_UseBatching: 1
 --- !u!1 &5892352241852698921
 GameObject:
@@ -1898,8 +1913,8 @@ MonoBehaviour:
   - {fileID: 393525829638646213}
   - {fileID: 8860196591831835450}
   m_Bounds:
-    m_Center: {x: 2.05704, y: 0.23649943, z: 0}
-    m_Extent: {x: 3.153489, y: 1.3324869, z: 0}
+    m_Center: {x: 4.8153787, y: 1.279753, z: 0}
+    m_Extent: {x: 2.6222377, y: 0.7912473, z: 0}
   m_UseBatching: 1
 --- !u!1 &7464547362744027585
 GameObject:
@@ -2001,8 +2016,8 @@ MonoBehaviour:
   - {fileID: 6992587819665678640}
   - {fileID: 2686381908028772330}
   m_Bounds:
-    m_Center: {x: 1.8256537, y: -0.24810696, z: 0}
-    m_Extent: {x: 1.4657879, y: 1.1188409, z: 0}
+    m_Center: {x: 0.05382973, y: 0.0006349087, z: 0}
+    m_Extent: {x: 0.9211872, y: 1.1760857, z: 0}
   m_UseBatching: 1
 --- !u!1 &7799060213859402115
 GameObject:
@@ -2104,8 +2119,8 @@ MonoBehaviour:
   - {fileID: 7940051175813227213}
   - {fileID: 8662790652071194241}
   m_Bounds:
-    m_Center: {x: 3.4461594, y: 0.08270335, z: 0}
-    m_Extent: {x: 4.7602916, y: 1.4442312, z: 0}
+    m_Center: {x: -0.023044467, y: 0.4327824, z: 0}
+    m_Extent: {x: 1.1822, y: 3.7870827, z: 0}
   m_UseBatching: 1
 --- !u!1 &8272514523865995192
 GameObject:
@@ -2282,15 +2297,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e83011bbd64a9e544b822085f3824b7e, type: 3}
---- !u!198 &5286960567874303616 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 5286960566639678669, guid: e83011bbd64a9e544b822085f3824b7e,
-    type: 3}
-  m_PrefabInstance: {fileID: 1235968589}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3053991530201417632 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3053991531416282605, guid: e83011bbd64a9e544b822085f3824b7e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1235968589}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &5286960567874303616 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 5286960566639678669, guid: e83011bbd64a9e544b822085f3824b7e,
     type: 3}
   m_PrefabInstance: {fileID: 1235968589}
   m_PrefabAsset: {fileID: 0}

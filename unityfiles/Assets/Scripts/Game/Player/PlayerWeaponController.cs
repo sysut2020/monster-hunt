@@ -7,12 +7,12 @@ using UnityEngine;
 /// event args for the weapon change event. 
 /// can hold info about the new gun controller
 /// </summary>
-public class WeaponChangedEventArgs: EventArgs{
-    public GunController NewGunController {get; set;}
-    public PLAYER_ANIMATION AnimId {get; set;}
+public class WeaponChangedEventArgs : EventArgs {
+    public GunController NewGunController { get; set; }
+    public PLAYER_ANIMATION AnimId { get; set; }
 }
 
-public class PlayerWeaponController: Singleton<PlayerWeaponController> {
+public class PlayerWeaponController : Singleton<PlayerWeaponController> {
 
     [SerializeField]
     [Tooltip("list of guns.")]
@@ -27,22 +27,12 @@ public class PlayerWeaponController: Singleton<PlayerWeaponController> {
     [SerializeField]
     private GameObject weaponGO;
 
-    
-
-
-
     private WeaponData currentWeapon;
     private int currentWeaponIndex = -1;
     private GunController activeGunController;
 
-
-
-    
     private SpriteRenderer weaponSpriteRend;
 
-
-    
-    
     // -- properties -- //
     public List<WeaponData> AvailableWeapons {
         get => availableWeapons;
@@ -60,17 +50,17 @@ public class PlayerWeaponController: Singleton<PlayerWeaponController> {
     /// <summary>
     /// Starts to fire the weapon
     /// </summary>
-    public void StartFiring() {this.activeGunController?.StartFiring();}
+    public void StartFiring() { this.activeGunController.StartFiring(); }
 
     /// <summary>
     /// Stop fireing the weapon
     /// </summary>
-    public void StopFiring() {this.activeGunController?.StopFiring();}
+    public void StopFiring() { this.activeGunController.StopFiring(); }
 
     /// <summary>
     /// Fires a bullet if able (not on cooldown since last shot)
     /// </summary>
-    public void FireOnce() {this.activeGunController?.FireOnce();}
+    public void FireOnce() { this.activeGunController.FireOnce(); }
 
     /// <summary>
     /// changes to the next weapon in the weapon list 
@@ -78,7 +68,6 @@ public class PlayerWeaponController: Singleton<PlayerWeaponController> {
     /// </summary>
     /// <returns>The weapon controller of the new active weapon</returns>
     //public GunController ChangeToNextWeapon() => this.ChangeWeapon(1);
-
 
     /// <summary>
     /// changes to the prev weapon in the weapon list 
@@ -90,7 +79,7 @@ public class PlayerWeaponController: Singleton<PlayerWeaponController> {
     // -- events -- //
 
     public static event EventHandler<WeaponChangedEventArgs> WeaponChangedEvent;
-    
+
     // -- private -- //
 
     /// <summary>
@@ -99,11 +88,11 @@ public class PlayerWeaponController: Singleton<PlayerWeaponController> {
     /// </summary>
     /// <param name="numChanges">the number of places in the weapon list to change the active weapon</param>
     /// <returns>the new active weapon controller</returns>
-    private void ChangeWeapon(int numChanges){
+    private void ChangeWeapon(int numChanges) {
         int newIndex = (this.currentWeaponIndex + numChanges) % (this.availableWeapons.Count);
-        if (newIndex < 0){newIndex=this.availableWeapons.Count -1;}
+        if (newIndex < 0) { newIndex = this.availableWeapons.Count - 1; }
 
-        if (newIndex != this.currentWeaponIndex){
+        if (newIndex != this.currentWeaponIndex) {
             this.currentWeaponIndex = newIndex;
             this.currentWeapon = AvailableWeapons[newIndex];
 
@@ -118,7 +107,7 @@ public class PlayerWeaponController: Singleton<PlayerWeaponController> {
 
             //TODO: Change not destroy
             Destroy(ActiveGunController);
-            
+
             this.ActiveGunController = this.FirePoint.AddComponent<GunController>() as GunController;
 
             this.ActiveGunController.FirePoint = this.firePoint;
@@ -145,7 +134,7 @@ public class PlayerWeaponController: Singleton<PlayerWeaponController> {
     /// <summary>
     /// Awake is called when the script instance is being loaded.
     /// </summary>
-    void Awake(){
+    void Awake() {
         //this.weaponGO = new GameObject();
         this.weaponSpriteRend = weaponGO.AddComponent<SpriteRenderer>() as SpriteRenderer;
 
@@ -154,14 +143,12 @@ public class PlayerWeaponController: Singleton<PlayerWeaponController> {
         //weaponGO.transform.parent = gunHand.transform;
         //FirePoint.transform.parent = weaponGO.transform;
 
-        
     }
 
     /// <summary>
     /// Update is called every frame, if the MonoBehaviour is enabled.
     /// </summary>
-    void Update()
-    {
+    void Update() {
         if (Input.GetKeyDown(KeyCode.E)) {
             ChangeWeapon(1);
         }
@@ -177,9 +164,5 @@ public class PlayerWeaponController: Singleton<PlayerWeaponController> {
         }
 
     }
-
-
-    
-
 
 }
