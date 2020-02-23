@@ -14,31 +14,29 @@ someGunName(with tag weapon)
 
 public class GunController : MonoBehaviour {
     // -- inspector -- //
+    
 
-    [Header("Bullet properties")]
-    [Tooltip("velocity of bullet in units/(1/50) sec.")]
+    // TODO; kan man serialize for get\set uten at det havner i feltet på siden
     [SerializeField]
     private Vector2 bulletVelocity = Vector2.zero;
 
-    [Tooltip("Damage inflicted by bullet.")]
     [SerializeField]
     private float bulletDamage = 0;
 
-    [Tooltip("How long the bullet will live if it doesn´t hit anything.")]
     [SerializeField]
     private float bulletTtl = 0;
 
-    [Tooltip("2d texture for bullet sprite.")]
     [SerializeField]
-    private Texture2D bulletTexture = null;
+    private Sprite bulletSprite = null;
 
-    [Tooltip("the scale of the sprite used.")]
     [SerializeField]
     private Vector2 spriteScale;
 
-    [Tooltip("Fire rate in shots/sec.")]
     [SerializeField]
     private float fireRate = 1f;
+
+    [SerializeField]
+    private GameObject firePoint;
 
     // -- properties -- //
 
@@ -51,6 +49,13 @@ public class GunController : MonoBehaviour {
         }
     }
 
+    public Vector2 BulletVelocity { get => bulletVelocity; set => bulletVelocity = value; }
+    public float BulletDamage { get => bulletDamage; set => bulletDamage = value; }
+    public float BulletTtl { get => bulletTtl; set => bulletTtl = value; }
+    public Sprite BulletSprite { get => bulletSprite; set => bulletSprite = value; }
+    public Vector2 SpriteScale { get => spriteScale; set => spriteScale = value; }
+    public GameObject FirePoint { get => firePoint; set => firePoint = value; }
+
     // -- internal -- //
     private readonly Timers fireRateTimer = new Timers();
     private ArrayList activeBullets = new ArrayList();
@@ -59,8 +64,7 @@ public class GunController : MonoBehaviour {
     [SerializeField]
     private bool isFiring;
 
-    [SerializeField]
-    private GameObject firePoint;
+    
 
     private float bulletWaitTime;
 
@@ -98,8 +102,8 @@ public class GunController : MonoBehaviour {
     /// </summary>
     private void FireNewProjectile() {
         GameObject bulletCopy = Instantiate(this.blueprintBullet);
-        bulletCopy.transform.rotation = this.firePoint.transform.rotation;
-        bulletCopy.transform.position = this.firePoint.transform.position;
+        bulletCopy.transform.rotation = this.FirePoint.transform.rotation;
+        bulletCopy.transform.position = this.FirePoint.transform.position;
         bulletCopy.SetActive(true);
 
         this.activeBullets.Add(bulletCopy);
@@ -112,8 +116,8 @@ public class GunController : MonoBehaviour {
         GameObject bulletCopy = (GameObject) this.idleBullets[0];
         this.idleBullets.Remove(bulletCopy);
 
-        bulletCopy.transform.rotation = this.firePoint.transform.rotation;
-        bulletCopy.transform.position = this.firePoint.transform.position;
+        bulletCopy.transform.rotation = this.FirePoint.transform.rotation;
+        bulletCopy.transform.position = this.FirePoint.transform.position;
         bulletCopy.SetActive(true);
 
         this.activeBullets.Add(bulletCopy);
@@ -128,18 +132,17 @@ public class GunController : MonoBehaviour {
         bullet.name = "Bullet";
 
         SpriteRenderer spriteRender = bullet.AddComponent<SpriteRenderer>() as SpriteRenderer;
-        spriteRender.sprite = Sprite.Create(this.bulletTexture,
-            new Rect(0, 0, this.bulletTexture.width, this.bulletTexture.height), Vector2.zero);
-        bullet.transform.localScale = this.spriteScale;
+        spriteRender.sprite = this.BulletSprite;
+        bullet.transform.localScale = this.SpriteScale;
 
         BoxCollider2D boxCol = bullet.AddComponent<BoxCollider2D>() as BoxCollider2D;
         boxCol.isTrigger = true;
 
         BulletControl bulletControl = bullet.AddComponent<BulletControl>() as BulletControl;
 
-        bulletControl.Velocity = this.bulletVelocity;
-        bulletControl.Damage = this.bulletDamage;
-        bulletControl.BulletTimeToLive = this.bulletTtl;
+        bulletControl.Velocity = this.BulletVelocity;
+        bulletControl.Damage = this.BulletDamage;
+        bulletControl.BulletTimeToLive = this.BulletTtl;
 
         // for hit detection
         Rigidbody2D rigidB2d = bullet.AddComponent<Rigidbody2D>() as Rigidbody2D;
@@ -195,7 +198,7 @@ public class GunController : MonoBehaviour {
 
     void Start() {
         //TODO: Discuss system for timer naming conventions
-        this.SetBulletWaitTime(this.fireRate);
+        this.SetBulletWaitTime(this.FireRate);
         this.timerUID = this.fireRateTimer.RollingUID;
         this.fireRateTimer.Set(this.timerUID, bulletWaitTime);
         this.GenerateBulletBlueprint();
@@ -208,6 +211,15 @@ public class GunController : MonoBehaviour {
         if (isFiring) {
             this.MaybeFire();
         }
+    }
+
+    /// <summary>
+    /// This function is called when the MonoBehaviour will be destroyed.
+    /// </summary>
+    void OnDestroy(){
+        foreach (GameObject GO in activeBullets){Destroy(GO);}
+        foreach (GameObject GO in idleBullets){Destroy(GO);}
+        Destroy(blueprintBullet);
     }
 
     // -- debug -- //
