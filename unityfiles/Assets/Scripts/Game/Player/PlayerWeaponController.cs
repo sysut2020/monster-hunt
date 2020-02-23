@@ -9,21 +9,42 @@ using UnityEngine;
 /// </summary>
 public class WeaponChangedEventArgs: EventArgs{
     public GunController NewGunController {get; set;}
+    public PLAYER_ANIMATION AnimId {get; set;}
 }
 
 public class PlayerWeaponController: Singleton<PlayerWeaponController> {
 
     [SerializeField]
-    private List<GameObject> availableWeapons;
+    [Tooltip("list of guns.")]
+    private List<WeaponData> availableWeapons;
 
-    private GameObject currentWeapon;
-    private int currentWeaponIndex;
+    [SerializeField]
+    [Tooltip("the hand that holds the gun.")]
+    private GameObject gunHand;
 
+    [SerializeField]
+    private GameObject firePoint;
+    [SerializeField]
+    private GameObject weaponGO;
+
+    
+
+
+
+    private WeaponData currentWeapon;
+    private int currentWeaponIndex = -1;
     private GunController activeGunController;
+
+
+
+    
+    private SpriteRenderer weaponSpriteRend;
+
+
     
     
     // -- properties -- //
-    public List<GameObject> AvailableWeapons {
+    public List<WeaponData> AvailableWeapons {
         get => availableWeapons;
         set => availableWeapons = value;
     }
@@ -32,6 +53,7 @@ public class PlayerWeaponController: Singleton<PlayerWeaponController> {
         get => activeGunController;
         internal set => this.activeGunController = value;
     }
+    public GameObject FirePoint { get => firePoint; set => firePoint = value; }
 
     // -- public -- //
 
@@ -55,7 +77,7 @@ public class PlayerWeaponController: Singleton<PlayerWeaponController> {
     /// if the end of the list is reached the index loops around
     /// </summary>
     /// <returns>The weapon controller of the new active weapon</returns>
-    public GunController ChangeToNextWeapon() => this.ChangeWeapon(1);
+    //public GunController ChangeToNextWeapon() => this.ChangeWeapon(1);
 
 
     /// <summary>
@@ -63,11 +85,11 @@ public class PlayerWeaponController: Singleton<PlayerWeaponController> {
     /// if the end of the list is reached the index loops around
     /// </summary>
     /// <returns>The weapon controller of the new active weapon</returns>
-    public GunController ChangeToPrevWeapon() => this.ChangeWeapon(-1);
+    //public GunController ChangeToPrevWeapon() => this.ChangeWeapon(-1);
 
     // -- events -- //
 
-    public event EventHandler<WeaponChangedEventArgs> WeaponChangedEvent;
+    public static event EventHandler<WeaponChangedEventArgs> WeaponChangedEvent;
     
     // -- private -- //
 
@@ -77,21 +99,67 @@ public class PlayerWeaponController: Singleton<PlayerWeaponController> {
     /// </summary>
     /// <param name="numChanges">the number of places in the weapon list to change the active weapon</param>
     /// <returns>the new active weapon controller</returns>
-    private GunController ChangeWeapon(int numChanges){
-        int newIndex = (this.AvailableWeapons.Count + numChanges) % (this.availableWeapons.Count -1);
+    private void ChangeWeapon(int numChanges){
+        int newIndex = (this.currentWeaponIndex + numChanges) % (this.availableWeapons.Count);
         if (newIndex < 0){newIndex=this.availableWeapons.Count -1;}
 
         if (newIndex != this.currentWeaponIndex){
             this.currentWeaponIndex = newIndex;
-            this.ActiveGunController = WUGameObjects.GetChildWithTagLike(this.availableWeapons[newIndex], "gun")[0].GetComponent<GunController>();
+            this.currentWeapon = AvailableWeapons[newIndex];
+
+            this.weaponSpriteRend.sprite = currentWeapon.WeaponSprite;
+
+            this.weaponGO.transform.localPosition = currentWeapon.WeaponPosission;
+            this.weaponGO.transform.localRotation = Quaternion.Euler(currentWeapon.WeaponRotation);
+            this.weaponGO.transform.localScale = currentWeapon.WeaponScale;
+
+            this.FirePoint.transform.localPosition = currentWeapon.FPPosission;
+            this.FirePoint.transform.localRotation = Quaternion.Euler(currentWeapon.FPRotation);
+
+            //TODO: Change not destroy
+            Destroy(ActiveGunController);
+            
+            this.ActiveGunController = this.FirePoint.AddComponent<GunController>() as GunController;
+
+            this.activeGunController.FirePoint = this.firePoint;
+            this.ActiveGunController.BulletSprite = currentWeapon.BulletSprite;
+            this.ActiveGunController.BulletDamage = currentWeapon.BulletDamage;
+            this.ActiveGunController.BulletTtl = currentWeapon.BulletTtl;
+            this.ActiveGunController.BulletVelocity = new Vector2(currentWeapon.BulletVelocity, 0);
+
         }
         WeaponChangedEventArgs args = new WeaponChangedEventArgs();
         args.NewGunController = this.ActiveGunController;
+        args.AnimId = this.currentWeapon.HoldingAnimation;
 
         WeaponChangedEvent?.Invoke(this, args);
+    }
+
+    // -- unity -- //
+
+    /// <summary>
+    /// Awake is called when the script instance is being loaded.
+    /// </summary>
+    void Awake(){
+        //this.weaponGO = new GameObject();
+        this.weaponSpriteRend = weaponGO.AddComponent<SpriteRenderer>() as SpriteRenderer;
+
+        //this.FirePoint = new GameObject();
+
+        //weaponGO.transform.parent = gunHand.transform;
+        //FirePoint.transform.parent = weaponGO.transform;
 
         
-        return this.activeGunController;
+    }
+
+    /// <summary>
+    /// Update is called every frame, if the MonoBehaviour is enabled.
+    /// </summary>
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.E)) {
+            ChangeWeapon(1);
+        }
     }
 
 

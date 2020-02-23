@@ -96,11 +96,11 @@ public class PlayerInventory {
     public event EventHandler<InventoryUpdatedEventArgs> InventoryUpdatedEvent;
 
     private void SubscribeToEvents(){
-        PlayerWeaponController.Instance.WeaponChangedEvent += c_WeaponChangedEvent;
+        PlayerWeaponController.WeaponChangedEvent += c_WeaponChangedEvent;
     }
 
     private void UnsubscribeFromEvents(){
-        PlayerWeaponController.Instance.WeaponChangedEvent -= c_WeaponChangedEvent;
+        PlayerWeaponController.WeaponChangedEvent -= c_WeaponChangedEvent;
     }
     private static void c_WeaponChangedEvent(object o, WeaponChangedEventArgs arg){
         instance.AlertPowerupsOnWeaponChange(arg.NewGunController);
