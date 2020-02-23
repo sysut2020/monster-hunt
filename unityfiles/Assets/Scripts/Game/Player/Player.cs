@@ -100,17 +100,24 @@ public class Player : MonoBehaviour, IDamageable {
     public static event EventHandler<PlayerEventArgs> PlayerKilledEvent;
     private void SubscribeToEvents() {
         LevelManager.CleanUpEvent += (object o, EventArgs _) => this.c_CleanupEvent();
+        PlayerWeaponController.WeaponChangedEvent += c_WeaponChangedEvent;
 ;
     }
 
     private void UnsubscribeFromEvents() {
         LevelManager.CleanUpEvent -= (object o, EventArgs _) => this.c_CleanupEvent();
+        PlayerWeaponController.WeaponChangedEvent -= c_WeaponChangedEvent;
 ;
     }
 
     private void c_CleanupEvent(){
         this.UnsubscribeFromEvents();
         Destroy(gameObject);
+    }
+
+
+    private void c_WeaponChangedEvent(object _, WeaponChangedEventArgs args){
+        animator.SetInteger("ACTIVE_WEAPON", (int)args.AnimId);
     }
 
     // -- private -- // 
@@ -144,7 +151,7 @@ public class Player : MonoBehaviour, IDamageable {
     /// Update is called every frame, if the MonoBehaviour is enabled.
     /// </summary>
     void Update() {
-        UpdateEffects();
+        //UpdateEffects();
     }
 
 
@@ -159,7 +166,7 @@ public class Player : MonoBehaviour, IDamageable {
     void OnTriggerEnter2D(Collider2D Col) {
         if (Col.TryGetComponent(out Enemy enemy)) {
             if (enemy.IsAttacking) {
-                animator.SetTrigger(AnimationTriggers.DAMAGE);                
+                animator.SetTrigger(AnimationTriggers.DAMAGE);    
             }
         }
     }
