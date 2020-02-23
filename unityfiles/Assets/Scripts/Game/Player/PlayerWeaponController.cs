@@ -60,17 +60,17 @@ public class PlayerWeaponController: Singleton<PlayerWeaponController> {
     /// <summary>
     /// Starts to fire the weapon
     /// </summary>
-    public void StartFiring() {this.activeGunController.StartFiring();}
+    public void StartFiring() {this.activeGunController?.StartFiring();}
 
     /// <summary>
     /// Stop fireing the weapon
     /// </summary>
-    public void StopFiring() {this.activeGunController.StopFiring();}
+    public void StopFiring() {this.activeGunController?.StopFiring();}
 
     /// <summary>
     /// Fires a bullet if able (not on cooldown since last shot)
     /// </summary>
-    public void FireOnce() {this.activeGunController.FireOnce();}
+    public void FireOnce() {this.activeGunController?.FireOnce();}
 
     /// <summary>
     /// changes to the next weapon in the weapon list 
@@ -121,11 +121,16 @@ public class PlayerWeaponController: Singleton<PlayerWeaponController> {
             
             this.ActiveGunController = this.FirePoint.AddComponent<GunController>() as GunController;
 
-            this.activeGunController.FirePoint = this.firePoint;
+            this.ActiveGunController.FirePoint = this.firePoint;
+            this.ActiveGunController.FireRate = currentWeapon.FireRate;
             this.ActiveGunController.BulletSprite = currentWeapon.BulletSprite;
+            this.ActiveGunController.SpriteScale = currentWeapon.BulletSpriteScale;
             this.ActiveGunController.BulletDamage = currentWeapon.BulletDamage;
             this.ActiveGunController.BulletTtl = currentWeapon.BulletTtl;
+            this.ActiveGunController.BulletSpread = currentWeapon.BulletSpread;
             this.ActiveGunController.BulletVelocity = new Vector2(currentWeapon.BulletVelocity, 0);
+
+            this.activeGunController.GenerateBulletBlueprint();
 
         }
         WeaponChangedEventArgs args = new WeaponChangedEventArgs();
@@ -160,6 +165,17 @@ public class PlayerWeaponController: Singleton<PlayerWeaponController> {
         if (Input.GetKeyDown(KeyCode.E)) {
             ChangeWeapon(1);
         }
+
+        if (Input.GetMouseButtonDown(0)) {
+            this.FireOnce();
+        }
+
+        if (Input.GetMouseButton(1)) {
+            this.StartFiring();
+        } else {
+            this.StopFiring();
+        }
+
     }
 
 
