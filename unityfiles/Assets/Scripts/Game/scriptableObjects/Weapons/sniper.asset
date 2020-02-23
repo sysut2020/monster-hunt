@@ -14,15 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
   holdingAnimation: 1
   weaponSprite: {fileID: 21300000, guid: 3957e6511526fc64aa6f70a89dbde675, type: 3}
-  weaponPosission: {x: -0.84, y: -6.74, z: 5}
-  weaponRotation: {x: 0, y: 0, z: -90}
+  weaponPosission: {x: 2.53, y: -1.13, z: 1.95}
+  weaponRotation: {x: 0, y: 0, z: -15.128}
   weaponScale: {x: 4, y: 4, z: 1}
-  fPPosission: {x: 0.77, y: -11.59, z: 0}
-  fPRotation: {x: 0, y: 0, z: -90}
-  bulletVelocity: 1
-  bulletDamage: 122
+  fPPosission: {x: 7.59, y: -0.85, z: 0}
+  fPRotation: {x: 0, y: 0, z: -15.128}
+  bulletVelocity: 40
+  bulletDamage: 10000
   bulletTtl: 20
-  bulletSprite: {fileID: -2795864604848390673, guid: 2e62efd4dfe5f421f9afda485312b139,
-    type: 3}
+  bulletSprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   bulletSpriteScale: {x: 1, y: 1, z: 1}
   fireRate: 1
+  bulletSpread: 0
