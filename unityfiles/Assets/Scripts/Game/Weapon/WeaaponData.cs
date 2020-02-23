@@ -70,6 +70,10 @@ public class WeaponData : ScriptableObject {
     [SerializeField]
     private float fireRate = 1f;
 
+    [Tooltip("Fire rate in shots/sec.")]
+    [SerializeField]
+    private float bulletSpread = 0f;
+
     public PLAYER_ANIMATION HoldingAnimation { get => holdingAnimation; set => holdingAnimation = value; }
     public Sprite WeaponSprite { get => weaponSprite; set => weaponSprite = value; }
     public Vector3 WeaponRotation { get => weaponRotation; set => weaponRotation = value; }
@@ -83,4 +87,5 @@ public class WeaponData : ScriptableObject {
     public Sprite BulletSprite { get => bulletSprite; set => bulletSprite = value; }
     public Vector3 BulletSpriteScale { get => bulletSpriteScale; set => bulletSpriteScale = value; }
     public float FireRate { get => fireRate; set => fireRate = value; }
+    public float BulletSpread { get => bulletSpread; set => bulletSpread = value; }
 }
