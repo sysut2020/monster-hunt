@@ -16,6 +16,22 @@ CapsuleCollider2D:
   m_Offset: {x: 2.3855455, y: 0.38864145}
   m_Size: {x: 5.7710824, y: 1.7772715}
   m_Direction: 1
+--- !u!70 &8585172574669291610
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8125066998924797240}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.25352323, y: -1.0869461}
+  m_Size: {x: 15.265622, y: 5.4316387}
+  m_Direction: 1
 --- !u!212 &8585172573420138181
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -30,6 +46,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -84,38 +101,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!70 &8585172574744159322
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9211931033707335757}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 3.2314053, y: 1.7599275}
-  m_Size: {x: 11.164934, y: 6.1363316}
-  m_Direction: 1
---- !u!70 &8585172574669291610
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8125066998924797240}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.25352323, y: -1.0869461}
-  m_Size: {x: 15.265622, y: 5.4316387}
-  m_Direction: 1
 --- !u!1 &8585172573557834230
 GameObject:
   m_ObjectHideFlags: 0
@@ -140,7 +125,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8585172573557834230}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.758, y: 2.311, z: 0}
+  m_LocalPosition: {x: -2.209, y: 2.42, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8585172573794392774}
@@ -160,7 +145,7 @@ GameObject:
   - component: {fileID: 8585172573794392776}
   - component: {fileID: 8585172573794392775}
   m_Layer: 0
-  m_Name: Raptor 1
+  m_Name: Raptor
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -243,8 +228,24 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -1.2865973, y: 1.5847708}
-  m_Size: {x: 2.5314229, y: 2.154761}
+  m_Offset: {x: -1.1511531, y: 1.5847708}
+  m_Size: {x: 2.2605345, y: 2.154761}
+  m_Direction: 1
+--- !u!70 &8585172574744159322
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9211931033707335757}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 3.2314053, y: 1.7599275}
+  m_Size: {x: 11.164934, y: 6.1363316}
   m_Direction: 1
 --- !u!1001 &8585172573420138179
 PrefabInstance:
