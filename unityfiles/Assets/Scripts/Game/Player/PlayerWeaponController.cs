@@ -50,17 +50,17 @@ public class PlayerWeaponController : Singleton<PlayerWeaponController> {
     /// <summary>
     /// Starts to fire the weapon
     /// </summary>
-    public void StartFiring() { this.activeGunController.StartFiring(); }
+    public void StartFiring() { this.activeGunController?.StartFiring(); }
 
     /// <summary>
     /// Stop fireing the weapon
     /// </summary>
-    public void StopFiring() { this.activeGunController.StopFiring(); }
+    public void StopFiring() { this.activeGunController?.StopFiring(); }
 
     /// <summary>
     /// Fires a bullet if able (not on cooldown since last shot)
     /// </summary>
-    public void FireOnce() { this.activeGunController.FireOnce(); }
+    public void FireOnce() { this.activeGunController?.FireOnce(); }
 
     /// <summary>
     /// changes to the next weapon in the weapon list 
