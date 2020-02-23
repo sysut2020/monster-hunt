@@ -43,6 +43,8 @@ public enum LEVEL_STATE {
     /// <summary>
     /// Reloads the current scene
     /// </summary>
-    RELOAD
+    RELOAD,
+    
+    GAME_WON
 }
 
