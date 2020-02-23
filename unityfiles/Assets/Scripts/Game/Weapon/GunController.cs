@@ -14,7 +14,6 @@ someGunName(with tag weapon)
 
 public class GunController : MonoBehaviour {
     // -- inspector -- //
-    
 
     // TODO; kan man serialize for get\set uten at det havner i feltet på siden
     [SerializeField]
@@ -30,7 +29,7 @@ public class GunController : MonoBehaviour {
     private Sprite bulletSprite = null;
 
     [SerializeField]
-    private Vector2 spriteScale;
+    private Vector2 spriteScale = new Vector2(1, 1);
 
     [SerializeField]
     private float fireRate = 1f;
@@ -63,8 +62,6 @@ public class GunController : MonoBehaviour {
 
     [SerializeField]
     private bool isFiring;
-
-    
 
     private float bulletWaitTime;
 
@@ -216,9 +213,9 @@ public class GunController : MonoBehaviour {
     /// <summary>
     /// This function is called when the MonoBehaviour will be destroyed.
     /// </summary>
-    void OnDestroy(){
-        foreach (GameObject GO in activeBullets){Destroy(GO);}
-        foreach (GameObject GO in idleBullets){Destroy(GO);}
+    void OnDestroy() {
+        foreach (GameObject GO in activeBullets) { Destroy(GO); }
+        foreach (GameObject GO in idleBullets) { Destroy(GO); }
         Destroy(blueprintBullet);
     }
 
