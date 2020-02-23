@@ -24,7 +24,7 @@ public class GunController : MonoBehaviour {
     private float bulletDamage = 0;
 
     [SerializeField]
-    private float bulletTtl = 0;
+    private float bulletTtl = 5;
 
     [SerializeField]
     private Sprite bulletSprite = null;
@@ -34,6 +34,8 @@ public class GunController : MonoBehaviour {
 
     [SerializeField]
     private float fireRate = 1f;
+    [SerializeField]
+    private float bulletSpread = 0f;
 
     [SerializeField]
     private GameObject firePoint;
@@ -45,7 +47,8 @@ public class GunController : MonoBehaviour {
         set {
             this.fireRate = value;
             this.SetBulletWaitTime(value);
-            this.fireRateTimer.Update(this.timerUID, this.bulletWaitTime);
+            
+            bool suc = this.fireRateTimer.Update(this.timerUID, this.bulletWaitTime);
         }
     }
 
@@ -55,6 +58,7 @@ public class GunController : MonoBehaviour {
     public Sprite BulletSprite { get => bulletSprite; set => bulletSprite = value; }
     public Vector2 SpriteScale { get => spriteScale; set => spriteScale = value; }
     public GameObject FirePoint { get => firePoint; set => firePoint = value; }
+    public float BulletSpread { get => bulletSpread; set => bulletSpread = value; }
 
     // -- internal -- //
     private readonly Timers fireRateTimer = new Timers();
@@ -102,11 +106,7 @@ public class GunController : MonoBehaviour {
     /// </summary>
     private void FireNewProjectile() {
         GameObject bulletCopy = Instantiate(this.blueprintBullet);
-        bulletCopy.transform.rotation = this.FirePoint.transform.rotation;
-        bulletCopy.transform.position = this.FirePoint.transform.position;
-        bulletCopy.SetActive(true);
-
-        this.activeBullets.Add(bulletCopy);
+        this.FireProjectile(bulletCopy);
     }
 
     /// <summary>
@@ -115,18 +115,31 @@ public class GunController : MonoBehaviour {
     private void FireExistingProjectile() {
         GameObject bulletCopy = (GameObject) this.idleBullets[0];
         this.idleBullets.Remove(bulletCopy);
+        this.FireProjectile(bulletCopy);
+        
+    }
 
-        bulletCopy.transform.rotation = this.FirePoint.transform.rotation;
-        bulletCopy.transform.position = this.FirePoint.transform.position;
-        bulletCopy.SetActive(true);
+    /// <summary>
+    /// recives a game objet orients it and fires it
+    /// </summary>
+    /// <param name="bullet">the GO to fire</param>
+    private void FireProjectile(GameObject bullet){
+        //bullet.transform.rotation = this.FirePoint.transform.rotation;
+        bullet.transform.rotation = Quaternion.Euler( 
+            this.FirePoint.transform.rotation.eulerAngles.x,
+            this.FirePoint.transform.rotation.eulerAngles.y,
+            this.FirePoint.transform.rotation.eulerAngles.z + Random.Range(-this.BulletSpread, this.BulletSpread)
+        );
+        bullet.transform.position = this.FirePoint.transform.position;
+        bullet.SetActive(true);
 
-        this.activeBullets.Add(bulletCopy);
+        this.activeBullets.Add(bullet);
     }
 
     /// <summary>
     /// generates a bullet blueprint for the 
     /// </summary>
-    private void GenerateBulletBlueprint() {
+    public void GenerateBulletBlueprint() {
         GameObject bullet = new GameObject();
         this.blueprintBullet = bullet;
         bullet.name = "Bullet";
@@ -196,18 +209,15 @@ public class GunController : MonoBehaviour {
 
     // -- unity -- //
 
-    void Start() {
+    void Awake() {
         //TODO: Discuss system for timer naming conventions
         this.SetBulletWaitTime(this.FireRate);
         this.timerUID = this.fireRateTimer.RollingUID;
         this.fireRateTimer.Set(this.timerUID, bulletWaitTime);
-        this.GenerateBulletBlueprint();
     }
 
     void Update() {
-        if (Input.GetMouseButtonDown(0)) {
-            this.MaybeFire();
-        }
+        
         if (isFiring) {
             this.MaybeFire();
         }
