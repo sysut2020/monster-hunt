@@ -21,6 +21,8 @@ class PlayThroughData {
 public class LevelManager : Singleton<LevelManager> {
     [SerializeField]
     private GameObject gameOverCanvas;
+    [SerializeField]
+    private GameObject gameWonCanvas;
 
     [SerializeField]
     private LevelDetails levelDetails;
@@ -87,7 +89,7 @@ public class LevelManager : Singleton<LevelManager> {
     private void c_EnemyKilledEvent(object o, EnemyEventArgs args) {
         playThroughData.EnemysKilled += 1;
         if (this.levelDetails.NumberOfEnemies <= playThroughData.EnemysKilled) {
-            this.LevelStateChange(LEVEL_STATE.EXIT);
+            this.LevelStateChange(LEVEL_STATE.GAME_WON);
         }
     }
 
@@ -113,6 +115,10 @@ public class LevelManager : Singleton<LevelManager> {
             case LEVEL_STATE.GAME_OVER:
                 Time.timeScale = 0;
                 gameOverCanvas.SetActive(true);
+                break;
+            case LEVEL_STATE.GAME_WON:
+                Time.timeScale = 0;
+                gameWonCanvas.SetActive(true);
                 break;
 
                 /// Start the main mode spawn the player and start the level
