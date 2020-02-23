@@ -111,6 +111,7 @@ public class LevelManager : Singleton<LevelManager> {
         switch (NewState) {
             /// The game is over show game over screen
             case LEVEL_STATE.GAME_OVER:
+                Time.timeScale = 0;
                 gameOverCanvas.SetActive(true);
                 break;
 
@@ -118,12 +119,12 @@ public class LevelManager : Singleton<LevelManager> {
             case LEVEL_STATE.HUNTING:
                 InitLevel();
                 break;
-
                 /// Exit the game and go to main menu
             case LEVEL_STATE.EXIT:
                 break;
 
             case LEVEL_STATE.RELOAD:
+                Time.timeScale = 1;
                 SceneManager.Instance.RestartCurrentScene();
                 break;
 
