@@ -47,6 +47,10 @@ public class Enemy : MonoBehaviour, IDamageable {
     /// Handles what to do when the enemy is killed
     /// </summary>
     public void Dead() {
+        EnemyEventArgs args = new EnemyEventArgs();
+        args.EnemyType = this.enemyType;
+        args.Position = this.transform.position;
+        EnemyKilledEvent?.Invoke(this, args);
         Destroy(this.gameObject);
     }
     // -- events -- //
@@ -64,12 +68,5 @@ public class Enemy : MonoBehaviour, IDamageable {
         args.EnemyType = this.enemyType;
         EnemySpawnEvent?.Invoke(this, args);
     }
-
-    private void OnDestroy() {
-        EnemyEventArgs args = new EnemyEventArgs();
-        args.EnemyType = this.enemyType;
-        args.Position = this.transform.position;
-        EnemyKilledEvent?.Invoke(this, args);
-    }
-
+    
 }
