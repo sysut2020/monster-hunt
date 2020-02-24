@@ -214,7 +214,7 @@ public class GunController : MonoBehaviour {
     }
 
     void Update() {
-        
+        // todo: This meens the fire rate is capped by the framerate this may be a non issue
         if (isFiring) {
             this.MaybeFire();
         }
