@@ -31,8 +31,8 @@ public class Jetpack : MonoBehaviour {
         this.flames.Stop();
     }
 
-    private void Update() {
-        if (Input.GetKey(controlButton)) {
+    private void FixedUpdate() {
+        if (Input.GetAxis("Vertical") > 0) {
             AddForce();
             if (!this.flames.isEmitting) this.flames.Play();
         } else if (this.flames.isEmitting) {

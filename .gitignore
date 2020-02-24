@@ -117,3 +117,7 @@ $RECYCLE.BIN/
 unityfiles/Assembly-CSharp.csproj.DotSettings
 
 *.DotSettings
+
+*.bak_000f
+
+*.lck
