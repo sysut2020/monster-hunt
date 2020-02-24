@@ -46,6 +46,7 @@ public class AimControl {
     /// </summary>
     private void SubscribeToEvents() {
         PlayerWeaponController.WeaponChangedEvent += c_WeaponChangedEvent;
+        LevelManager.CleanUpEvent += c_CleanupEvent;
            
     }
     
@@ -54,12 +55,18 @@ public class AimControl {
     /// </summary>
     private void UnsubscribeFromEvents() {
         PlayerWeaponController.WeaponChangedEvent -= c_WeaponChangedEvent;
-        
+        LevelManager.CleanUpEvent -= c_CleanupEvent;
     }
 
     private void c_WeaponChangedEvent(object _, WeaponChangedEventArgs args){
         CreateHelperObjects();
     }
+
+    private void c_CleanupEvent() {
+        this.UnsubscribeFromEvents();
+    }
+
+    private void c_CleanupEvent(object o, EventArgs _) => c_CleanupEvent();
 
     /// <summary>
     /// Creates helper game objects for calculating the angle
@@ -88,11 +95,9 @@ public class AimControl {
         helperRotPoint.transform.rotation = RotationPoint.rotation;
         helperRotPoint.transform.Rotate(0, 0, 0);
         helperRotPoint.transform.position = RotationPoint.position;
-        helperRotPoint.name = "Aim control - helper rotationpoint";
 
         helperAimPoint.transform.rotation = FirePoint.transform.rotation;
         helperAimPoint.transform.position = FirePoint.transform.position;
-        helperAimPoint.name = "hAim control- helper aim point";
 
         helperRotPoint.transform.rotation = tmp;
         RotationPoint.transform.rotation = tmp;
