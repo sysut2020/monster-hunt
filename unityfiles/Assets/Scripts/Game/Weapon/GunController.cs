@@ -47,7 +47,7 @@ public class GunController : MonoBehaviour {
             this.fireRate = value;
             this.SetBulletWaitTime(value);
             
-            bool suc = this.fireRateTimer.Update(this.timerUID, this.bulletWaitTime);
+            this.fireRateTimer.Update(this.timerUID, this.bulletWaitTime);
         }
     }
 
@@ -186,7 +186,7 @@ public class GunController : MonoBehaviour {
         // if yes is there any bullets in the active bullet list that is inactive
         for (int i = this.activeBullets.Count; i > 0; i--) {
 
-            
+
             GameObject g = (GameObject) this.activeBullets[i - 1];
             //TODO: probably shit solution somone try somthing better
             if (!g.activeInHierarchy) {
