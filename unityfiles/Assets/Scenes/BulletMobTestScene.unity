@@ -750,7 +750,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timerText: {fileID: 1562375724}
-  levelTime: 1000
+  levelTime: 10
 --- !u!1 &970100146
 GameObject:
   m_ObjectHideFlags: 0
@@ -2813,6 +2813,11 @@ PrefabInstance:
       propertyPath: m_LocalAABB.m_Extent.y
       value: 6.351356
       objectReference: {fileID: 0}
+    - target: {fileID: 1263180002746614681, guid: f97e86996a5ae4de0863df3f62a618c8,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1263180002749817825, guid: f97e86996a5ae4de0863df3f62a618c8,
         type: 3}
       propertyPath: m_Spline.m_ControlPoints.Array.data[2].position.y
@@ -2857,6 +2862,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalAABB.m_Extent.y
       value: 2.1068223
+      objectReference: {fileID: 0}
+    - target: {fileID: 1263180002749817830, guid: f97e86996a5ae4de0863df3f62a618c8,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1263180002749817831, guid: f97e86996a5ae4de0863df3f62a618c8,
         type: 3}
@@ -2917,6 +2927,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_DynamicOccludee
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1263180003125035211, guid: f97e86996a5ae4de0863df3f62a618c8,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1263180003310470184, guid: f97e86996a5ae4de0863df3f62a618c8,
         type: 3}
@@ -3008,6 +3023,11 @@ PrefabInstance:
       propertyPath: m_LocalAABB.m_Extent.z
       value: 0.0050049997
       objectReference: {fileID: 0}
+    - target: {fileID: 1263180003310470185, guid: f97e86996a5ae4de0863df3f62a618c8,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1263180003744437440, guid: f97e86996a5ae4de0863df3f62a618c8,
         type: 3}
       propertyPath: m_Spline.m_ControlPoints.Array.data[3].position.y
@@ -3062,6 +3082,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalAABB.m_Extent.y
       value: 8.113321
+      objectReference: {fileID: 0}
+    - target: {fileID: 1263180003744437441, guid: f97e86996a5ae4de0863df3f62a618c8,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1263180004143560900, guid: f97e86996a5ae4de0863df3f62a618c8,
         type: 3}

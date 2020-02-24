@@ -5,29 +5,43 @@ using TMPro;
 using UnityEngine;
 
 public class TimerGUI : MonoBehaviour {
-
+    
+    /// <summary>
+    /// The text we want displayed in our GUI
+    /// </summary>
     [SerializeField] 
     private TMP_Text timerText;
     
+    /// <summary>
+    /// Time time we want to count down on our timer
+    /// </summary>
     [SerializeField]
-    private float levelTime = 1000;
-
-    private string timerID = "1";
-    private Timers timer;
-
+    [Tooltip("In seconds")]
+    private float levelTime = 10;
+    
     private void Awake() {
         if (timerText == null){
             throw new MissingComponentException("Missing text component");
         }
-        this.timer = new Timers();
-        timer.Set(timerID, levelTime);
     }
 
     private void Update() {
         SetTimerText();
     }
-
+    
     private void SetTimerText() {
-        this.timerText.SetText($"{timer.TimeLeft(timerID)}");
+        levelTime -= Time.deltaTime;
+        if (levelTime < 0) {
+            levelTime = 0;
+        }
+        
+        //Rounds the level time to an even number
+        Mathf.RoundToInt(levelTime).ToString();
+        
+        TimeSpan timeSpan = TimeSpan.FromSeconds(levelTime);
+        // Used to format the time to a readable "human" time
+        string timeString = string.Format("{0:D2}:{1:D2}", timeSpan.Minutes, timeSpan.Seconds);
+        
+        this.timerText.SetText($"{timeString}");
     }
 }
