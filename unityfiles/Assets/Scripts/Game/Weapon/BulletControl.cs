@@ -78,7 +78,7 @@ public class BulletControl : MonoBehaviour {
             }
         }
 
-        if (!Col.TryGetComponent(out BulletControl _)){
+        if (!Col.TryGetComponent(out BulletControl _) && !Col.TryGetComponent(out PlayerHealthController a)){
             this.KillSelf();
         }
         
