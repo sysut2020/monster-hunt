@@ -12,7 +12,7 @@ public class WeaponChangedEventArgs : EventArgs {
     public PLAYER_ANIMATION AnimId { get; set; }
 }
 
-public class PlayerWeaponController : Singleton<PlayerWeaponController> {
+public class PlayerWeaponController : MonoBehaviour {
 
     [SerializeField]
     [Tooltip("list of guns.")]
