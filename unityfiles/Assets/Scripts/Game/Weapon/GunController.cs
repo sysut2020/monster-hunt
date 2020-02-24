@@ -121,7 +121,6 @@ public class GunController : MonoBehaviour {
     /// </summary>
     /// <param name="bullet">the GO to fire</param>
     private void FireProjectile(GameObject bullet){
-        //bullet.transform.rotation = this.FirePoint.transform.rotation;
         bullet.transform.rotation = Quaternion.Euler( 
             this.FirePoint.transform.rotation.eulerAngles.x,
             this.FirePoint.transform.rotation.eulerAngles.y,
@@ -186,6 +185,8 @@ public class GunController : MonoBehaviour {
     private void Fire() {
         // if yes is there any bullets in the active bullet list that is inactive
         for (int i = this.activeBullets.Count; i > 0; i--) {
+
+            
             GameObject g = (GameObject) this.activeBullets[i - 1];
             //TODO: probably shit solution somone try somthing better
             if (!g.activeInHierarchy) {
