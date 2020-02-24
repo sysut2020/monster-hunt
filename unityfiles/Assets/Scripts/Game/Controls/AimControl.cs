@@ -24,12 +24,12 @@ public class AimControl {
     /// </summary>
     private readonly Transform RotationPoint;
 
-    private Vector2 chekVec = Vector2.zero;
+    private Vector2 CheckV = Vector2.zero;
 
     private GameObject helperRotPoint;
     private GameObject helperAimPoint;
 
-    private bool debug = true;
+    private bool debug = false;
 
     public AimControl(GameObject firePoint, Transform rotatePoint) {
         this.FirePoint = firePoint;
@@ -45,8 +45,8 @@ public class AimControl {
     /// Subscribes to the relevant events for this class
     /// </summary>
     private void SubscribeToEvents() {
-        PlayerWeaponController.WeaponChangedEvent += c_WeaponChangedEvent;
-        LevelManager.CleanUpEvent += c_CleanupEvent;
+        PlayerWeaponController.WeaponChangedEvent += CallbackWeaponChangedEvent;
+        LevelManager.CleanUpEvent += CallbackCleanupEvent;
            
     }
     
@@ -54,19 +54,19 @@ public class AimControl {
     /// Subscribes to the relevant events for this class
     /// </summary>
     private void UnsubscribeFromEvents() {
-        PlayerWeaponController.WeaponChangedEvent -= c_WeaponChangedEvent;
-        LevelManager.CleanUpEvent -= c_CleanupEvent;
+        PlayerWeaponController.WeaponChangedEvent -= CallbackWeaponChangedEvent;
+        LevelManager.CleanUpEvent -= CallbackCleanupEvent;
     }
 
-    private void c_WeaponChangedEvent(object _, WeaponChangedEventArgs args){
+    private void CallbackWeaponChangedEvent(object _, WeaponChangedEventArgs args){
         CreateHelperObjects();
     }
 
-    private void c_CleanupEvent() {
+    private void CallbackCleanupEvent() {
         this.UnsubscribeFromEvents();
     }
 
-    private void c_CleanupEvent(object o, EventArgs _) => c_CleanupEvent();
+    private void CallbackCleanupEvent(object o, EventArgs _) => CallbackCleanupEvent();
 
     /// <summary>
     /// Creates helper game objects for calculating the angle
@@ -80,7 +80,6 @@ public class AimControl {
         if (helperRotPoint == null){
             helperRotPoint = new GameObject();
             helperRotPoint.transform.parent = RotationPoint.transform.parent;
-            //helperRotPoint.transform.localScale = Vector3.zero;
             helperRotPoint.name = "Aim control - helper rotationpoint";
         }
         if (helperAimPoint == null){
@@ -102,20 +101,6 @@ public class AimControl {
         helperRotPoint.transform.rotation = tmp;
         RotationPoint.transform.rotation = tmp;
 
-
-
-
-              
-
-        
-        // helperRotPoint.transform.localRotation = RotationPoint.localRotation;
-        // helperRotPoint.transform.localPosition = RotationPoint.localPosition;
-
-        // helperAimPoint.transform.localRotation = FirePoint.transform.localRotation;
-        // helperAimPoint.transform.localPosition = FirePoint.transform.localPosition;
-        
-        //helperAimPoint.transform.rotation = Quaternion.Euler(helperRotPoint.transform.InverseTransformDirection(FirePoint.transform.rotation.eulerAngles));
-        //helperAimPoint.transform.localPosition = helperRotPoint.transform.InverseTransformPoint(FirePoint.transform.position);
         
     }
 
@@ -125,10 +110,10 @@ public class AimControl {
     /// <param name="mousePoint">the point to aim at</param>
     /// <returns>angle that points towars mousepoint</returns>
     public Vector3 GetAngle(Vector3 mousePoint) {
-        Vector2 newChekVec = RotationPoint.transform.position-FirePoint.transform.position;
+        Vector2 newCheckV = RotationPoint.transform.position-FirePoint.transform.position;
 
-        if (Mathf.Floor(chekVec.magnitude*10) != Mathf.Floor(newChekVec.magnitude*10)){
-            this.chekVec = newChekVec;
+        if (Mathf.Floor(CheckV.magnitude*10) != Mathf.Floor(newCheckV.magnitude*10)){
+            this.CheckV = newCheckV;
             CreateHelperObjects();
         }
 

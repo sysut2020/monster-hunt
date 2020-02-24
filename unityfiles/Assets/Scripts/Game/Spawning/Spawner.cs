@@ -17,11 +17,11 @@ public class Spawner : Singleton<Spawner> {
     [SerializeField]
     private bool spawnSingle = false;
 
-    [Tooltip("check if theere is space to spawn if not don't")]
+    [Tooltip("check if there is space to spawn if not don't")]
     [SerializeField]
-    private bool chekIfSpace = true;
+    private bool checkIfSpace = true;
 
-    [Tooltip("Time betwen spawns")]
+    [Tooltip("Time between spawns")]
     [SerializeField]
     private float timeBetweenSpawns = 0;
 

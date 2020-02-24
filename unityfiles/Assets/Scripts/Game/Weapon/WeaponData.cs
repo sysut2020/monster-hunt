@@ -4,6 +4,8 @@ using UnityEngine;
 
 [CreateAssetMenu (fileName = "Data", menuName = "ScriptableObjects/WeaponData", order = 2)]
 public class WeaponData : ScriptableObject {
+
+    // TODO: fill stuff out
     
     [Header("Weapon posission")]
     [Tooltip ("the Angle of the different arm elements")]
@@ -33,12 +35,12 @@ public class WeaponData : ScriptableObject {
 
     [Tooltip("")]
     [SerializeField]
-    private Vector3 fPPosission;
+    private Vector3 firePointPosission;
 
 
     [Tooltip("")]
     [SerializeField]
-    private Vector3 fPRotation;
+    private Vector3 firePointRotation;
     
     
 
@@ -79,8 +81,8 @@ public class WeaponData : ScriptableObject {
     public Vector3 WeaponRotation { get => weaponRotation; set => weaponRotation = value; }
     public Vector3 WeaponPosission { get => weaponPosission; set => weaponPosission = value; }
     public Vector3 WeaponScale { get => weaponScale; set => weaponScale = value; }
-    public Vector3 FPRotation { get => fPRotation; set => fPRotation = value; }
-    public Vector3 FPPosission { get => fPPosission; set => fPPosission = value; }
+    public Vector3 FPRotation { get => firePointRotation; set => firePointRotation = value; }
+    public Vector3 FPPosission { get => firePointPosission; set => firePointPosission = value; }
     public float BulletVelocity { get => bulletVelocity; set => bulletVelocity = value; }
     public float BulletDamage { get => bulletDamage; set => bulletDamage = value; }
     public float BulletTtl { get => bulletTtl; set => bulletTtl = value; }
