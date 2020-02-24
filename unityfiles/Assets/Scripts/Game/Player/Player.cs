@@ -90,13 +90,13 @@ public class Player : MonoBehaviour, IDamageable {
 
     public static event EventHandler<PlayerEventArgs> PlayerKilledEvent;
     private void SubscribeToEvents() {
-        LevelManager.CleanUpEvent += (object o, EventArgs _) => this.c_CleanupEvent();
+        LevelManager.CleanUpEvent += this.c_CleanupEvent;
         PlayerWeaponController.WeaponChangedEvent += c_WeaponChangedEvent;
 ;
     }
 
     private void UnsubscribeFromEvents() {
-        LevelManager.CleanUpEvent -= (object o, EventArgs _) => this.c_CleanupEvent();
+        LevelManager.CleanUpEvent -= this.c_CleanupEvent;
         PlayerWeaponController.WeaponChangedEvent -= c_WeaponChangedEvent;
 ;
     }
@@ -105,6 +105,8 @@ public class Player : MonoBehaviour, IDamageable {
         this.UnsubscribeFromEvents();
         Destroy(gameObject);
     }
+
+    private void c_CleanupEvent(object o, EventArgs _) => c_CleanupEvent();
 
 
     private void c_WeaponChangedEvent(object _, WeaponChangedEventArgs args){
@@ -147,6 +149,10 @@ public class Player : MonoBehaviour, IDamageable {
         SubscribeToEvents();
     }
 
+    void OnDestroy(){
+        this.UnsubscribeFromEvents();
+    }
+
     void OnTriggerEnter2D(Collider2D Col) {
         Enemy enemy = Col.gameObject.GetComponentInParent<Enemy>();
         if (enemy != null) {
@@ -156,5 +162,4 @@ public class Player : MonoBehaviour, IDamageable {
             }
         }
     }
-
 }

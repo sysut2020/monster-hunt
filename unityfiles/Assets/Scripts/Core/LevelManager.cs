@@ -47,6 +47,7 @@ public class LevelManager : Singleton<LevelManager> {
     /// <summary>
     /// This event tells the listeners they are about to be deleted and should relese 
     /// all subscribed events
+    /// Mainly for non mono behaviour objects that cant use onDelete
     /// </summary>
     public static event EventHandler CleanUpEvent;
 
@@ -54,8 +55,6 @@ public class LevelManager : Singleton<LevelManager> {
     /// Subscribes to the relevant events for this class
     /// </summary>
     private void SubscribeToEvents() {
-        CleanUpEvent += (object __, EventArgs _) => this.UnsubscribeFromEvents();
-
         Player.PlayerKilledEvent += c_PlayerKilledEvent;
         Enemy.EnemyKilledEvent += c_EnemyKilledEvent;
     }
@@ -64,8 +63,6 @@ public class LevelManager : Singleton<LevelManager> {
     /// Subscribes to the relevant events for this class
     /// </summary>
     private void UnsubscribeFromEvents() {
-        CleanUpEvent -= (object __, EventArgs _) => this.UnsubscribeFromEvents();;
-
         Player.PlayerKilledEvent -= c_PlayerKilledEvent;
         Enemy.EnemyKilledEvent -= c_EnemyKilledEvent;
     }
@@ -131,6 +128,7 @@ public class LevelManager : Singleton<LevelManager> {
 
             case LEVEL_STATE.RELOAD:
                 Time.timeScale = 1;
+                CleanUpEvent.Invoke(this, EventArgs.Empty);
                 SceneManager.Instance.RestartCurrentScene();
                 break;
 
