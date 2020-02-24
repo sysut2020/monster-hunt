@@ -22,7 +22,7 @@ MonoBehaviour:
   bulletVelocity: 40
   bulletDamage: 10000
   bulletTtl: 20
-  bulletSprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  bulletSpriteScale: {x: 1, y: 1, z: 1}
+  bulletSprite: {fileID: 21300000, guid: ce27df47f5e275f6f8b3594f7296b2e2, type: 3}
+  bulletSpriteScale: {x: 0.1, y: 0.1, z: 1}
   fireRate: 1
   bulletSpread: 0
