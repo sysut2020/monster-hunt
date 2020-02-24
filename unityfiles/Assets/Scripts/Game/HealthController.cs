@@ -7,21 +7,20 @@ using UnityEngine;
 /// controlling an entity's health. can give or take away health
 /// and keeping track of wether or not the entity is dead
 /// </summary>
-[RequireComponent (typeof (IDamageable))]
+[RequireComponent(typeof(IDamageable))]
 public class HealthController : MonoBehaviour {
-    [Tooltip ("the amount of health a given entity has.")]
+    [Tooltip("the amount of health a given entity has.")]
     [SerializeField]
     private float entityHealth = 1;
-
     private bool isDead = false;
 
-    private IDamageable damageable;
     /// <summary>
+    private IDamageable damageable;
     /// Start is called on the frame when a script is enabled just before
     /// any of the Update methods is called the first time.
     /// </summary>
-    void Start () {
-        this.damageable = this.gameObject.GetComponent<IDamageable> ();
+    void Start() {
+        this.damageable = this.gameObject.GetComponent<IDamageable>();
     }
 
     // -- properties -- //
@@ -42,10 +41,10 @@ public class HealthController : MonoBehaviour {
     /// Reduces the entity's Health by a given value
     /// </summary>
     /// <param name="dmg">The amount of damage given to the entity</param>
-    public void ApplyDamage (float dmg) {
+    public virtual void ApplyDamage(float dmg) {
         this.entityHealth = this.entityHealth - dmg;
 
-        this.CheckIfDead ();
+        this.CheckIfDead();
     }
 
     /// <summary>
@@ -53,7 +52,7 @@ public class HealthController : MonoBehaviour {
     /// if the entity is dead check if it is Revive
     /// </summary>
     /// <param name="healing">The amount of health given to the entity</param>
-    public void ApplyHealing (float healing) {
+    public void ApplyHealing(float healing) {
 
         if (!this.isDead) {
             this.entityHealth = this.entityHealth + healing;
@@ -67,9 +66,9 @@ public class HealthController : MonoBehaviour {
     /// if it is set the isDead to true
     /// if not set it to false
     /// </summary>
-    private void CheckIfDead () {
+    protected void CheckIfDead() {
         if (this.entityHealth <= 0f && damageable != null) {
-            this.damageable.Dead ();
+            this.damageable.Dead();
             this.IsDead = true;
 
         } else {

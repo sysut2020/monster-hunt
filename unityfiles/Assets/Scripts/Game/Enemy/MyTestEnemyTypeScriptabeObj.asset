@@ -14,3 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 5
   speed: 2
+  letterDropChance: 2
+  coinDropChance: 3
+  powerUpDropChance: 1

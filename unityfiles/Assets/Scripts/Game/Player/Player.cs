@@ -1,25 +1,21 @@
-using System.Collections.Generic;
-using System.Xml.Linq;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class PlayerEventArgs: EventArgs{
-    public GameObject PlayerGO {get; set;}
-    public EnemyType PlayerMoney {get; set;}
-    public EnemyType PlayerLetters {get; set;}
+public class PlayerEventArgs : EventArgs {
+    public GameObject PlayerGO { get; set; }
+    public EnemyType PlayerMoney { get; set; }
+    public EnemyType PlayerLetters { get; set; }
 }
-
-
 
 /// <summary>
 /// this class describes the player
 /// </summary>
 public class Player : MonoBehaviour, IDamageable {
-    
 
     [SerializeField]
-    private HealthController playerHealthController;
+    private PlayerHealthController playerHealthController;
 
     private PlayerInventory playerInventory = new PlayerInventory();
 
@@ -28,7 +24,6 @@ public class Player : MonoBehaviour, IDamageable {
     public delegate void EventHandler();
 
     public static event EventHandler OnPlayerDead;
-
 
     private PlayerWeaponController playerWeaponController;
 
@@ -49,7 +44,7 @@ public class Player : MonoBehaviour, IDamageable {
 
     // -- properties -- //
 
-    public HealthController PlayerHealthController {
+    public PlayerHealthController PlayerHealthController {
         get => playerHealthController;
         internal set => this.playerHealthController = value;
     }
@@ -65,10 +60,6 @@ public class Player : MonoBehaviour, IDamageable {
     }
 
     // -- public -- //
-
-    
-
-    
 
     /// <summary>
     /// Gives a pickup to the player
@@ -90,7 +81,7 @@ public class Player : MonoBehaviour, IDamageable {
         }
     }
 
-    public void Dead(){
+    public void Dead() {
         PlayerEventArgs args = new PlayerEventArgs();
         // TODO: fill args
         PlayerKilledEvent?.Invoke(this, args);
@@ -99,44 +90,37 @@ public class Player : MonoBehaviour, IDamageable {
 
     public static event EventHandler<PlayerEventArgs> PlayerKilledEvent;
     private void SubscribeToEvents() {
-        LevelManager.CleanUpEvent += (object o, EventArgs _) => this.c_CleanupEvent();
-;
+        LevelManager.CleanUpEvent += (object o, EventArgs _) => this.c_CleanupEvent();;
     }
 
     private void UnsubscribeFromEvents() {
-        LevelManager.CleanUpEvent -= (object o, EventArgs _) => this.c_CleanupEvent();
-;
+        LevelManager.CleanUpEvent -= (object o, EventArgs _) => this.c_CleanupEvent();;
     }
 
-    private void c_CleanupEvent(){
+    private void c_CleanupEvent() {
         this.UnsubscribeFromEvents();
         Destroy(gameObject);
     }
 
     // -- private -- // 
 
-  
-
-    
     /// <summary>
     /// iterates through the active effects and checks if any one of them are done
     /// if they are the effect is cleaned out and removed
     /// </summary>
     private void UpdateEffects() {
-        if (this.playerInventory.ActivePickups.Count > 0){
+        if (this.playerInventory.ActivePickups.Count > 0) {
             List<IEffectPowerUp> tmp = this.playerInventory.ActivePickups;
             tmp.Reverse<IEffectPowerUp>();
             foreach (IEffectPowerUp effect in tmp) {
                 if (effect.IsEffectFinished()) {
                     effect.Cleanup();
                     this.playerInventory.RemoveEffectPickup(effect);
+                }
             }
         }
-        }
-        
-    }
 
-    
+    }
 
     // -- unity -- //
 
@@ -144,22 +128,22 @@ public class Player : MonoBehaviour, IDamageable {
     /// Update is called every frame, if the MonoBehaviour is enabled.
     /// </summary>
     void Update() {
-        UpdateEffects();
+
     }
 
-
     private void Awake() {
-        if (!this.TryGetComponent<Animator>(out this.animator)){
+        if (!this.TryGetComponent<Animator>(out this.animator)) {
             Debug.LogError("PLAYER ANIMATOR NOT FOUND");
         }
         SubscribeToEvents();
     }
 
-
     void OnTriggerEnter2D(Collider2D Col) {
-        if (Col.TryGetComponent(out Enemy enemy)) {
+        Enemy enemy = Col.gameObject.GetComponentInParent<Enemy>();
+        if (enemy != null) {
             if (enemy.IsAttacking) {
-                animator.SetTrigger(AnimationTriggers.DAMAGE);                
+                animator.SetTrigger(AnimationTriggers.DAMAGE);
+                this.PlayerHealthController.ApplyDamage(2);
             }
         }
     }
