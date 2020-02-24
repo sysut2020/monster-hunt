@@ -18,7 +18,11 @@ public class TimerGUI : MonoBehaviour {
     [SerializeField]
     [Tooltip("In seconds")]
     private float levelTime = 10;
-    
+    public float LevelTime {
+        get => levelTime;
+        set => levelTime = value;
+    }
+
     private void Awake() {
         if (timerText == null){
             throw new MissingComponentException("Missing text component");
