@@ -12,6 +12,10 @@ public class PauseMenu : MonoBehaviour {
     private static readonly float PLAY = 1;
 
     private void Awake() {
+        if (pauseMenuCanvas == null) {
+            throw new NotImplementedException("Please add pause menu canvas");
+        }
+        
         DeactivateMenu();
     }
 
