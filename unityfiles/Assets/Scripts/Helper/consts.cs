@@ -45,6 +45,16 @@ public enum LEVEL_STATE {
     /// </summary>
     RELOAD,
     
+    /// <summary>
+    /// Game pause
+    /// </summary>
+    PAUSE,
+    
+    /// <summary>
+    /// Resume game
+    /// </summary>
+    RESUME,
+    
     GAME_WON
 }
 
