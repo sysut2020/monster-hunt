@@ -3,7 +3,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour {
-    [SerializeField] private GameObject pauseMenuCanvas;
+    [SerializeField]
+    private GameObject pauseMenuCanvas;
 
     private Boolean isPaused = false;
 
@@ -15,32 +16,76 @@ public class PauseMenu : MonoBehaviour {
         if (pauseMenuCanvas == null) {
             throw new NotImplementedException("Please add pause menu canvas");
         }
-        
+
         DeactivateMenu();
+    }
+
+    private void Start() {
+        SubscribeToEvents();
     }
 
     // Update is called once per frame
     void Update() {
         if (Input.GetButtonDown("Cancel")) {
-            isPaused = !isPaused;
-
-            if (isPaused) {
-                ActivateMenu();
-            } else {
-                DeactivateMenu();
-            }
+            TogglePause();
         }
     }
 
-    void ActivateMenu() {
+    /// <summary>
+    /// Toggles the pause state.
+    /// Shows pause menu if paused
+    /// </summary>
+    private void TogglePause() {
+        isPaused = !isPaused;
+
+        if (isPaused) {
+            PauseGame();
+        } else {
+            ResumeGame();
+        }
+    }
+
+    private void OnDestroy() {
+        UnsubscribeFromEvents();
+    }
+
+    private void UnsubscribeFromEvents() {
+        LevelManager.LevelStateChangeEvent -= ChangeGameState();
+    }
+
+    private void SubscribeToEvents() {
+        LevelManager.LevelStateChangeEvent += ChangeGameState();
+    }
+
+    private EventHandler<LevelStateChangeEventArgs> ChangeGameState() {
+        return (sender, args) => {
+            if (args.NewState == LEVEL_STATE.PAUSE) {
+                PauseGame();
+            }
+
+            if (args.NewState == LEVEL_STATE.RESUME) {
+                ResumeGame();
+            }
+        };
+    }
+
+    private void ResumeGame() {
+        Time.timeScale = PLAY;
+        isPaused = false;
+        DeactivateMenu();
+    }
+
+    private void PauseGame() {
+        isPaused = true;
         Time.timeScale = PAUSE;
-        //Time.fixedDeltaTime = PAUSE;
+        ActivateMenu();
+    }
+    
+    void ActivateMenu() {
         pauseMenuCanvas.SetActive(true);
     }
 
     public void DeactivateMenu() {
-        Time.timeScale = PLAY;
         pauseMenuCanvas.SetActive(false);
-        isPaused = false;
     }
 }
