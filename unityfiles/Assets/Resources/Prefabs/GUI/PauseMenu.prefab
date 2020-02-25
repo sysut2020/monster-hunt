@@ -540,6 +540,7 @@ GameObject:
   - component: {fileID: 2457482681097628466}
   - component: {fileID: 92132846364475821}
   - component: {fileID: 2055320154710403155}
+  - component: {fileID: 997120743}
   m_Layer: 5
   m_Name: ContinueButton
   m_TagString: Untagged
@@ -645,18 +646,20 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 92132846364475821}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
+--- !u!114 &997120743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7111656635977087792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 091625f2176094635828763c0547bd46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelState: 5
 --- !u!1 &8627096512600203008
 GameObject:
   m_ObjectHideFlags: 0
