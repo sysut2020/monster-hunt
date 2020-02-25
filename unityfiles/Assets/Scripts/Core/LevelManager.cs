@@ -179,6 +179,10 @@ public class LevelManager : Singleton<LevelManager> {
         }
     }
 
+    public int GetLevelTimeLeft(){
+        return this.levelTimer.TimeLeft(this.LEVEL_TIMER_ID);
+    }
+
     private void OnEnable() {
         SubscribeToEvents();
     }
