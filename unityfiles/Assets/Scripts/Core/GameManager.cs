@@ -49,7 +49,7 @@ public class GameManager : Singleton<GameManager> {
     }
 
     /// <summary>
-    /// This function is fiered when the LevelStateChangeEvent is invoked
+    /// This function is fired when the LevelStateChangeEvent is invoked
     /// This function will trigger on the following level states:
     /// 
     /// STATE.EXIT: 
@@ -96,8 +96,7 @@ public class GameManager : Singleton<GameManager> {
         GameStateChangeEvent?.Invoke(this, args);
 
     }
-
-    //-- Events --//
+    
 
     // -- unity -- //
 
