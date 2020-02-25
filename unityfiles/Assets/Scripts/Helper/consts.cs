@@ -55,6 +55,11 @@ public enum LEVEL_STATE {
     /// </summary>
     RESUME,
     
+    /// <summary>
+    /// Confirm
+    /// </summary>
+    CONFIRM,
+    
     GAME_WON
 }
 
