@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca7133b6d09d47dea5409bd48c89e7bc, type: 3}
   m_Name: Level1
   m_EditorClassIdentifier: 
-  time: 1000000
+  time: 10
   numberOfEnemies: 8
   numberOfLetters: 0
