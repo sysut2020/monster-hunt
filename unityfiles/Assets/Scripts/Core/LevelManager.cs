@@ -21,6 +21,7 @@ class PlayThroughData {
 public class LevelManager : Singleton<LevelManager> {
     [SerializeField]
     private GameObject gameOverCanvas;
+
     [SerializeField]
     private GameObject gameWonCanvas;
 
@@ -103,7 +104,6 @@ public class LevelManager : Singleton<LevelManager> {
     /// </summary>
     /// <param name="NewState">The new level state</param>
     private void LevelStateChange(LEVEL_STATE NewState) {
-
         this.currentState = NewState;
         LevelStateChangeEventArgs args = new LevelStateChangeEventArgs();
         args.NewState = NewState;
@@ -118,11 +118,11 @@ public class LevelManager : Singleton<LevelManager> {
                 gameWonCanvas.SetActive(true);
                 break;
 
-                /// Start the main mode spawn the player and start the level
+            /// Start the main mode spawn the player and start the level
             case LEVEL_STATE.HUNTING:
                 InitLevel();
                 break;
-                /// Exit the game and go to main menu
+            /// Exit the game and go to main menu
             case LEVEL_STATE.EXIT:
                 break;
 
@@ -160,7 +160,6 @@ public class LevelManager : Singleton<LevelManager> {
 
     private void startLevelTime() {
         this.levelTimer.Set(LEVEL_TIMER_ID, this.levelDetails.Time);
-
     }
 
     // -- unity -- //
@@ -172,8 +171,8 @@ public class LevelManager : Singleton<LevelManager> {
 
         this.LevelStateChange(LEVEL_STATE.HUNTING);
     }
-    private void Update() {
 
+    private void Update() {
         if (this.levelTimer.Done(LEVEL_TIMER_ID)) {
             this.LevelStateChange(LEVEL_STATE.EXIT);
         }
@@ -186,5 +185,4 @@ public class LevelManager : Singleton<LevelManager> {
     private void OnDestroy() {
         UnsubscribeFromEvents();
     }
-
 }
