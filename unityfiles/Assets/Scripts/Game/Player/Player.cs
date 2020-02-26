@@ -90,26 +90,17 @@ public class Player : MonoBehaviour, IDamageable {
 
     public static event EventHandler<PlayerEventArgs> PlayerKilledEvent;
     private void SubscribeToEvents() {
-        LevelManager.CleanUpEvent += this.c_CleanupEvent;
-        PlayerWeaponController.WeaponChangedEvent += c_WeaponChangedEvent;
+        PlayerWeaponController.WeaponChangedEvent += CallbackWeaponChangedEvent;
 ;
     }
 
     private void UnsubscribeFromEvents() {
-        LevelManager.CleanUpEvent -= this.c_CleanupEvent;
-        PlayerWeaponController.WeaponChangedEvent -= c_WeaponChangedEvent;
+        PlayerWeaponController.WeaponChangedEvent -= CallbackWeaponChangedEvent;
 ;
     }
 
-    private void c_CleanupEvent() {
-        this.UnsubscribeFromEvents();
-        Destroy(gameObject);
-    }
 
-    private void c_CleanupEvent(object o, EventArgs _) => c_CleanupEvent();
-
-
-    private void c_WeaponChangedEvent(object _, WeaponChangedEventArgs args){
+    private void CallbackWeaponChangedEvent(object _, WeaponChangedEventArgs args){
         animator.SetInteger("ACTIVE_WEAPON", (int)args.AnimId);
     }
 

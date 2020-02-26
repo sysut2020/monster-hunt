@@ -135,13 +135,7 @@ public class PlayerWeaponController : MonoBehaviour {
     /// Awake is called when the script instance is being loaded.
     /// </summary>
     void Awake() {
-        //this.weaponGO = new GameObject();
         this.weaponSpriteRend = weaponGO.AddComponent<SpriteRenderer>() as SpriteRenderer;
-
-        //this.FirePoint = new GameObject();
-
-        //weaponGO.transform.parent = gunHand.transform;
-        //FirePoint.transform.parent = weaponGO.transform;
 
     }
 

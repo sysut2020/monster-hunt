@@ -55,16 +55,16 @@ public class LevelManager : Singleton<LevelManager> {
     /// Subscribes to the relevant events for this class
     /// </summary>
     private void SubscribeToEvents() {
-        Player.PlayerKilledEvent += c_PlayerKilledEvent;
-        Enemy.EnemyKilledEvent += c_EnemyKilledEvent;
+        Player.PlayerKilledEvent += CallbackPlayerKilledEvent;
+        Enemy.EnemyKilledEvent += CallbackEnemyKilledEvent;
     }
 
     /// <summary>
     /// Subscribes to the relevant events for this class
     /// </summary>
     private void UnsubscribeFromEvents() {
-        Player.PlayerKilledEvent -= c_PlayerKilledEvent;
-        Enemy.EnemyKilledEvent -= c_EnemyKilledEvent;
+        Player.PlayerKilledEvent -= CallbackPlayerKilledEvent;
+        Enemy.EnemyKilledEvent -= CallbackEnemyKilledEvent;
     }
 
     /// <summary>
@@ -73,7 +73,7 @@ public class LevelManager : Singleton<LevelManager> {
     /// </summary>
     /// <param name="o">the object calling</param>
     /// <param name="args">the event args</param>
-    private void c_PlayerKilledEvent(object o, EventArgs _) {
+    private void CallbackPlayerKilledEvent(object o, EventArgs _) {
         LevelStateChange(LEVEL_STATE.GAME_OVER);
     }
 
@@ -83,7 +83,7 @@ public class LevelManager : Singleton<LevelManager> {
     /// </summary>
     /// <param name="o">the object calling</param>
     /// <param name="args">the event args</param>
-    private void c_EnemyKilledEvent(object o, EnemyEventArgs args) {
+    private void CallbackEnemyKilledEvent(object o, EnemyEventArgs args) {
         playThroughData.EnemysKilled += 1;
         if (this.levelDetails.NumberOfEnemies <= playThroughData.EnemysKilled) {
             this.LevelStateChange(LEVEL_STATE.GAME_WON);
