@@ -27,7 +27,6 @@ public class EnemyFollowBehaviour : StateMachineBehaviour {
         this.player = GameObject.FindGameObjectWithTag("Player").transform;
         this.parent = animator.transform.parent;
         this.enemy = parent.GetComponent<Enemy>();
-        this.speed = this.enemy.EnemyType.Speed;
         if (this.attack) {
             this.attack = false;
             this.enemy.IsAttacking = false;

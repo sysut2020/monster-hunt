@@ -119,14 +119,14 @@ public class PlayerInventory {
     // -- events -- //
     public event EventHandler<InventoryUpdatedEventArgs> InventoryUpdatedEvent;
 
-    private void SubscribeToEvents(){
-        PlayerWeaponController.WeaponChangedEvent += CallbackWeaponChangedEvent;
+    private void SubscribeToEvents() {
+        PlayerWeaponController.Instance.WeaponChangedEvent += c_WeaponChangedEvent;
     }
 
-    private void UnsubscribeFromEvents(){
-        PlayerWeaponController.WeaponChangedEvent -= CallbackWeaponChangedEvent;
+    private void UnsubscribeFromEvents() {
+        PlayerWeaponController.Instance.WeaponChangedEvent -= c_WeaponChangedEvent;
     }
-    private void CallbackWeaponChangedEvent(object o, WeaponChangedEventArgs arg) {
+    private void c_WeaponChangedEvent(object o, WeaponChangedEventArgs arg) {
         AlertPowerupsOnWeaponChange(arg.NewGunController);
     }
 

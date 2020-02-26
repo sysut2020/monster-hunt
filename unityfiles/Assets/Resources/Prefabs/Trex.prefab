@@ -312,7 +312,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d77862b3809dc90aba1881e6210ac41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyType: {fileID: 11400000, guid: 9de46413ae465494a8b3db821d73fb32, type: 2}
+  enemyType: {fileID: 11400000, guid: 412c8073747011a81b958f3cd51659b5, type: 2}
   frontPoint: {fileID: 2855561317469738987}
 --- !u!114 &6071819141442889178
 MonoBehaviour:

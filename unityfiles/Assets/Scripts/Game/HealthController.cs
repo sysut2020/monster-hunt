@@ -13,9 +13,9 @@ public class HealthController : MonoBehaviour {
     [SerializeField]
     private float entityHealth = 1;
     private bool isDead = false;
-    private IDamageable damageable;
 
     /// <summary>
+    private IDamageable damageable;
     /// Start is called on the frame when a script is enabled just before
     /// any of the Update methods is called the first time.
     /// </summary>

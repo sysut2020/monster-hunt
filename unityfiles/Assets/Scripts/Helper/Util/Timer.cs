@@ -43,7 +43,6 @@ class Timer {
     /// </summary>
     /// <param name="millisec"></param>
     public void Update (float millisec) {
-        waitTime = millisec;
         completeTime = DateTime.Now.AddMilliseconds(millisec);
     }
 

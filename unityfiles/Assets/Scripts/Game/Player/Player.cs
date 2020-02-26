@@ -90,18 +90,16 @@ public class Player : MonoBehaviour, IDamageable {
 
     public static event EventHandler<PlayerEventArgs> PlayerKilledEvent;
     private void SubscribeToEvents() {
-        PlayerWeaponController.WeaponChangedEvent += CallbackWeaponChangedEvent;
-;
+        LevelManager.CleanUpEvent += (object o, EventArgs _) => this.c_CleanupEvent();;
     }
 
     private void UnsubscribeFromEvents() {
-        PlayerWeaponController.WeaponChangedEvent -= CallbackWeaponChangedEvent;
-;
+        LevelManager.CleanUpEvent -= (object o, EventArgs _) => this.c_CleanupEvent();;
     }
 
-
-    private void CallbackWeaponChangedEvent(object _, WeaponChangedEventArgs args){
-        animator.SetInteger("ACTIVE_WEAPON", (int)args.AnimId);
+    private void c_CleanupEvent() {
+        this.UnsubscribeFromEvents();
+        Destroy(gameObject);
     }
 
     // -- private -- // 
@@ -130,7 +128,7 @@ public class Player : MonoBehaviour, IDamageable {
     /// Update is called every frame, if the MonoBehaviour is enabled.
     /// </summary>
     void Update() {
-        //UpdateEffects();
+
     }
 
     private void Awake() {
@@ -138,10 +136,6 @@ public class Player : MonoBehaviour, IDamageable {
             Debug.LogError("PLAYER ANIMATOR NOT FOUND");
         }
         SubscribeToEvents();
-    }
-
-    void OnDestroy(){
-        this.UnsubscribeFromEvents();
     }
 
     void OnTriggerEnter2D(Collider2D Col) {
@@ -153,4 +147,5 @@ public class Player : MonoBehaviour, IDamageable {
             }
         }
     }
+
 }
