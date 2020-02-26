@@ -39,6 +39,29 @@ public enum LEVEL_STATE {
     /// <summary>
     /// Start the hunting mode in game
     /// </summary>
-    HUNTING
+    HUNTING,
+    /// <summary>
+    /// Reloads the current scene
+    /// </summary>
+    RELOAD,
+    
+    GAME_WON
+}
+
+/// <summary>
+/// 
+/// </summary>
+public enum PLAYER_ANIMATION {
+
+    /// <summary>
+    /// 
+    /// </summary>
+    HOLD_SNIPER = 1,
+    
+    /// <summary>
+    /// 
+    /// </summary>
+	HOLD_RAYGUN = 2,
+
 }
 
