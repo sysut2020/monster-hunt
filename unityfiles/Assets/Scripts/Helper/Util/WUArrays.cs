@@ -11,7 +11,7 @@ static class WUArrays
 {
     // string array functions
 
-    // high speed functions
+    // --- Singel letter string arrays --- //
 
 
     /// <summary>
@@ -73,6 +73,19 @@ static class WUArrays
     }
 
    
+    /// <summary>
+    /// Removes the elements in A from B
+    /// both A and b has to be sorted
+    /// ie:
+    /// A=["A", "B", "D"]  
+    /// B=["A", "A", "B", "C", "D", "D"]
+    /// 
+    /// RemoveAllAFromB(A,B) = ["A", "C", "D"]
+    /// 
+    /// </summary>
+    /// <param name="A">A list of the strings to remove from B</param>
+    /// <param name="B">A list of the strings to remove from</param>
+    /// <returns>B with a Removed</returns>
     public static List<string> RemoveAllAFromB(string[] A, string[] B)
     {
         List<String> returnValues = new List<string>();
@@ -123,6 +136,182 @@ static class WUArrays
 
         return returnValues;
     }
-    
+
+
+    // --- 2D arrays --- //
+
+    /// <summary>
+    /// Returns the row at the provided y index 
+    /// in the the provided 2d array
+    /// </summary>
+    /// <param name="ar">the array to get the type from</param>
+    /// <param name="y">the y index of the row</param>
+    /// <typeparam name="T">the type of the array</typeparam>
+    /// <returns>the row at the given index</returns>
+    public static T[] GetRow<T>(T[,] ar, int y)
+    {
+        if (y >= ar.GetLength(1))
+        {
+            // if the row index is outside the array throw an exeption
+            throw new IndexOutOfRangeException("Target possision out of range");
+        } 
+
+        int xSize = ar.GetLength(0);
+        T[] ret = new T[xSize];
+        for (int i = 0; i < xSize; i++)
+        {
+            ret[i] = ar[i,y];
+        }
+        return ret;
+    }
+
+    /// <summary>
+    /// Returns the col at the provided x index 
+    /// in the the provided 2d array
+    /// </summary>
+    /// <param name="ar">the array to get the type from</param>
+    /// <param name="x">the x index of the col</param>
+    /// <typeparam name="T">the type of the array</typeparam>
+    /// <returns>the col at the given index</returns>
+    public static T[] GetCol<T>(T[,] ar, int x)
+    {
+        if (x > ar.GetLength(0))
+        {
+            // if the col index is outside the array throw an exeption
+            throw new IndexOutOfRangeException("Target possision out of range");
+        } 
+
+        int ySize = ar.GetLength(1);
+        T[] ret = new T[ySize];
+        for (int i = 0; i < ySize; i++)
+        {
+            ret[i] = ar[x, i];
+        }
+        return ret;
+    }
+
+
+    /// <summary>
+    /// Gets all the connected non null values from the
+    /// provided x,y coordinates in ether x or y direction
+    /// if the starting point is null null is returned
+    /// </summary>
+    /// <param name="ar">the array </param>
+    /// <param name="x">the x cord of the starting point</param>
+    /// <param name="y">the y cord of the starting point</param>
+    /// <param name="axis">the axis to search 0 is x axis(row) 1 is y axis(col)</param>
+    /// <typeparam name="T">the type of the array</typeparam>
+    /// <returns>An array of all the connected elements form the starting point in the given dir</returns>
+    public static T[] GetConnected<T>(T[,] ar,int x, int y, int axis)
+    {
+        int xSize = ar.GetLength(0);
+        int ySize = ar.GetLength(1);
+
+        PrintMultiDim(ar);
+
+        if (x >= xSize || y >= ySize)
+        {
+            // if the targetet pos is outside the array throw an exception
+            throw new IndexOutOfRangeException("Target possision out of range");
+        } 
+        else if (ar[x,y] == null)
+        {
+            // if the target pos is null return null
+            return null;
+        }
+
+        int lowerBound;
+        int upperBound;
+        int startIndex;
+        T[] valuesList;
+
+        if (axis == 1) // x dir
+        {
+            valuesList = WUArrays.GetRow(ar, y);
+            startIndex = x;
+        } 
+        else // y dir
+        {
+            valuesList = WUArrays.GetCol(ar, x);
+            
+            startIndex = y;
+            
+        }
+
+        lowerBound = valuesList.GetLowerBound(0);
+        upperBound = valuesList.GetUpperBound(0);
+
+        // find upper bound 
+        for (int i = startIndex; i <= upperBound; i++)
+        {
+            if (valuesList[i] == null)
+            {
+                upperBound = i - 1;
+                break;
+            }
+        }
+
+        // find lower bound 
+        for (int i = startIndex; i >= lowerBound; i--)
+        {
+            if (valuesList[i] == null)
+            {
+                lowerBound = i + 1;
+                break;
+            }
+        }
+
+        
+        int diff = upperBound - lowerBound;
+        T[] ret = new T[diff+1];
+        
+        for (int i = 0; i <= diff; i++)
+        {
+            ret[i] = valuesList[lowerBound + i];
+        }
+
+        return ret;
+    }
+
+    public static void PrintMultiDim<T>(T[,] ar){
+ 
+        string p = "";
+        for (int yDim = ar.GetLowerBound(1); yDim <= ar.GetUpperBound(1); yDim++)
+        {
+            for (int xDim = ar.GetLowerBound(0); xDim <= ar.GetUpperBound(0); xDim++)
+                {
+                    p += ar[xDim,yDim] + ", ";
+                }
+            p += "\n";
+        
+        }
+    }
+
+
+    /// <summary>
+    /// returns the first occurrence of the search object in the
+    /// provided array
+    /// </summary>
+    /// <param name="ar">the array to search through</param>
+    /// <param name="sertchObj">the objet to find</param>
+    /// <typeparam name="T">the type of the object and array</typeparam>
+    /// <returns>the found object if found else the default val for the type T</returns>
+    public static T MultiDimFind<T>(T[,] ar, T searchObj){
+        T ret = default(T);
+        if (ar== null || searchObj == null){return ret;}
+
+        for (int xDim = ar.GetLowerBound(0); xDim < ar.GetUpperBound(0); xDim++)
+        {
+            for (int yDim = ar.GetLowerBound(1); yDim < ar.GetUpperBound(1); yDim++){
+                if (ar[xDim,yDim].Equals(searchObj)){
+                    ret = ar[xDim,yDim];
+                    break;
+                }
+            }
+            if (!ret.Equals(default(T))){break;}
+        }
+
+        return ret;
+    }
 }
 
