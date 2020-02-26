@@ -12,31 +12,7 @@ public class WordChecker
     private static string[] words = {"AAB", "ABA", "BOB", "HELLO", "UNCLE"};
     //REMOVE AND READ FROM FILE
 
-
-
-    // -- properties -- //
-    // -- public -- //
-
-
-
-    public bool IsSeriesWord(LgLetter[] series){
-        string maybeForwardsWord = "";
-        string maybeBackwardsWord = "";
-        int seriesLen = series.Length;
-
-        // forward pass
-        for (int i = 0; i < seriesLen; i++)
-        {
-            maybeForwardsWord += series[i].Letter;
-        }
-
-        for (int i = seriesLen - 1; i >= 0; i--)
-        {
-            maybeBackwardsWord += series[i].Letter;
-        }
-
-        return isWordValid(maybeBackwardsWord) || isWordValid(maybeForwardsWord);
-    }
+    
 
     // -- private -- // 
 

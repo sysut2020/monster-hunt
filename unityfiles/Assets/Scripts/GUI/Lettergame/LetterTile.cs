@@ -20,15 +20,21 @@ public class LetterTile : Dragable
 
     private LgLetter holdingLetter;
 
+    // -- properties -- //
     public string LetterTileLetter { get => letterTileLetter; set => letterTileLetter = value; }
 
 
 
-    // -- properties -- //
+    
 
 
     // -- events -- // 
 
+
+    /// <summary>
+    /// Calback for the letter count change event
+    /// </summary>
+    /// <param name="args">event args</param>
     private void CallbackLetterCountChangedEvent(object _, LetterCountCangedEventArgs args){
         Dictionary<string, int> lettercounts = args.AvailLetters;
 
@@ -36,8 +42,14 @@ public class LetterTile : Dragable
             LetterCount.text =  lettercounts[LetterTileLetter].ToString();
         }
     }
-    // -- public -- //
+
+
     // -- private -- // 
+    
+    /// <summary>
+    /// Tels whether or not the Ui element should start the drag operation 
+    /// </summary>
+    /// <returns>true if the drag operation can start false if not</returns>   
     override protected bool CanStartDrag(){
         holdingLetter = null;
         holdingLetter = LetterGameManager.Instance.TryGetLetter(IconLetter);
@@ -45,6 +57,9 @@ public class LetterTile : Dragable
 
     }
 
+    /// <summary>
+    /// What the Ui element should do when the drag operation is complete
+    /// </summary>
     override protected void OnDragCompletion(PointerEventData eventData){
         if (holdingLetter != null){
             GameObject hit = eventData.pointerCurrentRaycast.gameObject;
@@ -57,12 +72,6 @@ public class LetterTile : Dragable
         }
     }
     // -- unity -- //
-
-    
-    
-
-  
-
 
     // Start is called before the first frame update
     void Start(){

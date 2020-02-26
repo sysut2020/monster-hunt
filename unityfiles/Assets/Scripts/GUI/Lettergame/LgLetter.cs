@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-
+//TODO: shit name, improve.
 public class LgLetter{
 
     private readonly string letter;

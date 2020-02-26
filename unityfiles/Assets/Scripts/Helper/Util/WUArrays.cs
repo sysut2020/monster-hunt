@@ -273,6 +273,11 @@ static class WUArrays
         return ret;
     }
 
+    /// <summary>
+    /// prints the multi dimensional array
+    /// </summary>
+    /// <param name="ar">the array to print</param>
+    /// <typeparam name="T">the type of the array</typeparam>
     public static void PrintMultiDim<T>(T[,] ar){
  
         string p = "";

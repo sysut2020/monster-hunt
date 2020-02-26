@@ -96,6 +96,14 @@ public class LetterGameManager : Singleton<LetterGameManager>
     }
 
     // -- public -- //
+
+    /// <summary>
+    /// try's to get a specific letter from the game manager
+    /// If a letter is available (not on the board) the letters object is returned
+    /// if not null
+    /// </summary>
+    /// <param name="letter">the letter to check if is available</param>
+    /// <returns>the letters objet is it is available else null</returns>
     public LgLetter TryGetLetter(string letter){
         LgLetter ret = null;
         foreach (LgLetter l in playerLetters[letter]){
@@ -108,7 +116,15 @@ public class LetterGameManager : Singleton<LetterGameManager>
         return ret;
     }
 
+    /// <summary>
+    /// Updates the provided letters posission to the provided coordinates
+    /// </summary>
+    /// <param name="newX">the new x pos for the letter</param>
+    /// <param name="newY">the new x pos for the letter</param>
+    /// <param name="letter">the letter object to update the cords of</param>
     public void UpdateLetterPos(int newX, int newY, LgLetter letter){
+        int prevX = letter.XPos;
+        int prevY = letter.YPos;
         if (BoardIsTileValid(newX, newY)){
             // check for new words from the new point
             this.BoardSetTile(newX,newY,letter);
@@ -121,20 +137,22 @@ public class LetterGameManager : Singleton<LetterGameManager>
         // check if the was any words formed from moving this one
 
         // TODO: Currently cheking xx AND y for all laboring nodes when only x for t/b and y for l/r should be cheked
-        newX = letter.XPos;
-        newY = letter.YPos;
-        print(BoardIsTileValid(newX+1, newY));
-        
-        if (BoardIsTileValid(newX+1, newY)) ChekIfWordFromPos(newX+1, newY);
-        if (BoardIsTileValid(newX-1, newY)) ChekIfWordFromPos(newX-1, newY);
-        if (BoardIsTileValid(newX, newY+1)) ChekIfWordFromPos(newX, newY+1);
-        if (BoardIsTileValid(newX, newY-1)) ChekIfWordFromPos(newX, newY-1);
+        if (BoardIsTileValid(prevX+1, prevY)) ChekIfWordFromPos(prevX+1, prevY);
+        if (BoardIsTileValid(prevX-1, prevY)) ChekIfWordFromPos(prevX-1, prevY);
+        if (BoardIsTileValid(prevX, prevY+1)) ChekIfWordFromPos(prevX, prevY+1);
+        if (BoardIsTileValid(prevX, prevY-1)) ChekIfWordFromPos(prevX, prevY-1);
         
         this.refreshLetterNumberDisplay();
     }
     
     // -- private -- //
 
+    /// <summary>
+    /// Chefs if there are any words formed from drawing a vertical or horizontal line 
+    /// through the adjacent letters 
+    /// </summary>
+    /// <param name="x">the x pos of the cord to check from</param>
+    /// <param name="y">the x pos of the cord to check from</param>
     private void ChekIfWordFromPos(int x, int y){
         
         if (!BoardIsTileValid(x,y)){return;}
@@ -156,10 +174,14 @@ public class LetterGameManager : Singleton<LetterGameManager>
             WordChecker.isWordValid(wordYN)||
             WordChecker.isWordValid(wordYR)
         ){
+            // sadly emoji does not work in the unity console
             print("🎂🎉🎉🎉🎂🎂 WORD FOUND 🎂🎂🎂🎉🎂🎉🎉");
         }
     }
 
+    /// <summary>
+    /// Invokes a event telling all the letter displays to update their number of letters
+    /// </summary>
     private void refreshLetterNumberDisplay(){
         LetterCountCangedEventArgs args = new LetterCountCangedEventArgs();
         args.AvailLetters = this.CurrentAvailableLetterCount;
@@ -167,6 +189,10 @@ public class LetterGameManager : Singleton<LetterGameManager>
     }
 
 
+    /// <summary>
+    /// Fills inn the players letters
+    /// </summary>
+    /// <param name="args">the event args</param>
     private void FillPlayerLetters(LetterGameStartEventArgs args){
         Dictionary<string, int> playerDataDict = new Dictionary<string, int> {{"A",5},{"B",7},{"C",4}};// args.CurrentLetters; 
         foreach (string key in playerDataDict.Keys){
@@ -180,6 +206,9 @@ public class LetterGameManager : Singleton<LetterGameManager>
         }
     }
 
+    /// <summary>
+    /// Make a holder for every letter
+    /// </summary>
     private void MakePlayerLetter(){
         foreach (String letter in letters)
         {
@@ -192,9 +221,14 @@ public class LetterGameManager : Singleton<LetterGameManager>
 
     // -- tile map stuff -- //
 
+    /// <summary>
+    /// Tries to remove the provided letter from the board
+    /// </summary>
+    /// <param name="letter">the letter object to remove from the board</param>
+    /// <returns>true if successfull false if not</returns>
     private bool BoardTryRemoveLetter(LgLetter letter){
         bool suc = false;
-        if (letter.IsOnBoard){ // fixe seinere WUArrays.MultiDimFind(tileMap, letter)
+        if (letter.IsOnBoard){ // Fix WUArrays.MultiDimFind(tileMap, letter) and use it it's is more reliable
             if (letter != tileMap[letter.XPos,letter.YPos]){
                 throw new Exception("TILE POSSISION MISMATCH");
             }
@@ -210,21 +244,40 @@ public class LetterGameManager : Singleton<LetterGameManager>
         return suc;
     }
     
+    /// <summary>
+    /// Set a tile on the board. if the tile is occupied the occupant wil be removed
+    /// </summary>
+    /// <param name="x">the x pos to place the letter</param>
+    /// <param name="y">the y pos to place the letter</param>
+    /// <param name="tile">the letter objet to place</param>
     private void BoardSetTile(int x, int y, LgLetter tile){
         LgLetter oldTile = this.BoardTryGetTile(x,y);
         if (oldTile != null){
+            print("removes old");
             // if there is a tile at the possision remove it
             this.BoardTryRemoveLetter(oldTile);
         } 
 
+        // remove the tiles old poss from the log 
+        if (tile.IsOnBoard){
+            tileMap[tile.XPos,tile.YPos] = null;
+        }
+        
         
         tile.XPos = x;
         tile.YPos = y;
         tile.IsOnBoard = true;
         tileMap[x,y] = tile;
-        print($"New tile set at x{x}-y{y}");        
+        //print($"New tile set at x{x}-y{y}");        
     }
 
+    /// <summary>
+    /// try to get the letter at the provided x and y pos
+    /// returns the letter obj if possible null if not
+    /// </summary>
+    /// <param name="x">the x pos of the tile to get</param>
+    /// <param name="y">the y pos of the tile to get</param>
+    /// <returns></returns>
     private LgLetter BoardTryGetTile(int x, int y){
         LgLetter ret = null;
 
@@ -237,6 +290,12 @@ public class LetterGameManager : Singleton<LetterGameManager>
         return ret;
     }
 
+    /// <summary>
+    /// checks if a tile on the board is valid 
+    /// </summary>
+    /// <param name="x">the x pos of the place to check</param>
+    /// <param name="y">the y pos of the place to check</param>
+    /// <returns>true if the tile is valid false if not</returns>
     private bool BoardIsTileValid(int x, int y){
         bool ret = true;
         if (
