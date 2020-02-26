@@ -17,9 +17,8 @@ public class PauseMenu : MonoBehaviour {
 
     private void Awake() {
         CheckForMissingComponents();
-
-
-        DeactivateMenu();
+        
+        DeactivateMenu(); 
     }
 
     private void Start() {
