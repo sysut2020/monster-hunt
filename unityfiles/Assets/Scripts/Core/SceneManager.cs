@@ -57,4 +57,13 @@ public sealed class SceneManager {
         UnityEngine.SceneManagement.SceneManager.LoadScene(index);
     }
 
+    /// <summary>
+    /// Reloads the currently active scene
+    /// </summary>
+    public void RestartCurrentScene() {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(
+            UnityEngine.SceneManagement.SceneManager.GetActiveScene().name
+        );
+    }
+
 }

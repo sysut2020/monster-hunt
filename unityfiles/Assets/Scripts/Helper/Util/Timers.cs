@@ -47,6 +47,7 @@ public class Timers {
         bool suc = false;
         if (timers.Keys.Contains (timerID)) {
             Timer toUpdate = timers[timerID];
+            toUpdate.Update(newTimeInMillisec);
             suc = true;
         }
         return suc;
