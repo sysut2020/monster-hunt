@@ -6,6 +6,9 @@ public class PauseMenu : MonoBehaviour {
     [SerializeField]
     private GameObject pauseMenuCanvas;
 
+    [SerializeField]
+    private GameObject confirmDialog;
+
     private Boolean isPaused = false;
 
     private Button continueButton;
@@ -13,9 +16,8 @@ public class PauseMenu : MonoBehaviour {
     private static readonly float PLAY = 1;
 
     private void Awake() {
-        if (pauseMenuCanvas == null) {
-            throw new NotImplementedException("Please add pause menu canvas");
-        }
+        CheckForMissingComponents();
+
 
         DeactivateMenu();
     }
@@ -27,7 +29,11 @@ public class PauseMenu : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         if (Input.GetButtonDown("Cancel")) {
-            TogglePause();
+            if (confirmDialog.activeSelf) {
+                DeactivateConfirmDialog();
+            } else {
+                TogglePause();
+            }
         }
     }
 
@@ -64,9 +70,25 @@ public class PauseMenu : MonoBehaviour {
             }
 
             if (args.NewState == LEVEL_STATE.RESUME) {
-                ResumeGame();
+                if (confirmDialog.activeSelf) {
+                    DeactivateConfirmDialog();
+                } else {
+                    ResumeGame();
+                }
+            }
+
+            if (args.NewState == LEVEL_STATE.CONFIRM) {
+                ActivateConfirmDialog();
             }
         };
+    }
+
+    private void DeactivateConfirmDialog() {
+        confirmDialog.SetActive(false);
+    }
+
+    private void ActivateConfirmDialog() {
+        confirmDialog.SetActive(true);
     }
 
     private void ResumeGame() {
@@ -80,12 +102,22 @@ public class PauseMenu : MonoBehaviour {
         Time.timeScale = PAUSE;
         ActivateMenu();
     }
-    
+
     void ActivateMenu() {
         pauseMenuCanvas.SetActive(true);
     }
 
     public void DeactivateMenu() {
         pauseMenuCanvas.SetActive(false);
+    }
+
+    private void CheckForMissingComponents() {
+        if (pauseMenuCanvas == null) {
+            throw new MissingComponentException("Please add pause menu canvas");
+        }
+
+        if (confirmDialog == null) {
+            throw new MissingComponentException("Please add confirm dialog to inspector");
+        }
     }
 }
