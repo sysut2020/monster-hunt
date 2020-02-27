@@ -68,6 +68,12 @@ public class PauseMenu : Singleton<PauseMenu> {
                 PauseGame();
             }
 
+            if (args.NewState == LEVEL_STATE.PLAY) {
+                // If PLAY is called from anywhere, make sure to turn off all canvases
+                DeactivateConfirmDialog();
+                ResumeGame();
+            }
+
             if (args.NewState == LEVEL_STATE.RESUME) {
                 if (confirmDialog.activeSelf) {
                     DeactivateConfirmDialog();
@@ -117,6 +123,14 @@ public class PauseMenu : Singleton<PauseMenu> {
 
         if (confirmDialog == null) {
             throw new MissingComponentException("Missing confirm dialog");
+        }
+    }
+
+    public void ChangePauseState(PAUSE_MENU_STATE pauseState) {
+        switch (pauseState) {
+            case PAUSE_MENU_STATE.CONFIRM:
+                ActivateConfirmDialog();
+                break;
         }
     }
 }
