@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -112,6 +112,10 @@ public class PauseMenu : Singleton<PauseMenu> {
         pauseMenuCanvas.SetActive(false);
     }
 
+    /// <summary>
+    /// Checks that all necessary components are given to the script
+    /// </summary>
+    /// <exception cref="MissingComponentException"></exception>
     private void CheckForMissingComponents() {
         if (pauseMenuCanvas == null) {
             throw new MissingComponentException("Missing pause menu canvas");
