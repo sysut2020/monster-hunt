@@ -18,7 +18,7 @@ public class GameBoardTile : Dragable
     [SerializeField]
     private int xPos, yPos;
 
-    private LgLetter holdingLetter;
+    private LgLetter holdingLetter = null;
 
     public int XPos { get => xPos; set => xPos = value; }
     public int YPos { get => yPos; set => yPos = value; }
@@ -90,8 +90,12 @@ public class GameBoardTile : Dragable
                 // hit somthing with game tile
                 if (tile != this){
                     // not self
-                    tile.SetTile(holdingLetter);
-                    ResetTile();
+                        if(holdingLetter !=null){
+                            // if holding a letter
+                            tile.SetTile(holdingLetter);
+                            ResetTile();
+                        }
+                    
                 }
             } else{
                 // hit some GO without gametile
