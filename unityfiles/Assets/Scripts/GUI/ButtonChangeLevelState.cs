@@ -8,16 +8,10 @@ using UnityEngine.UI;
 /// It requires to be on an game object with Button script applied
 /// </summary>
 [RequireComponent(typeof(Button))]
-public class ButtonChangeLevelState : MonoBehaviour
+public class ButtonChangeLevelState : ButtonTrigger
 {
-
     [SerializeField]
     private LEVEL_STATE levelState;
-    
-    /// <summary>
-    /// The button that triggers the click event
-    /// </summary>
-    private Button triggerButton;
 
     private void Awake() {
         this.triggerButton = GetComponent<Button>();
