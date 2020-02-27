@@ -16,6 +16,6 @@ public class ButtonChangePauseMenuState : ButtonTrigger {
     }
 
     private void ChangeState() {
-        PauseMenu.Instance.ChangePauseState(this.pauseState);
+        PauseMenu.Instance.ChangePauseMenuState(this.pauseState);
     }
 }

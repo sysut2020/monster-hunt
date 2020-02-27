@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -73,14 +73,6 @@ public class PauseMenu : Singleton<PauseMenu> {
                 DeactivateConfirmDialog();
                 ResumeGame();
             }
-
-            if (args.NewState == LEVEL_STATE.RESUME) {
-                if (confirmDialog.activeSelf) {
-                    DeactivateConfirmDialog();
-                } else {
-                    ResumeGame();
-                }
-            }
         };
     }
 
@@ -126,10 +118,14 @@ public class PauseMenu : Singleton<PauseMenu> {
         }
     }
 
-    public void ChangePauseState(PAUSE_MENU_STATE pauseState) {
+    public void ChangePauseMenuState(PAUSE_MENU_STATE pauseState) {
         switch (pauseState) {
-            case PAUSE_MENU_STATE.CONFIRM:
+            case PAUSE_MENU_STATE.CONFIRMATION:
                 ActivateConfirmDialog();
+                break;
+            
+            case PAUSE_MENU_STATE.BASE:
+                DeactivateConfirmDialog();
                 break;
         }
     }

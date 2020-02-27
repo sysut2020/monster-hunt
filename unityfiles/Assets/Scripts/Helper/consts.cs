@@ -49,11 +49,6 @@ public enum LEVEL_STATE {
     /// Game pause
     /// </summary>
     PAUSE,
-    
-    /// <summary>
-    /// Resume game
-    /// </summary>
-    RESUME,
 
     GAME_WON
 }
@@ -76,9 +71,8 @@ public enum PLAYER_ANIMATION {
 }
 
 public enum PAUSE_MENU_STATE {
-	/// <summary>
-	/// Confirm
-	/// </summary>
-	CONFIRM
+	CONFIRMATION,
+	
+	BASE
 }
 
