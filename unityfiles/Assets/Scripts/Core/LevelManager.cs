@@ -119,7 +119,7 @@ public class LevelManager : Singleton<LevelManager> {
                 break;
 
             /// Start the main mode spawn the player and start the level
-            case LEVEL_STATE.HUNTING:
+            case LEVEL_STATE.PLAY:
                 InitLevel();
                 break;
             /// Exit the game and go to main menu
@@ -169,7 +169,7 @@ public class LevelManager : Singleton<LevelManager> {
         LEVEL_TIMER_ID = this.levelTimer.RollingUID;
         this.startLevelTime();
 
-        this.LevelStateChange(LEVEL_STATE.HUNTING);
+        this.LevelStateChange(LEVEL_STATE.PLAY);
     }
 
     private void Update() {
