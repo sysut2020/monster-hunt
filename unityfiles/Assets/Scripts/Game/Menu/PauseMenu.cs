@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -80,10 +80,6 @@ public class PauseMenu : Singleton<PauseMenu> {
                 } else {
                     ResumeGame();
                 }
-            }
-
-            if (args.NewState == LEVEL_STATE.CONFIRM) {
-                ActivateConfirmDialog();
             }
         };
     }
