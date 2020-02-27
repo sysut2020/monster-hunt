@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1595998510611255439}
   - component: {fileID: 1437639738478679091}
   - component: {fileID: 359831113954020}
-  - component: {fileID: 5274606762331128668}
+  - component: {fileID: 7034575884091099282}
   m_Layer: 5
   m_Name: NoButton
   m_TagString: Untagged
@@ -119,7 +119,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &5274606762331128668
+--- !u!114 &7034575884091099282
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -128,10 +128,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 664420803317877839}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 091625f2176094635828763c0547bd46, type: 3}
+  m_Script: {fileID: 11500000, guid: 5023d0253bac420abd4d251ea398cdb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelState: 5
+  pauseState: 1
 --- !u!1 &2519588124289468666
 GameObject:
   m_ObjectHideFlags: 0
@@ -241,7 +241,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: 4
+  m_firstOverflowCharacterIndex: -1
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -270,7 +270,7 @@ MonoBehaviour:
     spaceCount: 6
     wordCount: 7
     linkCount: 0
-    lineCount: 8
+    lineCount: 1
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
