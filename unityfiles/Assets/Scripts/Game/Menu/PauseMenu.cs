@@ -112,11 +112,11 @@ public class PauseMenu : MonoBehaviour {
 
     private void CheckForMissingComponents() {
         if (pauseMenuCanvas == null) {
-            throw new MissingComponentException("Please add pause menu canvas");
+            throw new MissingComponentException("Missing pause menu canvas");
         }
 
         if (confirmDialog == null) {
-            throw new MissingComponentException("Please add confirm dialog to inspector");
+            throw new MissingComponentException("Missing confirm dialog");
         }
     }
 }
