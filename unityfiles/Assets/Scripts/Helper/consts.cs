@@ -54,12 +54,7 @@ public enum LEVEL_STATE {
     /// Resume game
     /// </summary>
     RESUME,
-    
-    /// <summary>
-    /// Confirm
-    /// </summary>
-    CONFIRM,
-    
+
     GAME_WON
 }
 
@@ -78,5 +73,12 @@ public enum PLAYER_ANIMATION {
     /// </summary>
 	HOLD_RAYGUN = 2,
 
+}
+
+public enum PAUSE_MENU_STATE {
+	/// <summary>
+	/// Confirm
+	/// </summary>
+	CONFIRM
 }
 
