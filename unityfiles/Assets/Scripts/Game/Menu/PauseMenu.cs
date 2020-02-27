@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PauseMenu : MonoBehaviour {
+public class PauseMenu : Singleton<PauseMenu> {
     [SerializeField]
     private GameObject pauseMenuCanvas;
 
