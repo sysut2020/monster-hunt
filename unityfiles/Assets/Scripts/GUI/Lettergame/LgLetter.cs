@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-//TODO: shit name, improve.
-public class LgLetter{
+public class LetterGameLetter{
 
     private readonly string letter;
     private int xPos, yPos;
     private bool isOnBoard = false;
 
-    public LgLetter(int x, int y, string tileLetter){
+    public LetterGameLetter(int x, int y, string tileLetter){
         this.XPos = x;
         this.YPos = y;
         this.letter = tileLetter;

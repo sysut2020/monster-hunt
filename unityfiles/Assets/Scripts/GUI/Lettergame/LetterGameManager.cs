@@ -15,7 +15,7 @@ public class LetterGameStartEventArgs: EventArgs{
 }
 
 public class BoardChangedEventArgs: EventArgs{
-    private LgLetter[,] TileMap { get; set; }
+    private LetterGameLetter[,] TileMap { get; set; }
 }
 
 public class LetterCountCangedEventArgs: EventArgs{
@@ -67,8 +67,8 @@ public class LetterGameManager : Singleton<LetterGameManager>
 
 
 
-    private Dictionary<String, List<LgLetter>> playerLetters; 
-    private LgLetter[,] tileMap;
+    private Dictionary<String, List<LetterGameLetter>> playerLetters; 
+    private LetterGameLetter[,] tileMap;
 
 
 
@@ -79,7 +79,7 @@ public class LetterGameManager : Singleton<LetterGameManager>
             Dictionary<string, int> ret = new Dictionary<string, int>();
             foreach (string key in playerLetters.Keys){
                 ret.Add(key, 0);
-                foreach (LgLetter l in playerLetters[key]){
+                foreach (LetterGameLetter l in playerLetters[key]){
                     if (!l.IsOnBoard) ret[key] += 1;
                 }
             }
@@ -104,9 +104,9 @@ public class LetterGameManager : Singleton<LetterGameManager>
     /// </summary>
     /// <param name="letter">the letter to check if is available</param>
     /// <returns>the letters objet is it is available else null</returns>
-    public LgLetter TryGetLetter(string letter){
-        LgLetter ret = null;
-        foreach (LgLetter l in playerLetters[letter]){
+    public LetterGameLetter TryGetLetter(string letter){
+        LetterGameLetter ret = null;
+        foreach (LetterGameLetter l in playerLetters[letter]){
             if (!l.IsOnBoard){
                 ret = l;
                 break;
@@ -122,7 +122,7 @@ public class LetterGameManager : Singleton<LetterGameManager>
     /// <param name="newX">the new x pos for the letter</param>
     /// <param name="newY">the new x pos for the letter</param>
     /// <param name="letter">the letter object to update the cords of</param>
-    public void UpdateLetterPos(int newX, int newY, LgLetter letter){
+    public void UpdateLetterPos(int newX, int newY, LetterGameLetter letter){
         int prevX = letter.XPos;
         int prevY = letter.YPos;
         if (BoardIsTileValid(newX, newY)){
@@ -198,7 +198,7 @@ public class LetterGameManager : Singleton<LetterGameManager>
         foreach (string key in playerDataDict.Keys){
            if(playerLetters.Keys.Contains(key)){
                for (int i = 0; i < playerDataDict[key]; i++){
-                    LgLetter newLetter = new LgLetter(-1,-1, key); 
+                    LetterGameLetter newLetter = new LetterGameLetter(-1,-1, key); 
                     playerLetters[key].Add(newLetter);
                }
                
@@ -212,7 +212,7 @@ public class LetterGameManager : Singleton<LetterGameManager>
     private void MakePlayerLetter(){
         foreach (String letter in letters)
         {
-           this.playerLetters.Add(letter, new List<LgLetter>());
+           this.playerLetters.Add(letter, new List<LetterGameLetter>());
         }
     }
 
@@ -226,7 +226,7 @@ public class LetterGameManager : Singleton<LetterGameManager>
     /// </summary>
     /// <param name="letter">the letter object to remove from the board</param>
     /// <returns>true if successful false if not</returns>
-    private bool BoardTryRemoveLetter(LgLetter letter){
+    private bool BoardTryRemoveLetter(LetterGameLetter letter){
         bool suc = false;
         if (letter.IsOnBoard){ // Fix WUArrays.MultiDimFind(tileMap, letter) and use it it's is more reliable
             if (letter != tileMap[letter.XPos,letter.YPos]){
@@ -250,8 +250,8 @@ public class LetterGameManager : Singleton<LetterGameManager>
     /// <param name="x">the x pos to place the letter</param>
     /// <param name="y">the y pos to place the letter</param>
     /// <param name="tile">the letter objet to place</param>
-    private void BoardSetTile(int x, int y, LgLetter tile){
-        LgLetter oldTile = this.BoardTryGetTile(x,y);
+    private void BoardSetTile(int x, int y, LetterGameLetter tile){
+        LetterGameLetter oldTile = this.BoardTryGetTile(x,y);
         if (oldTile != null){
             print("removes old");
             // if there is a tile at the position remove it
@@ -278,8 +278,8 @@ public class LetterGameManager : Singleton<LetterGameManager>
     /// <param name="x">the x pos of the tile to get</param>
     /// <param name="y">the y pos of the tile to get</param>
     /// <returns></returns>
-    private LgLetter BoardTryGetTile(int x, int y){
-        LgLetter ret = null;
+    private LetterGameLetter BoardTryGetTile(int x, int y){
+        LetterGameLetter ret = null;
 
         if (BoardIsTileValid(x,y)){
             if(tileMap[x,y] != null){
@@ -313,8 +313,8 @@ public class LetterGameManager : Singleton<LetterGameManager>
 
     // Start is called before the first frame update
     void Start(){
-        this.tileMap = new LgLetter[this.bSizeX,this.bSizeY];
-        this.playerLetters = new Dictionary<String, List<LgLetter>>();
+        this.tileMap = new LetterGameLetter[this.bSizeX,this.bSizeY];
+        this.playerLetters = new Dictionary<String, List<LetterGameLetter>>();
         MakePlayerLetter();
         FillPlayerLetters(null);
         

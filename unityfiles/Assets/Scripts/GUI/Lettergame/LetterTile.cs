@@ -18,7 +18,7 @@ public class LetterTile : Dragable
     [SerializeField]
     private string letterTileLetter = "#";
 
-    private LgLetter holdingLetter;
+    private LetterGameLetter holdingLetter;
 
     // -- properties -- //
     public string LetterTileLetter { get => letterTileLetter; set => letterTileLetter = value; }

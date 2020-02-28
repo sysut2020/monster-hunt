@@ -18,7 +18,7 @@ public class GameBoardTile : Dragable
     [SerializeField]
     private int xPos, yPos;
 
-    private LgLetter holdingLetter = null;
+    private LetterGameLetter holdingLetter = null;
 
     public int XPos { get => xPos; set => xPos = value; }
     public int YPos { get => yPos; set => yPos = value; }
@@ -36,7 +36,7 @@ public class GameBoardTile : Dragable
     /// set the letter to be displayed int the tile
     /// </summary>
     /// <param name="letter">the letter to display</param>
-    public void SetTile(LgLetter letter){
+    public void SetTile(LetterGameLetter letter){
         LetterGameManager.Instance.UpdateLetterPos(XPos,YPos,letter);
         holdingLetter = letter;
         this.updateDisplayedLetter();
