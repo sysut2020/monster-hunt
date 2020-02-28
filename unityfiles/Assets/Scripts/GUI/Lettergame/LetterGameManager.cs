@@ -117,7 +117,7 @@ public class LetterGameManager : Singleton<LetterGameManager>
     }
 
     /// <summary>
-    /// Updates the provided letters posission to the provided coordinates
+    /// Updates the provided letters position to the provided coordinates
     /// </summary>
     /// <param name="newX">the new x pos for the letter</param>
     /// <param name="newY">the new x pos for the letter</param>
@@ -148,7 +148,7 @@ public class LetterGameManager : Singleton<LetterGameManager>
     // -- private -- //
 
     /// <summary>
-    /// Chefs if there are any words formed from drawing a vertical or horizontal line 
+    /// Checks if there are any words formed from drawing a vertical or horizontal line 
     /// through the adjacent letters 
     /// </summary>
     /// <param name="x">the x pos of the cord to check from</param>
@@ -190,7 +190,7 @@ public class LetterGameManager : Singleton<LetterGameManager>
 
 
     /// <summary>
-    /// Fills inn the players letters
+    /// Fills in the players letters
     /// </summary>
     /// <param name="args">the event args</param>
     private void FillPlayerLetters(LetterGameStartEventArgs args){
@@ -225,12 +225,12 @@ public class LetterGameManager : Singleton<LetterGameManager>
     /// Tries to remove the provided letter from the board
     /// </summary>
     /// <param name="letter">the letter object to remove from the board</param>
-    /// <returns>true if successfull false if not</returns>
+    /// <returns>true if successful false if not</returns>
     private bool BoardTryRemoveLetter(LgLetter letter){
         bool suc = false;
         if (letter.IsOnBoard){ // Fix WUArrays.MultiDimFind(tileMap, letter) and use it it's is more reliable
             if (letter != tileMap[letter.XPos,letter.YPos]){
-                throw new Exception("TILE POSSISION MISMATCH");
+                throw new Exception("TILE POSITION MISMATCH");
             }
             
             tileMap[letter.XPos,letter.YPos] = null;
@@ -254,11 +254,11 @@ public class LetterGameManager : Singleton<LetterGameManager>
         LgLetter oldTile = this.BoardTryGetTile(x,y);
         if (oldTile != null){
             print("removes old");
-            // if there is a tile at the possision remove it
+            // if there is a tile at the position remove it
             this.BoardTryRemoveLetter(oldTile);
         } 
 
-        // remove the tiles old poss from the log 
+        // remove the tiles old position from the log 
         if (tile.IsOnBoard){
             tileMap[tile.XPos,tile.YPos] = null;
         }
@@ -273,7 +273,7 @@ public class LetterGameManager : Singleton<LetterGameManager>
 
     /// <summary>
     /// try to get the letter at the provided x and y pos
-    /// returns the letter obj if possible null if not
+    /// returns the letter object if possible, null if not
     /// </summary>
     /// <param name="x">the x pos of the tile to get</param>
     /// <param name="y">the y pos of the tile to get</param>

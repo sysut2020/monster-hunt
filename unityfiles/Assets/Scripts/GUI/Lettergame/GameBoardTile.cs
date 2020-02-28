@@ -66,7 +66,7 @@ public class GameBoardTile : Dragable
     }
 
     /// <summary>
-    /// Tels whether or not the Ui element should start the drag operation 
+    /// Tells whether or not the Ui element should start the drag operation 
     /// </summary>
     /// <returns>true if the drag operation can start false if not</returns>   
     override protected bool CanStartDrag(){
@@ -85,9 +85,9 @@ public class GameBoardTile : Dragable
     override protected void OnDragCompletion(PointerEventData eventData){
         GameObject hit = eventData.pointerCurrentRaycast.gameObject;
         if (hit != null){
-            // hit somthing
+            // hit something
             if( hit.TryGetComponent<GameBoardTile>(out GameBoardTile tile)){
-                // hit somthing with game tile
+                // hit something with game tile
                 if (tile != this){
                     // not self
                         if(holdingLetter !=null){
@@ -98,7 +98,7 @@ public class GameBoardTile : Dragable
                     
                 }
             } else{
-                // hit some GO without gametile
+                // hit some GO without game tile
                 LetterGameManager.Instance.UpdateLetterPos(-1,-1,holdingLetter);
                 ResetTile();
 
