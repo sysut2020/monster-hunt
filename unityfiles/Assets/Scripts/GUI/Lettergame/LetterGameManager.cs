@@ -37,10 +37,16 @@ public class LetterGameManager : Singleton<LetterGameManager>
     // maby move this to a global constant
     private readonly string[] letters = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
 
+    /// <summary>
+    /// The x size of the board
+    /// </summary>
     [Tooltip("")]
     [SerializeField]
     private int bSizeX;
 
+    /// <summary>
+    /// The y size of the board
+    /// </summary>
     [Tooltip("")]
     [SerializeField]
     private int bSizeY;
@@ -61,11 +67,6 @@ public class LetterGameManager : Singleton<LetterGameManager>
     GameObject letterTile;
 
     
-
-    [SerializeField]
-    GameObject icon;
-
-
 
     private Dictionary<String, List<LetterGameLetter>> playerLetters; 
     private LetterGameLetter[,] tileMap;
@@ -148,6 +149,31 @@ public class LetterGameManager : Singleton<LetterGameManager>
     // -- private -- //
 
     /// <summary>
+    /// Makes and places the board tiles
+    /// </summary>
+    private void MakeBoardTiles(){
+        for (int i = 0; i < bSizeX*bSizeY; i++){
+            GameObject n = Instantiate(this.boardTile);
+            GameBoardTile tile = n.GetComponent<GameBoardTile>();
+            tile.XPos = (int) i % bSizeX;
+            tile.YPos = (int) Mathf.Floor(i/bSizeX);
+            n.transform.SetParent(playingBoard.transform);
+        }
+    }
+
+    /// <summary>
+    /// Makes and places the letter tiles
+    /// </summary>
+    private void MakeLetterTile(){
+        foreach (string letter in letters){
+            GameObject n = Instantiate(this.letterTile);
+            LetterTile tile = n.GetComponent<LetterTile>();
+            tile.LetterTileLetter = letter;
+            n.transform.SetParent(letterBoard.transform);
+        }
+    }
+
+    /// <summary>
     /// Checks if there are any words formed from drawing a vertical or horizontal line 
     /// through the adjacent letters 
     /// </summary>
@@ -166,8 +192,6 @@ public class LetterGameManager : Singleton<LetterGameManager>
         string wordYN = string.Join("",yDir.ToArray());
         string wordYR = string.Join("",yDir.Reverse().ToArray());
 
-        //print($"X dir {wordXN}");
-        //print($"Y dir {wordYN}");
         if(
             WordChecker.isWordValid(wordXN)||
             WordChecker.isWordValid(wordXR)||
@@ -308,9 +332,7 @@ public class LetterGameManager : Singleton<LetterGameManager>
     }
 
 
-   
-
-
+    
     // Start is called before the first frame update
     void Start(){
         this.tileMap = new LetterGameLetter[this.bSizeX,this.bSizeY];
@@ -318,22 +340,10 @@ public class LetterGameManager : Singleton<LetterGameManager>
         MakePlayerLetter();
         FillPlayerLetters(null);
         
+        this.MakeBoardTiles();
+        this.MakeLetterTile();
 
-        for (int i = 0; i < bSizeX*bSizeY; i++){
-            GameObject n = Instantiate(this.boardTile);
-            GameBoardTile tile = n.GetComponent<GameBoardTile>();
-            tile.XPos = (int) i % bSizeX;
-            tile.YPos = (int) Mathf.Floor(i/bSizeX);
-            n.transform.SetParent(playingBoard.transform);
-
-        }
-
-        foreach (string letter in letters){
-            GameObject n = Instantiate(this.letterTile);
-            LetterTile tile = n.GetComponent<LetterTile>();
-            tile.LetterTileLetter = letter;
-            n.transform.SetParent(letterBoard.transform);
-        }
+        
 
         refreshLetterNumberDisplay();
         
