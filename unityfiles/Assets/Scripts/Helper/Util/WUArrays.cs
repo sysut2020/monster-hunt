@@ -214,7 +214,7 @@ static class WUArrays
             // if the targetet pos is outside the array throw an exception
             throw new IndexOutOfRangeException("Target possision out of range");
         } 
-        else if (ar[x,y] == null)
+        else if (default(T).Equals(ar[x,y]))
         {
             // if the target pos is null return null
             return null;
@@ -244,7 +244,7 @@ static class WUArrays
         // find upper bound 
         for (int i = startIndex; i <= upperBound; i++)
         {
-            if (valuesList[i] == null)
+            if (default(T).Equals(valuesList[i]))
             {
                 upperBound = i - 1;
                 break;
@@ -254,7 +254,7 @@ static class WUArrays
         // find lower bound 
         for (int i = startIndex; i >= lowerBound; i--)
         {
-            if (valuesList[i] == null)
+            if (default(T).Equals(valuesList[i]))
             {
                 lowerBound = i + 1;
                 break;
@@ -303,7 +303,7 @@ static class WUArrays
     /// <returns>the found object if found else the default val for the type T</returns>
     public static T MultiDimFind<T>(T[,] ar, T searchObj){
         T ret = default(T);
-        if (ar== null || searchObj == null){return ret;}
+        if (default(T).Equals(ar) || default(T).Equals(searchObj)){return ret;}
 
         for (int xDim = ar.GetLowerBound(0); xDim < ar.GetUpperBound(0); xDim++)
         {

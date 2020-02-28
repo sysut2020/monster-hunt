@@ -81,20 +81,16 @@ public class LetterGameManager : Singleton<LetterGameManager>
             foreach (string key in playerLetters.Keys){
                 ret.Add(key, 0);
                 foreach (LetterGameLetter l in playerLetters[key]){
-                    if (!l.IsOnBoard) ret[key] += 1;
+                    if (!l.IsOnBoard){ ret[key] += 1;}
                 }
             }
             return ret;
         }
     }
     // -- events -- // 
-    public static event EventHandler<BoardChangedEventArgs> BoardChangedEvent;
     public static event EventHandler<LetterCountCangedEventArgs> LetterCountCangedEvent;
 
 
-    private void CallbackLetterGameStartEvent(object _, LetterGameStartEventArgs args){
-
-    }
 
     // -- public -- //
 
@@ -138,10 +134,10 @@ public class LetterGameManager : Singleton<LetterGameManager>
         // check if the was any words formed from moving this one
 
         // TODO: Currently cheking xx AND y for all laboring nodes when only x for t/b and y for l/r should be cheked
-        if (BoardIsTileValid(prevX+1, prevY)) ChekIfWordFromPos(prevX+1, prevY);
-        if (BoardIsTileValid(prevX-1, prevY)) ChekIfWordFromPos(prevX-1, prevY);
-        if (BoardIsTileValid(prevX, prevY+1)) ChekIfWordFromPos(prevX, prevY+1);
-        if (BoardIsTileValid(prevX, prevY-1)) ChekIfWordFromPos(prevX, prevY-1);
+        if (BoardIsTileValid(prevX+1, prevY)){ ChekIfWordFromPos(prevX+1, prevY);}
+        if (BoardIsTileValid(prevX-1, prevY)){ ChekIfWordFromPos(prevX-1, prevY);}
+        if (BoardIsTileValid(prevX, prevY+1)){ ChekIfWordFromPos(prevX, prevY+1);}
+        if (BoardIsTileValid(prevX, prevY-1)){ ChekIfWordFromPos(prevX, prevY-1);}
         
         this.refreshLetterNumberDisplay();
     }
@@ -155,7 +151,7 @@ public class LetterGameManager : Singleton<LetterGameManager>
         for (int i = 0; i < bSizeX*bSizeY; i++){
             GameObject n = Instantiate(this.boardTile);
             GameBoardTile tile = n.GetComponent<GameBoardTile>();
-            tile.XPos = (int) i % bSizeX;
+            tile.XPos = i % bSizeX;
             tile.YPos = (int) Mathf.Floor(i/bSizeX);
             n.transform.SetParent(playingBoard.transform);
         }
@@ -218,7 +214,7 @@ public class LetterGameManager : Singleton<LetterGameManager>
     /// </summary>
     /// <param name="args">the event args</param>
     private void FillPlayerLetters(LetterGameStartEventArgs args){
-        Dictionary<string, int> playerDataDict = new Dictionary<string, int> {{"A",5},{"B",7},{"C",4}};// args.CurrentLetters; 
+        Dictionary<string, int> playerDataDict = new Dictionary<string, int> {{"A",5},{"B",7},{"C",4}};// when communication from GM is in use: args.CurrentLetters; 
         foreach (string key in playerDataDict.Keys){
            if(playerLetters.Keys.Contains(key)){
                for (int i = 0; i < playerDataDict[key]; i++){
@@ -254,6 +250,7 @@ public class LetterGameManager : Singleton<LetterGameManager>
         bool suc = false;
         if (letter.IsOnBoard){ // Fix WUArrays.MultiDimFind(tileMap, letter) and use it it's is more reliable
             if (letter != tileMap[letter.XPos,letter.YPos]){
+                // TODO: make exception
                 throw new Exception("TILE POSITION MISMATCH");
             }
             
@@ -292,7 +289,6 @@ public class LetterGameManager : Singleton<LetterGameManager>
         tile.YPos = y;
         tile.IsOnBoard = true;
         tileMap[x,y] = tile;
-        //print($"New tile set at x{x}-y{y}");        
     }
 
     /// <summary>

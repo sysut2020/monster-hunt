@@ -25,10 +25,7 @@ public class GameBoardTile : Dragable
 
     // -- properties -- //
     // -- events -- // 
-    public static event EventHandler<TileChangedEventArgs> TileChangedEventArgs;
-    public void CallbackBoardChangedEvent(object _, BoardChangedEventArgs __){
-
-    }
+    
 
     // -- public -- //
 
