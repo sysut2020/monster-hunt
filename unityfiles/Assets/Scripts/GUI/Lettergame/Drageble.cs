@@ -50,11 +50,11 @@ public abstract class Dragable : MonoBehaviour, IBeginDragHandler, IDragHandler,
             
             var canvas = this.gameObject.GetComponentInParent<Canvas>();
 
-            if (dragOnSurfaces)
+            if (dragOnSurfaces){
                 DraggingPlane = transform as RectTransform;
-            else
+            }else{
                 DraggingPlane = canvas.transform as RectTransform;
-
+            }
             SetDraggedPosition(eventData);
         }
         
@@ -71,21 +71,21 @@ public abstract class Dragable : MonoBehaviour, IBeginDragHandler, IDragHandler,
     
 
     public void OnEndDrag(PointerEventData eventData){
-        if (DraggingIcon != null)
+        if (DraggingIcon != null){
             DraggingIcon.SetActive(false);
             OnDragCompletion(eventData);
+        }
         
     }
     // -- private -- // 
 
     private void SetDraggedPosition(PointerEventData data){
-        if (dragOnSurfaces && data.pointerEnter != null && data.pointerEnter.transform as RectTransform != null)
+        if (dragOnSurfaces && data.pointerEnter != null && data.pointerEnter.transform as RectTransform != null){
             DraggingPlane = data.pointerEnter.transform as RectTransform;
-
+        }
         var rt = DraggingIcon.GetComponent<RectTransform>();
         Vector3 globalMousePos;
-        if (RectTransformUtility.ScreenPointToWorldPointInRectangle(DraggingPlane, data.position, data.pressEventCamera, out globalMousePos))
-        {
+        if (RectTransformUtility.ScreenPointToWorldPointInRectangle(DraggingPlane, data.position, data.pressEventCamera, out globalMousePos)){
             rt.position = globalMousePos;
             rt.rotation = DraggingPlane.rotation;
         }
