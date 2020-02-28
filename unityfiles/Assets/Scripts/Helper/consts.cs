@@ -50,7 +50,9 @@ public enum LEVEL_STATE {
     /// </summary>
     PAUSE,
 
-    GAME_WON
+    GAME_WON,
+    
+    START
 }
 
 /// <summary>
