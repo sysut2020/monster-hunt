@@ -33,6 +33,8 @@ public class LevelManager : Singleton<LevelManager> {
     private LEVEL_STATE currentState; // may need default here in that case find out the starting state
 
     private PlayThroughData playThroughData;
+    private static readonly int PAUSE = 0;
+    private static readonly int PLAY = 1;
 
     // -- properties -- //
 
@@ -110,24 +112,33 @@ public class LevelManager : Singleton<LevelManager> {
         switch (NewState) {
             /// The game is over show game over screen
             case LEVEL_STATE.GAME_OVER:
-                Time.timeScale = 0;
+                Time.timeScale = PAUSE;
                 gameOverCanvas.SetActive(true);
                 break;
             case LEVEL_STATE.GAME_WON:
-                Time.timeScale = 0;
+                Time.timeScale = PAUSE;
                 gameWonCanvas.SetActive(true);
                 break;
 
+            case LEVEL_STATE.PAUSE:
+                Time.timeScale = PAUSE;
+                break;
+            
+            case LEVEL_STATE.START:
+                InitLevel();
+                ChangeLevelState(LEVEL_STATE.PLAY);
+                break;
+                
             /// Start the main mode spawn the player and start the level
             case LEVEL_STATE.PLAY:
-                InitLevel();
+                Time.timeScale = PLAY;
                 break;
             /// Exit the game and go to main menu
             case LEVEL_STATE.EXIT:
                 break;
 
             case LEVEL_STATE.RELOAD:
-                Time.timeScale = 1;
+                Time.timeScale = PLAY;
                 CleanUpEvent.Invoke(this, EventArgs.Empty);
                 SceneManager.Instance.RestartCurrentScene();
                 break;
@@ -169,7 +180,7 @@ public class LevelManager : Singleton<LevelManager> {
         LEVEL_TIMER_ID = this.levelTimer.RollingUID;
         this.startLevelTime();
 
-        this.LevelStateChange(LEVEL_STATE.PLAY);
+        this.LevelStateChange(LEVEL_STATE.START);
     }
 
     private void Update() {
