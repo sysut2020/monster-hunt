@@ -51,7 +51,6 @@ public class LetterTile : Dragable
     /// </summary>
     /// <returns>true if the drag operation can start false if not</returns>   
     override protected bool CanStartDrag(){
-        holdingLetter = null;
         holdingLetter = LetterGameManager.Instance.TryGetLetter(IconLetter);
         return holdingLetter != null;
 
