@@ -11,9 +11,8 @@ public class PauseMenu : Singleton<PauseMenu> {
 
     private Boolean isPaused = false;
 
+    [SerializeField]
     private Button continueButton;
-    private static readonly int PAUSE = 0;
-    private static readonly float PLAY = 1;
 
     private void Awake() {
         CheckForMissingComponents();
@@ -22,7 +21,7 @@ public class PauseMenu : Singleton<PauseMenu> {
     }
 
     private void Start() {
-        SubscribeToEvents();
+        continueButton.onClick.AddListener(ResumeGame);
     }
 
     // Update is called once per frame
@@ -51,27 +50,7 @@ public class PauseMenu : Singleton<PauseMenu> {
     }
 
     private void OnDestroy() {
-        UnsubscribeFromEvents();
-    }
-
-    private void UnsubscribeFromEvents() {
-        LevelManager.LevelStateChangeEvent -= CallbackChangeGameState;
-    }
-
-    private void SubscribeToEvents() {
-        LevelManager.LevelStateChangeEvent += CallbackChangeGameState;
-    }
-
-    private void CallbackChangeGameState(object _, LevelStateChangeEventArgs args) {
-        if (args.NewState == LEVEL_STATE.PAUSE) {
-            PauseGame();
-        }
-
-        if (args.NewState == LEVEL_STATE.PLAY) {
-            // If PLAY is called from anywhere, make sure to turn off all canvases
-            DeactivateConfirmDialog();
-            ResumeGame();
-        }
+        continueButton.onClick.RemoveAllListeners();
     }
 
     private void DeactivateConfirmDialog() {
@@ -83,18 +62,16 @@ public class PauseMenu : Singleton<PauseMenu> {
     }
 
     private void ResumeGame() {
-        Time.timeScale = PLAY;
-        isPaused = false;
+        LevelManager.Instance.ChangeLevelState(LEVEL_STATE.PLAY);
         DeactivateMenu();
     }
 
     private void PauseGame() {
-        isPaused = true;
-        Time.timeScale = PAUSE;
+        LevelManager.Instance.ChangeLevelState(LEVEL_STATE.PAUSE);
         ActivateMenu();
     }
 
-    void ActivateMenu() {
+    private void ActivateMenu() {
         pauseMenuCanvas.SetActive(true);
     }
 
@@ -116,6 +93,10 @@ public class PauseMenu : Singleton<PauseMenu> {
         }
     }
 
+    /// <summary>
+    /// Changes the state of the pause menu in the case where the player wants to quit the game
+    /// </summary>
+    /// <param name="pauseState"></param>
     public void ChangePauseMenuState(PAUSE_MENU_STATE pauseState) {
         switch (pauseState) {
             case PAUSE_MENU_STATE.CONFIRMATION:
