@@ -40,12 +40,12 @@ public class PauseMenu : Singleton<PauseMenu> {
     /// Shows pause menu if paused
     /// </summary>
     private void TogglePause() {
-        isPaused = !isPaused;
-
-        if (isPaused) {
+        if (!isPaused) {
             PauseGame();
+            isPaused = true;
         } else {
             ResumeGame();
+            isPaused = false;
         }
     }
 
