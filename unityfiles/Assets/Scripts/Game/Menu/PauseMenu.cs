@@ -17,8 +17,8 @@ public class PauseMenu : Singleton<PauseMenu> {
 
     private void Awake() {
         CheckForMissingComponents();
-        
-        DeactivateMenu(); 
+
+        DeactivateMenu();
     }
 
     private void Start() {
@@ -55,25 +55,23 @@ public class PauseMenu : Singleton<PauseMenu> {
     }
 
     private void UnsubscribeFromEvents() {
-        LevelManager.LevelStateChangeEvent -= ChangeGameState();
+        LevelManager.LevelStateChangeEvent -= CallbackChangeGameState;
     }
 
     private void SubscribeToEvents() {
-        LevelManager.LevelStateChangeEvent += ChangeGameState();
+        LevelManager.LevelStateChangeEvent += CallbackChangeGameState;
     }
 
-    private EventHandler<LevelStateChangeEventArgs> ChangeGameState() {
-        return (sender, args) => {
-            if (args.NewState == LEVEL_STATE.PAUSE) {
-                PauseGame();
-            }
+    private void CallbackChangeGameState(object _, LevelStateChangeEventArgs args) {
+        if (args.NewState == LEVEL_STATE.PAUSE) {
+            PauseGame();
+        }
 
-            if (args.NewState == LEVEL_STATE.PLAY) {
-                // If PLAY is called from anywhere, make sure to turn off all canvases
-                DeactivateConfirmDialog();
-                ResumeGame();
-            }
-        };
+        if (args.NewState == LEVEL_STATE.PLAY) {
+            // If PLAY is called from anywhere, make sure to turn off all canvases
+            DeactivateConfirmDialog();
+            ResumeGame();
+        }
     }
 
     private void DeactivateConfirmDialog() {
@@ -123,7 +121,7 @@ public class PauseMenu : Singleton<PauseMenu> {
             case PAUSE_MENU_STATE.CONFIRMATION:
                 ActivateConfirmDialog();
                 break;
-            
+
             case PAUSE_MENU_STATE.BASE:
                 DeactivateConfirmDialog();
                 break;
