@@ -110,6 +110,10 @@ public class PauseMenu : Singleton<PauseMenu> {
             case PAUSE_MENU_STATE.BASE:
                 DeactivateConfirmDialog();
                 break;
+
+            default:
+                Debug.LogWarning("State unknown for Pause Menu");
+                break;
         }
     }
 }
