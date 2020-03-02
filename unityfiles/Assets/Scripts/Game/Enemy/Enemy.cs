@@ -60,14 +60,17 @@ public class Enemy : MonoBehaviour, IDamageable {
     // -- private -- //
 
     // -- unity -- // 
-    void Start() {
-        this.tag = "Enemy";
+    private void Awake() {
         this.enemyHealthController = this.gameObject.GetComponent<EnemyHealthController>();
         this.enemyHealthController.StartHealth = this.EnemyType.Health;
+    }
+
+    void Start() {
+        this.tag = "Enemy";
         EnemyEventArgs args = new EnemyEventArgs();
         args.Position = this.gameObject.transform.position;
         args.EnemyType = this.enemyType;
         EnemySpawnEvent?.Invoke(this, args);
     }
-    
+
 }
