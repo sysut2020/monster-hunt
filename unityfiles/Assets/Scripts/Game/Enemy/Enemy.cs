@@ -11,7 +11,7 @@ public class EnemyEventArgs : EventArgs {
 /// <summary>
 /// Describes an enemy
 /// </summary>
-[RequireComponent(typeof(HealthController))]
+[RequireComponent(typeof(EnemyHealthController))]
 public class Enemy : MonoBehaviour, IDamageable {
 
     [Tooltip("A sciptable object representing the enemy type")]
@@ -23,7 +23,7 @@ public class Enemy : MonoBehaviour, IDamageable {
     private Transform frontPoint;
 
     private bool isAttacking = false;
-    private HealthController healthController;
+    private EnemyHealthController enemyHealthController;
 
     // -- properties -- //
 
@@ -62,8 +62,8 @@ public class Enemy : MonoBehaviour, IDamageable {
     // -- unity -- // 
     void Start() {
         this.tag = "Enemy";
-        this.healthController = this.gameObject.GetComponent<HealthController>();
-        this.healthController.EntityStartHealth = this.EnemyType.Health;
+        this.enemyHealthController = this.gameObject.GetComponent<EnemyHealthController>();
+        this.enemyHealthController.EntityStartHealth = this.EnemyType.Health;
         EnemyEventArgs args = new EnemyEventArgs();
         args.Position = this.gameObject.transform.position;
         args.EnemyType = this.enemyType;
