@@ -1,11 +1,11 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.Net.Cache;
 using UnityEngine;
 
 /// <summary>
 /// controlling an entity's health. can give or take away health
-/// and keeping track of wether or not the entity is dead
+/// and keeping track of wetter or not the entity is dead
 /// </summary>
 [RequireComponent(typeof(IDamageable))]
 public class HealthController : MonoBehaviour {
