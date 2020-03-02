@@ -6,6 +6,8 @@
 /// </summary>
 [RequireComponent(typeof(IDamageable))]
 public class EnemyHealthController : HealthController {
+
+    [SerializeField]
     private EnemyHealthBarGUIController healthBarGuiController;
 
     /// <summary>
@@ -13,14 +15,10 @@ public class EnemyHealthController : HealthController {
     /// any of the Update methods is called the first time.
     /// </summary>
     void Start() {
-        health = startHealth;
-
-        healthBarGuiController = (EnemyHealthBarGUIController) FindObjectOfType(typeof(EnemyHealthBarGUIController));
-        
         if (healthBarGuiController == null) {
             throw new MissingComponentException("Missing EnemyHealthBarGUIController"); // todo this will always be thrown from the player
         }
-
+        health = startHealth;
         healthBarGuiController.SetStartHealth(startHealth);
     }
 
