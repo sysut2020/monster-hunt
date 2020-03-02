@@ -6,7 +6,6 @@
 /// </summary>
 [RequireComponent(typeof(IDamageable))]
 public class EnemyHealthController : HealthControllerBase {
-    private float health;
     private EnemyHealthBarGUIController healthBarGuiController;
 
     /// <summary>
@@ -48,22 +47,6 @@ public class EnemyHealthController : HealthControllerBase {
         if (!this.IsDead) {
             health += healing;
             healthBarGuiController.UpdateHealthBar(health);
-        }
-    }
-
-    // -- private -- // 
-
-    /// <summary>
-    /// Checks if the entity's health is below 0
-    /// if it is set the isDead to true
-    /// if not set it to false
-    /// </summary>
-    protected void CheckIfDead() {
-        if (this.health <= 0f && damageable != null) {
-            this.damageable.Dead();
-            this.IsDead = true;
-        } else {
-            this.IsDead = false;
         }
     }
 }

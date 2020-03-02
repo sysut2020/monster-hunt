@@ -6,6 +6,7 @@ public abstract class HealthControllerBase : MonoBehaviour {
     [SerializeField]
     protected float entityStartHealth = 1;
     private bool isDead = false;
+    protected float health;
 
 
     protected IDamageable damageable;
@@ -36,4 +37,18 @@ public abstract class HealthControllerBase : MonoBehaviour {
     /// </summary>
     /// <param name="healing">The amount of health given to the entity</param>
     public abstract void ApplyHealing(float healing);
+    
+    /// <summary>
+    /// Checks if the entity's health is below 0
+    /// if it is set the isDead to true
+    /// if not set it to false
+    /// </summary>
+    protected void CheckIfDead() {
+        if (this.health <= 0f && damageable != null) {
+            this.damageable.Dead();
+            this.IsDead = true;
+        } else {
+            this.IsDead = false;
+        }
+    }
 }
