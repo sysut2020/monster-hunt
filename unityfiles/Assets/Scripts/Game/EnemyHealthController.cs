@@ -21,7 +21,7 @@ public class EnemyHealthController : HealthController {
             throw new MissingComponentException("Missing EnemyHealthBarGUIController"); // todo this will always be thrown from the player
         }
 
-        healthBarGuiController.StartHealth = startHealth;
+        healthBarGuiController.SetStartHealth(startHealth);
     }
 
     // -- properties -- //

@@ -15,8 +15,8 @@ public class EnemyHealthBarGUIController : MonoBehaviour {
     private Image healthBar;
 
 
-    public float StartHealth {
-        set => startHealth = value;
+    public void SetStartHealth(float value) {
+        startHealth = value;
     }
 
     // Start is called before the first frame update
