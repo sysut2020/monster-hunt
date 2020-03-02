@@ -6,7 +6,7 @@ public class PlayerHealthUpdateArgs : EventArgs {
 	public float MaxHealth { get; set; }
 }
 
-public class PlayerHealthController : HealthController {
+public class PlayerHealthController : HealthControllerBase {
 
 	private float MaxHealth { get; set; }
 
@@ -23,6 +23,10 @@ public class PlayerHealthController : HealthController {
 		args.MaxHealth = MaxHealth;
 		PlayerHealthController.OnPlayerHealthUpdate?.Invoke(this, args);
 		this.CheckIfDead();
+	}
+
+	public override void ApplyHealing(float healing) {
+		throw new NotImplementedException();
 	}
 
 	private void Awake() {
