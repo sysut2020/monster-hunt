@@ -13,7 +13,7 @@ public class EnemyHealthController : HealthController {
     /// any of the Update methods is called the first time.
     /// </summary>
     void Start() {
-        health = entityStartHealth;
+        health = startHealth;
 
         healthBarGuiController = (EnemyHealthBarGUIController) FindObjectOfType(typeof(EnemyHealthBarGUIController));
         
@@ -21,7 +21,7 @@ public class EnemyHealthController : HealthController {
             throw new MissingComponentException("Missing EnemyHealthBarGUIController"); // todo this will always be thrown from the player
         }
 
-        healthBarGuiController.StartHealth = entityStartHealth;
+        healthBarGuiController.StartHealth = startHealth;
     }
 
     // -- properties -- //

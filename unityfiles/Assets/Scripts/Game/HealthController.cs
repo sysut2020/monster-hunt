@@ -1,19 +1,21 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public abstract class HealthController : MonoBehaviour {
+    [FormerlySerializedAs("entityStartHealth")]
     [Tooltip("the amount of health a given entity has.")]
     [SerializeField]
-    protected float entityStartHealth = 1;
+    protected float startHealth = 1;
     private bool isDead = false;
     protected float health;
 
 
     protected IDamageable damageable;
 
-    public float EntityStartHealth {
-        get { return this.entityStartHealth; }
-        set { this.entityStartHealth = value; }
+    public float StartHealth {
+        get { return this.startHealth; }
+        set { this.startHealth = value; }
     }
 
     private void Awake() {
