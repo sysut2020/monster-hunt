@@ -6,7 +6,7 @@ public class PlayerHealthUpdateArgs : EventArgs {
 	public float MaxHealth { get; set; }
 }
 
-public class PlayerHealthController : HealthControllerBase {
+public class PlayerHealthController : HealthController {
 
 	private float MaxHealth { get; set; }
 

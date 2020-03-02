@@ -5,7 +5,7 @@
 /// and keeping track of wetter or not the entity is dead
 /// </summary>
 [RequireComponent(typeof(IDamageable))]
-public class EnemyHealthController : HealthControllerBase {
+public class EnemyHealthController : HealthController {
     private EnemyHealthBarGUIController healthBarGuiController;
 
     /// <summary>

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public abstract class HealthControllerBase : MonoBehaviour {
+public abstract class HealthController : MonoBehaviour {
     [Tooltip("the amount of health a given entity has.")]
     [SerializeField]
     protected float entityStartHealth = 1;
