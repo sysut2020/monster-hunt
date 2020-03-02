@@ -18,15 +18,15 @@ public class PlayerHealthController : HealthController {
 	/// <param name="dmg"></param>
 	override public void ApplyDamage(float dmg) {
 		var args = new PlayerHealthUpdateArgs();
-		this.EntityHealth -= dmg;
-		args.CurrentHealth = EntityHealth;
+		this.EntityStartHealth -= dmg;
+		args.CurrentHealth = EntityStartHealth;
 		args.MaxHealth = MaxHealth;
 		PlayerHealthController.OnPlayerHealthUpdate?.Invoke(this, args);
 		this.CheckIfDead();
 	}
 
 	private void Awake() {
-		this.MaxHealth = this.EntityHealth;
+		this.MaxHealth = this.EntityStartHealth;
 	}
 
 }

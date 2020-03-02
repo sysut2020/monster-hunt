@@ -63,7 +63,7 @@ public class Enemy : MonoBehaviour, IDamageable {
     void Start() {
         this.tag = "Enemy";
         this.healthController = this.gameObject.GetComponent<HealthController>();
-        this.healthController.EntityHealth = this.EnemyType.Health;
+        this.healthController.EntityStartHealth = this.EnemyType.Health;
         EnemyEventArgs args = new EnemyEventArgs();
         args.Position = this.gameObject.transform.position;
         args.EnemyType = this.enemyType;
