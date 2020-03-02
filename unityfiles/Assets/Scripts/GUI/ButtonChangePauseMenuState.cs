@@ -7,6 +7,6 @@ public class ButtonChangePauseMenuState : ButtonChangeStateTrigger {
     private PAUSE_MENU_STATE pauseState;
     
     protected override void ChangeState() {
-        PauseMenu.Instance.ChangePauseMenuState(this.pauseState);
+        PauseMenuController.Instance.ChangePauseMenuState(this.pauseState);
     }
 }
