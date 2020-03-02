@@ -37,6 +37,7 @@ public class DataHandler : MonoBehaviour {
             
             var binaryFormatter = new BinaryFormatter();
             
+            // Using statement makes the file stream automatically close, when instructions are done
             using (var fileStream = File.Open(savePath, FileMode.Open)){
                 save = (Save) binaryFormatter.Deserialize(fileStream);
             }
