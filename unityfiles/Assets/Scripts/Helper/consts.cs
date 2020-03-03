@@ -37,15 +37,22 @@ public enum LEVEL_STATE {
 	GAME_OVER,
 
     /// <summary>
-    /// Start the hunting mode in game
+    /// Start the play mode in game
     /// </summary>
-    HUNTING,
+    PLAY,
     /// <summary>
     /// Reloads the current scene
     /// </summary>
     RELOAD,
     
-    GAME_WON
+    /// <summary>
+    /// Game pause
+    /// </summary>
+    PAUSE,
+
+    GAME_WON,
+    
+    START
 }
 
 /// <summary>
@@ -63,5 +70,13 @@ public enum PLAYER_ANIMATION {
     /// </summary>
 	HOLD_RAYGUN = 2,
 
+}
+
+public enum PAUSE_MENU_STATE {
+	CONFIRMATION,
+	
+	BASE,
+	
+	QUIT
 }
 
