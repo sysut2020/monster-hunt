@@ -60,13 +60,15 @@ public class CollectibleSpawner : MonoBehaviour {
             var collectible = Instantiate(item.Item.gameObject);
             collectible.name = item.ItemName;
             collectible.transform.position = position;
-        } catch (System.NullReferenceException) { }
+        } catch (System.NullReferenceException) {
+            Debug.LogWarning("Null reference when instatiating collectable");
+        }
     }
 
     private CollectibleSpawnerItem TryGetSpawnable(List<CollectibleSpawnerItem> spawnerItems, int totalSpawnWeight) {
         int weightedSpawnChance = Random.Range(0, totalSpawnWeight);
         return spawnerItems.Find(collectableItem => {
-            if (weightedSpawnChance <= collectableItem.SpawnChance) return true;
+            if (weightedSpawnChance <= collectableItem.SpawnChance) { return true; }
             weightedSpawnChance -= collectableItem.SpawnChance;
             return false;
         });
