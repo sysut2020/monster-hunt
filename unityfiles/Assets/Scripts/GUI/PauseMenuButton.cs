@@ -4,7 +4,8 @@ using UnityEngine.UI;
 
 public class PauseMenuButton : ChangeEventButton {
     [SerializeField]
-    private PAUSE_MENU_EVENTS eventToFire;
+    private PAUSE_MENU_STATE eventToFire;
+
     public static event EventHandler<ButtonClickEventArgs> buttonEventHandler;
 
 
