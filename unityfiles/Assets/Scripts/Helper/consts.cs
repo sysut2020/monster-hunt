@@ -75,6 +75,8 @@ public enum PLAYER_ANIMATION {
 public enum PAUSE_MENU_STATE {
 	CONFIRMATION,
 	
-	BASE
+	BASE,
+	
+	QUIT
 }
 
