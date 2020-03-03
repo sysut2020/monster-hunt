@@ -36,7 +36,10 @@ public class EnemyHealthBarGUIController : MonoBehaviour {
     /// </summary>
     /// <param name="health">how much the health the enemy currently has</param>
     public void UpdateHealthBar(float health) {
-        if (health <= 0) return; // if health is below 0 there is no point in updating health bar
+        if (health <= 0) {
+            return; // if health is below 0 there is no point in updating health bar
+        } 
+
         if (!healthBarBackground.activeSelf) {
             // if the health bar is not shown, show it.
             DisplayHealthBar();
