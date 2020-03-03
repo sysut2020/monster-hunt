@@ -18,8 +18,11 @@ public class LevelDetails : ScriptableObject {
     [Tooltip ("number of letters to be spawned during game play")]
     [SerializeField]
     private int numberOfLetters;
-
-    public int Time { get => time;}
+    
+    /// <summary>
+    /// Returns the level time in milliseconds
+    /// </summary>
+    public int Time { get => time*1000;}
     public int NumberOfEnemies { get => numberOfEnemies;}
     public int NumberOfLetters { get => numberOfLetters;}
 }
