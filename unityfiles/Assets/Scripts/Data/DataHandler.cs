@@ -7,21 +7,21 @@ using UnityEngine;
 
 [RequireComponent(typeof(PlayerInventory))]
 public class DataHandler : MonoBehaviour {
-
+    
     private PlayerInventory playerInventory;
     private string savePath;
 
+    private DataHandler instance = null;
+
+    private DataHandler() { }
+    
     private void Start() {
         this.playerInventory = GetComponent<PlayerInventory>();
         savePath = Application.persistentDataPath + "/gamesave.save";
     }
 
-    public void SaveData() {
-        var save = new Save() {
-            SavedMoney = playerInventory.Money,
-            SavedCollectedLetters = playerInventory.CollectedLetters,
-            SavedActivePowerUps = playerInventory.ActivePickups
-        };
+    public void SaveData(Save save) {
+        
         
         var binaryFormatter = new BinaryFormatter();
         
@@ -31,9 +31,10 @@ public class DataHandler : MonoBehaviour {
         }
     }
 
-    public void LoadData() {
+    public Save LoadData() {
+        Save save = null;
         if (File.Exists(savePath)){
-            Save save;
+            
             
             var binaryFormatter = new BinaryFormatter();
             
@@ -41,13 +42,12 @@ public class DataHandler : MonoBehaviour {
             using (var fileStream = File.Open(savePath, FileMode.Open)){
                 save = (Save) binaryFormatter.Deserialize(fileStream);
             }
-
-            playerInventory.Money = save.SavedMoney;
-            playerInventory.CollectedLetters = save.SavedCollectedLetters;
-            playerInventory.ActivePickups = save.SavedActivePowerUps;
+            
         }
         else {
             Debug.LogWarning("Save file does not exist");
         }
+
+        return save;
     }
 }

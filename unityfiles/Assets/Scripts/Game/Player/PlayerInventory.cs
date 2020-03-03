@@ -30,6 +30,13 @@ public class PlayerInventory {
     private List<IEffectPowerUp> activePickups;
 
     // -- properties -- //
+    public PlayerInventory() {
+        SubscribeToCollectibleEvents();
+        this.money = 0;
+        this.collectedLetters = new List<string>();
+        this.activePickups = new List<IEffectPowerUp>();
+    }
+
     public int Money {
         get => money;
         internal set => this.money = value;
@@ -45,12 +52,13 @@ public class PlayerInventory {
         internal set => this.activePickups = value;
     }
 
-    private void Start() {
+    private void SubscribeToCollectibleEvents() {
         CoinCollectable.OnCoinCollected += OnCoinCollected;
         LetterCollectable.OnLetterCollected += OnLetterCollected;
         PowerupCollectable.OnPowerupCollected += OnEffectPickup;
     }
-
+    
+    // todo Trygve link up to network
     private void OnDestroy() {
         CoinCollectable.OnCoinCollected -= OnCoinCollected;
         LetterCollectable.OnLetterCollected -= OnLetterCollected;

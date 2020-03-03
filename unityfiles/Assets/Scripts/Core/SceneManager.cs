@@ -1,4 +1,6 @@
 ﻿using System;
+using UnityEngine;
+using Object = System.Object;
 
 /// <summary>
 /// The scene manager is responsible for loading scenes.
@@ -13,7 +15,7 @@ public sealed class SceneManager {
     private static readonly object padlock = new Object();
 
     private DataHandler dataHandler;
-
+    
     /// <summary>
     /// Check if instance of SceneManager exist, if it does, return it.
     /// Else lock the resource and create a new instance of it and return it.
@@ -33,7 +35,9 @@ public sealed class SceneManager {
         private set { }
     }
 
-    private SceneManager() { }
+    private SceneManager() {
+        
+    }
 
     /// <summary>
     /// Loads a new scene by its scene name
@@ -41,6 +45,8 @@ public sealed class SceneManager {
     /// </summary>
     /// <param name="sceneName">the name of the scene</param>
     public void ChangeScene(string sceneName) {
+        
+        
         if (sceneName == null) {
             throw new ArgumentNullException("Scene name can not be null");
         }

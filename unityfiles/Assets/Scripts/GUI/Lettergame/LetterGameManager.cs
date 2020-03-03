@@ -213,8 +213,8 @@ public class LetterGameManager : Singleton<LetterGameManager>
     /// Fills in the players letters
     /// </summary>
     /// <param name="args">the event args</param>
-    private void FillPlayerLetters(LetterGameStartEventArgs args){
-        Dictionary<string, int> playerDataDict = new Dictionary<string, int> {{"A",5},{"B",7},{"C",4}};// when communication from GM is in use: args.CurrentLetters; 
+    private void FillPlayerLetters(Dictionary<string, int> playerDataDict){
+        //Dictionary<string, int> playerDataDict = new Dictionary<string, int> {{"A",5},{"B",7},{"C",4}};// when communication from GM is in use: args.CurrentLetters; 
         foreach (string key in playerDataDict.Keys){
            if(playerLetters.Keys.Contains(key)){
                for (int i = 0; i < playerDataDict[key]; i++){
@@ -334,7 +334,7 @@ public class LetterGameManager : Singleton<LetterGameManager>
         this.tileMap = new LetterGameLetter[this.bSizeX,this.bSizeY];
         this.playerLetters = new Dictionary<String, List<LetterGameLetter>>();
         MakePlayerLetter();
-        FillPlayerLetters(null);
+        FillPlayerLetters(GameManager.Instance.PlayerPersistentStorage.AvailableLetters);
         
         this.MakeBoardTiles();
         this.MakeLetterTile();
