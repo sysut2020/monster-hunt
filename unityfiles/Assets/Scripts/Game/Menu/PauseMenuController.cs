@@ -3,6 +3,14 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
+/// The event data for the pause menu changed events 
+/// </summary>
+public class PauseMenuChangeEventArgs : EventArgs {
+    public LEVEL_STATE NewLevelState { get; set; }
+}
+
+
+/// <summary>
 /// Handler for Pause menu. Turns on and of the main pause menu and the quit confirmation when needed.
 /// Can tells the LevelManager when to switch to Pause/Play state.
 /// </summary>
@@ -66,12 +74,16 @@ public class PauseMenuController : Singleton<PauseMenuController> {
     }
 
     private void ResumeGame() {
-        LevelManager.Instance.ChangeLevelState(LEVEL_STATE.PLAY);
+        PauseMenuChangeEventArgs args = new PauseMenuChangeEventArgs();
+        args.NewLevelState = LEVEL_STATE.PLAY;
+        PauseMenuChangeEvent?.Invoke(this, args);
         DeactivateMenu();
     }
 
     private void PauseGame() {
-        LevelManager.Instance.ChangeLevelState(LEVEL_STATE.PAUSE);
+        PauseMenuChangeEventArgs args = new PauseMenuChangeEventArgs();
+        args.NewLevelState = LEVEL_STATE.PAUSE;
+        PauseMenuChangeEvent?.Invoke(this, args);
         ActivateMenu();
     }
 
@@ -116,4 +128,9 @@ public class PauseMenuController : Singleton<PauseMenuController> {
                 break;
         }
     }
+    
+    /// <summary>
+    /// This event tells the listeners the level state should change
+    /// </summary>
+    public static event EventHandler<PauseMenuChangeEventArgs> PauseMenuChangeEvent;
 }

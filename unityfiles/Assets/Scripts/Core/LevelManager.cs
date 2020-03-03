@@ -60,6 +60,7 @@ public class LevelManager : Singleton<LevelManager> {
     private void SubscribeToEvents() {
         Player.PlayerKilledEvent += CallbackPlayerKilledEvent;
         Enemy.EnemyKilledEvent += CallbackEnemyKilledEvent;
+        PauseMenuController.PauseMenuChangeEvent += CallbackChangeLevelState;
     }
 
     /// <summary>
@@ -68,6 +69,11 @@ public class LevelManager : Singleton<LevelManager> {
     private void UnsubscribeFromEvents() {
         Player.PlayerKilledEvent -= CallbackPlayerKilledEvent;
         Enemy.EnemyKilledEvent -= CallbackEnemyKilledEvent;
+        PauseMenuController.PauseMenuChangeEvent -= CallbackChangeLevelState;
+    }
+
+    private void CallbackChangeLevelState(object _, PauseMenuChangeEventArgs args) {
+        ChangeLevelState(args.NewLevelState);
     }
 
     /// <summary>
