@@ -21,6 +21,7 @@ class PlayThroughData {
 public class LevelManager : Singleton<LevelManager> {
     [SerializeField]
     private GameObject gameOverCanvas;
+
     [SerializeField]
     private GameObject gameWonCanvas;
 
@@ -32,6 +33,8 @@ public class LevelManager : Singleton<LevelManager> {
     private LEVEL_STATE currentState; // may need default here in that case find out the starting state
 
     private PlayThroughData playThroughData;
+    private static readonly int PAUSE = 0;
+    private static readonly int PLAY = 1;
 
     // -- properties -- //
 
@@ -57,6 +60,7 @@ public class LevelManager : Singleton<LevelManager> {
     private void SubscribeToEvents() {
         Player.PlayerKilledEvent += CallbackPlayerKilledEvent;
         Enemy.EnemyKilledEvent += CallbackEnemyKilledEvent;
+        PauseMenuController.PauseMenuChangeEvent += CallbackChangeLevelState;
     }
 
     /// <summary>
@@ -65,6 +69,11 @@ public class LevelManager : Singleton<LevelManager> {
     private void UnsubscribeFromEvents() {
         Player.PlayerKilledEvent -= CallbackPlayerKilledEvent;
         Enemy.EnemyKilledEvent -= CallbackEnemyKilledEvent;
+        PauseMenuController.PauseMenuChangeEvent -= CallbackChangeLevelState;
+    }
+
+    private void CallbackChangeLevelState(object _, PauseMenuChangeEventArgs args) {
+        ChangeLevelState(args.NewLevelState);
     }
 
     /// <summary>
@@ -103,31 +112,39 @@ public class LevelManager : Singleton<LevelManager> {
     /// </summary>
     /// <param name="NewState">The new level state</param>
     private void LevelStateChange(LEVEL_STATE NewState) {
-
         this.currentState = NewState;
         LevelStateChangeEventArgs args = new LevelStateChangeEventArgs();
         args.NewState = NewState;
         switch (NewState) {
             /// The game is over show game over screen
             case LEVEL_STATE.GAME_OVER:
-                Time.timeScale = 0;
+                Time.timeScale = PAUSE;
                 gameOverCanvas.SetActive(true);
                 break;
             case LEVEL_STATE.GAME_WON:
-                Time.timeScale = 0;
+                Time.timeScale = PAUSE;
                 gameWonCanvas.SetActive(true);
                 break;
 
-                /// Start the main mode spawn the player and start the level
-            case LEVEL_STATE.HUNTING:
-                InitLevel();
+            case LEVEL_STATE.PAUSE:
+                Time.timeScale = PAUSE;
                 break;
-                /// Exit the game and go to main menu
+            
+            case LEVEL_STATE.START:
+                InitLevel();
+                ChangeLevelState(LEVEL_STATE.PLAY);
+                break;
+                
+            /// Start the main mode spawn the player and start the level
+            case LEVEL_STATE.PLAY:
+                Time.timeScale = PLAY;
+                break;
+            /// Exit the game and go to main menu
             case LEVEL_STATE.EXIT:
                 break;
 
             case LEVEL_STATE.RELOAD:
-                Time.timeScale = 1;
+                Time.timeScale = PLAY;
                 CleanUpEvent.Invoke(this, EventArgs.Empty);
                 SceneManager.Instance.RestartCurrentScene();
                 break;
@@ -160,7 +177,6 @@ public class LevelManager : Singleton<LevelManager> {
 
     private void startLevelTime() {
         this.levelTimer.Set(LEVEL_TIMER_ID, this.levelDetails.Time);
-
     }
 
     // -- unity -- //
@@ -170,10 +186,10 @@ public class LevelManager : Singleton<LevelManager> {
         LEVEL_TIMER_ID = this.levelTimer.RollingUID;
         this.startLevelTime();
 
-        this.LevelStateChange(LEVEL_STATE.HUNTING);
+        this.LevelStateChange(LEVEL_STATE.START);
     }
-    private void Update() {
 
+    private void Update() {
         if (this.levelTimer.Done(LEVEL_TIMER_ID)) {
             this.LevelStateChange(LEVEL_STATE.EXIT);
         }
@@ -190,5 +206,4 @@ public class LevelManager : Singleton<LevelManager> {
     private void OnDestroy() {
         UnsubscribeFromEvents();
     }
-
 }

@@ -12,7 +12,6 @@ public class GameStateChangeEventArgs : EventArgs {
 /// The manager for the whole game main task is to start and stop scenes and levels
 /// </summary>
 public class GameManager : Singleton<GameManager> {
-
     private const int MAIN_MENU_SCENE_INDEX = 0;
     private const int TEST_LEVEL_SCENE_INDEX = 1;
 
@@ -35,7 +34,6 @@ public class GameManager : Singleton<GameManager> {
     private void SubscribeToEvents() {
         // todo subscribe to OnPlayerDead, OnTimeOut, OnAllEnemiesDead
         LevelManager.LevelStateChangeEvent += c_LevelStateChangeEvent;
-
     }
 
     /// <summary>
@@ -45,11 +43,10 @@ public class GameManager : Singleton<GameManager> {
         // todo unsubscribe from OnPlayerDead, OnTimeOut, OnAllEnemiesDead
         // maybe that this also should be done on disable
         LevelManager.LevelStateChangeEvent -= c_LevelStateChangeEvent;
-
     }
 
     /// <summary>
-    /// This function is fiered when the LevelStateChangeEvent is invoked
+    /// This function is fired when the LevelStateChangeEvent is invoked
     /// This function will trigger on the following level states:
     /// 
     /// STATE.EXIT: 
@@ -70,7 +67,6 @@ public class GameManager : Singleton<GameManager> {
     /// </summary>
     /// <param name="NewState">The new game state</param>
     public void GameStateChange(GAME_STATE NewState) {
-
         this.currentState = NewState;
         GameStateChangeEventArgs args = new GameStateChangeEventArgs();
         args.NewState = NewState;
@@ -94,10 +90,8 @@ public class GameManager : Singleton<GameManager> {
         }
 
         GameStateChangeEvent?.Invoke(this, args);
-
     }
 
-    //-- Events --//
 
     // -- unity -- //
 
@@ -108,5 +102,4 @@ public class GameManager : Singleton<GameManager> {
     private void OnDestroy() {
         UnsubscribeFromEvents();
     }
-
 }
