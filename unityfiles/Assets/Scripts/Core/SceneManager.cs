@@ -12,6 +12,8 @@ public sealed class SceneManager {
     // Lock for thread safety
     private static readonly object padlock = new Object();
 
+    private DataHandler dataHandler;
+
     /// <summary>
     /// Check if instance of SceneManager exist, if it does, return it.
     /// Else lock the resource and create a new instance of it and return it.
@@ -51,6 +53,8 @@ public sealed class SceneManager {
     /// </summary>
     /// <param name="index">the index of the scene</param>
     public void ChangeScene(int index) {
+        dataHandler.SaveData();
+        
         if (index < 0) {
             throw new ArgumentException("Scene index must be >= 0");
         }

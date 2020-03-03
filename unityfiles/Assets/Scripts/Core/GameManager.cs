@@ -15,6 +15,7 @@ public class GameManager : Singleton<GameManager> {
 
     private const int MAIN_MENU_SCENE_INDEX = 0;
     private const int TEST_LEVEL_SCENE_INDEX = 1;
+    private const int LETTER_GAME_SCENE_INDEX = 2;
 
     private GAME_STATE currentState;
 
@@ -83,13 +84,17 @@ public class GameManager : Singleton<GameManager> {
             case GAME_STATE.TEST_LEVEL:
                 SceneManager.Instance.ChangeScene(TEST_LEVEL_SCENE_INDEX);
                 break;
+            
+            case GAME_STATE.LETTER_LEVEL:
+                SceneManager.Instance.ChangeScene(LETTER_GAME_SCENE_INDEX);
+                break;
 
             case GAME_STATE.EXIT:
                 Application.Quit();
                 break;
 
             default:
-                Debug.Log("🌮🌮🌮🌮  UNKNOWN GAME STATE  🌮🌮🌮🌮");
+                Debug.LogError("🌮🌮🌮🌮  UNKNOWN GAME STATE  🌮🌮🌮🌮");
                 break;
         }
 

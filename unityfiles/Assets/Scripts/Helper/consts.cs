@@ -19,6 +19,11 @@ public enum GAME_STATE {
     /// Go to the test level
     /// </summary>
 	TEST_LEVEL,
+    
+    /// <summary>
+    /// Go to the letter level
+    /// </summary>
+    LETTER_LEVEL
 }
 
 /// <summary>
