@@ -9,7 +9,7 @@ public class ButtonClickEventArgs: EventArgs{
 /// <summary>
 /// the abstract class containing for a button that fires an event
 /// The implementation of this abstract class has to define the
-/// get feald for the Event enumerator and the event handler to be invoked
+/// get field for the Event enumerator and the event handler to be invoked
 /// </summary>
 public abstract class ChangeEventButton : MonoBehaviour {
     /// <summary>
