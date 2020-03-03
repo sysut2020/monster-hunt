@@ -17,7 +17,7 @@ public class Player : MonoBehaviour, IDamageable {
     [SerializeField]
     private PlayerHealthController playerHealthController;
 
-    private PlayerInventory playerInventory = new PlayerInventory();
+    private PlayerInventory playerInventory;
 
     private Animator animator;
 
@@ -89,9 +89,9 @@ public class Player : MonoBehaviour, IDamageable {
     // -- events -- //
 
     public static event EventHandler<PlayerEventArgs> PlayerKilledEvent;
-    private void SubscribeToEvents() {
+    public static event EventHandler<PlayerDestroyedEventArgs> PlayerDestroyedEvent;
+    private void SubscribeToEvents() { 
         PlayerWeaponController.WeaponChangedEvent += CallbackWeaponChangedEvent;
-;
     }
 
     private void UnsubscribeFromEvents() {
@@ -134,6 +134,8 @@ public class Player : MonoBehaviour, IDamageable {
     }
 
     private void Awake() {
+        playerInventory = new PlayerInventory();
+        
         if (!this.TryGetComponent<Animator>(out this.animator)) {
             Debug.LogError("PLAYER ANIMATOR NOT FOUND");
         }
@@ -141,6 +143,9 @@ public class Player : MonoBehaviour, IDamageable {
     }
 
     void OnDestroy(){
+        PlayerDestroyedEventArgs args = new PlayerDestroyedEventArgs();
+        args.PlayerInventoryArgs = this.playerInventory;
+        PlayerDestroyedEvent?.Invoke(this, args);
         this.UnsubscribeFromEvents();
     }
 

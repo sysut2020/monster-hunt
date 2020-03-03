@@ -204,6 +204,7 @@ public class LevelManager : Singleton<LevelManager> {
     }
 
     private void OnDestroy() {
+        CleanUpScene()
         UnsubscribeFromEvents();
     }
 }

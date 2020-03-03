@@ -94,7 +94,7 @@ public abstract class Dragable : MonoBehaviour, IBeginDragHandler, IDragHandler,
 
     // -- unity -- //
     // Start is called before the first frame update
-    void Awake(){
+    void Start(){
         GameObject newIcon = GameObject.Instantiate(DraggingIcon);
         newIcon.name = "DragIcon";
         newIcon.transform.SetParent(DraggingIcon.transform.parent);
