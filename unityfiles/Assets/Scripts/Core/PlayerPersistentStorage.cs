@@ -8,9 +8,11 @@ public class PlayerDestroyedEventArgs : EventArgs {
     public PlayerInventory PlayerInventoryArgs { get; set; }
 }
 
+/// <summary>
+/// Used to get persistent information from the players inventory
+/// </summary>
 public class PlayerPersistentStorage {
     
-
     private Dictionary<string, int> availableLetters;
 
     public PlayerPersistentStorage() {
@@ -33,19 +35,23 @@ public class PlayerPersistentStorage {
         availableLetters = this.formatPlayerInventoryLetter(args.PlayerInventoryArgs.CollectedLetters);
         
     }
-
+    
+    /// <summary>
+    /// Formats the letters from the players inventory, to a dictionary.
+    /// </summary>
+    /// <param name="lettersToFormat">The letters we want to format</param>
+    /// <returns>Dictionary of letters</returns>
     private Dictionary<string, int> formatPlayerInventoryLetter(List<string> lettersToFormat) {
-        Dictionary<string, int> ret  = new Dictionary<string, int>();
+        Dictionary<string, int> formatedDictionary  = new Dictionary<string, int>();
         foreach (string letter in lettersToFormat){
-            if (ret.Keys.Contains(letter)){
-                ret[letter] += 1;
+            if (formatedDictionary.Keys.Contains(letter)){
+                formatedDictionary[letter] += 1;
             }
             else{
-                ret.Add(letter, 1);
+                formatedDictionary.Add(letter, 1);
             }
         }
-
-        return ret;
+        return formatedDictionary;
     }
     
     
