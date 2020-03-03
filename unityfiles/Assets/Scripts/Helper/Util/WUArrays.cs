@@ -207,14 +207,13 @@ static class WUArrays
         int xSize = ar.GetLength(0);
         int ySize = ar.GetLength(1);
 
-        PrintMultiDim(ar);
 
         if (x >= xSize || y >= ySize)
         {
             // if the targetet pos is outside the array throw an exception
             throw new IndexOutOfRangeException("Target possision out of range");
         } 
-        else if (default(T).Equals(ar[x,y]))
+        else if (EqualityComparer<T>.Default.Equals(ar[x,y],default(T)))
         {
             // if the target pos is null return null
             return null;
@@ -244,7 +243,7 @@ static class WUArrays
         // find upper bound 
         for (int i = startIndex; i <= upperBound; i++)
         {
-            if (default(T).Equals(valuesList[i]))
+            if (EqualityComparer<T>.Default.Equals(valuesList[i],default(T)))
             {
                 upperBound = i - 1;
                 break;
@@ -254,7 +253,7 @@ static class WUArrays
         // find lower bound 
         for (int i = startIndex; i >= lowerBound; i--)
         {
-            if (default(T).Equals(valuesList[i]))
+            if (EqualityComparer<T>.Default.Equals(valuesList[i],default(T)))
             {
                 lowerBound = i + 1;
                 break;
@@ -290,6 +289,7 @@ static class WUArrays
             p += "\n";
         
         }
+        Debug.Log(p);
     }
 
 
@@ -303,7 +303,7 @@ static class WUArrays
     /// <returns>the found object if found else the default val for the type T</returns>
     public static T MultiDimFind<T>(T[,] ar, T searchObj){
         T ret = default(T);
-        if (default(T).Equals(ar) || default(T).Equals(searchObj)){return ret;}
+        if (ar == null || EqualityComparer<T>.Default.Equals(searchObj,default(T))){return ret;}
 
         for (int xDim = ar.GetLowerBound(0); xDim < ar.GetUpperBound(0); xDim++)
         {
@@ -313,7 +313,7 @@ static class WUArrays
                     break;
                 }
             }
-            if (!ret.Equals(default(T))){break;}
+            if (!EqualityComparer<T>.Default.Equals(ret,default(T))){break;}
         }
 
         return ret;
