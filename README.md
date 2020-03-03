@@ -6,5 +6,5 @@
 - - -
 
 Projects dependencies:
--  Unity 
--  Git LFS
+  - Unity 
+  - Git LFS
