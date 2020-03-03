@@ -67,6 +67,12 @@ public class CollectibleSpawner : MonoBehaviour {
 
     private CollectibleSpawnerItem TryGetSpawnable(List<CollectibleSpawnerItem> spawnerItems, int totalSpawnWeight) {
         int weightedSpawnChance = Random.Range(0, totalSpawnWeight);
+
+        // Loops over the spawnerItems list and returns the first element from the
+        // spawnerItems list that satisfies the if condition. Else it will just continue
+        // until the list is empty. On each step where there is no match, also reduce the 
+        // weightedSpawnChance, in hope to catch an item that satisfies the if condition.
+        // https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1.find?view=netframework-4.8
         return spawnerItems.Find(collectableItem => {
             if (weightedSpawnChance <= collectableItem.SpawnChance) { return true; }
             weightedSpawnChance -= collectableItem.SpawnChance;
