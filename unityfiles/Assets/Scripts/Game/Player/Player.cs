@@ -145,7 +145,6 @@ public class Player : MonoBehaviour, IDamageable {
     void OnDestroy(){
         PlayerDestroyedEventArgs args = new PlayerDestroyedEventArgs();
         args.PlayerInventoryArgs = this.playerInventory;
-        print(playerInventory.CollectedLetters);
         PlayerDestroyedEvent?.Invoke(this, args);
         this.UnsubscribeFromEvents();
     }
