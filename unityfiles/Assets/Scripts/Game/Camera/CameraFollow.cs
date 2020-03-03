@@ -76,6 +76,7 @@ public class CameraFollow : MonoBehaviour {
 	/// Draws the left and right clamp in editor window, when the 
 	/// object is selected.
 	/// </summary>
+#if UNITY_EDITOR
 	private void OnDrawGizmosSelected() {
 		float lineTop = 10 + this.transform.position.y;
 		float lineBottom = -10 + this.transform.position.y;
@@ -94,5 +95,5 @@ public class CameraFollow : MonoBehaviour {
 		Handles.Label(new Vector3(this.leftEdgeClamp, this.transform.position.y, 0), "LEFT");
 
 	}
-
+#endif
 }
