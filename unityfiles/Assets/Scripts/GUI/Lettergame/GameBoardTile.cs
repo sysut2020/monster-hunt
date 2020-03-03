@@ -110,7 +110,7 @@ public class GameBoardTile : Dragable
     }
     // -- unity -- //
 
-    private void Start() {
+    private void Awake() {
         TileText = this.GetComponentInChildren<Text>();
     }
 }

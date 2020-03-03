@@ -21,7 +21,16 @@ public class LetterTile : Dragable
     private LetterGameLetter holdingLetter;
 
     // -- properties -- //
-    public string LetterTileLetter { get => letterTileLetter; set => letterTileLetter = value; }
+    public string LetterTileLetter {
+        get {
+            return letterTileLetter;
+            } 
+        set{
+            this.letterTileLetter = value;
+            this.IconLetter = value;
+            this.DisplayLetter.text = value;
+        }
+    }
 
 
 
@@ -73,9 +82,7 @@ public class LetterTile : Dragable
     // -- unity -- //
 
     // Start is called before the first frame update
-    void Start(){
-        this.IconLetter = this.LetterTileLetter;
-        this.DisplayLetter.text = this.letterTileLetter;
+    void Awake(){
         LetterGameManager.LetterCountCangedEvent += CallbackLetterCountChangedEvent;
         
     }
