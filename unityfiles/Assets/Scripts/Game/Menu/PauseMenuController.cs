@@ -9,7 +9,6 @@ public class PauseMenuChangeEventArgs : EventArgs {
     public LEVEL_STATE NewLevelState { get; set; }
 }
 
-
 /// <summary>
 /// Handler for Pause menu. Turns on and of the main pause menu and the quit confirmation when needed.
 /// Can tells the LevelManager when to switch to Pause/Play state.
@@ -29,7 +28,14 @@ public class PauseMenuController : Singleton<PauseMenuController> {
     private void Awake() {
         CheckForMissingComponents();
 
+        SubscribeToEvents();
         DeactivateMenu();
+    }
+
+    private void CallbackChangePauseMenuState(object _, ButtonClickEventArgs args) {
+        if (args.ButtonEvent.GetType() == typeof(PAUSE_MENU_STATE)) {
+            ChangePauseMenuState((PAUSE_MENU_STATE) args.ButtonEvent);
+        }
     }
 
     private void Start() {
@@ -63,6 +69,15 @@ public class PauseMenuController : Singleton<PauseMenuController> {
 
     private void OnDestroy() {
         continueButton.onClick.RemoveAllListeners();
+        UnsubscribeFromEvents();
+    }
+
+    private void SubscribeToEvents() {
+        PauseMenuButton.buttonEventHandler += CallbackChangePauseMenuState;
+    }
+
+    private void UnsubscribeFromEvents() {
+        PauseMenuButton.buttonEventHandler -= CallbackChangePauseMenuState;
     }
 
     private void DeactivateConfirmDialog() {
@@ -123,12 +138,19 @@ public class PauseMenuController : Singleton<PauseMenuController> {
                 DeactivateConfirmDialog();
                 break;
 
+            case PAUSE_MENU_STATE.QUIT:
+                // Sending quit signal to listeners
+                PauseMenuChangeEventArgs args = new PauseMenuChangeEventArgs();
+                args.NewLevelState = LEVEL_STATE.EXIT;
+                PauseMenuChangeEvent?.Invoke(this, args);
+                break;
+
             default:
                 Debug.LogWarning("State unknown for Pause Menu");
                 break;
         }
     }
-    
+
     /// <summary>
     /// This event tells the listeners the level state should change
     /// </summary>
