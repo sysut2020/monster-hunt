@@ -5,7 +5,6 @@ using UnityEngine.UI;
 /// Takes care of displaying and updating the enemy's health bar
 /// </summary>
 public class EnemyHealthBarGUIController : MonoBehaviour {
-    
     [SerializeField]
     private GameObject healthBarBackground;
 
@@ -37,9 +36,12 @@ public class EnemyHealthBarGUIController : MonoBehaviour {
     /// </summary>
     /// <param name="health">how much the health the enemy currently has</param>
     public void UpdateHealthBar(float health) {
-        if (!healthBarBackground.activeSelf) { // if the health bar is not shown, show it.
+        if (health <= 0) return; // if health is below 0 there is no point in updating health bar
+        if (!healthBarBackground.activeSelf) {
+            // if the health bar is not shown, show it.
             DisplayHealthBar();
         }
+
         healthBar.fillAmount = health / startHealth;
     }
 }
