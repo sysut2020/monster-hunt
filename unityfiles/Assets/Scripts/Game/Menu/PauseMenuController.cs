@@ -106,7 +106,7 @@ public class PauseMenuController : Singleton<PauseMenuController> {
         pauseMenuCanvas.SetActive(true);
     }
 
-    public void DeactivateMenu() {
+    private void DeactivateMenu() {
         pauseMenuCanvas.SetActive(false);
     }
 
