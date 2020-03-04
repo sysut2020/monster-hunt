@@ -94,7 +94,6 @@ public class EnemyBehaviour : MonoBehaviour {
 	}
 
 	private void Move(float speed) {
-		Debug.Log(speed);
 		this.EnemyTransform.Translate(Vector3.right * Time.deltaTime * speed);
 	}
 
