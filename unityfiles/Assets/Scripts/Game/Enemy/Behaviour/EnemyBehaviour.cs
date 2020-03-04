@@ -102,6 +102,9 @@ public class EnemyBehaviour : MonoBehaviour {
 		if (IsPlayerInAttackReach(target) && AttackTimer < Time.time) {
 			this.SetState(BehaviourState.ATTACK);
 			AttackTimer = TIME_BETWEEN_ATTACKS + Time.time;
+			this.Enemy.IsAttacking = true;
+		} else if (AttackTimer < Time.time && this.Enemy.IsAttacking) {
+			this.Enemy.IsAttacking = false;
 		}
 	}
 
