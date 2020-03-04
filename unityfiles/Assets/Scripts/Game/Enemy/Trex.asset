@@ -14,6 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 15
   speed: 9
-  letterDropChance: 6
-  coinDropChance: 2
-  powerUpDropChance: 1
+  collectibleItems:
+  - itemName: Coin
+    spawnChance: 20
+    item: {fileID: 1216276751, guid: 1c0ee2a1e85c5e9ddb424342246bc1a8, type: 3}
+  - itemName: Letter
+    spawnChance: 80
+    item: {fileID: 2709097042343801514, guid: 138075cffcb7d450db60abcd09815133, type: 3}
