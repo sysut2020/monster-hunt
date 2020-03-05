@@ -109,7 +109,7 @@ public class EnemyBehaviour : MonoBehaviour {
 	}
 
 	private void SetAttackIfTargetIsInReach(Transform target) {
-		if (target == null) return;
+		if (target == null) { return; }
 		if (IsPlayerInAttackReach(target) && AttackTimer < Time.time) {
 			this.SetState(BehaviourState.ATTACK);
 			AttackTimer = TIME_BETWEEN_ATTACKS + Time.time;
@@ -189,7 +189,7 @@ public class EnemyBehaviour : MonoBehaviour {
 	/// <summary>
 	/// Prevents enemies to fall of the edge when patrolling
 	/// </summary>
-	private void OnTriggerExit2D(Collider2D other) {
+	private void OnTriggerExit2D(Collider2D _) {
 		if (this.CurrentState == BehaviourState.PATROL) {
 			Idle();
 		}
