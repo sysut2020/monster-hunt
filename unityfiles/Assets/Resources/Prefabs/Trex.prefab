@@ -315,8 +315,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyType: {fileID: 11400000, guid: 9de46413ae465494a8b3db821d73fb32, type: 2}
   frontPoint: {fileID: 2855561317469738987}
-  moveSpeed: 1
-  patrolTime: 1
 --- !u!114 &6071819141442889178
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1563,6 +1561,7 @@ GameObject:
   - component: {fileID: 7172128625851911693}
   - component: {fileID: 1491832022208310850}
   - component: {fileID: 2106684123}
+  - component: {fileID: 2106684124}
   m_Layer: 0
   m_Name: trex
   m_TagString: Untagged
@@ -1628,6 +1627,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   visualizeVision: 0
+--- !u!61 &2106684124
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5958666549321440739}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 22.12, y: -11.29}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &5974050445283610778
 GameObject:
   m_ObjectHideFlags: 0
