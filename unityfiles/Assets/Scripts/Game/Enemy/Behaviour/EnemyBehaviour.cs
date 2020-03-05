@@ -110,13 +110,13 @@ public class EnemyBehaviour : MonoBehaviour {
 
 	private void SetChaseIfCanSeeTarget(Transform target) {
 		if (target != null) {
-			this.SetState(BehaviourState.CHASE);
+			Chase();
 		}
 	}
 
 	private void SetIdleIfLostSightOfTarget(Transform target) {
 		if (target == null) {
-			this.SetState(BehaviourState.IDLE);
+			Idle();
 		}
 	}
 
@@ -152,7 +152,7 @@ public class EnemyBehaviour : MonoBehaviour {
 	/// <summary>
 	/// Casts a 2D ray from the vision point and in the direction we are facing
 	/// and checks if we hit a target. if the correct target is hit,
-    /// return the instance, else null.
+	/// return the instance, else null.
 	/// </summary>
 	/// <returns>target or null if not found</returns>
 	private Transform TryGetTarget() {
@@ -176,7 +176,7 @@ public class EnemyBehaviour : MonoBehaviour {
 	}
 
 	/// <summary>
-    /// Prevents enemies to fall of the edge when patrolling
+	/// Prevents enemies to fall of the edge when patrolling
 	/// </summary>
 	private void OnTriggerExit2D(Collider2D other) {
 		if (this.CurrentState == BehaviourState.PATROL) {
@@ -203,6 +203,7 @@ public class EnemyBehaviour : MonoBehaviour {
 
 	private void Chase() {
 		this.Animator.SetBool(this.WALK_TRIGGER_NAME, true);
+		this.SetState(BehaviourState.CHASE);
 	}
 
 	private void Attack() {
