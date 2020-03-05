@@ -90,6 +90,9 @@ public class EnemyBehaviour : MonoBehaviour {
 			case BehaviourState.ATTACK:
 				this.Attack();
 				break;
+			default:
+				Idle();
+				break;
 		}
 	}
 
