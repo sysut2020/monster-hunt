@@ -67,7 +67,7 @@ public class EnemyBehaviour : MonoBehaviour {
 		EnemyTransform = Enemy.transform;
 		this.Vision = Enemy.FrontPoint;
 
-		this.SetState(BehaviourState.IDLE);
+		this.ChooseRandomStartState();
 	}
 
 	private void FixedUpdate() {
@@ -90,6 +90,14 @@ public class EnemyBehaviour : MonoBehaviour {
 			case BehaviourState.ATTACK:
 				this.Attack();
 				break;
+		}
+	}
+
+	private void ChooseRandomStartState() {
+		if (UnityEngine.Random.Range(0, 2) == 0) {
+			this.Idle();
+		} else {
+			this.Patrol();
 		}
 	}
 
