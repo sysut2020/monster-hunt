@@ -49,7 +49,7 @@ public class EnemyBehaviour : MonoBehaviour {
 		if (this.transform.parent.TryGetComponent(out Enemy enemy)) {
 			this.Enemy = enemy;
 		} else {
-			throw new Exception("Cant find Enemy script i parent.");
+			throw new MissingComponentException("Cant find Enemy script i parent.");
 		}
 		this.Animator = this.GetComponent<Animator>();
 	}
