@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Raport
   m_EditorClassIdentifier: 
   health: 9
-  speed: 11
+  patrolSpeed: 4
+  chaseSpeed: 6
+  visionLength: 10
   collectibleItems:
   - itemName: Coin
     spawnChance: 18

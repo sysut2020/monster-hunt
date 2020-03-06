@@ -13,9 +13,17 @@ public class EnemyType : ScriptableObject {
     [SerializeField]
     private int health;
 
-    [Tooltip("The enemy movement speed")]
+    [Tooltip("The speed when patroling")]
     [SerializeField]
-    private float speed;
+    private float patrolSpeed;
+
+    [Tooltip("The speed when chasing/charging")]
+    [SerializeField]
+    private float chaseSpeed;
+
+    [Tooltip("How far it can see")]
+    [SerializeField]
+    private float visionLength;
 
     [Header("Spawnable items from enemy")]
 
@@ -23,6 +31,8 @@ public class EnemyType : ScriptableObject {
     private List<CollectibleSpawnerItem> collectibleItems;
 
     public int Health { get => health; }
-    public float Speed { get => speed; }
+    public float PatrolSpeed { get => patrolSpeed; }
+    public float ChaseSpeed { get => chaseSpeed; }
+    public float VisionLength { get => visionLength; }
     public List<CollectibleSpawnerItem> CollectibleItems { get => collectibleItems; }
 }
