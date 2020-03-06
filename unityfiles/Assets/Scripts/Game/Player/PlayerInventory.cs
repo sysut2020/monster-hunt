@@ -52,7 +52,6 @@ public class PlayerInventory {
         internal set => this.activePickups = value;
     }
 
-    
     // -- public -- //
 
     // -- events -- //
@@ -61,7 +60,7 @@ public class PlayerInventory {
     /// <summary>
     /// subscribe from all the events
     /// </summary>
-    private void SubscribeToEvents(){
+    private void SubscribeToEvents() {
         PlayerWeaponController.WeaponChangedEvent += CallbackWeaponChangedEvent;
         CoinCollectable.OnCoinCollected += CallbackCoinCollected;
         LetterCollectable.OnLetterCollected += CallbackLetterCollected;
@@ -72,7 +71,7 @@ public class PlayerInventory {
     /// <summary>
     /// unsubscribe from all the events
     /// </summary>
-    private void UnsubscribeFromEvents(object _, EventArgs __){
+    private void UnsubscribeFromEvents(object _, EventArgs __) {
         PlayerWeaponController.WeaponChangedEvent -= CallbackWeaponChangedEvent;
         CoinCollectable.OnCoinCollected -= CallbackCoinCollected;
         LetterCollectable.OnLetterCollected -= CallbackLetterCollected;
@@ -108,7 +107,6 @@ public class PlayerInventory {
     private void CallbackEffectPickup(object sender, PowerUpCollectedArgs args) {
         throw new NotImplementedException();
     }
-    
 
     // -- private -- // 
 
@@ -117,7 +115,7 @@ public class PlayerInventory {
     /// </summary>
     /// <param name="effect">the pickup to add</param>
     /// <summary>
-    private void AddEffectPickup(IEffectPowerUp effect) {
+    public void AddEffectPickup(IEffectPowerUp effect) {
         this.activePickups.Add(effect);
     }
 
@@ -125,7 +123,7 @@ public class PlayerInventory {
     /// removes the the given effect pickup
     /// </summary>
     /// /// <param name="effect">the pickup to remove</param>
-    private void RemoveEffectPickup(IEffectPowerUp effect) {
+    public void RemoveEffectPickup(IEffectPowerUp effect) {
         this.activePickups.Remove(effect);
     }
 
@@ -144,7 +142,6 @@ public class PlayerInventory {
     private void AddMoney(int value) {
         this.money += value;
     }
-    
 
     /// <summary>
     /// Fires an event saying the player inventory has been updated.

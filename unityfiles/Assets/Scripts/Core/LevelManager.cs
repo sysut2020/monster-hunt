@@ -116,7 +116,7 @@ public class LevelManager : Singleton<LevelManager> {
         LevelStateChangeEventArgs args = new LevelStateChangeEventArgs();
         args.NewState = NewState;
         switch (NewState) {
-            /// The game is over show game over screen
+            // The game is over show game over screen
             case LEVEL_STATE.GAME_OVER:
                 Time.timeScale = PAUSE;
                 gameOverCanvas.SetActive(true);
@@ -135,11 +135,11 @@ public class LevelManager : Singleton<LevelManager> {
                 ChangeLevelState(LEVEL_STATE.PLAY);
                 break;
                 
-            /// Start the main mode spawn the player and start the level
+            // Start the main mode spawn the player and start the level
             case LEVEL_STATE.PLAY:
                 Time.timeScale = PLAY;
                 break;
-            /// Exit the game and go to main menu
+            // Exit the game and go to main menu
             case LEVEL_STATE.EXIT:
                 break;
 
@@ -204,7 +204,7 @@ public class LevelManager : Singleton<LevelManager> {
     }
 
     private void OnDestroy() {
-        CleanUpScene()
+        CleanUpScene();
         UnsubscribeFromEvents();
     }
 }
