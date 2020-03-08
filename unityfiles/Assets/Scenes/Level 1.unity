@@ -3711,76 +3711,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Main character - with weapon
       objectReference: {fileID: 0}
-    - target: {fileID: 2384281202937811623, guid: fd02fbe1502ddec41abcab488e83e5a3,
-        type: 3}
-      propertyPath: m_SortingLayerID
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2384281202937811623, guid: fd02fbe1502ddec41abcab488e83e5a3,
-        type: 3}
-      propertyPath: m_SortingLayer
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2900317197630449732, guid: fd02fbe1502ddec41abcab488e83e5a3,
-        type: 3}
-      propertyPath: m_SortingLayerID
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2900317197630449732, guid: fd02fbe1502ddec41abcab488e83e5a3,
-        type: 3}
-      propertyPath: m_SortingLayer
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3780439210992667495, guid: fd02fbe1502ddec41abcab488e83e5a3,
-        type: 3}
-      propertyPath: m_SortingLayerID
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3780439210992667495, guid: fd02fbe1502ddec41abcab488e83e5a3,
-        type: 3}
-      propertyPath: m_SortingLayer
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4072832374539621972, guid: fd02fbe1502ddec41abcab488e83e5a3,
-        type: 3}
-      propertyPath: m_SortingLayerID
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4072832374539621972, guid: fd02fbe1502ddec41abcab488e83e5a3,
-        type: 3}
-      propertyPath: m_SortingLayer
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4184857319020124905, guid: fd02fbe1502ddec41abcab488e83e5a3,
-        type: 3}
-      propertyPath: m_SortingLayerID
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4184857319020124905, guid: fd02fbe1502ddec41abcab488e83e5a3,
-        type: 3}
-      propertyPath: m_SortingLayer
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5148037526417804663, guid: fd02fbe1502ddec41abcab488e83e5a3,
-        type: 3}
-      propertyPath: m_SortingLayerID
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5148037526417804663, guid: fd02fbe1502ddec41abcab488e83e5a3,
-        type: 3}
-      propertyPath: m_SortingLayer
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5338383094597679514, guid: fd02fbe1502ddec41abcab488e83e5a3,
-        type: 3}
-      propertyPath: m_SortingLayerID
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5338383094597679514, guid: fd02fbe1502ddec41abcab488e83e5a3,
-        type: 3}
-      propertyPath: m_SortingLayer
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6394018647851918217, guid: fd02fbe1502ddec41abcab488e83e5a3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3834,36 +3764,6 @@ PrefabInstance:
     - target: {fileID: 6394018647851918217, guid: fd02fbe1502ddec41abcab488e83e5a3,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6784265358903011031, guid: fd02fbe1502ddec41abcab488e83e5a3,
-        type: 3}
-      propertyPath: m_SortingLayerID
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6784265358903011031, guid: fd02fbe1502ddec41abcab488e83e5a3,
-        type: 3}
-      propertyPath: m_SortingLayer
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7572856631641606831, guid: fd02fbe1502ddec41abcab488e83e5a3,
-        type: 3}
-      propertyPath: m_SortingLayerID
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7572856631641606831, guid: fd02fbe1502ddec41abcab488e83e5a3,
-        type: 3}
-      propertyPath: m_SortingLayer
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8862863088161852536, guid: fd02fbe1502ddec41abcab488e83e5a3,
-        type: 3}
-      propertyPath: m_SortingLayerID
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8862863088161852536, guid: fd02fbe1502ddec41abcab488e83e5a3,
-        type: 3}
-      propertyPath: m_SortingLayer
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
