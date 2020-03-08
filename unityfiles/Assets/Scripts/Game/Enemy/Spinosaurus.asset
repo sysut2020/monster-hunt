@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 12
   patrolSpeed: 4
-  chaseSpeed: 4
-  visionLength: 10
+  chaseSpeed: 9
+  visionLength: 15
   collectibleItems: []
