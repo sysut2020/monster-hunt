@@ -22,7 +22,7 @@ public class TimerGUI : MonoBehaviour {
         get => levelTime;
         set => levelTime = value;
     }
-    
+
     private int lastTime = 0;
 
     private void Awake() {
@@ -34,16 +34,16 @@ public class TimerGUI : MonoBehaviour {
     private void Update() {
         SetTimerText();
     }
-    
+
     public void SetTime(int time) {
-        this.LevelTime = time;
+        this.LevelTime = time / 1000;
     }
-    
+
     private void SetTimerText() {
         // If the level time has changed, update the timer GUI
         if (this.levelTime != lastTime) {
             this.lastTime = this.levelTime;
-            
+
             TimeSpan timeSpan = TimeSpan.FromSeconds(levelTime);
             // Used to format the time to a readable "human" time
             string timeString = string.Format("{0:D2}:{1:D2}", timeSpan.Minutes, timeSpan.Seconds);
