@@ -167,7 +167,7 @@ GameObject:
   - component: {fileID: 7877945517881897808}
   - component: {fileID: 2502209542457462268}
   - component: {fileID: 2193608763667141281}
-  - component: {fileID: 1671456203}
+  - component: {fileID: 1404568515}
   m_Layer: 5
   m_Name: Restart level button
   m_TagString: Untagged
@@ -285,7 +285,7 @@ MonoBehaviour:
           m_StringArgument: wrwer
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &1671456203
+--- !u!114 &1404568515
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -294,10 +294,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5401371773828094063}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 091625f2176094635828763c0547bd46, type: 3}
+  m_Script: {fileID: 11500000, guid: 58679cfcd83b25c46a870dc22744d8c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelState: 3
+  sceneName: Level 2
 --- !u!1 &6929612923714650649
 GameObject:
   m_ObjectHideFlags: 0

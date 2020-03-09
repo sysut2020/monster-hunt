@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -19371,25 +19371,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &937961591 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5401371773828094063, guid: daee3ecbfcd3891a294de8b104dd33ae,
-    type: 3}
-  m_PrefabInstance: {fileID: 1841869688}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &937961593
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 937961591}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58679cfcd83b25c46a870dc22744d8c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneName: MainMenu
 --- !u!1 &938063148
 GameObject:
   m_ObjectHideFlags: 0
@@ -78915,6 +78896,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1404568515, guid: daee3ecbfcd3891a294de8b104dd33ae, type: 3}
+      propertyPath: sceneName
+      value: Level 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6929612923714650649, guid: daee3ecbfcd3891a294de8b104dd33ae,
         type: 3}
       propertyPath: m_Name
@@ -79120,25 +79105,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &1842946593 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7271288109337078551, guid: c0037af04ebe241508ded6287f68ad6c,
-    type: 3}
-  m_PrefabInstance: {fileID: 93178869}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1842946594
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1842946593}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58679cfcd83b25c46a870dc22744d8c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneName: MainMenu
 --- !u!1 &1844019540
 GameObject:
   m_ObjectHideFlags: 0
