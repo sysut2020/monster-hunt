@@ -37,7 +37,6 @@ public abstract class Dragable : MonoBehaviour, IBeginDragHandler, IDragHandler,
     public void OnBeginDrag(PointerEventData eventData) {
         if (this.CanStartDrag()) {
             DraggingIcon.SetActive(true);
-            DraggingIcon.transform.SetAsLastSibling();
             DraggingIcon.GetComponentInChildren<TMP_Text>().text = IconLetter;
 
             var canvas = this.gameObject.GetComponentInParent<Canvas>();
@@ -84,9 +83,9 @@ public abstract class Dragable : MonoBehaviour, IBeginDragHandler, IDragHandler,
     // -- unity -- //
     // Start is called before the first frame update
     void Start() {
-        GameObject newIcon = GameObject.Instantiate(DraggingIcon);
-        newIcon.name = "DragIcon";
-        newIcon.transform.SetParent(DraggingIcon.transform.parent);
+        GameObject newIcon = Instantiate(DraggingIcon);
+        newIcon.transform.SetParent(this.transform);
+        newIcon.name = "LetterDragIcon";
         this.DraggingIcon = newIcon;
         DraggingIcon.SetActive(false);
         iconText = DraggingIcon.GetComponentInChildren<Text>();
