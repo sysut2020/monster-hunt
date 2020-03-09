@@ -378,7 +378,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 700d01a273b2d33a8afc8ca12bc5c686, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DraggingIcon: {fileID: 0}
+  DraggingIcon: {fileID: 156736933485824405, guid: 8d904228d35ab2145aca91b26a7e7874,
+    type: 3}
   dragOnSurfaces: 1
   LetterCount: {fileID: 2947810736879630933}
   DisplayLetter: {fileID: 2947810737648147216}
