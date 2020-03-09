@@ -51,7 +51,7 @@ public class GameBoardTile : Dragable {
     /// </summary>
     private void updateDisplayedLetter() {
         if (holdingLetter == null) {
-            TileText.text = "?";
+            TileText.text = "";
         } else {
             TileText.text = this.holdingLetter.Letter;
         }
@@ -65,7 +65,7 @@ public class GameBoardTile : Dragable {
     override protected bool CanStartDrag() {
         if (holdingLetter != null) {
             this.IconLetter = this.holdingLetter.Letter;
-            TileText.text = "?";
+            TileText.text = "";
             return true;
         }
         return false;
