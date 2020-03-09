@@ -60,15 +60,14 @@ public class LetterTile : Dragable {
     /// What the Ui element should do when the drag operation is complete
     /// </summary>
     override protected void OnDragCompletion(PointerEventData eventData) {
-        if (holdingLetter != null) {
-            GameObject hit = eventData.pointerCurrentRaycast.gameObject;
-            if (hit != null) {
-                if (hit.TryGetComponent<GameBoardTile>(out GameBoardTile tile)) {
-                    tile.SetTile(holdingLetter);
-                    holdingLetter = null;
-                }
-            }
-        }
+
+        GameObject hit = eventData.pointerCurrentRaycast.gameObject;
+        if (holdingLetter == null || hit == null) return;
+
+        var gameBoardTile = hit.transform.GetComponentInParent<GameBoardTile>();
+        if (gameBoardTile != null) { gameBoardTile.SetTile(holdingLetter); }
+        holdingLetter = null;
+
     }
     // -- unity -- //
 
