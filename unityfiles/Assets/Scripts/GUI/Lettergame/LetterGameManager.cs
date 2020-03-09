@@ -15,7 +15,7 @@ public class LetterGameStartEventArgs : EventArgs {
 }
 
 public class BoardChangedEventArgs : EventArgs {
-    private LetterGameLetter [, ] TileMap { get; set; }
+    private LetterGameLetter[, ] TileMap { get; set; }
 }
 
 public class LetterCountCangedEventArgs : EventArgs {
@@ -33,7 +33,7 @@ public class LetterCountCangedEventArgs : EventArgs {
 /// </summary>
 public class LetterGameManager : Singleton<LetterGameManager> {
     // maby move this to a global constant
-    private readonly string [] letters = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
+    private readonly string[] letters = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
 
     /// <summary>
     /// The x size of the board
@@ -62,7 +62,7 @@ public class LetterGameManager : Singleton<LetterGameManager> {
     GameObject letterTile;
 
     private Dictionary<String, List<LetterGameLetter>> playerLetters;
-    private LetterGameLetter [, ] tileMap;
+    private LetterGameLetter[, ] tileMap;
 
     // -- properties -- //
     public Dictionary<string, int> CurrentAvailableLetterCount {
@@ -70,8 +70,8 @@ public class LetterGameManager : Singleton<LetterGameManager> {
             Dictionary<string, int> ret = new Dictionary<string, int>();
             foreach (string key in playerLetters.Keys) {
                 ret.Add(key, 0);
-                foreach (LetterGameLetter l in playerLetters [key]) {
-                    if (!l.IsOnBoard) { ret [key] += 1; }
+                foreach (LetterGameLetter l in playerLetters[key]) {
+                    if (!l.IsOnBoard) { ret[key] += 1; }
                 }
             }
             return ret;
@@ -91,7 +91,7 @@ public class LetterGameManager : Singleton<LetterGameManager> {
     /// <returns>the letters objet is it is available else null</returns>
     public LetterGameLetter TryGetLetter(string letter) {
         LetterGameLetter ret = null;
-        foreach (LetterGameLetter l in playerLetters [letter]) {
+        foreach (LetterGameLetter l in playerLetters[letter]) {
             if (!l.IsOnBoard) {
                 ret = l;
                 break;
@@ -164,26 +164,37 @@ public class LetterGameManager : Singleton<LetterGameManager> {
     /// <param name="x">the x pos of the cord to check from</param>
     /// <param name="y">the x pos of the cord to check from</param>
     private void ChekIfWordFromPos(int x, int y) {
-
+        Debug.Log("Checking word for: " + x + " - " + y, this);
         if (!BoardIsTileValid(x, y)) { return; }
         if (BoardTryGetTile(x, y) == null) { return; }
-        var xDir = WUArrays.GetConnected(tileMap, x, y, 0).Select(tile => tile.Letter).ToArray();
-        var yDir = WUArrays.GetConnected(tileMap, x, y, 1).Select(tile => tile.Letter).ToArray();
+        var yConnected = WUArrays.GetConnected(tileMap, x, y, 0);
+        var xConnected = WUArrays.GetConnected(tileMap, x, y, 1);
 
-        string wordXN = string.Join("", xDir.ToArray());
-        string wordXR = string.Join("", xDir.Reverse().ToArray());
+        var yDirection = yConnected.Select(tile => tile.Letter).ToArray();
+        var xDirection = xConnected.Select(tile => tile.Letter).ToArray();
 
-        string wordYN = string.Join("", yDir.ToArray());
-        string wordYR = string.Join("", yDir.Reverse().ToArray());
+        string wordYN = string.Concat(yDirection.ToArray());
+        string wordYR = string.Concat(yDirection.Reverse().ToArray());
 
-        if (
-            WordChecker.isWordValid(wordXN) ||
-            WordChecker.isWordValid(wordXR) ||
-            WordChecker.isWordValid(wordYN) ||
-            WordChecker.isWordValid(wordYR)
-        ) {
-            // sadly emoji does not work in the unity console
-            print("🎂🎉🎉🎉🎂🎂 WORD FOUND 🎂🎂🎂🎉🎂🎉🎉");
+        string wordXN = string.Concat(xDirection.ToArray());
+        string wordXR = string.Concat(xDirection.Reverse().ToArray());
+
+        if (WordChecker.isWordValid(wordYN)) {
+            Debug.Log("Word YN", this);
+
+        }
+        if (WordChecker.isWordValid(wordYR)) { Debug.Log("Word YR", this); }
+        if (WordChecker.isWordValid(wordXN)) {
+            Debug.Log("Word XN", this);
+            foreach (var le in xConnected) {
+                Debug.Log(le.XPos, this);
+            }
+        }
+        if (WordChecker.isWordValid(wordXR)) {
+            Debug.Log("Word XR", this);
+            foreach (var le in xConnected) {
+                Debug.Log(le.XPos, this);
+            }
         }
     }
 
@@ -230,9 +241,9 @@ public class LetterGameManager : Singleton<LetterGameManager> {
         }; // when communication from GM is in use: args.CurrentLetters; 
         foreach (string key in playerDataDict.Keys) {
             if (playerLetters.Keys.Contains(key)) {
-                for (int i = 0; i < playerDataDict [key]; i++) {
+                for (int i = 0; i < playerDataDict[key]; i++) {
                     LetterGameLetter newLetter = new LetterGameLetter(-1, -1, key);
-                    playerLetters [key].Add(newLetter);
+                    playerLetters[key].Add(newLetter);
                 }
 
             }
@@ -257,13 +268,9 @@ public class LetterGameManager : Singleton<LetterGameManager> {
     /// <returns>true if successful false if not</returns>
     private bool BoardTryRemoveLetter(LetterGameLetter letter) {
         bool suc = false;
-        if (letter.IsOnBoard) { // Fix WUArrays.MultiDimFind(tileMap, letter) and use it it's is more reliable
-            if (letter != tileMap [letter.XPos, letter.YPos]) {
-                // TODO: make exception
-                throw new Exception("TILE POSITION MISMATCH");
-            }
-
-            tileMap [letter.XPos, letter.YPos] = null;
+        var foundLetter = WUArrays.MultiDimFind(tileMap, letter);
+        if (foundLetter != null) {
+            tileMap[letter.XPos, letter.YPos] = null;
             letter.IsOnBoard = false;
             letter.XPos = -1;
             letter.YPos = -1;
@@ -290,13 +297,13 @@ public class LetterGameManager : Singleton<LetterGameManager> {
 
         // remove the tiles old position from the log 
         if (tile.IsOnBoard) {
-            tileMap [tile.XPos, tile.YPos] = null;
+            tileMap[tile.XPos, tile.YPos] = null;
         }
 
         tile.XPos = x;
         tile.YPos = y;
         tile.IsOnBoard = true;
-        tileMap [x, y] = tile;
+        tileMap[x, y] = tile;
     }
 
     /// <summary>
@@ -310,8 +317,8 @@ public class LetterGameManager : Singleton<LetterGameManager> {
         LetterGameLetter ret = null;
 
         if (BoardIsTileValid(x, y)) {
-            if (tileMap [x, y] != null) {
-                ret = tileMap [x, y];
+            if (tileMap[x, y] != null) {
+                ret = tileMap[x, y];
             }
         }
 
@@ -337,7 +344,7 @@ public class LetterGameManager : Singleton<LetterGameManager> {
 
     // Start is called before the first frame update
     void Start() {
-        this.tileMap = new LetterGameLetter [this.bSizeX, this.bSizeY];
+        this.tileMap = new LetterGameLetter[this.bSizeX, this.bSizeY];
         this.playerLetters = new Dictionary<String, List<LetterGameLetter>>();
         MakePlayerLetter();
         FillPlayerLetters(GameManager.Instance.PlayerPersistentStorage.AvailableLetters);
