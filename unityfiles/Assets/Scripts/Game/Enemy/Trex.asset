@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 15
   patrolSpeed: 3
-  chaseSpeed: 3
-  visionLength: 10
+  chaseSpeed: 7
+  visionLength: 17
   collectibleItems:
   - itemName: Coin
     spawnChance: 20
