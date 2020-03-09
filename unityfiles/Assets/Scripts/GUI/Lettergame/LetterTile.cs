@@ -64,9 +64,10 @@ public class LetterTile : Dragable {
         GameObject hit = eventData.pointerCurrentRaycast.gameObject;
         if (holdingLetter == null || hit == null) return;
 
-        var gameBoardTile = hit.transform.GetComponentInParent<GameBoardTile>();
-        if (gameBoardTile != null) { gameBoardTile.SetTile(holdingLetter); }
-        holdingLetter = null;
+        if (hit.TryGetComponent<GameBoardTile>(out GameBoardTile tile)) {
+            tile.SetTile(holdingLetter);
+            holdingLetter = null;
+        }
 
     }
     // -- unity -- //
