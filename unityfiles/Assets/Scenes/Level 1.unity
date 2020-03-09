@@ -1465,7 +1465,8 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7271288109337078549, guid: c0037af04ebe241508ded6287f68ad6c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: c0037af04ebe241508ded6287f68ad6c, type: 3}
 --- !u!1 &93178870 stripped
 GameObject:
@@ -19370,6 +19371,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &937961591 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5401371773828094063, guid: daee3ecbfcd3891a294de8b104dd33ae,
+    type: 3}
+  m_PrefabInstance: {fileID: 1841869688}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &937961593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 937961591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58679cfcd83b25c46a870dc22744d8c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneName: MainMenu
 --- !u!1 &938063148
 GameObject:
   m_ObjectHideFlags: 0
@@ -78900,6 +78920,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameOverCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 6929612923714650649, guid: daee3ecbfcd3891a294de8b104dd33ae,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6929612923714650660, guid: daee3ecbfcd3891a294de8b104dd33ae,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -79005,7 +79030,8 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1671456203, guid: daee3ecbfcd3891a294de8b104dd33ae, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: daee3ecbfcd3891a294de8b104dd33ae, type: 3}
 --- !u!1 &1841869689 stripped
 GameObject:
@@ -79094,6 +79120,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1842946593 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7271288109337078551, guid: c0037af04ebe241508ded6287f68ad6c,
+    type: 3}
+  m_PrefabInstance: {fileID: 93178869}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1842946594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1842946593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58679cfcd83b25c46a870dc22744d8c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneName: MainMenu
 --- !u!1 &1844019540
 GameObject:
   m_ObjectHideFlags: 0
