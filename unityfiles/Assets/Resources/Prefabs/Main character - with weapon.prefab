@@ -541,7 +541,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 634bfa48c37eb474c9e80021877793e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startHealth: 1
+  startHealth: 20
 --- !u!1 &2279120330704540954
 GameObject:
   m_ObjectHideFlags: 0
