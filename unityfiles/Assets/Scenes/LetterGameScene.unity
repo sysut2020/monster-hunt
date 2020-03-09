@@ -424,7 +424,7 @@ MonoBehaviour:
   m_CellSize: {x: 50, y: 50}
   m_Spacing: {x: -21, y: -21}
   m_Constraint: 1
-  m_ConstraintCount: 10
+  m_ConstraintCount: 27
 --- !u!1 &1169627858
 GameObject:
   m_ObjectHideFlags: 0
@@ -438,7 +438,7 @@ GameObject:
   - component: {fileID: 1169627860}
   - component: {fileID: 1169627859}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: GameBoardCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -896,8 +896,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bebc41f2c51f0954bdedc3d5b53845c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bSizeX: 10
-  bSizeY: 5
+  bSizeX: 27
+  bSizeY: 10
   playingBoard: {fileID: 1130438225}
   boardTile: {fileID: 286058784610945078, guid: 981e2891e07383041b9a9f4b903bc284,
     type: 3}
