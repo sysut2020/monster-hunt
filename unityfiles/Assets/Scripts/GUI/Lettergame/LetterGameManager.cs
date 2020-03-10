@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -124,7 +124,6 @@ public class LetterGameManager : Singleton<LetterGameManager> {
                 this.TraverseInDirection(prevPX, prevY, timestamp, 1, false);
                 foreach (var item in con) {
                     TraverseInDirection(item.XPos, item.YPos, timestamp, 0, true);
-                    Debug.Log(item.Letter, this);
                 }
             }
         }
@@ -135,7 +134,6 @@ public class LetterGameManager : Singleton<LetterGameManager> {
                 this.TraverseInDirection(prevNX, prevY, timestamp, 1, false);
                 foreach (var item in con.Reverse()) {
                     TraverseInDirection(item.XPos, item.YPos, timestamp, 0, true);
-                    Debug.Log(item.Letter, this);
                 }
             }
         }
@@ -147,7 +145,6 @@ public class LetterGameManager : Singleton<LetterGameManager> {
                 this.TraverseInDirection(prevX, prevPY, timestamp, 0, false);
                 foreach (var item in con) {
                     TraverseInDirection(item.XPos, item.YPos, timestamp, 1, true);
-                    Debug.Log(item.Letter, this);
                 }
             }
         }
@@ -160,7 +157,6 @@ public class LetterGameManager : Singleton<LetterGameManager> {
                 this.TraverseInDirection(prevX, prevNY, timestamp, 0, false);
                 foreach (var item in con.Reverse()) {
                     TraverseInDirection(item.XPos, item.YPos, timestamp, 1, true);
-                    Debug.Log(item.Letter, this);
                 }
             }
         }
@@ -209,7 +205,6 @@ public class LetterGameManager : Singleton<LetterGameManager> {
         foreach (var item in yConnected) {
             if (deepTraverse) {
                 if (item.isValidLetterInWord) {
-                    Debug.Log("I AM VALID: " + item.Letter + " XPOS: " + item.XPos + " YPOS: " + item.YPos, item.gbt);
                     TraverseInDirection(item.XPos, item.YPos, timestamp, 1, true);
                 }
             }
@@ -219,7 +214,6 @@ public class LetterGameManager : Singleton<LetterGameManager> {
         foreach (var item in xConnected) {
             if (deepTraverse) {
                 if (item.isValidLetterInWord) {
-                    Debug.Log("I AM VALID: " + item.Letter + " XPOS: " + item.XPos + " YPOS: " + item.YPos, item.gbt);
                     TraverseInDirection(item.XPos, item.YPos, timestamp, 0, true);
                 }
             }
@@ -237,30 +231,20 @@ public class LetterGameManager : Singleton<LetterGameManager> {
 
         if (WordChecker.isWordValid(wordYN)) {
             isValidInY = true;
-            Debug.Log("Valid Y: " +
-                isValidInY, this);
         }
-        Debug.Log(WordChecker.isWordValid(wordXN));
+
         if (WordChecker.isWordValid(wordXN)) {
             isValidInX = true;
-            Debug.Log("Valid X: " +
-                isValidInX, this);
         }
-        string xw = "";
+
         foreach (var le in xConnected) {
-            // Debug.Log(le.Letter);
-            if (isValidInX) xw += le.Letter;
-
             le.SetValidLetter(isValidInX, timestamp);
-
         }
-        if (xw.Length > 0) Debug.Log(xw, this);
-        string yw = "";
+
         foreach (var le in yConnected) {
-            if (isValidInY) yw += le.Letter;
             le.SetValidLetter(isValidInY, timestamp);
         }
-        if (yw.Length > 0) Debug.Log(yw, this);
+
     }
 
     private LetterGameLetter[] TryGetConnectedLetters(int xpos, int ypos, int dimension) {
@@ -283,7 +267,6 @@ public class LetterGameManager : Singleton<LetterGameManager> {
             foreach (var item in xConnected) {
                 if (deepTraverse) {
                     if (item.isValidLetterInWord) {
-                        Debug.Log("I AM VALID: " + item.Letter + " XPOS: " + item.XPos + " YPOS: " + item.YPos, item.gbt);
                         TraverseInDirection(item.XPos, item.YPos, timestamp, 0, false);
                     }
                 }
@@ -296,7 +279,6 @@ public class LetterGameManager : Singleton<LetterGameManager> {
             }
 
             foreach (var le in xConnected) {
-                Debug.Log(le.Letter);
                 le.SetValidLetter(isValidInX, timestamp);
             }
         } else {
@@ -304,7 +286,6 @@ public class LetterGameManager : Singleton<LetterGameManager> {
             foreach (var item in yConnected) {
                 if (deepTraverse) {
                     if (item.isValidLetterInWord) {
-                        Debug.Log("I AM VALID: " + item.Letter + " XPOS: " + item.XPos + " YPOS: " + item.YPos, item.gbt);
                         TraverseInDirection(item.XPos, item.YPos, timestamp, 1, false);
                     }
                 }
