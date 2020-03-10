@@ -8,9 +8,8 @@ using UnityEngine;
 [System.Serializable]
 public class SaveData {
     
-    private Dictionary<string, int> highScores; 
-    private int money;
+    public Dictionary<string, int> HighScores; 
+    public int Money;
 
-    public Dictionary<string, int> HighScores { get => HighScores; set => HighScores = value; }
-    public int Money { get => Money; set => Money = value; }
+
 }

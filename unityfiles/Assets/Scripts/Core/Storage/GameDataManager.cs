@@ -20,6 +20,8 @@ public class GameDataManager {
     public GameDataManager() {
         this.playerLetters = new Dictionary<string, int>();
         this.money = 0;
+
+        this.LoadData();
     }
 
 
@@ -54,20 +56,26 @@ public class GameDataManager {
         this.money = m;
     }
 
-    // -- private -- // 
-
-    private void SaveData(){
+    public void SaveData(){
         SaveData saveObj = new SaveData();
         saveObj.Money = this.money;
         // saveObj.HighScores = steffanos work your magic here
         DataSaver.Save(saveObj);
     }
 
+    // -- private -- // 
+
+    
+
 
     private void LoadData(){
         SaveData saveObj = DataSaver.Load();
-        if(saveObj?.Money != 0) {this.AddMoney(saveObj.Money);}
-        //if(saveObj?.HighScores != 0) {steffanos work your magic here;}
+        if(saveObj != null) {
+            if(saveObj?.Money != 0) {this.AddMoney(saveObj.Money);}
+            Debug.Log(money);
+            //if(saveObj?.HighScores != 0) {steffanos work your magic here;}
+        }
+        
   
         
     }
