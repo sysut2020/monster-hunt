@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -86942,6 +86942,51 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8649431201121111432, guid: 29b2f3b47246b124583fe83323766931,
+        type: 3}
+      propertyPath: sounds.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8649431201121111432, guid: 29b2f3b47246b124583fe83323766931,
+        type: 3}
+      propertyPath: sounds.Array.data[3].name
+      value: Sniper sound effect
+      objectReference: {fileID: 0}
+    - target: {fileID: 8649431201121111432, guid: 29b2f3b47246b124583fe83323766931,
+        type: 3}
+      propertyPath: sounds.Array.data[3].audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: a92e3484e08d1ee4fa786a09f82b72e3, type: 3}
+    - target: {fileID: 8649431201121111432, guid: 29b2f3b47246b124583fe83323766931,
+        type: 3}
+      propertyPath: sounds.Array.data[3].volume
+      value: 0.226
+      objectReference: {fileID: 0}
+    - target: {fileID: 8649431201121111432, guid: 29b2f3b47246b124583fe83323766931,
+        type: 3}
+      propertyPath: sounds.Array.data[3].pitch
+      value: 1.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 8649431201121111432, guid: 29b2f3b47246b124583fe83323766931,
+        type: 3}
+      propertyPath: sounds.Array.data[4].name
+      value: Laser gun sound effect
+      objectReference: {fileID: 0}
+    - target: {fileID: 8649431201121111432, guid: 29b2f3b47246b124583fe83323766931,
+        type: 3}
+      propertyPath: sounds.Array.data[4].audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 9db972f8419c3544bb71da7c25a52a13, type: 3}
+    - target: {fileID: 8649431201121111432, guid: 29b2f3b47246b124583fe83323766931,
+        type: 3}
+      propertyPath: sounds.Array.data[4].volume
+      value: 0.226
+      objectReference: {fileID: 0}
+    - target: {fileID: 8649431201121111432, guid: 29b2f3b47246b124583fe83323766931,
+        type: 3}
+      propertyPath: sounds.Array.data[4].pitch
+      value: 1.01
+      objectReference: {fileID: 0}
     - target: {fileID: 8649431201121111433, guid: 29b2f3b47246b124583fe83323766931,
         type: 3}
       propertyPath: m_Name
