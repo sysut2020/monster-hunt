@@ -6,9 +6,11 @@ using UnityEngine;
 /// All information we want to store, can be kept in this class
 /// </summary>
 [System.Serializable]
-public class Save {
+public class SaveData {
     
-    public int SavedMoney; 
-    public Dictionary<string, int> availableLetters;
-    
+    private Dictionary<string, int> highScores; 
+    private int money;
+
+    public Dictionary<string, int> HighScores { get => HighScores; set => HighScores = value; }
+    public int Money { get => Money; set => Money = value; }
 }

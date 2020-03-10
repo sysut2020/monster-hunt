@@ -201,30 +201,30 @@ public class LetterGameManager : Singleton<LetterGameManager> {
     /// </summary>
     /// <param name="args">the event args</param>
     private void FillPlayerLetters(Dictionary<string, int> w) {
-        Dictionary<string, int> playerDataDict = new Dictionary<string, int> { { "A", 5 },
-            { "B", 7 },
-            { "C", 4 },
-            { "D", 5 },
-            { "E", 7 },
-            { "F", 4 },
-            { "G", 7 },
-            { "H", 4 },
-            { "I", 5 },
-            { "J", 7 },
-            { "K", 4 },
-            { "L", 4 },
-            { "M", 4 },
-            { "N", 4 },
-            { "O", 4 },
-            { "P", 4 },
-            { "Q", 4 },
-            { "R", 4 },
-            { "S", 4 },
-            { "T", 4 },
-            { "U", 4 },
-            { "V", 4 },
-            { "W", 4 }
-        }; // when communication from GM is in use: args.CurrentLetters; 
+        // Dictionary<string, int> playerDataDict = new Dictionary<string, int> { { "A", 5 },
+        //     { "B", 7 },
+        //     { "C", 4 },
+        //     { "D", 5 },
+        //     { "E", 7 },
+        //     { "F", 4 },
+        //     { "G", 7 },
+        //     { "H", 4 },
+        //     { "I", 5 },
+        //     { "J", 7 },
+        //     { "K", 4 },
+        //     { "L", 4 },
+        //     { "M", 4 },
+        //     { "N", 4 },
+        //     { "O", 4 },
+        //     { "P", 4 },
+        //     { "Q", 4 },
+        //     { "R", 4 },
+        //     { "S", 4 },
+        //     { "T", 4 },
+        //     { "U", 4 },
+        //     { "V", 4 },
+        //     { "W", 4 }
+        // }; // when communication from GM is in use: args.CurrentLetters; 
         foreach (string key in playerDataDict.Keys) {
             if (playerLetters.Keys.Contains(key)) {
                 for (int i = 0; i < playerDataDict[key]; i++) {
@@ -337,7 +337,7 @@ public class LetterGameManager : Singleton<LetterGameManager> {
         this.tileMap = new LetterGameLetter[this.bSizeX, this.bSizeY];
         this.playerLetters = new Dictionary<String, List<LetterGameLetter>>();
         MakePlayerLetter();
-        FillPlayerLetters(GameManager.Instance.PlayerPersistentStorage.AvailableLetters);
+        FillPlayerLetters(GameManager.Instance.GameDataManager.PlayerLetters);
 
         this.MakeBoardTiles();
         this.MakeLetterTile();

@@ -18,10 +18,11 @@ public class GameManager : Singleton<GameManager> {
 
     private GAME_STATE currentState;
 
-    private PlayerPersistentStorage playerPersistentStorage;
-    public PlayerPersistentStorage PlayerPersistentStorage {
-        get => playerPersistentStorage;
-        set => playerPersistentStorage = value;
+    private GameDataManager gameDataManager;
+
+    // -- properties -- //
+    public GameDataManager GameDataManager {
+        get => gameDataManager;
     }
 
     // -- public -- //
@@ -105,7 +106,7 @@ public class GameManager : Singleton<GameManager> {
     // -- unity -- //
 
     private void OnEnable() {
-        playerPersistentStorage = new PlayerPersistentStorage();
+        this.gameDataManager = new GameDataManager();
         SubscribeToEvents();
     }
 
