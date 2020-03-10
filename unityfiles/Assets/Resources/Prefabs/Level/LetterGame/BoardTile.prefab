@@ -213,6 +213,7 @@ MonoBehaviour:
   TileText: {fileID: 286058784132834096}
   xPos: 0
   yPos: 0
+  tileImage: {fileID: 286058784610945073}
 --- !u!222 &286058784610945074
 CanvasRenderer:
   m_ObjectHideFlags: 0
