@@ -22,11 +22,7 @@ public class Jetpack : MonoBehaviour {
 
     [SerializeField]
     private ParticleSystem flames;
-
-    // The key to press to activate the jetpack force
-    [SerializeField]
-    private KeyCode controlButton;
-
+    
     private void Start() {
         this.flames.Stop();
     }
