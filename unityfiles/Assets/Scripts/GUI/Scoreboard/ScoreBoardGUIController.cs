@@ -14,22 +14,30 @@ public class ScoreBoardGUIController : MonoBehaviour {
         entryTemplate = entryContainer.Find("template");
 
         entryTemplate.gameObject.SetActive(false);
+
+        scoreboardEntries = new List<ScoreboardEntry>() {
+            new ScoreboardEntry {Name = "spiftire", Score = 2000},
+            new ScoreboardEntry {Name = "dummy", Score = 12300},
+            new ScoreboardEntry {Name = "dumb", Score = 69}
+        };
+
+        scoreboardEntryTransformList = new List<Transform>();
+        foreach (ScoreboardEntry entry in scoreboardEntries) {
+            CreateScoreboardEntryTransform(entry, entryContainer, scoreboardEntryTransformList);
+        }
     }
 
-    private void CreateScoreboardEntryTransform(ScoreboardEntry scoreboardEntry, Transform container, List<Transform> transformList) {
+    private void CreateScoreboardEntryTransform(ScoreboardEntry scoreboardEntry, Transform container,
+        List<Transform> transformList) {
         var templateHeight = entryTemplate.GetComponent<RectTransform>().rect.height;
         Transform entryTransform = Instantiate(entryTemplate, container);
         RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
         entryRectTransform.anchoredPosition = new Vector2(0, -templateHeight * transformList.Count);
-        Debug.Log(entryRectTransform.anchoredPosition);
         entryTransform.gameObject.SetActive(true);
 
-        var name = scoreboardEntry.Name;
-        var score = scoreboardEntry.Score;
+        entryTransform.Find("nameTemplateText").GetComponent<TextMeshProUGUI>().text = scoreboardEntry.Name;
+        entryTransform.Find("scoreTemplateText").GetComponent<TextMeshProUGUI>().text = scoreboardEntry.Score.ToString();
 
-        entryTransform.Find("nameTemplate").GetComponent<TextMeshPro>().text = name;
-        entryTransform.Find("scoreTemplate").GetComponent<TextMeshPro>().text = score.ToString();
-        
         transformList.Add(entryTransform);
     }
 }
