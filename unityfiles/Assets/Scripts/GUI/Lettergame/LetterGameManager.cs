@@ -108,24 +108,70 @@ public class LetterGameManager : Singleton<LetterGameManager> {
     /// <param name="newY">the new x pos for the letter</param>
     /// <param name="letter">the letter object to update the cords of</param>
     public void UpdateLetterPos(int newX, int newY, LetterGameLetter letter) {
+        float timestamp = DateTime.Now.Millisecond * UnityEngine.Random.Range(0f, 100f);
         int prevX = letter.XPos;
         int prevY = letter.YPos;
         if (BoardIsTileValid(newX, newY)) {
             // check for new words from the new point
             this.BoardSetTile(newX, newY, letter);
-            this.ChekIfWordFromPos(newX, newY);
+            this.ChekIfWordFromPos(newX, newY, timestamp);
         } else {
             // a letter til has been removed from the screen remove it
             BoardTryRemoveLetter(letter);
         }
 
         // check if the was any words formed from moving this one
+        if (prevX < 0 && prevY < 0) {
+            prevX = newX;
+            prevY = newY;
+        }
+        int prevPX = prevX + 1;
+        if (BoardIsTileValid(prevPX, prevY)) {
+            LetterGameLetter[] con = TryGetConnectedLetters(prevPX, prevY, 1);
+            if (con != null) {
+                this.TraverseInDirection(prevPX, prevY, timestamp, 1);
+                foreach (var item in con) {
+                    TraverseInDirection(item.XPos, item.YPos, timestamp, 0);
+                    Debug.Log(item.Letter, this);
+                }
+            }
+        }
+        int prevNX = prevX - 1;
+        if (BoardIsTileValid(prevNX, prevY)) {
+            LetterGameLetter[] con = TryGetConnectedLetters(prevNX, prevY, 1);
+            if (con != null) {
+                this.TraverseInDirection(prevNX, prevY, timestamp, 1);
+                foreach (var item in con.Reverse()) {
+                    TraverseInDirection(item.XPos, item.YPos, timestamp, 0);
+                    Debug.Log(item.Letter, this);
+                }
+            }
+        }
 
-        // TODO: Currently cheking xx AND y for all laboring nodes when only x for t/b and y for l/r should be cheked
-        if (BoardIsTileValid(prevX + 1, prevY)) { ChekIfWordFromPos(prevX + 1, prevY); }
-        if (BoardIsTileValid(prevX - 1, prevY)) { ChekIfWordFromPos(prevX - 1, prevY); }
-        if (BoardIsTileValid(prevX, prevY + 1)) { ChekIfWordFromPos(prevX, prevY + 1); }
-        if (BoardIsTileValid(prevX, prevY - 1)) { ChekIfWordFromPos(prevX, prevY - 1); }
+        int prevPY = prevY + 1;
+        if (BoardIsTileValid(prevX, prevPY)) {
+            LetterGameLetter[] con = TryGetConnectedLetters(prevX, prevPY, 0);
+            if (con != null) {
+                this.TraverseInDirection(prevX, prevPY, timestamp, 0);
+                foreach (var item in con) {
+                    TraverseInDirection(item.XPos, item.YPos, timestamp, 1);
+                    Debug.Log(item.Letter, this);
+                }
+            }
+        }
+
+        int prevNY = prevY - 1;
+        if (BoardIsTileValid(prevX, prevNY)) {
+            // ChekIfWordFromPos(prevX, prevNY,timestamp);
+            LetterGameLetter[] con = TryGetConnectedLetters(prevX, prevNY, 0);
+            if (con != null) {
+                this.TraverseInDirection(prevX, prevNY, timestamp, 0);
+                foreach (var item in con.Reverse()) {
+                    TraverseInDirection(item.XPos, item.YPos, timestamp, 1);
+                    Debug.Log(item.Letter, this);
+                }
+            }
+        }
 
         this.refreshLetterNumberDisplay();
     }
@@ -163,39 +209,103 @@ public class LetterGameManager : Singleton<LetterGameManager> {
     /// </summary>
     /// <param name="x">the x pos of the cord to check from</param>
     /// <param name="y">the x pos of the cord to check from</param>
-    private void ChekIfWordFromPos(int x, int y) {
-        Debug.Log("Checking word for: " + x + " - " + y, this);
+    private void ChekIfWordFromPos(int x, int y, float timestamp) {
         if (!BoardIsTileValid(x, y)) { return; }
         if (BoardTryGetTile(x, y) == null) { return; }
+
         var yConnected = WUArrays.GetConnected(tileMap, x, y, 0);
         var xConnected = WUArrays.GetConnected(tileMap, x, y, 1);
 
         var yDirection = yConnected.Select(tile => tile.Letter).ToArray();
         var xDirection = xConnected.Select(tile => tile.Letter).ToArray();
 
+        bool isValidInY = false;
+        bool isValidInX = false;
+
         string wordYN = string.Concat(yDirection.ToArray());
-        string wordYR = string.Concat(yDirection.Reverse().ToArray());
 
         string wordXN = string.Concat(xDirection.ToArray());
-        string wordXR = string.Concat(xDirection.Reverse().ToArray());
 
         if (WordChecker.isWordValid(wordYN)) {
-            Debug.Log("Word YN", this);
+            isValidInY = true;
+            Debug.Log("Valid Y: " +
+                isValidInY, this);
+        }
+        Debug.Log(WordChecker.isWordValid(wordXN));
+        if (WordChecker.isWordValid(wordXN)) {
+            isValidInX = true;
+            Debug.Log("Valid X: " +
+                isValidInX, this);
+        }
+        string xw = "";
+        foreach (var le in xConnected) {
+            // Debug.Log(le.Letter);
+            if (isValidInX) xw += le.Letter;
+
+            le.SetValidLetter(isValidInX, timestamp);
 
         }
-        if (WordChecker.isWordValid(wordYR)) { Debug.Log("Word YR", this); }
-        if (WordChecker.isWordValid(wordXN)) {
-            Debug.Log("Word XN", this);
+        if (xw.Length > 0) Debug.Log(xw, this);
+        string yw = "";
+        foreach (var le in yConnected) {
+            if (isValidInY) yw += le.Letter;
+            le.SetValidLetter(isValidInY, timestamp);
+        }
+        if (yw.Length > 0) Debug.Log(yw, this);
+    }
+
+    private LetterGameLetter[] TryGetConnectedLetters(int xpos, int ypos, int dimension) {
+        return WUArrays.GetConnected(this.tileMap, xpos, ypos, dimension);
+    }
+
+    /// <summary>
+    /// Checks if there are any words formed from drawing a vertical or horizontal line 
+    /// through the adjacent letters 
+    /// </summary>
+    /// <param name="x">the x pos of the cord to check from</param>
+    /// <param name="y">the x pos of the cord to check from</param>
+    private void TraverseInDirection(int x, int y, float timestamp, int direction) {
+        if (!BoardIsTileValid(x, y)) { return; }
+        if (BoardTryGetTile(x, y) == null) { return; }
+
+        if (direction == 1) {
+            var xConnected = TryGetConnectedLetters(x, y, 1);
+
+            foreach (var item in xConnected) {
+                Debug.Log("I AM CONNECTED: " + item.Letter + " XPOS: " + item.XPos + " YPOS: " + item.YPos);
+            }
+            var xDirection = xConnected.Select(tile => tile.Letter).ToArray();
+            bool isValidInX = false;
+            string wordXN = string.Concat(xDirection.ToArray());
+            if (WordChecker.isWordValid(wordXN)) {
+                isValidInX = true;
+            }
+
             foreach (var le in xConnected) {
-                Debug.Log(le.XPos, this);
+                Debug.Log(le.Letter);
+                le.SetValidLetter(isValidInX, timestamp);
+            }
+        } else {
+            var yConnected = TryGetConnectedLetters(x, y, 0);
+            foreach (var item in yConnected) {
+                Debug.Log("I AM CONNECTED: " + item.Letter + " XPOS: " + item.XPos + " YPOS: " + item.YPos);
+            }
+            var yDirection = yConnected.Select(tile => tile.Letter).ToArray();
+
+            bool isValidInY = false;
+
+            string wordYN = string.Concat(yDirection.ToArray());
+
+            if (WordChecker.isWordValid(wordYN)) {
+                isValidInY = true;
+            }
+
+            foreach (var le in yConnected) {
+                le.SetValidLetter(isValidInY, timestamp);
+
             }
         }
-        if (WordChecker.isWordValid(wordXR)) {
-            Debug.Log("Word XR", this);
-            foreach (var le in xConnected) {
-                Debug.Log(le.XPos, this);
-            }
-        }
+
     }
 
     /// <summary>
