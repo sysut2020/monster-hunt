@@ -6,16 +6,16 @@ using UnityEngine;
 public class AudioManager : Singleton<AudioManager> {
     
     public Sound[] sounds;
-    
+
     private void Awake() {
         // Add all the sounds to our audio manager
         foreach (Sound s in sounds) {
             s.audioSource = gameObject.AddComponent<AudioSource>();
-            s.audioSource.clip = s.audioClip;
+            s.audioSource.clip = s.AudioClip;
 
-            s.audioSource.volume = s.volume;
-            s.audioSource.pitch = s.pitch;
-            s.audioSource.loop = s.loop;
+            s.audioSource.volume = s.Volume;
+            s.audioSource.pitch = s.Pitch;
+            s.audioSource.loop = s.Loop;
         }
     }
     /// <summary>
@@ -24,7 +24,7 @@ public class AudioManager : Singleton<AudioManager> {
     /// </summary>
     /// <param name="name">The audio clip we want to play</param>
     public void Play(string name) {
-        Sound s = Array.Find(sounds, sound => sound.name == name);
+        Sound s = Array.Find(sounds, sound => sound.Name == name);
         if (s == null) {
             Debug.LogWarning("Sound: " + name +" not found!");
             return;

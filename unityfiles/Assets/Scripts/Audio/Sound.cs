@@ -6,20 +6,42 @@ using UnityEngine;
 public class Sound {
     
     // Name of the sound
-    public string name;
-    
+    private string name;
+    public string Name {
+        get => name;
+        set => name = value;
+    }
+
     // The audio clip we want to play
-    public AudioClip audioClip;
+    private AudioClip audioClip;
+
+    public AudioClip AudioClip {
+        get => audioClip;
+        set => audioClip = value;
+    }
     
     // The volume of the sound
     [Range(0f, 1f)]
-    public float volume;
+    private float volume;
+    public float Volume {
+        get => volume;
+        set => volume = value;
+    }
+
     // The pitch of the sound
     [Range(0.1f, 3f)]
-    public float pitch;
-    
+    private float pitch;
+    public float Pitch {
+        get => pitch;
+        set => pitch = value;
+    }
+
     // If we want the sound to loop or not
-    public bool loop;
+    private bool loop;
+    public bool Loop {
+        get => loop;
+        set => loop = value;
+    }
     
     [HideInInspector]
     public AudioSource audioSource;
