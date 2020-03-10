@@ -18,6 +18,10 @@ public class GameManager : Singleton<GameManager> {
 
     private GAME_STATE currentState;
 
+    private const string MAIN_MENU_MUSIC = "Main menu music";
+    private const string LEVEL_1_MUSIC = "Level 1 music";
+    private const string LETTER_GAME_MUSIC = "Letter game music";
+
     private PlayerPersistentStorage playerPersistentStorage;
     public PlayerPersistentStorage PlayerPersistentStorage {
         get => playerPersistentStorage;
@@ -79,14 +83,17 @@ public class GameManager : Singleton<GameManager> {
         switch (NewState) {
             case GAME_STATE.MAIN_MENU:
                 UnityEngine.SceneManagement.SceneManager.LoadScene(MAIN_MENU_SCENE_INDEX);
+                AudioManager.Instance.Play(MAIN_MENU_MUSIC);
                 break;
 
             case GAME_STATE.TEST_LEVEL:
                 SceneManager.Instance.ChangeScene(TEST_LEVEL_SCENE_INDEX);
+                AudioManager.Instance.Play(LEVEL_1_MUSIC);
                 break;
             
             case GAME_STATE.LETTER_LEVEL:
                 SceneManager.Instance.ChangeScene(LETTER_GAME_SCENE_INDEX);
+                AudioManager.Instance.Play(LETTER_GAME_MUSIC);
                 break;
 
             case GAME_STATE.EXIT:

@@ -3,11 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AudioManager : MonoBehaviour {
+public class AudioManager : Singleton<AudioManager> {
 
-    private Sound[] sounds;
-
-    private static AudioManager instance;
+    public Sound[] sounds;
+    
     
     private void Awake() {
         
@@ -22,11 +21,7 @@ public class AudioManager : MonoBehaviour {
             s.audioSource.loop = s.loop;
         }
     }
-
-    private void Start() {
-        Play("Level 1 music");
-    }
-
+    
     public void Play(string name) {
         Sound s = Array.Find(sounds, sound => sound.name == name);
         if (s == null) {
