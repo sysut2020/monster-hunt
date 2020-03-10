@@ -37,6 +37,7 @@ public class GameBoardTile : Dragable {
     /// <param name="letter">the letter to display</param>
     public void SetTile(LetterGameLetter letter) {
         letter.OnValidLetterInWordCallback(SetTileValidColor);
+        letter.gbt = this;
         holdingLetter = letter;
         LetterGameManager.Instance.UpdateLetterPos(XPos, YPos, letter);
         this.updateDisplayedLetter();
@@ -49,6 +50,7 @@ public class GameBoardTile : Dragable {
     /// </summary>
     public void ResetTile() {
         SetTileValidColor(false);
+        holdingLetter.gbt = this;
         holdingLetter = null;
         this.updateDisplayedLetter();
     }

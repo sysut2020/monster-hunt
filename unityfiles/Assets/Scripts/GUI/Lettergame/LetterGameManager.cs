@@ -111,10 +111,11 @@ public class LetterGameManager : Singleton<LetterGameManager> {
         float timestamp = DateTime.Now.Millisecond * UnityEngine.Random.Range(0f, 100f);
         int prevX = letter.XPos;
         int prevY = letter.YPos;
+
         if (BoardIsTileValid(newX, newY)) {
             // check for new words from the new point
             this.BoardSetTile(newX, newY, letter);
-            this.ChekIfWordFromPos(newX, newY, timestamp);
+            this.ChekIfWordFromPos(newX, newY, timestamp, true);
         } else {
             // a letter til has been removed from the screen remove it
             BoardTryRemoveLetter(letter);
@@ -129,9 +130,9 @@ public class LetterGameManager : Singleton<LetterGameManager> {
         if (BoardIsTileValid(prevPX, prevY)) {
             LetterGameLetter[] con = TryGetConnectedLetters(prevPX, prevY, 1);
             if (con != null) {
-                this.TraverseInDirection(prevPX, prevY, timestamp, 1);
+                this.TraverseInDirection(prevPX, prevY, timestamp, 1, false);
                 foreach (var item in con) {
-                    TraverseInDirection(item.XPos, item.YPos, timestamp, 0);
+                    TraverseInDirection(item.XPos, item.YPos, timestamp, 0, true);
                     Debug.Log(item.Letter, this);
                 }
             }
@@ -140,9 +141,9 @@ public class LetterGameManager : Singleton<LetterGameManager> {
         if (BoardIsTileValid(prevNX, prevY)) {
             LetterGameLetter[] con = TryGetConnectedLetters(prevNX, prevY, 1);
             if (con != null) {
-                this.TraverseInDirection(prevNX, prevY, timestamp, 1);
+                this.TraverseInDirection(prevNX, prevY, timestamp, 1, false);
                 foreach (var item in con.Reverse()) {
-                    TraverseInDirection(item.XPos, item.YPos, timestamp, 0);
+                    TraverseInDirection(item.XPos, item.YPos, timestamp, 0, true);
                     Debug.Log(item.Letter, this);
                 }
             }
@@ -152,9 +153,9 @@ public class LetterGameManager : Singleton<LetterGameManager> {
         if (BoardIsTileValid(prevX, prevPY)) {
             LetterGameLetter[] con = TryGetConnectedLetters(prevX, prevPY, 0);
             if (con != null) {
-                this.TraverseInDirection(prevX, prevPY, timestamp, 0);
+                this.TraverseInDirection(prevX, prevPY, timestamp, 0, false);
                 foreach (var item in con) {
-                    TraverseInDirection(item.XPos, item.YPos, timestamp, 1);
+                    TraverseInDirection(item.XPos, item.YPos, timestamp, 1, true);
                     Debug.Log(item.Letter, this);
                 }
             }
@@ -165,9 +166,9 @@ public class LetterGameManager : Singleton<LetterGameManager> {
             // ChekIfWordFromPos(prevX, prevNY,timestamp);
             LetterGameLetter[] con = TryGetConnectedLetters(prevX, prevNY, 0);
             if (con != null) {
-                this.TraverseInDirection(prevX, prevNY, timestamp, 0);
+                this.TraverseInDirection(prevX, prevNY, timestamp, 0, false);
                 foreach (var item in con.Reverse()) {
-                    TraverseInDirection(item.XPos, item.YPos, timestamp, 1);
+                    TraverseInDirection(item.XPos, item.YPos, timestamp, 1, true);
                     Debug.Log(item.Letter, this);
                 }
             }
@@ -209,12 +210,29 @@ public class LetterGameManager : Singleton<LetterGameManager> {
     /// </summary>
     /// <param name="x">the x pos of the cord to check from</param>
     /// <param name="y">the x pos of the cord to check from</param>
-    private void ChekIfWordFromPos(int x, int y, float timestamp) {
+    private void ChekIfWordFromPos(int x, int y, float timestamp, bool deepTraverse) {
         if (!BoardIsTileValid(x, y)) { return; }
         if (BoardTryGetTile(x, y) == null) { return; }
 
         var yConnected = WUArrays.GetConnected(tileMap, x, y, 0);
+        foreach (var item in yConnected) {
+            if (deepTraverse) {
+                if (item.isValidLetterInWord) {
+                    Debug.Log("I AM VALID: " + item.Letter + " XPOS: " + item.XPos + " YPOS: " + item.YPos, item.gbt);
+                    TraverseInDirection(item.XPos, item.YPos, timestamp, 1, true);
+                }
+            }
+        }
+
         var xConnected = WUArrays.GetConnected(tileMap, x, y, 1);
+        foreach (var item in xConnected) {
+            if (deepTraverse) {
+                if (item.isValidLetterInWord) {
+                    Debug.Log("I AM VALID: " + item.Letter + " XPOS: " + item.XPos + " YPOS: " + item.YPos, item.gbt);
+                    TraverseInDirection(item.XPos, item.YPos, timestamp, 0, true);
+                }
+            }
+        }
 
         var yDirection = yConnected.Select(tile => tile.Letter).ToArray();
         var xDirection = xConnected.Select(tile => tile.Letter).ToArray();
@@ -264,7 +282,7 @@ public class LetterGameManager : Singleton<LetterGameManager> {
     /// </summary>
     /// <param name="x">the x pos of the cord to check from</param>
     /// <param name="y">the x pos of the cord to check from</param>
-    private void TraverseInDirection(int x, int y, float timestamp, int direction) {
+    private void TraverseInDirection(int x, int y, float timestamp, int direction, bool deepTraverse) {
         if (!BoardIsTileValid(x, y)) { return; }
         if (BoardTryGetTile(x, y) == null) { return; }
 
@@ -272,7 +290,12 @@ public class LetterGameManager : Singleton<LetterGameManager> {
             var xConnected = TryGetConnectedLetters(x, y, 1);
 
             foreach (var item in xConnected) {
-                Debug.Log("I AM CONNECTED: " + item.Letter + " XPOS: " + item.XPos + " YPOS: " + item.YPos);
+                if (deepTraverse) {
+                    if (item.isValidLetterInWord) {
+                        Debug.Log("I AM VALID: " + item.Letter + " XPOS: " + item.XPos + " YPOS: " + item.YPos, item.gbt);
+                        TraverseInDirection(item.XPos, item.YPos, timestamp, 0, false);
+                    }
+                }
             }
             var xDirection = xConnected.Select(tile => tile.Letter).ToArray();
             bool isValidInX = false;
@@ -288,7 +311,12 @@ public class LetterGameManager : Singleton<LetterGameManager> {
         } else {
             var yConnected = TryGetConnectedLetters(x, y, 0);
             foreach (var item in yConnected) {
-                Debug.Log("I AM CONNECTED: " + item.Letter + " XPOS: " + item.XPos + " YPOS: " + item.YPos);
+                if (deepTraverse) {
+                    if (item.isValidLetterInWord) {
+                        Debug.Log("I AM VALID: " + item.Letter + " XPOS: " + item.XPos + " YPOS: " + item.YPos, item.gbt);
+                        TraverseInDirection(item.XPos, item.YPos, timestamp, 1, false);
+                    }
+                }
             }
             var yDirection = yConnected.Select(tile => tile.Letter).ToArray();
 

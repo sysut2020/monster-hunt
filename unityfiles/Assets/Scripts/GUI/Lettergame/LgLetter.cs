@@ -12,6 +12,8 @@ public class LetterGameLetter {
     private float validationStamp;
     private bool isValid;
 
+    public GameBoardTile gbt;
+
     public LetterGameLetter(int x, int y, string tileLetter) {
         this.XPos = x;
         this.YPos = y;
