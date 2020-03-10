@@ -25,6 +25,8 @@ public class ScoreBoardGUIController : MonoBehaviour {
         foreach (ScoreboardEntry entry in scoreboardEntries) {
             CreateScoreboardEntryTransform(entry, entryContainer, scoreboardEntryTransformList);
         }
+        
+        scoreboardEntries.Sort((entry1, entry2) => entry1.Score.CompareTo(entry2.Score));
     }
 
     private void CreateScoreboardEntryTransform(ScoreboardEntry scoreboardEntry, Transform container,
@@ -54,5 +56,9 @@ public class ScoreboardEntry {
     public int Score {
         get => score;
         set => score = value;
+    }
+
+    public static int CompareByScore(ScoreboardEntry entry1, ScoreboardEntry entry2) {
+        return entry1.Score.CompareTo(entry2.Score);
     }
 }
