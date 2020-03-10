@@ -105,12 +105,14 @@ public class GameManager : Singleton<GameManager> {
 
     // -- unity -- //
 
-    private void OnEnable() {
+    private void Awake() { 
+        DontDestroyOnLoad(this);
         this.gameDataManager = new GameDataManager();
         SubscribeToEvents();
     }
 
     private void OnDestroy() {
         UnsubscribeFromEvents();
+        this.gameDataManager.SaveData();
     }
 }

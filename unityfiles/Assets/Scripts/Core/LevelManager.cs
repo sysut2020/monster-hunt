@@ -219,6 +219,5 @@ public class LevelManager : Singleton<LevelManager> {
 
         GameManager.Instance.GameDataManager.AddLetters(playerInventory.CollectedLetters);
         GameManager.Instance.GameDataManager.AddMoney(playerInventory.Money);
-
     }
 }
