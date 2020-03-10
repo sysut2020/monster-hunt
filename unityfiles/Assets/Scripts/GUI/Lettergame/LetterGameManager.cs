@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,15 +22,6 @@ public class LetterCountCangedEventArgs : EventArgs {
     public Dictionary<string, int> AvailLetters { get; set; }
 }
 
-/// <summary>
-/// NOTES: this may very well be a stupid and unreliable way of doing this a if tuff brakes weirdly (mismatch in the array an the real board)
-///     just make an event that tels every tile how the board should look
-/// 
-/// This class shod also kinda be two classes but that create a ridiculous high Coupling
-/// 
-/// 
-/// stuff to implement find a smart way to notefy all letters shy shold be completd
-/// </summary>
 public class LetterGameManager : Singleton<LetterGameManager> {
     // maby move this to a global constant
     private readonly string[] letters = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
