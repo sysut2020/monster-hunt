@@ -10,28 +10,23 @@ using UnityEngine;
 /// The handler can save and load data.
 /// All of our data we want stored, needs to be saved in a "Save" object.
 /// </summary>
-[RequireComponent(typeof(PlayerInventory))]
-public class DataHandler : MonoBehaviour {
+
+public static class DataSaver {
     
-    private PlayerInventory playerInventory;
-    private string savePath;
+
+    private const string savePath = "/GameSaveFile";
     
-    private void Start() {
-        this.playerInventory = GetComponent<PlayerInventory>();
-        //The address path for our save file
-        savePath = Application.persistentDataPath + "/gamesave.save";
-    }
     
     /// <summary>
     /// Used to save data on a ".save" file
     /// </summary>
     /// <param name="save">The "Save" object we want to save</param>
-    public void SaveData(Save save) {
+    public static void Save(SaveData saveData) {
         var binaryFormatter = new BinaryFormatter();
         
         // Using statement makes the file stream automatically close, when instructions are done
-        using (var fileStream = File.Create(savePath)) {
-            binaryFormatter.Serialize(fileStream, save);
+        using (var fileStream = File.Create(Application.persistentDataPath + savePath)) {
+            binaryFormatter.Serialize(fileStream, saveData);
         }
     }
     
@@ -39,15 +34,17 @@ public class DataHandler : MonoBehaviour {
     /// Used to load the information from a ".save" file
     /// </summary>
     /// <returns>The information to a "Save" object</returns>
-    public Save LoadData() {
-        Save save = null;
-        if (File.Exists(savePath)){
+    public static SaveData Load() {
+        SaveData save = null;
+        
+        if (File.Exists(Application.persistentDataPath + savePath)){
             var binaryFormatter = new BinaryFormatter();
             
             // Using statement makes the file stream automatically close, when instructions are done
-            using (var fileStream = File.Open(savePath, FileMode.Open)){
-                save = (Save) binaryFormatter.Deserialize(fileStream);
+            using (var fileStream = File.Open(Application.persistentDataPath + savePath, FileMode.Open)){
+                save = (SaveData) binaryFormatter.Deserialize(fileStream);
             }
+            
             
         }
         else {

@@ -28,6 +28,7 @@ public class LevelManager : Singleton<LevelManager> {
     [SerializeField]
     private LevelDetails levelDetails;
 
+    private PlayerInventory playerInventory;
     private Timers levelTimer = new Timers();
     private string LEVEL_TIMER_ID;
     private LEVEL_STATE currentState; // may need default here in that case find out the starting state
@@ -175,13 +176,26 @@ public class LevelManager : Singleton<LevelManager> {
         CleanUpEvent?.Invoke(this, EventArgs.Empty);
     }
 
+    /// <summary>
+    /// Starts the level timer
+    /// </summary>
     private void startLevelTime() {
         this.levelTimer.Set(LEVEL_TIMER_ID, this.levelDetails.Time);
+    }
+
+    /// <summary>
+    /// returns the time left in milliseconds
+    /// if timer is done -1 is returned
+    /// </summary>
+    /// <returns>time left in milliseconds -1 if done</returns>
+    public int GetLevelTimeLeft(){
+        return this.levelTimer.TimeLeft(this.LEVEL_TIMER_ID);
     }
 
     // -- unity -- //
 
     private void Start() {
+        playerInventory = new PlayerInventory();
         this.playThroughData = new PlayThroughData();
         LEVEL_TIMER_ID = this.levelTimer.RollingUID;
         this.startLevelTime();
@@ -195,10 +209,6 @@ public class LevelManager : Singleton<LevelManager> {
         }
     }
 
-    public int GetLevelTimeLeft(){
-        return this.levelTimer.TimeLeft(this.LEVEL_TIMER_ID);
-    }
-
     private void OnEnable() {
         SubscribeToEvents();
     }
@@ -206,5 +216,8 @@ public class LevelManager : Singleton<LevelManager> {
     private void OnDestroy() {
         CleanUpScene();
         UnsubscribeFromEvents();
+
+        GameManager.Instance.GameDataManager.AddLetters(playerInventory.CollectedLetters);
+        GameManager.Instance.GameDataManager.AddMoney(playerInventory.Money);
     }
 }
