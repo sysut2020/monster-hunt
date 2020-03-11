@@ -21,13 +21,13 @@ public class ScoreboardEntry : IComparable<ScoreboardEntry> {
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="entryToCompare">The entry to compare</param>
+    /// <param name="other">The entry to compare</param>
     /// <returns></returns>
-    public int CompareTo(ScoreboardEntry entryToCompare) {
-        if (entryToCompare.Score < Score) {
+    public int CompareTo(ScoreboardEntry other) {
+        if (other.Score < Score) {
             return 1;
         }
-        if (entryToCompare.Score > Score) {
+        if (other.Score > Score) {
             return -1;
         }
 

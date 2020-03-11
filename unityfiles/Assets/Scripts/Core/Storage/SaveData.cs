@@ -6,6 +6,16 @@
 /// </summary>
 [System.Serializable]
 public class SaveData {
-    public List<ScoreboardEntry> HighScores;
-    public int Money;
+    private List<ScoreboardEntry> highScores;
+    private int money;
+
+    public List<ScoreboardEntry> HighScores {
+        get => highScores;
+        set => highScores = value;
+    }
+
+    public int Money {
+        get => money;
+        set => money = value;
+    }
 }

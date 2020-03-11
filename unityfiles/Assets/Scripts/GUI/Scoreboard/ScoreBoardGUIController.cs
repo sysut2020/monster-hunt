@@ -11,7 +11,6 @@ public class ScoreBoardGUIController : MonoBehaviour {
     private Transform entryContainer;
     private Transform entryTemplate;
     private List<ScoreboardEntry> scoreboardEntries;
-    private List<Transform> scoreboardEntryTransformList;
 
     private void Awake() {
         InitilizeFields();
@@ -23,9 +22,9 @@ public class ScoreBoardGUIController : MonoBehaviour {
         //     new ScoreboardEntry {PlayerName = "dumb", Score = 69}
         // };
         
-        SortScoreBoardInDecendingOrder();
+        SortScoreBoardInDescendingOrder();
 
-        scoreboardEntryTransformList = new List<Transform>();
+        var scoreboardEntryTransformList = new List<Transform>();
         foreach (ScoreboardEntry entry in scoreboardEntries) {
             CreateScoreboardEntryTransform(entry, entryContainer, scoreboardEntryTransformList);
         }
@@ -33,7 +32,7 @@ public class ScoreBoardGUIController : MonoBehaviour {
         // GameManager.Instance.GameDataManager.SetHighScores(scoreboardEntries);
     }
 
-    private void SortScoreBoardInDecendingOrder() {
+    private void SortScoreBoardInDescendingOrder() {
         scoreboardEntries.Sort();
         scoreboardEntries.Reverse();
     }
