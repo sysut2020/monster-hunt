@@ -47,18 +47,9 @@ public class ScoreBoardGUIController : MonoBehaviour {
 }
 
 public class ScoreboardEntry : IComparable {
-    private string name;
-    private int score;
+    public string Name { get; set; }
 
-    public string Name {
-        get => name;
-        set => name = value;
-    }
-
-    public int Score {
-        get => score;
-        set => score = value;
-    }
+    public int Score { get; set; }
 
     /// <summary>
     /// Used to sort a list of ScoreboardEntries
