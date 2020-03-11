@@ -221,7 +221,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -78, y: -19.440002}
+  m_AnchoredPosition: {x: -78, y: -19.44043}
   m_SizeDelta: {x: 93.93994, y: 148.17}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &764205683
@@ -563,7 +563,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -227.57}
+  m_AnchoredPosition: {x: 0, y: -227.56934}
   m_SizeDelta: {x: -273.47, y: -487.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1462004237
@@ -732,7 +732,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 77.20001, y: -19.44}
+  m_AnchoredPosition: {x: 77.19922, y: -19.44043}
   m_SizeDelta: {x: 93.94, y: 148.17}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1616188953
@@ -896,6 +896,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bebc41f2c51f0954bdedc3d5b53845c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  backsearch: 1
   bSizeX: 27
   bSizeY: 10
   playingBoard: {fileID: 1130438225}
