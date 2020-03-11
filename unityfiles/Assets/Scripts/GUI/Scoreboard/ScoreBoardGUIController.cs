@@ -2,6 +2,11 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+/// <summary>
+/// Controls how the scoreboard is displayed.
+/// Loads the different high scores from the saved data and displays them in a descending fashion
+/// Script is highly inspired by Code Monkey. (source: https://www.youtube.com/watch?v=iAbaqGYdnyI)
+/// </summary>
 public class ScoreBoardGUIController : MonoBehaviour {
     private Transform entryContainer;
     private Transform entryTemplate;
@@ -9,11 +14,8 @@ public class ScoreBoardGUIController : MonoBehaviour {
     private List<Transform> scoreboardEntryTransformList;
 
     private void Awake() {
-        entryContainer = transform.Find("entryContainer");
-        entryTemplate = entryContainer.Find("template");
-
-        entryTemplate.gameObject.SetActive(false);
-        scoreboardEntries = GameManager.Instance.GameDataManager.HighScores;
+        InitilizeFields();
+        LoadHighScores();
 
         // scoreboardEntries = new List<ScoreboardEntry>() {
         //     new ScoreboardEntry {PlayerName = "spiftire", Score = 2000},
@@ -21,8 +23,7 @@ public class ScoreBoardGUIController : MonoBehaviour {
         //     new ScoreboardEntry {PlayerName = "dumb", Score = 69}
         // };
         
-        scoreboardEntries.Sort();
-        scoreboardEntries.Reverse();
+        SortScoreBoardInDecendingOrder();
 
         scoreboardEntryTransformList = new List<Transform>();
         foreach (ScoreboardEntry entry in scoreboardEntries) {
@@ -32,6 +33,27 @@ public class ScoreBoardGUIController : MonoBehaviour {
         // GameManager.Instance.GameDataManager.SetHighScores(scoreboardEntries);
     }
 
+    private void SortScoreBoardInDecendingOrder() {
+        scoreboardEntries.Sort();
+        scoreboardEntries.Reverse();
+    }
+
+    private void InitilizeFields() {
+        entryContainer = transform.Find("entryContainer");
+        entryTemplate = entryContainer.Find("template");
+        entryTemplate.gameObject.SetActive(false);
+    }
+
+    private void LoadHighScores() {
+        scoreboardEntries = GameManager.Instance.GameDataManager.HighScores;
+    }
+
+    /// <summary>
+    /// Creates an entry in the scoreboard.
+    /// </summary>
+    /// <param name="scoreboardEntry">The entry to be displayed. Uses the entry fields to show player name and score on screen</param>
+    /// <param name="container">What container the score should be child of</param>
+    /// <param name="transformList">The list of all the other scores</param>
     private void CreateScoreboardEntryTransform(ScoreboardEntry scoreboardEntry, Transform container,
         List<Transform> transformList) {
         var templateHeight = entryTemplate.GetComponent<RectTransform>().rect.height;
