@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -17,9 +16,9 @@ public class ScoreBoardGUIController : MonoBehaviour {
         scoreboardEntries = GameManager.Instance.GameDataManager.HighScores;
 
         // scoreboardEntries = new List<ScoreboardEntry>() {
-        //     new ScoreboardEntry {Name = "spiftire", Score = 2000},
-        //     new ScoreboardEntry {Name = "dummy", Score = 12300},
-        //     new ScoreboardEntry {Name = "dumb", Score = 69}
+        //     new ScoreboardEntry {PlayerName = "spiftire", Score = 2000},
+        //     new ScoreboardEntry {PlayerName = "dummy", Score = 12300},
+        //     new ScoreboardEntry {PlayerName = "dumb", Score = 69}
         // };
         
         scoreboardEntries.Sort();
@@ -41,41 +40,10 @@ public class ScoreBoardGUIController : MonoBehaviour {
         entryRectTransform.anchoredPosition = new Vector2(0, -templateHeight * transformList.Count);
         entryTransform.gameObject.SetActive(true);
 
-        entryTransform.Find("nameTemplateText").GetComponent<TextMeshProUGUI>().text = scoreboardEntry.Name;
+        entryTransform.Find("nameTemplateText").GetComponent<TextMeshProUGUI>().text = scoreboardEntry.PlayerName;
         entryTransform.Find("scoreTemplateText").GetComponent<TextMeshProUGUI>().text =
             scoreboardEntry.Score.ToString();
 
         transformList.Add(entryTransform);
-    }
-}
-
-[System.Serializable]
-public class ScoreboardEntry : IComparable<ScoreboardEntry> {
-    public ScoreboardEntry() {
-    }
-
-    public ScoreboardEntry(string name, int score) {
-        Name = name;
-        Score = score;
-    }
-
-    public string Name { get; set; }
-
-    public int Score { get; set; }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="entryToCompare">The entry to compare</param>
-    /// <returns></returns>
-    public int CompareTo(ScoreboardEntry entryToCompare) {
-        if (entryToCompare.Score < Score) {
-            return 1;
-        }
-        if (entryToCompare.Score > Score) {
-            return -1;
-        }
-
-        return 0;
     }
 }
