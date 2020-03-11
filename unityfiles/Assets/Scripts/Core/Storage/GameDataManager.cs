@@ -90,7 +90,7 @@ public class GameDataManager {
             }
 
             // foreach (var entry in HighScores) {
-            //     Debug.Log("entry: " + entry.Name);
+            //     Debug.Log("entry: " + entry.PlayerName);
             // }
         }
     }
