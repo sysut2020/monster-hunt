@@ -12,8 +12,7 @@ public class Sound {
         set => name = value;
     }
 
-    // The audio clip we want to play
-    private AudioClip audioClip;
+    private AudioClip audioClipToPlay;
 
     public AudioClip AudioClip {
         get => audioClip;

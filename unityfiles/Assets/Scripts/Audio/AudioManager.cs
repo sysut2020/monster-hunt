@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class AudioManager : Singleton<AudioManager> {
     
-    public Sound[] sounds;
+    [SerializeField]
+    private Sound[] sounds;
 
     private void Awake() {
         // Add all the sounds to our audio manager
