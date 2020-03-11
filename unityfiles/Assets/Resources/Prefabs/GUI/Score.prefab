@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3378237799078036447}
   - component: {fileID: 7867858655848382884}
   - component: {fileID: 6036577679393927506}
-  - component: {fileID: 743786591001726923}
+  - component: {fileID: 94393248629106149}
   m_Layer: 5
   m_Name: Score
   m_TagString: Untagged
@@ -156,7 +156,7 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &743786591001726923
+--- !u!114 &94393248629106149
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -165,6 +165,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 6849158757731707902}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7f25da94991a96fd819809707bb1ec5, type: 3}
+  m_Script: {fileID: 11500000, guid: 0f32a7e21171e71bfaad9df297a651a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
