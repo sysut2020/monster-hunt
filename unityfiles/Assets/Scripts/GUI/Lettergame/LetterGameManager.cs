@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +23,17 @@ public class LetterCountCangedEventArgs : EventArgs {
 }
 
 public class LetterGameManager : Singleton<LetterGameManager> {
+
+    public bool backsearch = true;
+
+    /// <summary>
+    /// Dimension constants for multidimansional(2D) arrays
+    /// Y = 0
+    /// X = 1
+    /// </summary>
+    private const int YDIMENSION = 0;
+    private const int XDIMENSION = 1;
+
     // maby move this to a global constant
     private readonly string[] letters = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
 
