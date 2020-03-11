@@ -46,7 +46,16 @@ public class ScoreBoardGUIController : MonoBehaviour {
     }
 }
 
+[System.Serializable]
 public class ScoreboardEntry : IComparable<ScoreboardEntry> {
+    public ScoreboardEntry() {
+    }
+
+    public ScoreboardEntry(string name, int score) {
+        Name = name;
+        Score = score;
+    }
+
     public string Name { get; set; }
 
     public int Score { get; set; }
