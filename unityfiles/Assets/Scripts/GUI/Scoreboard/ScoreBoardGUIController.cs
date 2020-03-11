@@ -14,6 +14,7 @@ public class ScoreBoardGUIController : MonoBehaviour {
         entryTemplate = entryContainer.Find("template");
 
         entryTemplate.gameObject.SetActive(false);
+        scoreboardEntries = GameManager.Instance.GameDataManager.HighScores;
 
         scoreboardEntries = new List<ScoreboardEntry>() {
             new ScoreboardEntry {Name = "spiftire", Score = 2000},
