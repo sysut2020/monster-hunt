@@ -20,13 +20,14 @@ public class ScoreBoardGUIController : MonoBehaviour {
             new ScoreboardEntry {Name = "dummy", Score = 12300},
             new ScoreboardEntry {Name = "dumb", Score = 69}
         };
+        
+        scoreboardEntries.Sort();
+        scoreboardEntries.Reverse();
 
         scoreboardEntryTransformList = new List<Transform>();
         foreach (ScoreboardEntry entry in scoreboardEntries) {
             CreateScoreboardEntryTransform(entry, entryContainer, scoreboardEntryTransformList);
         }
-        
-        scoreboardEntries.Sort((entry1, entry2) => entry1.Score.CompareTo(entry2.Score));
     }
 
     private void CreateScoreboardEntryTransform(ScoreboardEntry scoreboardEntry, Transform container,
@@ -38,13 +39,14 @@ public class ScoreBoardGUIController : MonoBehaviour {
         entryTransform.gameObject.SetActive(true);
 
         entryTransform.Find("nameTemplateText").GetComponent<TextMeshProUGUI>().text = scoreboardEntry.Name;
-        entryTransform.Find("scoreTemplateText").GetComponent<TextMeshProUGUI>().text = scoreboardEntry.Score.ToString();
+        entryTransform.Find("scoreTemplateText").GetComponent<TextMeshProUGUI>().text =
+            scoreboardEntry.Score.ToString();
 
         transformList.Add(entryTransform);
     }
 }
 
-public class ScoreboardEntry {
+public class ScoreboardEntry : IComparable {
     private string name;
     private int score;
 
@@ -58,7 +60,20 @@ public class ScoreboardEntry {
         set => score = value;
     }
 
-    public static int CompareByScore(ScoreboardEntry entry1, ScoreboardEntry entry2) {
-        return entry1.Score.CompareTo(entry2.Score);
+    /// <summary>
+    /// Used to sort a list of ScoreboardEntries
+    /// </summary>
+    /// <param name="obj">the object to compare</param>
+    /// <returns></returns>
+    public int CompareTo(object obj) {
+        ScoreboardEntry entryToCompare = obj as ScoreboardEntry;
+        if (entryToCompare.Score < Score) {
+            return 1;
+        }
+        if (entryToCompare.Score > Score) {
+            return -1;
+        }
+
+        return 0;
     }
 }
