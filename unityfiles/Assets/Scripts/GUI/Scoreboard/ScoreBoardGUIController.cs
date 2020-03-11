@@ -16,11 +16,11 @@ public class ScoreBoardGUIController : MonoBehaviour {
         entryTemplate.gameObject.SetActive(false);
         scoreboardEntries = GameManager.Instance.GameDataManager.HighScores;
 
-        scoreboardEntries = new List<ScoreboardEntry>() {
-            new ScoreboardEntry {Name = "spiftire", Score = 2000},
-            new ScoreboardEntry {Name = "dummy", Score = 12300},
-            new ScoreboardEntry {Name = "dumb", Score = 69}
-        };
+        // scoreboardEntries = new List<ScoreboardEntry>() {
+        //     new ScoreboardEntry {Name = "spiftire", Score = 2000},
+        //     new ScoreboardEntry {Name = "dummy", Score = 12300},
+        //     new ScoreboardEntry {Name = "dumb", Score = 69}
+        // };
         
         scoreboardEntries.Sort();
         scoreboardEntries.Reverse();
@@ -29,6 +29,8 @@ public class ScoreBoardGUIController : MonoBehaviour {
         foreach (ScoreboardEntry entry in scoreboardEntries) {
             CreateScoreboardEntryTransform(entry, entryContainer, scoreboardEntryTransformList);
         }
+        
+        // GameManager.Instance.GameDataManager.SetHighScores(scoreboardEntries);
     }
 
     private void CreateScoreboardEntryTransform(ScoreboardEntry scoreboardEntry, Transform container,
