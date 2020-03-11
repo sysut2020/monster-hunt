@@ -46,18 +46,17 @@ public class ScoreBoardGUIController : MonoBehaviour {
     }
 }
 
-public class ScoreboardEntry : IComparable {
+public class ScoreboardEntry : IComparable<ScoreboardEntry> {
     public string Name { get; set; }
 
     public int Score { get; set; }
 
     /// <summary>
-    /// Used to sort a list of ScoreboardEntries
+    /// 
     /// </summary>
-    /// <param name="obj">the object to compare</param>
+    /// <param name="entryToCompare">The entry to compare</param>
     /// <returns></returns>
-    public int CompareTo(object obj) {
-        ScoreboardEntry entryToCompare = obj as ScoreboardEntry;
+    public int CompareTo(ScoreboardEntry entryToCompare) {
         if (entryToCompare.Score < Score) {
             return 1;
         }
