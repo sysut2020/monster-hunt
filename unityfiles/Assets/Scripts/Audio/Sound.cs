@@ -15,8 +15,8 @@ public class Sound {
     private AudioClip audioClipToPlay;
 
     public AudioClip AudioClip {
-        get => audioClip;
-        set => audioClip = value;
+        get => audioClipToPlay;
+        set => audioClipToPlay = value;
     }
     
     // The volume of the sound

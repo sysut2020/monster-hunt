@@ -3,33 +3,43 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public class PlaySoundEventArgs : EventArgs {
+}
+
 public class AudioManager : Singleton<AudioManager> {
+    private AudioSource audioSource;
     
-    [SerializeField]
-    private Sound[] sounds;
+    private AudioClip mainMenuMusic;
+    private AudioClip level1Music;
+    
+    
+    public EventHandler<PlaySoundEventArgs> PlaySoundEvent;
 
     private void Awake() {
-        // Add all the sounds to our audio manager
-        foreach (Sound s in sounds) {
-            s.audioSource = gameObject.AddComponent<AudioSource>();
-            s.audioSource.clip = s.AudioClip;
-
-            s.audioSource.volume = s.Volume;
-            s.audioSource.pitch = s.Pitch;
-            s.audioSource.loop = s.Loop;
-        }
+        SubscribeToEvents();
+        LoadAllAudioClips();
     }
-    /// <summary>
-    /// Plays the audio clip with a given name,
-    /// returns a warning if not found.
-    /// </summary>
-    /// <param name="name">The audio clip we want to play</param>
-    public void Play(string name) {
-        Sound s = Array.Find(sounds, sound => sound.Name == name);
-        if (s == null) {
-            Debug.LogWarning("Sound: " + name +" not found!");
-            return;
-        }
-        s.audioSource.Play();
+
+    private void SubscribeToEvents() {
+        GameManager.OnMainMenuMusic += CallBackMainMenuMusicEvent;
+        GameManager.OnLevel1Music += CallBackLevel1MusicEvent;
+    }
+
+    private void UnsubscribeFromEvents() {
+        GameManager.OnMainMenuMusic -= CallBackMainMenuMusicEvent;
+        GameManager.OnLevel1Music -= CallBackLevel1MusicEvent;
+    }
+    
+    private void CallBackMainMenuMusicEvent(object o, EventArgs args) {
+        audioSource.PlayOneShot(mainMenuMusic);
+    }
+
+    private void CallBackLevel1MusicEvent(object o, EventArgs args) {
+        audioSource.PlayOneShot(level1Music);
+    }
+
+    private void LoadAllAudioClips() {
+        mainMenuMusic = (AudioClip) Resources.Load("Audio/Game music/Main menu music.mp3");
+        level1Music = (AudioClip) Resources.Load("Audio/Game music/Level 1 music.mp3");
     }
 }

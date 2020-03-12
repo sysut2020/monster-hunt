@@ -17,11 +17,7 @@ public class GameManager : Singleton<GameManager> {
     private const int LETTER_GAME_SCENE_INDEX = 2;
 
     private GAME_STATE currentState;
-
-    private const string MAIN_MENU_MUSIC = "Main menu music";
-    private const string LEVEL_1_MUSIC = "Level 1 music";
-    private const string LETTER_GAME_MUSIC = "Letter game music";
-
+    
     private PlayerPersistentStorage playerPersistentStorage;
     public PlayerPersistentStorage PlayerPersistentStorage {
         get => playerPersistentStorage;
@@ -36,6 +32,9 @@ public class GameManager : Singleton<GameManager> {
     /// This event tells the listeners the game state has changed
     /// </summary>
     public static event EventHandler<GameStateChangeEventArgs> GameStateChangeEvent;
+
+    public static event EventHandler OnMainMenuMusic;
+    public static event EventHandler OnLevel1Music;
 
     /// <summary>
     /// Subscribes to the relevant events for this class
@@ -83,17 +82,17 @@ public class GameManager : Singleton<GameManager> {
         switch (NewState) {
             case GAME_STATE.MAIN_MENU:
                 UnityEngine.SceneManagement.SceneManager.LoadScene(MAIN_MENU_SCENE_INDEX);
-                AudioManager.Instance.Play(MAIN_MENU_MUSIC);
+                PlayMainMenuMusic();
                 break;
 
             case GAME_STATE.TEST_LEVEL:
                 SceneManager.Instance.ChangeScene(TEST_LEVEL_SCENE_INDEX);
-                AudioManager.Instance.Play(LEVEL_1_MUSIC);
+                PlayLevel1Music();
                 break;
             
             case GAME_STATE.LETTER_LEVEL:
                 SceneManager.Instance.ChangeScene(LETTER_GAME_SCENE_INDEX);
-                AudioManager.Instance.Play(LETTER_GAME_MUSIC);
+                
                 break;
 
             case GAME_STATE.EXIT:
@@ -118,5 +117,13 @@ public class GameManager : Singleton<GameManager> {
 
     private void OnDestroy() {
         UnsubscribeFromEvents();
+    }
+
+    private void PlayMainMenuMusic() {
+        OnMainMenuMusic?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void PlayLevel1Music() {
+        OnLevel1Music?.Invoke(this, EventArgs.Empty);
     }
 }
