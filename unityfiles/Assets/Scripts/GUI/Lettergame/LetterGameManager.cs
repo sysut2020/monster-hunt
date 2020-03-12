@@ -141,19 +141,23 @@ public class LetterGameManager : Singleton<LetterGameManager> {
     /// Finds words on the board, and builds the word when it 
     /// finds valid words in the provided dimension.
     /// </summary>
-    /// <param name="dimension"></param>
+    /// <param name="dimension">dimension to search in</param>
     private void FindWordsInDimension(int dimension) {
         int minDimension1;
         int maxDimension1;
         int minDimension2;
         int maxDimension2;
+        bool isXdimension = dimension == XDIMENSION;
 
+        /*
+            This block flips the X and Y depending on the dimension
+            we want to search in
+        */
         if (dimension == YDIMENSION) {
             minDimension1 = tileMap.GetLowerBound(XDIMENSION);
             maxDimension1 = tileMap.GetUpperBound(XDIMENSION);
             minDimension2 = tileMap.GetLowerBound(YDIMENSION);
             maxDimension2 = tileMap.GetUpperBound(YDIMENSION);
-
         } else {
             minDimension1 = tileMap.GetLowerBound(YDIMENSION);
             maxDimension1 = tileMap.GetUpperBound(YDIMENSION);
@@ -162,15 +166,49 @@ public class LetterGameManager : Singleton<LetterGameManager> {
         }
 
         for (int dimension1Counter = minDimension1; dimension1Counter <= maxDimension1; dimension1Counter++) {
-            for (int dimension2Counter = minDimension2; dimension2Counter <= maxDimension2; dimension2Counter++) {
-                if (IsBoardTileValid(dimension2Counter, dimension1Counter)) {
-                    var connectedLetters = TryGetConnectedLetters(dimension2Counter, dimension1Counter, dimension);
-                    if (CreateWordOfLetters(connectedLetters, dimension)) {
-                        dimension2Counter = GetLastLetterPosition(connectedLetters).x;
-                    }
+            int dimension2Counter = minDimension2;
+            // This is a fallback if the loop becomes trapped as a result of dim2counter boing set weird..
+            int failproofer = 0;
+            while (dimension2Counter <= maxDimension2 && failproofer <= maxDimension2) {
+                // Since we flip X and Y based on dimension we search in, we have to
+                // flip provided field to the tryfindword
+                if (isXdimension) {
+                    dimension2Counter = TryFindWordAtPosition(dimension2Counter, dimension1Counter, dimension);
+                } else {
+                    dimension2Counter = TryFindWordAtPosition(dimension1Counter, dimension2Counter, dimension);
                 }
+                dimension2Counter++;
+                // Failproof counter.. since we modify dimensionCounter based on positions
+                // it can cause infinite loops, if not careful. :D 
+                failproofer++;
             }
         }
+    }
+
+    /// <summary>
+    /// Tries to find a word in the position in the provided dimension X or Y 
+    /// and return the X or Y position of the last letter in the word.
+    /// If finding word in Y dimension, return Y position of last letter, if no 
+    /// words are found, return the X or Y of the provided X Y
+    /// </summary>
+    /// <param name="x">X position to search from</param>
+    /// <param name="y">Y position to search from</param>
+    /// <param name="dimension">the dimension to search in X or Y (0 or 1)</param>
+    /// <returns>returns last letter position X ofr x dimension, Y for y dimension</returns>
+    private int TryFindWordAtPosition(int x, int y, int dimension) {
+        int lastposition = 0;
+        if (IsBoardTileValid(x, y)) {
+            var connectedLetters = TryGetConnectedLetters(x, y, dimension);
+            if (CreateWordOfLetters(connectedLetters, dimension)) {
+                var pos = GetLastLetterPosition(connectedLetters);
+                lastposition = (dimension == XDIMENSION) ? pos.x : pos.y;
+            }
+        }
+        if (lastposition == 0) {
+            lastposition = (dimension == XDIMENSION) ? x : y;
+        }
+
+        return lastposition;
     }
 
     /// <summary>
