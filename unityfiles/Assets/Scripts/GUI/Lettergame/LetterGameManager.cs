@@ -114,10 +114,6 @@ public class LetterGameManager : Singleton<LetterGameManager> {
     /// <param name="newY">the new x pos for the letter</param>
     /// <param name="letter">the letter object to update the cords of</param>
     public void UpdateLetterPos(int newX, int newY, LetterGameLetter letter) {
-        float timestamp = DateTime.Now.Millisecond * UnityEngine.Random.Range(0f, 100f);
-        int prevX = letter.XPos;
-        int prevY = letter.YPos;
-
         if (BoardIsTileValid(newX, newY)) {
             // check for new words from the new point
             this.BoardSetTile(newX, newY, letter);
