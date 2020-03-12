@@ -8,12 +8,6 @@ public class LetterController : MonoBehaviour {
     [SerializeField]
     private TMP_Text letterComponent;
 
-    private bool isCollected;
-
-    private void Start() {
-        isCollected = false;
-    }
-
     /// <summary>
     /// Assigns the new letter to the component
     /// </summary>
