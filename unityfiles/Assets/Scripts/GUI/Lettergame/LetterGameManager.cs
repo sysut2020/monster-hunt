@@ -103,7 +103,7 @@ public class LetterGameManager : Singleton<LetterGameManager> {
                 break;
             }
         }
-        this.refreshLetterNumberDisplay();
+        this.RefreshLetterCountDisplay();
         return ret;
     }
 
@@ -125,7 +125,7 @@ public class LetterGameManager : Singleton<LetterGameManager> {
         this.ResetAllTilesOnBoard();
         this.FindWordsInDimension(XDIMENSION);
         this.FindWordsInDimension(YDIMENSION);
-        this.refreshLetterNumberDisplay();
+        this.RefreshLetterCountDisplay();
     }
 
     /// <summary>
@@ -270,7 +270,7 @@ public class LetterGameManager : Singleton<LetterGameManager> {
     /// <summary>
     /// Invokes a event telling all the letter displays to update their number of letters
     /// </summary>
-    private void refreshLetterNumberDisplay() {
+    private void RefreshLetterCountDisplay() {
         LetterCountCangedEventArgs args = new LetterCountCangedEventArgs();
         args.AvailLetters = this.CurrentAvailableLetterCount;
         LetterCountCangedEvent?.Invoke(this, args);
@@ -318,7 +318,7 @@ public class LetterGameManager : Singleton<LetterGameManager> {
             letter.XPos = -1;
             letter.YPos = -1;
 
-            this.refreshLetterNumberDisplay();
+            this.RefreshLetterCountDisplay();
             suc = true;
         }
         return suc;
@@ -399,7 +399,7 @@ public class LetterGameManager : Singleton<LetterGameManager> {
 
         this.MakeBoardTiles();
         this.MakeLetterTile();
-        refreshLetterNumberDisplay();
+        RefreshLetterCountDisplay();
 
     }
 
