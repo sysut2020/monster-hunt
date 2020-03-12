@@ -133,7 +133,7 @@ public class LetterGameManager : Singleton<LetterGameManager> {
     /// </summary>
     private void ResetAllTilesOnBoard() {
         foreach (var item in tileMap) {
-            item?.SetValidLetter(false);
+            item?.SetValidLetter(false, -1);
         }
     }
 
@@ -165,7 +165,7 @@ public class LetterGameManager : Singleton<LetterGameManager> {
             for (int dimension2Counter = minDimension2; dimension2Counter <= maxDimension2; dimension2Counter++) {
                 if (IsBoardTileValid(dimension2Counter, dimension1Counter)) {
                     var connectedLetters = TryGetConnectedLetters(dimension2Counter, dimension1Counter, dimension);
-                    if (CreateWordOfLetters(connectedLetters)) {
+                    if (CreateWordOfLetters(connectedLetters, dimension)) {
                         dimension2Counter = GetLastLetterPosition(connectedLetters).x;
                     }
                 }
@@ -183,7 +183,6 @@ public class LetterGameManager : Singleton<LetterGameManager> {
         if (connectedLetters != null) {
             int lastIndex = connectedLetters.Length - 1;
             var lastLetter = connectedLetters[Mathf.Clamp(lastIndex, 0, lastIndex)];
-            Debug.Log("LAST LETTER: " + lastLetter);
             lastPosition.x = lastLetter.XPos;
             lastPosition.y = lastLetter.YPos;
         }
@@ -197,11 +196,11 @@ public class LetterGameManager : Singleton<LetterGameManager> {
     /// </summary>
     /// <param name="connectedLetters">letters to create word of</param>
     /// <returns>true if created word, else false</returns>
-    private bool CreateWordOfLetters(LetterGameLetter[] connectedLetters) {
+    private bool CreateWordOfLetters(LetterGameLetter[] connectedLetters, int direction) {
         bool createdWord = false;
         if (IsConnectedLetterValid(connectedLetters)) {
             foreach (var letter in connectedLetters) {
-                letter.SetValidLetter(true);
+                letter.SetValidLetter(true, direction);
             }
             createdWord = true;
         }
@@ -219,7 +218,6 @@ public class LetterGameManager : Singleton<LetterGameManager> {
         if (connectedLetters != null) {
             string word = GetWordStringOfLetters(connectedLetters);
             isValidConnection = WordChecker.isWordValid(word);
-            Debug.Log(word);
         }
         return isValidConnection;
     }

@@ -19,6 +19,12 @@ public class GameBoardTile : Dragable {
     [SerializeField]
     private Image tileImage;
 
+    [SerializeField]
+    private Image verticalIndicator;
+
+    [SerializeField]
+    private Image horizontalIndicator;
+
     private LetterGameLetter holdingLetter = null;
 
     public int XPos { get => xPos; set => xPos = value; }
@@ -37,6 +43,7 @@ public class GameBoardTile : Dragable {
     /// <param name="letter">the letter to display</param>
     public void SetTile(LetterGameLetter letter) {
         letter.OnValidLetterInWordCallback(SetTileValidColor);
+        letter.WorldPosition = this.transform.position;
         letter.gbt = this;
         holdingLetter = letter;
         LetterGameManager.Instance.UpdateLetterPos(XPos, YPos, letter);
@@ -49,7 +56,7 @@ public class GameBoardTile : Dragable {
     /// resets the displayed char on the tile
     /// </summary>
     public void ResetTile() {
-        SetTileValidColor(false);
+        SetTileValidColor(false, -1);
         holdingLetter.gbt = this;
         holdingLetter = null;
         this.updateDisplayedLetter();
@@ -58,9 +65,21 @@ public class GameBoardTile : Dragable {
     /// Sets the color on the tile if it is valid, else 
     /// remove color
     /// </summary>
-    /// <param name="isValid">true if valid tile</param>
-    private void SetTileValidColor(bool isValid) {
-        if (isValid) { this.tileImage.color = Color.green; } else { this.tileImage.color = Color.white; }
+    /// /// <param name="isValid">true if valid tile</param>
+    private void SetTileValidColor(bool isValid, int direction) {
+        if (isValid) {
+            this.tileImage.color = Color.green;
+            if (direction == 1) { // RIGHT
+                this.horizontalIndicator.enabled = true;
+            } else if (direction == 0) {
+                this.verticalIndicator.enabled = true;
+            }
+        } else {
+            this.tileImage.color = Color.white;
+            this.horizontalIndicator.enabled = false;
+            this.verticalIndicator.enabled = false;
+        }
+
     }
 
     /// <summary>

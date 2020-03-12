@@ -8,8 +8,10 @@ public class LetterGameLetter {
     private readonly string letter;
     private int xPos, yPos;
     private bool isOnBoard = false;
-    private Action<bool> OnValidLetterInWord { get; set; }
+    private Action<bool, int> OnValidLetterInWord { get; set; }
     private bool isValid;
+
+    private Vector3 worldPosition;
 
     public GameBoardTile gbt;
 
@@ -24,7 +26,7 @@ public class LetterGameLetter {
     /// letter in a word.
     /// </summary>
     /// <param name="func">callback function to be called</param>
-    public void OnValidLetterInWordCallback(Action<bool> func) {
+    public void OnValidLetterInWordCallback(Action<bool, int> func) {
         OnValidLetterInWord = func;
     }
 
@@ -33,10 +35,10 @@ public class LetterGameLetter {
     /// Triggers the registered callback method when it becomes valid.
     /// </summary>
     /// <param name="isValidLetterInWord">true if valid, false if unvalid</param>
-    public void SetValidLetter(bool isValidLetterInWord) {
+    public void SetValidLetter(bool isValidLetterInWord, int direction) {
         try {
             this.isValid = isValidLetterInWord;
-            OnValidLetterInWord(isValidLetterInWord);
+            OnValidLetterInWord(isValidLetterInWord, direction);
         } catch (System.NullReferenceException) { }
     }
 
@@ -45,4 +47,5 @@ public class LetterGameLetter {
     public bool isValidLetterInWord { get => isValid; set => isValid = value; }
     public int YPos { get => yPos; set => yPos = value; }
     public int XPos { get => xPos; set => xPos = value; }
+    public Vector3 WorldPosition { get => worldPosition; set => worldPosition = value; }
 }
