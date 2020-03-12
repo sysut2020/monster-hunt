@@ -114,7 +114,7 @@ public class LetterGameManager : Singleton<LetterGameManager> {
     /// <param name="newY">the new x pos for the letter</param>
     /// <param name="letter">the letter object to update the cords of</param>
     public void UpdateLetterPos(int newX, int newY, LetterGameLetter letter) {
-        if (BoardIsTileValid(newX, newY)) {
+        if (IsBoardTileValid(newX, newY)) {
             // Add the tile to the board
             this.BoardSetTile(newX, newY, letter);
         } else {
@@ -163,7 +163,7 @@ public class LetterGameManager : Singleton<LetterGameManager> {
 
         for (int dimension1Counter = minDimension1; dimension1Counter <= maxDimension1; dimension1Counter++) {
             for (int dimension2Counter = minDimension2; dimension2Counter <= maxDimension2; dimension2Counter++) {
-                if (BoardIsTileValid(dimension2Counter, dimension1Counter)) {
+                if (IsBoardTileValid(dimension2Counter, dimension1Counter)) {
                     var connectedLetters = TryGetConnectedLetters(dimension2Counter, dimension1Counter, dimension);
                     if (CreateWordOfLetters(connectedLetters)) {
                         dimension2Counter = GetLastLetterPosition(connectedLetters).x;
@@ -358,7 +358,7 @@ public class LetterGameManager : Singleton<LetterGameManager> {
     private LetterGameLetter BoardTryGetTile(int x, int y) {
         LetterGameLetter ret = null;
 
-        if (BoardIsTileValid(x, y)) {
+        if (IsBoardTileValid(x, y)) {
             if (tileMap[x, y] != null) {
                 ret = tileMap[x, y];
             }
@@ -368,20 +368,21 @@ public class LetterGameManager : Singleton<LetterGameManager> {
     }
 
     /// <summary>
-    /// checks if a tile on the board is valid 
+    /// Check if the tile position is a valid position
+    /// on the board.
     /// </summary>
     /// <param name="x">the x pos of the place to check</param>
     /// <param name="y">the y pos of the place to check</param>
     /// <returns>true if the tile is valid false if not</returns>
-    private bool BoardIsTileValid(int x, int y) {
-        bool ret = true;
+    private bool IsBoardTileValid(int x, int y) {
+        bool valid = true;
         if (
             x > tileMap.GetUpperBound(0) ||
             x < tileMap.GetLowerBound(0) ||
             y > tileMap.GetUpperBound(1) ||
             y < tileMap.GetLowerBound(1)
-        ) { ret = false; }
-        return ret;
+        ) { valid = false; }
+        return valid;
     }
 
     // Start is called before the first frame update
