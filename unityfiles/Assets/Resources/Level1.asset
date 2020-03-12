@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Level1
   m_EditorClassIdentifier: 
   time: 120
-  numberOfEnemies: 13
-  numberOfLetters: 0
+  numberOfEnemies: 8
+  numberOfLetters: 5
