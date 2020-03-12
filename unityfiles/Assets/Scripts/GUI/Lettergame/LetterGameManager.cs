@@ -142,7 +142,7 @@ public class LetterGameManager : Singleton<LetterGameManager> {
     /// finds valid words in the provided dimension.
     /// </summary>
     /// <param name="dimension"></param>
-    public void FindWordsInDimension(int dimension) {
+    private void FindWordsInDimension(int dimension) {
         int minDimension1;
         int maxDimension1;
         int minDimension2;
