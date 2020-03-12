@@ -159,7 +159,7 @@ static class WUArrays {
     /// <param name="ar">the array </param>
     /// <param name="x">the x cord of the starting point</param>
     /// <param name="y">the y cord of the starting point</param>
-    /// <param name="axis">the axis to search 1 is x axis(row) 0 is y axis(col)</param>
+    /// <param name="axis">the axis to search 1 is Y axis(row) 0 is X axis(col)</param>
     /// <typeparam name="T">the type of the array</typeparam>
     /// <returns>An array of all the connected elements form the starting point in the given dir</returns>
     public static T[] GetConnected<T>(T[, ] ar, int x, int y, int axis) {
@@ -179,14 +179,14 @@ static class WUArrays {
         int startIndex;
         T[] valuesList;
 
-        if (axis == 1) // x dir
-        {
-            valuesList = WUArrays.GetRow(ar, y);
-            startIndex = x;
-        } else // y dir
+        if (axis == 1) // Y
         {
             valuesList = WUArrays.GetCol(ar, x);
             startIndex = y;
+        } else // X
+        {
+            valuesList = WUArrays.GetRow(ar, y);
+            startIndex = x;
         }
 
         lowerBound = valuesList.GetLowerBound(0);
