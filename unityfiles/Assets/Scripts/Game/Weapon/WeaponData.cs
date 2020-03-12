@@ -58,15 +58,8 @@ public class WeaponData : ScriptableObject {
 
     [Tooltip("How long the bullet will live if it doesn´t hit anything.")]
     [SerializeField]
-    private float bulletTtl = 0;
+    private int bulletTtl = 0;
 
-    [Tooltip("")]
-    [SerializeField]
-    private Sprite bulletSprite = null;
-
-    [Tooltip("")]
-    [SerializeField]
-    private Vector3 bulletSpriteScale = Vector3.zero;
 
     [Tooltip("Fire rate in shots/sec.")]
     [SerializeField]
@@ -85,9 +78,7 @@ public class WeaponData : ScriptableObject {
     public Vector3 FPPosission { get => firePointPosission; set => firePointPosission = value; }
     public float BulletVelocity { get => bulletVelocity; set => bulletVelocity = value; }
     public float BulletDamage { get => bulletDamage; set => bulletDamage = value; }
-    public float BulletTtl { get => bulletTtl; set => bulletTtl = value; }
-    public Sprite BulletSprite { get => bulletSprite; set => bulletSprite = value; }
-    public Vector3 BulletSpriteScale { get => bulletSpriteScale; set => bulletSpriteScale = value; }
+    public int BulletTtl { get => bulletTtl; set => bulletTtl = value; }
     public float FireRate { get => fireRate; set => fireRate = value; }
     public float BulletSpread { get => bulletSpread; set => bulletSpread = value; }
 }

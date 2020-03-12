@@ -16,25 +16,25 @@ public class PlayerWeaponController : MonoBehaviour {
 
     [SerializeField]
     [Tooltip("list of guns.")]
-    private List<WeaponData> availableWeapons;
+    private GameObject[] availableWeapons;
 
     [SerializeField]
     [Tooltip("the hand that holds the gun.")]
     private GameObject gunHand;
 
-    [SerializeField]
-    private GameObject firePoint;
-    [SerializeField]
-    private GameObject weaponGO;
 
-    private WeaponData currentWeapon;
+
+  
+    private BulletBuffer bulletBuffer = new BulletBuffer();
+    private List<GunController> gunControllers = new List<GunController>(); 
+    private GameObject currentWeapon = null;
     private int currentWeaponIndex = -1;
     private GunController activeGunController;
 
     private SpriteRenderer weaponSpriteRend;
 
     // -- properties -- //
-    public List<WeaponData> AvailableWeapons {
+    public GameObject[] AvailableWeapons {
         get => availableWeapons;
         set => availableWeapons = value;
     }
@@ -43,38 +43,14 @@ public class PlayerWeaponController : MonoBehaviour {
         get => activeGunController;
         internal set => this.activeGunController = value;
     }
-    public GameObject FirePoint { get => firePoint; set => firePoint = value; }
+
 
     // -- public -- //
 
-    /// <summary>
-    /// Starts to fire the weapon
-    /// </summary>
-    public void StartFiring() { this.activeGunController?.StartFiring(); }
 
-    /// <summary>
-    /// Stop fireing the weapon
-    /// </summary>
-    public void StopFiring() { this.activeGunController?.StopFiring(); }
-
-    /// <summary>
-    /// Fires a bullet if able (not on cooldown since last shot)
-    /// </summary>
-    public void FireOnce() { this.activeGunController?.FireOnce(); }
-
-    /// <summary>
-    /// changes to the next weapon in the weapon list 
-    /// if the end of the list is reached the index loops around
-    /// </summary>
-    /// <returns>The weapon controller of the new active weapon</returns>
-    //public GunController ChangeToNextWeapon() => this.ChangeWeapon(1);
-
-    /// <summary>
-    /// changes to the prev weapon in the weapon list 
-    /// if the end of the list is reached the index loops around
-    /// </summary>
-    /// <returns>The weapon controller of the new active weapon</returns>
-    //public GunController ChangeToPrevWeapon() => this.ChangeWeapon(-1);
+    public void MaybeFire() { 
+        this.activeGunController?.MaybeFire();
+    }
 
     // -- events -- //
 
@@ -89,44 +65,25 @@ public class PlayerWeaponController : MonoBehaviour {
     /// <param name="numChanges">the number of places in the weapon list to change the active weapon</param>
     /// <returns>the new active weapon controller</returns>
     private void ChangeWeapon(int numChanges) {
-        int newIndex = (this.currentWeaponIndex + numChanges) % (this.availableWeapons.Count);
-        if (newIndex < 0) { newIndex = this.availableWeapons.Count - 1; }
+        int newIndex = (this.currentWeaponIndex + numChanges) % (this.availableWeapons.Length);
+        if (newIndex < 0) { newIndex = this.availableWeapons.Length - 1; }
 
         if (newIndex != this.currentWeaponIndex) {
             this.currentWeaponIndex = newIndex;
+            this.currentWeapon?.SetActive(false);
             this.currentWeapon = AvailableWeapons[newIndex];
+            this.activeGunController = this.gunControllers[newIndex];
 
-            this.weaponSpriteRend.sprite = currentWeapon.WeaponSprite;
-
-            this.weaponGO.transform.localPosition = currentWeapon.WeaponPosission;
-            this.weaponGO.transform.localRotation = Quaternion.Euler(currentWeapon.WeaponRotation);
-            this.weaponGO.transform.localScale = currentWeapon.WeaponScale;
-
-            this.FirePoint.transform.localPosition = currentWeapon.FPPosission;
-            this.FirePoint.transform.localRotation = Quaternion.Euler(currentWeapon.FPRotation);
-
-            //TODO: Change not destroy
-            Destroy(ActiveGunController);
-
-            this.ActiveGunController = this.FirePoint.AddComponent<GunController>() as GunController;
-
-            this.ActiveGunController.FirePoint = this.firePoint;
-            this.ActiveGunController.FireRate = currentWeapon.FireRate;
-            this.ActiveGunController.BulletSprite = currentWeapon.BulletSprite;
-            this.ActiveGunController.SpriteScale = currentWeapon.BulletSpriteScale;
-            this.ActiveGunController.BulletDamage = currentWeapon.BulletDamage;
-            this.ActiveGunController.BulletTtl = currentWeapon.BulletTtl;
-            this.ActiveGunController.BulletSpread = currentWeapon.BulletSpread;
-            this.ActiveGunController.BulletVelocity = new Vector2(currentWeapon.BulletVelocity, 0);
-
-            this.activeGunController.GenerateBulletBlueprint();
-
+            this.currentWeapon.SetActive(true);
+            
         }
+
+
         WeaponChangedEventArgs args = new WeaponChangedEventArgs();
         args.NewGunController = this.ActiveGunController;
-        args.AnimId = this.currentWeapon.HoldingAnimation;
+        args.AnimId = this.activeGunController.WeaponData.HoldingAnimation;
 
-        WeaponChangedEvent?.Invoke(this, args);
+        WeaponChangedEvent?.Invoke(this, args);        
     }
 
     // -- unity -- //
@@ -135,8 +92,22 @@ public class PlayerWeaponController : MonoBehaviour {
     /// Awake is called when the script instance is being loaded.
     /// </summary>
     void Awake() {
-        this.weaponSpriteRend = weaponGO.AddComponent<SpriteRenderer>() as SpriteRenderer;
-
+        GameObject[] tmp = new GameObject[this.availableWeapons.Length];
+        for (int i = 0; i < this.availableWeapons.Length; i++){
+            GameObject w = Instantiate(this.availableWeapons[i]);
+            if (!w.TryGetComponent(out Gun gun)) {
+                throw new MissingComponentException("Bullet sprite missing");
+            }
+            w.transform.parent = this.gunHand.transform;
+            w.transform.localPosition = Vector3.zero;
+            w.transform.localScale = this.availableWeapons[i].transform.localScale;
+            gun.Bullet.SetActive(false);
+            GunController weaponGc = new GunController(gun, this.bulletBuffer);
+            this.gunControllers.Add(weaponGc);
+            w.SetActive(false);
+            tmp[i] = w;
+        }
+        this.availableWeapons = tmp;
     }
 
     /// <summary>
@@ -147,14 +118,16 @@ public class PlayerWeaponController : MonoBehaviour {
             ChangeWeapon(1);
         }
 
+        if (Input.GetKeyDown(KeyCode.Q)) {
+            ChangeWeapon(-1);
+        }
+
         if (Input.GetMouseButtonDown(0)) {
-            this.FireOnce();
+            this.MaybeFire();
         }
 
         if (Input.GetMouseButton(1)) {
-            this.StartFiring();
-        } else {
-            this.StopFiring();
+            this.MaybeFire();
         }
 
     }
