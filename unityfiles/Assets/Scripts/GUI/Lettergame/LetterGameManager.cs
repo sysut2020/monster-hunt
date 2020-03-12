@@ -77,7 +77,7 @@ public class LetterGameManager : Singleton<LetterGameManager> {
             foreach (string key in playerLetters.Keys) {
                 ret.Add(key, 0);
                 foreach (LetterGameLetter l in playerLetters[key]) {
-                    if (!l.IsOnBoard) { ret[key] += 1; }
+                    if (!l.IsOnBoard) { ret[key]++; }
                 }
             }
             return ret;
