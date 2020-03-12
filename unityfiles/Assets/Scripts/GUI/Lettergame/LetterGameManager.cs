@@ -430,7 +430,7 @@ public class LetterGameManager : Singleton<LetterGameManager> {
         if (this.fillWithTestLetters) {
             DebugFillWithLetters();
         } else {
-            FillPlayerLetters(GameManager.Instance.PlayerPersistentStorage.AvailableLetters);
+            FillPlayerLetters(GameManager.Instance?.GameDataManager.PlayerLetters);
         }
 
         this.MakeBoardTiles();

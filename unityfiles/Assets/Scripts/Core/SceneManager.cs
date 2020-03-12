@@ -13,8 +13,6 @@ public sealed class SceneManager {
     private static SceneManager instance = null;
     // Lock for thread safety
     private static readonly object padlock = new Object();
-
-    private DataHandler dataHandler;
     
     /// <summary>
     /// Check if instance of SceneManager exist, if it does, return it.
