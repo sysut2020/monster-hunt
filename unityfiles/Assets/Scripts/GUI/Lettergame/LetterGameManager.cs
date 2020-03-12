@@ -115,19 +115,16 @@ public class LetterGameManager : Singleton<LetterGameManager> {
     /// <param name="letter">the letter object to update the cords of</param>
     public void UpdateLetterPos(int newX, int newY, LetterGameLetter letter) {
         if (BoardIsTileValid(newX, newY)) {
-            // check for new words from the new point
+            // Add the tile to the board
             this.BoardSetTile(newX, newY, letter);
-            // this.ChekIfWordFromPos(newX, newY, timestamp, true);
         } else {
-            // a letter til has been removed from the screen remove it
+            // Remove the letter from the board
             BoardTryRemoveLetter(letter);
         }
 
         this.ResetAllTilesOnBoard();
-
         this.FindWordsInDimension(XDIMENSION);
         this.FindWordsInDimension(YDIMENSION);
-
         this.refreshLetterNumberDisplay();
     }
 
