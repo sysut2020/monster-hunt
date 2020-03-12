@@ -896,7 +896,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bebc41f2c51f0954bdedc3d5b53845c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  backsearch: 1
   bSizeX: 27
   bSizeY: 10
   playingBoard: {fileID: 1130438225}
@@ -905,3 +904,4 @@ MonoBehaviour:
   letterBoard: {fileID: 1462004235}
   letterTile: {fileID: 2947810737201172508, guid: 8de5a6f3b4ba79b48ada71030db7b88d,
     type: 3}
+  fillWithTestLetters: 0

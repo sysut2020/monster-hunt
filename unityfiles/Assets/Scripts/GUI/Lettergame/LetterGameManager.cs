@@ -1,5 +1,4 @@
-using System;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -24,15 +23,13 @@ public class LetterCountCangedEventArgs : EventArgs {
 
 public class LetterGameManager : Singleton<LetterGameManager> {
 
-    public bool backsearch = true;
-
     /// <summary>
     /// Dimension constants for multidimansional(2D) arrays
-    /// Y = 0
-    /// X = 1
+    /// Y = 1
+    /// X = 0
     /// </summary>
-    private const int YDIMENSION = 0;
-    private const int XDIMENSION = 1;
+    private const int YDIMENSION = 1;
+    private const int XDIMENSION = 0;
 
     // maby move this to a global constant
     private readonly string[] letters = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
@@ -62,6 +59,13 @@ public class LetterGameManager : Singleton<LetterGameManager> {
 
     [SerializeField]
     GameObject letterTile;
+
+    [Header("Testing")]
+    [SerializeField]
+    /// <summary>
+    /// True if should generate test letters, if testing/debugging the scene
+    /// </summary>
+    private bool fillWithTestLetters = false;
 
     private Dictionary<String, List<LetterGameLetter>> playerLetters;
     private LetterGameLetter[, ] tileMap;
@@ -117,63 +121,126 @@ public class LetterGameManager : Singleton<LetterGameManager> {
         if (BoardIsTileValid(newX, newY)) {
             // check for new words from the new point
             this.BoardSetTile(newX, newY, letter);
-            this.ChekIfWordFromPos(newX, newY, timestamp, true);
+            // this.ChekIfWordFromPos(newX, newY, timestamp, true);
         } else {
             // a letter til has been removed from the screen remove it
             BoardTryRemoveLetter(letter);
         }
 
-        if (prevX < 0 && prevY < 0) {
-            prevX = newX;
-            prevY = newY;
-        }
+        this.ResetAllTilesOnBoard();
 
-        if (backsearch) {
-            int prevPX = prevX + 1;
-            if (BoardIsTileValid(prevPX, prevY) && !(prevPX == newX && prevY == newY)) {
-                LetterGameLetter[] con = TryGetConnectedLetters(prevPX, prevY, XDIMENSION);
-                if (con != null) {
-                    this.TraverseInDirection(prevPX, prevY, timestamp, XDIMENSION, false, 0);
-                    foreach (var item in con) {
-                        TraverseInDirection(item.XPos, item.YPos, timestamp, YDIMENSION, true, 2);
-                    }
-                }
-            }
-            int prevNX = prevX - 1;
-            if (BoardIsTileValid(prevNX, prevY) && !((prevNX == newX) && (prevY == newY))) {
-                LetterGameLetter[] con = TryGetConnectedLetters(prevNX, prevY, XDIMENSION);
-                if (con != null) {
-                    this.TraverseInDirection(prevNX, prevY, timestamp, XDIMENSION, false, 0);
-                    foreach (var item in con.Reverse()) {
-                        TraverseInDirection(item.XPos, item.YPos, timestamp, YDIMENSION, true, 2);
-                    }
-                }
-            }
-
-            int prevPY = prevY + 1;
-            if (BoardIsTileValid(prevX, prevPY) && !(prevX == newX && prevPY == newY)) {
-                LetterGameLetter[] con = TryGetConnectedLetters(prevX, prevPY, YDIMENSION);
-                if (con != null) {
-                    this.TraverseInDirection(prevX, prevPY, timestamp, YDIMENSION, false, 0);
-                    foreach (var item in con) {
-                        TraverseInDirection(item.XPos, item.YPos, timestamp, XDIMENSION, true, 2);
-                    }
-                }
-            }
-
-            int prevNY = prevY - 1;
-            if (BoardIsTileValid(prevX, prevNY) && !(prevX == newX && prevNY == newY)) {
-                LetterGameLetter[] con = TryGetConnectedLetters(prevX, prevNY, YDIMENSION);
-                if (con != null) {
-                    this.TraverseInDirection(prevX, prevNY, timestamp, YDIMENSION, false, 0);
-                    foreach (var item in con.Reverse()) {
-                        TraverseInDirection(item.XPos, item.YPos, timestamp, XDIMENSION, true, 2);
-                    }
-                }
-            }
-        }
+        this.FindWordsInDimension(XDIMENSION);
+        this.FindWordsInDimension(YDIMENSION);
 
         this.refreshLetterNumberDisplay();
+    }
+
+    /// <summary>
+    /// Resets all the tiles on the board
+    /// </summary>
+    private void ResetAllTilesOnBoard() {
+        foreach (var item in tileMap) {
+            item?.SetValidLetter(false);
+        }
+    }
+
+    /// <summary>
+    /// Finds words on the board, and builds the word when it 
+    /// finds valid words in the provided dimension.
+    /// </summary>
+    /// <param name="dimension"></param>
+    public void FindWordsInDimension(int dimension) {
+        int minDimension1;
+        int maxDimension1;
+        int minDimension2;
+        int maxDimension2;
+
+        if (dimension == YDIMENSION) {
+            minDimension1 = tileMap.GetLowerBound(XDIMENSION);
+            maxDimension1 = tileMap.GetUpperBound(XDIMENSION);
+            minDimension2 = tileMap.GetLowerBound(YDIMENSION);
+            maxDimension2 = tileMap.GetUpperBound(YDIMENSION);
+
+        } else {
+            minDimension1 = tileMap.GetLowerBound(YDIMENSION);
+            maxDimension1 = tileMap.GetUpperBound(YDIMENSION);
+            minDimension2 = tileMap.GetLowerBound(XDIMENSION);
+            maxDimension2 = tileMap.GetUpperBound(XDIMENSION);
+        }
+
+        for (int dimension1Counter = minDimension1; dimension1Counter <= maxDimension1; dimension1Counter++) {
+            for (int dimension2Counter = minDimension2; dimension2Counter <= maxDimension2; dimension2Counter++) {
+                if (BoardIsTileValid(dimension2Counter, dimension1Counter)) {
+                    var connectedLetters = TryGetConnectedLetters(dimension2Counter, dimension1Counter, dimension);
+                    if (CreateWordOfLetters(connectedLetters)) {
+                        dimension2Counter = GetLastLetterPosition(connectedLetters).x;
+                    }
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Returns the last letter position of connected letters.
+    /// </summary>
+    /// <param name="connectedLetters">array of connected letters</param>
+    /// <returns>position of last connected letters</returns>
+    private Point GetLastLetterPosition(LetterGameLetter[] connectedLetters) {
+        Point lastPosition = new Point();
+        if (connectedLetters != null) {
+            int lastIndex = connectedLetters.Length - 1;
+            var lastLetter = connectedLetters[Mathf.Clamp(lastIndex, 0, lastIndex)];
+            Debug.Log("LAST LETTER: " + lastLetter);
+            lastPosition.x = lastLetter.XPos;
+            lastPosition.y = lastLetter.YPos;
+        }
+        return lastPosition;
+    }
+
+    /// <summary>
+    /// Checks if the connected letters is a valid word, and marks them as
+    /// valid if they are part of a whole valid word. Returns true if 
+    /// it created a word, else false.
+    /// </summary>
+    /// <param name="connectedLetters">letters to create word of</param>
+    /// <returns>true if created word, else false</returns>
+    private bool CreateWordOfLetters(LetterGameLetter[] connectedLetters) {
+        bool createdWord = false;
+        if (IsConnectedLetterValid(connectedLetters)) {
+            foreach (var letter in connectedLetters) {
+                letter.SetValidLetter(true);
+            }
+            createdWord = true;
+        }
+        return createdWord;
+    }
+
+    /// <summary>
+    /// Checks if there are any words formed from drawing a vertical or horizontal line 
+    /// through the adjacent letters 
+    /// </summary>
+    /// <param name="x">the x pos of the cord to check from</param>
+    /// <param name="y">the x pos of the cord to check from</param>
+    private bool IsConnectedLetterValid(LetterGameLetter[] connectedLetters) {
+        bool isValidConnection = false;
+        if (connectedLetters != null) {
+            string word = GetWordStringOfLetters(connectedLetters);
+            isValidConnection = WordChecker.isWordValid(word);
+            Debug.Log(word);
+        }
+        return isValidConnection;
+    }
+
+    /// <summary>
+    /// Creates a word string of an array of letters
+    /// </summary>
+    /// <param name="connectedLetters">array of letters to convert to single string</param>
+    /// <returns>string of the individual letters</returns>
+    private string GetWordStringOfLetters(LetterGameLetter[] connectedLetters) {
+        if (connectedLetters == null) return "";
+        var letters = connectedLetters.Select(tile => tile.Letter).ToArray();
+        return string.Concat(letters.ToArray());
+
     }
 
     // -- private -- //
@@ -203,149 +270,8 @@ public class LetterGameManager : Singleton<LetterGameManager> {
         }
     }
 
-    /// <summary>
-    /// Checks if there are any words formed from drawing a vertical or horizontal line 
-    /// through the adjacent letters 
-    /// </summary>
-    /// <param name="x">the x pos of the cord to check from</param>
-    /// <param name="y">the x pos of the cord to check from</param>
-    private void ChekIfWordFromPos(int x, int y, float timestamp, bool deepTraverse) {
-        if (!BoardIsTileValid(x, y)) { return; }
-        if (BoardTryGetTile(x, y) == null) { return; }
-
-        var yConnected = WUArrays.GetConnected(tileMap, x, y, YDIMENSION);
-        foreach (var item in yConnected) {
-            if (deepTraverse) {
-                if (item.isValidLetterInWord) {
-                    TraverseInDirection(item.XPos, item.YPos, timestamp, XDIMENSION, true, 2);
-                }
-            }
-        }
-
-        var xConnected = WUArrays.GetConnected(tileMap, x, y, XDIMENSION);
-        foreach (var item in xConnected) {
-            if (deepTraverse) {
-                if (item.isValidLetterInWord) {
-                    TraverseInDirection(item.XPos, item.YPos, timestamp, YDIMENSION, true, 2);
-                }
-            }
-        }
-
-        var yDirection = yConnected.Select(tile => tile.Letter).ToArray();
-        var xDirection = xConnected.Select(tile => tile.Letter).ToArray();
-
-        bool isValidInY = false;
-        bool isValidInX = false;
-
-        string wordYN = string.Concat(yDirection.ToArray());
-
-        string wordXN = string.Concat(xDirection.ToArray());
-
-        if (WordChecker.isWordValid(wordYN)) {
-            isValidInY = true;
-        }
-
-        if (WordChecker.isWordValid(wordXN)) {
-            isValidInX = true;
-        }
-
-        foreach (var le in xConnected) {
-            le.SetValidLetter(isValidInX, timestamp);
-        }
-
-        foreach (var le in yConnected) {
-            le.SetValidLetter(isValidInY, timestamp);
-        }
-
-    }
-
     private LetterGameLetter[] TryGetConnectedLetters(int xpos, int ypos, int dimension) {
         return WUArrays.GetConnected(this.tileMap, xpos, ypos, dimension);
-    }
-
-    /// <summary>
-    /// Checks if there are any words formed from drawing a vertical or horizontal line 
-    /// through the adjacent letters 
-    /// </summary>
-    /// <param name="x">the x pos of the cord to check from</param>
-    /// <param name="y">the x pos of the cord to check from</param>
-    private void TraverseInDirection(int x, int y, float timestamp, int direction, bool deepTraverse, int levels) {
-        if (!BoardIsTileValid(x, y)) { return; }
-        if (BoardTryGetTile(x, y) == null) { return; }
-        levels--;
-        if (direction == 1) {
-            string word = "X: ";
-            var xConnected = TryGetConnectedLetters(x, y, XDIMENSION);
-            bool chain = true;
-            foreach (var item in xConnected) {
-                if (deepTraverse && levels > 0) {
-                    word += item.Letter;
-                    if (item.isValidLetterInWord) {
-                        var xSubConnected = TryGetConnectedLetters(item.XPos, item.YPos, YDIMENSION);
-                        string subs = "SUB X: ";
-                        foreach (var e in xSubConnected) {
-                            subs += e.Letter;
-                            if (!e.isValidLetterInWord) chain = false;
-                        }
-                        Debug.Log(subs);
-                        if (chain) {
-                            TraverseInDirection(item.XPos, item.YPos, timestamp, YDIMENSION, true, levels);
-                        }
-                    } 
-                }
-            }
-            var xDirection = xConnected.Select(tile => tile.Letter).ToArray();
-            string wordXN = string.Concat(xDirection.ToArray());
-            bool isValidInX = false;
-            if (WordChecker.isWordValid(wordXN)) {
-                isValidInX = true;
-            }
-            Debug.Log(word);
-            if (xConnected.Length > 1) {
-                foreach (var le in xConnected) {
-                    le.SetValidLetter(isValidInX, timestamp);
-                }
-            }
-
-        } else {
-            string word = "Y: ";
-            var yConnected = TryGetConnectedLetters(x, y, YDIMENSION);
-            bool chain = true;
-            foreach (var item in yConnected) {
-                if (deepTraverse && levels > 0) {
-                    word += item.Letter;
-                    if (item.isValidLetterInWord) {
-                        var ySubConnected = TryGetConnectedLetters(item.XPos, item.YPos, XDIMENSION);
-                        string subs = "SUB Y: ";
-                        foreach (var e in ySubConnected) {
-                            subs += e.Letter;
-                            if (!e.isValidLetterInWord) chain = false;
-                        }
-                        Debug.Log(subs);
-                        if (chain) {
-                            TraverseInDirection(item.XPos, item.YPos, timestamp, XDIMENSION, true, levels);
-                        }
-                    }
-                }
-            }
-            Debug.Log(word);
-            if (yConnected.Length > 1) {
-                var yDirection = yConnected.Select(tile => tile.Letter).ToArray();
-
-                bool isValidInY = false;
-
-                string wordYN = string.Concat(yDirection.ToArray());
-
-                if (WordChecker.isWordValid(wordYN)) {
-                    isValidInY = true;
-                }
-                foreach (var le in yConnected) {
-                    le.SetValidLetter(isValidInY, timestamp);
-                }
-            }
-
-        }
-
     }
 
     /// <summary>
@@ -361,34 +287,8 @@ public class LetterGameManager : Singleton<LetterGameManager> {
     /// Fills in the players letters
     /// </summary>
     /// <param name="args">the event args</param>
-    private void FillPlayerLetters(Dictionary<string, int> w) {
-        Dictionary<string, int> playerDataDict = new Dictionary<string, int> { { "A", 25 },
-            { "B", 25 },
-            { "C", 25 },
-            { "D", 25 },
-            { "E", 25 },
-            { "F", 25 },
-            { "G", 25 },
-            { "H", 25 },
-            { "I", 25 },
-            { "J", 25 },
-            { "K", 25 },
-            { "L", 25 },
-            { "M", 25 },
-            { "N", 25 },
-            { "O", 25 },
-            { "P", 25 },
-            { "Q", 25 },
-            { "R", 25 },
-            { "S", 25 },
-            { "T", 25 },
-            { "U", 25 },
-            { "V", 25 },
-            { "W", 25 },
-            { "X", 25 },
-            { "Y", 25 },
-            { "Z", 25 }
-        }; // when communication from GM is in use: args.CurrentLetters; 
+    private void FillPlayerLetters(Dictionary<string, int> playerDataDict) {
+        if (playerDataDict == null) throw new NullReferenceException("Letter dictionary is null");
         foreach (string key in playerDataDict.Keys) {
             if (playerLetters.Keys.Contains(key)) {
                 for (int i = 0; i < playerDataDict[key]; i++) {
@@ -496,13 +396,52 @@ public class LetterGameManager : Singleton<LetterGameManager> {
         this.tileMap = new LetterGameLetter[this.bSizeX, this.bSizeY];
         this.playerLetters = new Dictionary<String, List<LetterGameLetter>>();
         MakePlayerLetter();
-        FillPlayerLetters(GameManager.Instance.PlayerPersistentStorage.AvailableLetters);
+
+        if (this.fillWithTestLetters) {
+            DebugFillWithLetters();
+        } else {
+            FillPlayerLetters(GameManager.Instance.PlayerPersistentStorage.AvailableLetters);
+        }
 
         this.MakeBoardTiles();
         this.MakeLetterTile();
-
         refreshLetterNumberDisplay();
 
+    }
+
+    /// <summary>
+    /// Fills the available letters board with letters when testing the letter
+    /// game and you need letters to test words :D 
+    /// </summary>
+    private void DebugFillWithLetters() {
+        Dictionary<string, int> playerDataDict = new Dictionary<string, int> { { "A", 25 },
+            { "B", 25 },
+            { "C", 25 },
+            { "D", 25 },
+            { "E", 25 },
+            { "F", 25 },
+            { "G", 25 },
+            { "H", 25 },
+            { "I", 25 },
+            { "J", 25 },
+            { "K", 25 },
+            { "L", 25 },
+            { "M", 25 },
+            { "N", 25 },
+            { "O", 25 },
+            { "P", 25 },
+            { "Q", 25 },
+            { "R", 25 },
+            { "S", 25 },
+            { "T", 25 },
+            { "U", 25 },
+            { "V", 25 },
+            { "W", 25 },
+            { "X", 25 },
+            { "Y", 25 },
+            { "Z", 25 }
+        };
+        this.FillPlayerLetters(playerDataDict);
     }
 
 }

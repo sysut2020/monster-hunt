@@ -9,7 +9,6 @@ public class LetterGameLetter {
     private int xPos, yPos;
     private bool isOnBoard = false;
     private Action<bool> OnValidLetterInWord { get; set; }
-    private float validationStamp;
     private bool isValid;
 
     public GameBoardTile gbt;
@@ -34,11 +33,8 @@ public class LetterGameLetter {
     /// Triggers the registered callback method when it becomes valid.
     /// </summary>
     /// <param name="isValidLetterInWord">true if valid, false if unvalid</param>
-    /// <param name="validationStamp">an unique timestamp for when it was validated</param>
-    public void SetValidLetter(bool isValidLetterInWord, float validationStamp) {
+    public void SetValidLetter(bool isValidLetterInWord) {
         try {
-            if (this.validationStamp.Equals(validationStamp) && isValid) return;
-            this.validationStamp = validationStamp;
             this.isValid = isValidLetterInWord;
             OnValidLetterInWord(isValidLetterInWord);
         } catch (System.NullReferenceException) { }
