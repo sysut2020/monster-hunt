@@ -18,9 +18,9 @@ public static class DataSaver {
     
     
     /// <summary>
-    /// Used to save data on a ".save" file
+    /// Used to save a save data objet to file
     /// </summary>
-    /// <param name="save">The "Save" object we want to save</param>
+    /// <param name="save">The object to save to file</param>
     public static void Save(SaveData saveData) {
         var binaryFormatter = new BinaryFormatter();
         
@@ -31,9 +31,10 @@ public static class DataSaver {
     }
     
     /// <summary>
-    /// Used to load the information from a ".save" file
+    /// Used to load a save data objet from file
+    /// If unsuccessfully null is returned
     /// </summary>
-    /// <returns>The information to a "Save" object</returns>
+    /// <returns>The stored save data object</returns>
     public static SaveData Load() {
         SaveData save = null;
         

@@ -227,7 +227,6 @@ public class LetterGameManager : Singleton<LetterGameManager> {
         // }; // when communication from GM is in use: args.CurrentLetters; 
         foreach (string key in playerDataDict.Keys) {
             if (playerLetters.Keys.Contains(key)) {
-                Debug.Log("PLAYER LETTERasdasdsadas" + key);
                 for (int i = 0; i < playerDataDict[key]; i++) {
                     LetterGameLetter newLetter = new LetterGameLetter(-1, -1, key);
                     playerLetters[key].Add(newLetter);
