@@ -1,12 +1,12 @@
-using System;
+﻿using System;
 
 /// <summary>
 /// Simple time object that can check if a given amount of time 
 /// has passed
 /// </summary>
-class Timer {
+class WUTimer {
 
-    private float waitTime;
+    private int waitTime;
     private DateTime completeTime = new DateTime ();
 
     /// <summary>
@@ -14,7 +14,7 @@ class Timer {
     ///     count
     /// </summary>
     /// <param name="millisec">The amount of time to check if has passed</param>
-    public Timer (float millisec) {
+    public WUTimer (int millisec) {
         waitTime = millisec;
         this.Restart ();
     }
@@ -42,7 +42,7 @@ class Timer {
     /// resets the timer with a new time
     /// </summary>
     /// <param name="millisec"></param>
-    public void Update (float millisec) {
+    public void Update (int millisec) {
         waitTime = millisec;
         completeTime = DateTime.Now.AddMilliseconds(millisec);
     }
