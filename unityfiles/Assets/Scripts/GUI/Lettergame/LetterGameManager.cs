@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -118,14 +118,11 @@ public class LetterGameManager : Singleton<LetterGameManager> {
             // check for new words from the new point
             this.BoardSetTile(newX, newY, letter);
             this.ChekIfWordFromPos(newX, newY, timestamp, true);
-            // this.TraverseInDirection(newX, prevY, timestamp, YDIMENSION, true, 3);
-            // this.TraverseInDirection(newY, prevY, timestamp, XDIMENSION, true, 3);
         } else {
             // a letter til has been removed from the screen remove it
             BoardTryRemoveLetter(letter);
         }
 
-        // check if the was any words formed from moving this one
         if (prevX < 0 && prevY < 0) {
             prevX = newX;
             prevY = newY;
@@ -136,10 +133,7 @@ public class LetterGameManager : Singleton<LetterGameManager> {
             if (BoardIsTileValid(prevPX, prevY) && !(prevPX == newX && prevY == newY)) {
                 LetterGameLetter[] con = TryGetConnectedLetters(prevPX, prevY, XDIMENSION);
                 if (con != null) {
-                    // this.ChekIfWordFromPos(prevPX, prevY, timestamp, true);
-
                     this.TraverseInDirection(prevPX, prevY, timestamp, XDIMENSION, false, 0);
-                    Debug.Log("DID MAIN TRAVERSE");
                     foreach (var item in con) {
                         TraverseInDirection(item.XPos, item.YPos, timestamp, YDIMENSION, true, 2);
                     }
@@ -149,10 +143,7 @@ public class LetterGameManager : Singleton<LetterGameManager> {
             if (BoardIsTileValid(prevNX, prevY) && !((prevNX == newX) && (prevY == newY))) {
                 LetterGameLetter[] con = TryGetConnectedLetters(prevNX, prevY, XDIMENSION);
                 if (con != null) {
-                    // this.ChekIfWordFromPos(prevNX, prevY, timestamp, true);
-
                     this.TraverseInDirection(prevNX, prevY, timestamp, XDIMENSION, false, 0);
-                    Debug.Log("DID MAIN TRAVERSE");
                     foreach (var item in con.Reverse()) {
                         TraverseInDirection(item.XPos, item.YPos, timestamp, YDIMENSION, true, 2);
                     }
@@ -163,10 +154,7 @@ public class LetterGameManager : Singleton<LetterGameManager> {
             if (BoardIsTileValid(prevX, prevPY) && !(prevX == newX && prevPY == newY)) {
                 LetterGameLetter[] con = TryGetConnectedLetters(prevX, prevPY, YDIMENSION);
                 if (con != null) {
-                    // this.ChekIfWordFromPos(prevX, prevPY, timestamp, true);
-
                     this.TraverseInDirection(prevX, prevPY, timestamp, YDIMENSION, false, 0);
-                    Debug.Log("DID MAIN TRAVERSE");
                     foreach (var item in con) {
                         TraverseInDirection(item.XPos, item.YPos, timestamp, XDIMENSION, true, 2);
                     }
@@ -175,13 +163,9 @@ public class LetterGameManager : Singleton<LetterGameManager> {
 
             int prevNY = prevY - 1;
             if (BoardIsTileValid(prevX, prevNY) && !(prevX == newX && prevNY == newY)) {
-                // ChekIfWordFromPos(prevX, prevNY,timestamp);
                 LetterGameLetter[] con = TryGetConnectedLetters(prevX, prevNY, YDIMENSION);
                 if (con != null) {
-                    // this.ChekIfWordFromPos(prevX, prevNY, timestamp, true);
-
                     this.TraverseInDirection(prevX, prevNY, timestamp, YDIMENSION, false, 0);
-                    Debug.Log("DID MAIN TRAVERSE");
                     foreach (var item in con.Reverse()) {
                         TraverseInDirection(item.XPos, item.YPos, timestamp, XDIMENSION, true, 2);
                     }
@@ -355,7 +339,6 @@ public class LetterGameManager : Singleton<LetterGameManager> {
                 if (WordChecker.isWordValid(wordYN)) {
                     isValidInY = true;
                 }
-
                 foreach (var le in yConnected) {
                     le.SetValidLetter(isValidInY, timestamp);
                 }
@@ -457,7 +440,6 @@ public class LetterGameManager : Singleton<LetterGameManager> {
     private void BoardSetTile(int x, int y, LetterGameLetter tile) {
         LetterGameLetter oldTile = this.BoardTryGetTile(x, y);
         if (oldTile != null) {
-            print("removes old");
             // if there is a tile at the position remove it
             this.BoardTryRemoveLetter(oldTile);
         }
