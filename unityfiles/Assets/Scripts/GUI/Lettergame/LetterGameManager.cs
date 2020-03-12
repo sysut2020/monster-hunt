@@ -118,6 +118,8 @@ public class LetterGameManager : Singleton<LetterGameManager> {
             // check for new words from the new point
             this.BoardSetTile(newX, newY, letter);
             this.ChekIfWordFromPos(newX, newY, timestamp, true);
+            // this.TraverseInDirection(newX, prevY, timestamp, YDIMENSION, true, 3);
+            // this.TraverseInDirection(newY, prevY, timestamp, XDIMENSION, true, 3);
         } else {
             // a letter til has been removed from the screen remove it
             BoardTryRemoveLetter(letter);
@@ -231,7 +233,7 @@ public class LetterGameManager : Singleton<LetterGameManager> {
         foreach (var item in yConnected) {
             if (deepTraverse) {
                 if (item.isValidLetterInWord) {
-                    TraverseInDirection(item.XPos, item.YPos, timestamp, XDIMENSION, true, 1);
+                    TraverseInDirection(item.XPos, item.YPos, timestamp, XDIMENSION, true, 2);
                 }
             }
         }
@@ -240,7 +242,7 @@ public class LetterGameManager : Singleton<LetterGameManager> {
         foreach (var item in xConnected) {
             if (deepTraverse) {
                 if (item.isValidLetterInWord) {
-                    TraverseInDirection(item.XPos, item.YPos, timestamp, YDIMENSION, true, 1);
+                    TraverseInDirection(item.XPos, item.YPos, timestamp, YDIMENSION, true, 2);
                 }
             }
         }
@@ -290,13 +292,12 @@ public class LetterGameManager : Singleton<LetterGameManager> {
         if (direction == 1) {
             string word = "X: ";
             var xConnected = TryGetConnectedLetters(x, y, XDIMENSION);
-            bool broken = false;
             bool chain = true;
             foreach (var item in xConnected) {
                 if (deepTraverse && levels > 0) {
                     word += item.Letter;
-                    if (item.isValidLetterInWord && !broken) {
-                        var xSubConnected = TryGetConnectedLetters(x, y, YDIMENSION);
+                    if (item.isValidLetterInWord) {
+                        var xSubConnected = TryGetConnectedLetters(item.XPos, item.YPos, YDIMENSION);
                         string subs = "SUB X: ";
                         foreach (var e in xSubConnected) {
                             subs += e.Letter;
@@ -306,22 +307,17 @@ public class LetterGameManager : Singleton<LetterGameManager> {
                         if (chain) {
                             TraverseInDirection(item.XPos, item.YPos, timestamp, YDIMENSION, true, levels);
                         }
-                    } else {
-                        broken = true;
-                        Debug.Log("X BROKE AT: " + item.Letter, item.gbt);
-                        break;
-                    }
+                    } 
                 }
             }
+            var xDirection = xConnected.Select(tile => tile.Letter).ToArray();
+            string wordXN = string.Concat(xDirection.ToArray());
+            bool isValidInX = false;
+            if (WordChecker.isWordValid(wordXN)) {
+                isValidInX = true;
+            }
             Debug.Log(word);
-            if (!broken && xConnected.Length > 1) {
-                var xDirection = xConnected.Select(tile => tile.Letter).ToArray();
-                bool isValidInX = false;
-                string wordXN = string.Concat(xDirection.ToArray());
-                if (WordChecker.isWordValid(wordXN)) {
-                    isValidInX = true;
-                }
-
+            if (xConnected.Length > 1) {
                 foreach (var le in xConnected) {
                     le.SetValidLetter(isValidInX, timestamp);
                 }
@@ -330,13 +326,12 @@ public class LetterGameManager : Singleton<LetterGameManager> {
         } else {
             string word = "Y: ";
             var yConnected = TryGetConnectedLetters(x, y, YDIMENSION);
-            bool broken = false;
             bool chain = true;
             foreach (var item in yConnected) {
                 if (deepTraverse && levels > 0) {
                     word += item.Letter;
-                    if (item.isValidLetterInWord && !broken) {
-                        var ySubConnected = TryGetConnectedLetters(x, y, XDIMENSION);
+                    if (item.isValidLetterInWord) {
+                        var ySubConnected = TryGetConnectedLetters(item.XPos, item.YPos, XDIMENSION);
                         string subs = "SUB Y: ";
                         foreach (var e in ySubConnected) {
                             subs += e.Letter;
@@ -346,15 +341,11 @@ public class LetterGameManager : Singleton<LetterGameManager> {
                         if (chain) {
                             TraverseInDirection(item.XPos, item.YPos, timestamp, XDIMENSION, true, levels);
                         }
-                    } else {
-                        broken = true;
-                        Debug.Log("Y BROKE AT: " + item.Letter, item.gbt);
-                        break;
                     }
                 }
             }
             Debug.Log(word);
-            if (!broken && yConnected.Length > 1) {
+            if (yConnected.Length > 1) {
                 var yDirection = yConnected.Select(tile => tile.Letter).ToArray();
 
                 bool isValidInY = false;
@@ -367,7 +358,6 @@ public class LetterGameManager : Singleton<LetterGameManager> {
 
                 foreach (var le in yConnected) {
                     le.SetValidLetter(isValidInY, timestamp);
-
                 }
             }
 
