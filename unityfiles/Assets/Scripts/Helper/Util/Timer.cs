@@ -34,8 +34,8 @@ class Timer {
     /// returns the time left in milliseconds
     /// </summary>
     /// <returns>the time left in milliseconds</returns>
-    public int TimeLeft () {
-        return this.completeTime.Subtract (DateTime.Now).Milliseconds;
+    public int TimeLeft() {
+        return (int) this.completeTime.Subtract(DateTime.Now).TotalMilliseconds;
     }
 
     /// <summary>

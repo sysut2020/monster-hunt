@@ -12,8 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ba0de5e307d1c08ba25f312b14a8b56, type: 3}
   m_Name: Raport
   m_EditorClassIdentifier: 
-  health: 9
-  speed: 11
-  letterDropChance: 3
-  coinDropChance: 1
-  powerUpDropChance: 1
+  health: 8
+  patrolSpeed: 4
+  chaseSpeed: 10
+  visionLength: 16
+  collectibleItems:
+  - itemName: Coin
+    spawnChance: 18
+    item: {fileID: 1216276751, guid: 1c0ee2a1e85c5e9ddb424342246bc1a8, type: 3}
+  - itemName: Letter
+    spawnChance: 60
+    item: {fileID: 2709097042343801514, guid: 138075cffcb7d450db60abcd09815133, type: 3}

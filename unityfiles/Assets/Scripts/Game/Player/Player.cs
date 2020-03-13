@@ -17,7 +17,7 @@ public class Player : MonoBehaviour, IDamageable {
     [SerializeField]
     private PlayerHealthController playerHealthController;
 
-    private PlayerInventory playerInventory = new PlayerInventory();
+    
 
     private Animator animator;
 
@@ -49,11 +49,6 @@ public class Player : MonoBehaviour, IDamageable {
         internal set => this.playerHealthController = value;
     }
 
-    public PlayerInventory PlayerInventory {
-        get => playerInventory;
-        internal set => this.playerInventory = value;
-    }
-
     public PlayerWeaponController PlayerWeaponController {
         get => playerWeaponController;
         internal set => this.playerWeaponController = value;
@@ -65,21 +60,22 @@ public class Player : MonoBehaviour, IDamageable {
     /// Gives a pickup to the player
     /// </summary>
     /// <param name="pickup">the pickup to give to the player</param>
-    public void GivePickup(IPowerUp pickup) {
-        // activate
-        pickup.ApplyEffect(this);
-        // if effect is persistent give it to the watcher
-        if (pickup is IEffectPowerUp) {
-            IEffectPowerUp equalTypeEffect = playerInventory.ActivePickups.Find(effect => effect.GetPickupName().Equals(pickup.GetPickupName()));
-            if (equalTypeEffect != null) {
-                // if it exists extend the existing
-                equalTypeEffect.ExtendEffect(equalTypeEffect);
-            } else {
-                // else just bop it on the end
-                this.PlayerInventory.AddEffectPickup(pickup as IEffectPowerUp);
-            }
-        }
-    }
+    /// /// TODO: handle powerupstuff
+    // public void GivePickup(IPowerUp pickup) {
+    //     // activate
+    //     pickup.ApplyEffect(this);
+    //     // if effect is persistent give it to the watcher
+    //     if (pickup is IEffectPowerUp) {
+    //         IEffectPowerUp equalTypeEffect = playerInventory.ActivePickups.Find(effect => effect.GetPickupName().Equals(pickup.GetPickupName()));
+    //         if (equalTypeEffect != null) {
+    //             // if it exists extend the existing
+    //             equalTypeEffect.ExtendEffect(equalTypeEffect);
+    //         } else {
+    //             // else just bop it on the end
+    //             this.PlayerInventory.AddEffectPickup(pickup as IEffectPowerUp);
+    //         }
+    //     }
+    // }
 
     public void Dead() {
         PlayerEventArgs args = new PlayerEventArgs();
@@ -89,9 +85,8 @@ public class Player : MonoBehaviour, IDamageable {
     // -- events -- //
 
     public static event EventHandler<PlayerEventArgs> PlayerKilledEvent;
-    private void SubscribeToEvents() {
+    private void SubscribeToEvents() { 
         PlayerWeaponController.WeaponChangedEvent += CallbackWeaponChangedEvent;
-;
     }
 
     private void UnsubscribeFromEvents() {
@@ -110,19 +105,20 @@ public class Player : MonoBehaviour, IDamageable {
     /// iterates through the active effects and checks if any one of them are done
     /// if they are the effect is cleaned out and removed
     /// </summary>
-    private void UpdateEffects() {
-        if (this.playerInventory.ActivePickups.Count > 0) {
-            List<IEffectPowerUp> tmp = this.playerInventory.ActivePickups;
-            tmp.Reverse<IEffectPowerUp>();
-            foreach (IEffectPowerUp effect in tmp) {
-                if (effect.IsEffectFinished()) {
-                    effect.Cleanup();
-                    this.playerInventory.RemoveEffectPickup(effect);
-                }
-            }
-        }
+    /// TODO: handle powerupstuff
+    // private void UpdateEffects() {
+    //     if (this.playerInventory.ActivePickups.Count > 0) {
+    //         List<IEffectPowerUp> tmp = this.playerInventory.ActivePickups;
+    //         tmp.Reverse<IEffectPowerUp>();
+    //         foreach (IEffectPowerUp effect in tmp) {
+    //             if (effect.IsEffectFinished()) {
+    //                 effect.Cleanup();
+    //                 this.playerInventory.RemoveEffectPickup(effect);
+    //             }
+    //         }
+    //     }
 
-    }
+    // }
 
     // -- unity -- //
 
@@ -134,6 +130,8 @@ public class Player : MonoBehaviour, IDamageable {
     }
 
     private void Awake() {
+        
+        
         if (!this.TryGetComponent<Animator>(out this.animator)) {
             Debug.LogError("PLAYER ANIMATOR NOT FOUND");
         }

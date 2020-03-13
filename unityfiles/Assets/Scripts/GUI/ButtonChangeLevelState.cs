@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,27 +9,22 @@ using UnityEngine.UI;
 /// It requires to be on an game object with Button script applied
 /// </summary>
 [RequireComponent(typeof(Button))]
-public class ButtonChangeLevelState : MonoBehaviour
-{
-
+public class ButtonChangeLevelState : ChangeEventButton {
     [SerializeField]
-    private LEVEL_STATE levelState;
-    
+    private PAUSE_MENU_EVENTS eventToFire;
+    public static event EventHandler<ButtonClickEventArgs> buttonEventHandler;
     /// <summary>
-    /// The button that triggers the click event
+    /// 
+    /// 
+    /// 
+    /// SUPER TODO: IMPLEMENT THIS
+    ///             What is in here is the Menu button stuff
+    /// 
+    /// 
+    /// 
     /// </summary>
-    private Button triggerButton;
 
-    private void Awake() {
-        this.triggerButton = GetComponent<Button>();
-        this.triggerButton.onClick.AddListener(ChangeState);
-    }
 
-    private void OnDestroy() {
-        this.triggerButton.onClick.RemoveListener(ChangeState);
-    }
-
-    private void ChangeState(){
-        LevelManager.Instance.ChangeLevelState(this.levelState);
-    }
+    protected override Enum EventToFire => eventToFire;
+    protected override EventHandler<ButtonClickEventArgs> ButtonEventHandler => buttonEventHandler;
 }

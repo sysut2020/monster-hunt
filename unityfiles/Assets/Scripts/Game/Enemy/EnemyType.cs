@@ -5,36 +5,34 @@ using UnityEngine;
 /// <summary>
 /// Describes a type of Enemy
 /// </summary>
-[CreateAssetMenu (fileName = "Data", menuName = "ScriptableObjects/Enemy", order = 1)]
+[CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/Enemy", order = 1)]
 public class EnemyType : ScriptableObject {
 
-    [Header ("Enemy stats")]
-    [Tooltip ("the amount of heath the enemy has")]
+    [Header("Enemy stats")]
+    [Tooltip("the amount of heath the enemy has")]
     [SerializeField]
     private int health;
 
-    [Tooltip ("The enemy movement speed")]
+    [Tooltip("The speed when patroling")]
     [SerializeField]
-    private float speed;
+    private float patrolSpeed;
 
-
-    [Header ("Enemy drop Chances")]
-
-    [Tooltip ("Letter drop chance")]
+    [Tooltip("The speed when chasing/charging")]
     [SerializeField]
-    private float letterDropChance;
+    private float chaseSpeed;
 
-    [Tooltip ("Coin drop chance")]
+    [Tooltip("How far it can see")]
     [SerializeField]
-    private float coinDropChance;
+    private float visionLength;
 
-    [Tooltip ("PU drop chance")]
+    [Header("Spawnable items from enemy")]
+
     [SerializeField]
-    private float powerUpDropChance;
+    private List<CollectibleSpawnerItem> collectibleItems;
 
-    public int Health { get => health;}
-    public float Speed { get => speed;}
-    public float LetterDropChance { get => letterDropChance;}
-    public float CoinDropChance { get => coinDropChance;}
-    public float PowerUpDropChance { get => powerUpDropChance;}
+    public int Health { get => health; }
+    public float PatrolSpeed { get => patrolSpeed; }
+    public float ChaseSpeed { get => chaseSpeed; }
+    public float VisionLength { get => visionLength; }
+    public List<CollectibleSpawnerItem> CollectibleItems { get => collectibleItems; }
 }

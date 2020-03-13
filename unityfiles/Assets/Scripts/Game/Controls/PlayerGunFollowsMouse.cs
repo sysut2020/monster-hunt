@@ -55,7 +55,7 @@ public class PlayerGunFollowsMouse : MonoBehaviour {
         this.aimControl = new AimControl(aimPoint.gameObject, rotatePoint.transform);
     }
 
-    private void Update() {
+    private void FixedUpdate() {
         RotateGun();
         if (this.IsMouseOnOtherSideOfCrossing()) {
             FlipCharacter();

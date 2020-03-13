@@ -1,17 +1,15 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
+/// <summary>
+/// Responsible for selecting and spawning collectables items provided in a 
+/// list of <see cref="CollectibleSpawnerItems"/> which all have a spawn chance.
+/// </summary>
 public class CollectibleSpawner : MonoBehaviour {
-    
-    [SerializeField]
-    private Collectable coinCollectable;
-    [SerializeField]
-    private Collectable letterCollectable;
-    [SerializeField]
-    private Collectable powerUpCollectable;
 
     [SerializeField]
     private int minimumSpawnItems = 1;
@@ -21,6 +19,7 @@ public class CollectibleSpawner : MonoBehaviour {
 
     private void Awake() {
         SubscribeToEvents();
+
     }
     private void OnDestroy() {
         UnsubscribeFromEvents();
@@ -30,57 +29,61 @@ public class CollectibleSpawner : MonoBehaviour {
     /// Subscribes to the relevant events for this class
     /// </summary>
     private void SubscribeToEvents() {
-        Enemy.EnemyKilledEvent += SpawnCollectible;
+        Enemy.EnemyKilledEvent += TrySpawnCollectable;
     }
 
     /// <summary>
     /// Subscribes to the relevant events for this class
     /// </summary>
     private void UnsubscribeFromEvents() {
-        Enemy.EnemyKilledEvent -= SpawnCollectible;
+        Enemy.EnemyKilledEvent -= TrySpawnCollectable;
     }
 
     /// <summary>
-    /// Spawns a collectible at a specific location
+    /// Tries to spawn collectables from the items provided in the list of 
+    /// items from args. It will spawn from minimumSpawnItems to maximumSpawnItems
+    /// set in the inspector.
     /// </summary>
-    /// <param name="position">The spawn location</param>
-    public void SpawnCollectible(object _, EnemyEventArgs args) {
-        int numberOfSpawnItems = Random.Range(minimumSpawnItems, maximumSpawnItems);
+    public void TrySpawnCollectable(object _, EnemyEventArgs args) {
+        int numberOfItemsToSpawn = Random.Range(minimumSpawnItems, maximumSpawnItems);
+        var collectiblesTable = args.EnemyType.CollectibleItems;
+        int totalSpawnWeight = CalculateTotalSpawnWeight(collectiblesTable);
 
-        for (int i = 0; i < numberOfSpawnItems; i++) {
-            GameObject collectible = GetCollectibleType(args);
-            if (collectible != null) {
-                collectible.SetActive(true);
-                collectible.tag = "Collectible";
-                collectible.transform.position = args.Position;
-            }
+        for (int i = 0; i < numberOfItemsToSpawn; i++) {
+            var collectableToSpawn = this.TryGetSpawnable(collectiblesTable, totalSpawnWeight);
+            TryCreateCollectable(collectableToSpawn, args.Position);
         }
     }
 
-    /// <summary>
-    /// Get the collectible type based on a random number. This should be on chance
-    /// </summary>
-    /// <param name="randomNumber">The number corresponding to type</param>
-    /// <returns>Random collectible</returns>
-    private GameObject GetCollectibleType(EnemyEventArgs args) {
-        GameObject collectible = null;
-
-        EnemyType e = args.EnemyType;
-        float a = e.CoinDropChance + e.LetterDropChance + e.PowerUpDropChance;
-        double randomNumber = Random.Range(0, a);
-        switch (randomNumber) {
-            case var n when(n <= e.PowerUpDropChance):
-                collectible = Instantiate(powerUpCollectable.gameObject);
-            break;
-            case var n when(n < (e.CoinDropChance + e.CoinDropChance)):
-                collectible = Instantiate(coinCollectable.gameObject);
-            break;
-            default:
-                collectible = Instantiate(letterCollectable.gameObject);
-                break;
-
+    private void TryCreateCollectable(CollectibleSpawnerItem item, Vector3 position) {
+        try {
+            var collectible = Instantiate(item.Item.gameObject);
+            collectible.name = item.ItemName;
+            collectible.transform.position = position;
+        } catch (System.NullReferenceException) {
+            Debug.LogWarning("Null reference when instatiating collectable");
         }
-
-        return collectible;
     }
+
+    private CollectibleSpawnerItem TryGetSpawnable(List<CollectibleSpawnerItem> spawnerItems, int totalSpawnWeight) {
+        int weightedSpawnChance = Random.Range(0, totalSpawnWeight);
+
+        // Loops over the spawnerItems list and returns the first element from the
+        // spawnerItems list that satisfies the if condition. Else it will just continue
+        // until the list is empty. On each step where there is no match, also reduce the 
+        // weightedSpawnChance, in hope to catch an item that satisfies the if condition.
+        // https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1.find?view=netframework-4.8
+        return spawnerItems.Find(collectableItem => {
+            if (weightedSpawnChance <= collectableItem.SpawnChance) { return true; }
+            weightedSpawnChance -= collectableItem.SpawnChance;
+            return false;
+        });
+    }
+
+    private int CalculateTotalSpawnWeight(List<CollectibleSpawnerItem> spawnerItems) {
+        int weight = 0;
+        spawnerItems.ForEach(collectableItem => weight += collectableItem.SpawnChance);
+        return weight;
+    }
+
 }

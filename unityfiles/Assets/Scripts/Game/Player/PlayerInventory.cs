@@ -21,23 +21,26 @@ public class InventoryUpdatedEventArgs : EventArgs {
 /// container class holding all the player inventory
 /// </summary>
 public class PlayerInventory {
-    [SerializeField]
     private int money;
-
-    [SerializeField]
-
     private List<String> collectedLetters;
     private List<IEffectPowerUp> activePickups;
 
+
+    public PlayerInventory() {
+        SubscribeToEvents();
+        this.money = 0;
+        this.collectedLetters = new List<string>();
+        this.activePickups = new List<IEffectPowerUp>();
+    }
     // -- properties -- //
+    
     public int Money {
         get => money;
         internal set => this.money = value;
     }
 
-    public List<string> CollectedLetters {
-        get => collectedLetters;
-        internal set => this.collectedLetters = value;
+    public Dictionary<string, int> CollectedLetters {
+        get => formatPlayerInventoryLetter(collectedLetters);
     }
 
     public List<IEffectPowerUp> ActivePickups {
@@ -45,18 +48,82 @@ public class PlayerInventory {
         internal set => this.activePickups = value;
     }
 
-    private void Start() {
-        CoinCollectable.OnCoinCollected += OnCoinCollected;
-        LetterCollectable.OnLetterCollected += OnLetterCollected;
-        PowerupCollectable.OnPowerupCollected += OnEffectPickup;
+    // -- public -- //
+
+    // -- events -- //
+    public event EventHandler<InventoryUpdatedEventArgs> InventoryUpdatedEvent;
+
+    /// <summary>
+    /// subscribe from all the events
+    /// </summary>
+    private void SubscribeToEvents() {
+        PlayerWeaponController.WeaponChangedEvent += CallbackWeaponChangedEvent;
+        CoinCollectable.OnCoinCollected += CallbackCoinCollected;
+        LetterCollectable.OnLetterCollected += CallbackLetterCollected;
+        PowerupCollectable.OnPowerupCollected += CallbackEffectPickup;
+        LevelManager.CleanUpEvent += UnsubscribeFromEvents;
     }
 
-    private void OnDestroy() {
-        CoinCollectable.OnCoinCollected -= OnCoinCollected;
-        LetterCollectable.OnLetterCollected -= OnLetterCollected;
-        PowerupCollectable.OnPowerupCollected -= OnEffectPickup;
+    /// <summary>
+    /// unsubscribe from all the events
+    /// </summary>
+    private void UnsubscribeFromEvents(object _, EventArgs __) {
+        PlayerWeaponController.WeaponChangedEvent -= CallbackWeaponChangedEvent;
+        CoinCollectable.OnCoinCollected -= CallbackCoinCollected;
+        LetterCollectable.OnLetterCollected -= CallbackLetterCollected;
+        PowerupCollectable.OnPowerupCollected -= CallbackEffectPickup;
+        LevelManager.CleanUpEvent -= UnsubscribeFromEvents;
     }
-    // -- public -- //
+    private void CallbackWeaponChangedEvent(object o, WeaponChangedEventArgs arg) {
+        AlertPowerupsOnWeaponChange(arg.NewGunController);
+    }
+
+    /// <summary>
+    /// Coin collected event subscriber function, adds coin amount to invetory
+    /// </summary>
+    /// <param name="sender">object that triggered event</param>
+    /// <param name="coin">the coin to add to inventory</param>
+    private void CallbackCoinCollected(object sender, CoinCollectedArgs coin) {
+        this.AddMoney(coin.Amount);
+    }
+
+    /// <summary>
+    /// Letter collected subscriber function, adds letter to invetory
+    /// </summary>
+    /// <param name="sender">object that triggered event</param>
+    /// <param name="letter">the letter to add to inventory</param>
+    private void CallbackLetterCollected(object sender, LetterCollectedArgs letter) {
+        this.AddLetter(letter.Letter);
+    }
+
+    /// Effect collected event subscriber function, adds effect to invetory
+    /// </summary>
+    /// <param name="sender">object that triggered event</param>
+    /// <param name="effect">the effect to add to inventory</param>
+    private void CallbackEffectPickup(object sender, PowerUpCollectedArgs args) {
+        throw new NotImplementedException();
+    }
+
+    // -- private -- // 
+
+    /// <summary>
+    /// Formats the letters in player inventory to the used format
+    /// </summary>
+    /// <param name="lettersToFormat">The letters we want to format</param>
+    /// <returns>Dictionary of letters</returns>
+    private Dictionary<string, int> formatPlayerInventoryLetter(List<string> lettersToFormat) {
+        Dictionary<string, int> formatedDictionary  = new Dictionary<string, int>();
+        foreach (string letter in lettersToFormat){
+            if (formatedDictionary.Keys.Contains(letter)){
+                formatedDictionary[letter] += 1;
+            }
+            else{
+                formatedDictionary.Add(letter, 1);
+            }
+        }
+        return formatedDictionary;
+    }
+    
 
     /// <summary>
     /// Adds the given effect pickup
@@ -65,14 +132,6 @@ public class PlayerInventory {
     /// <summary>
     public void AddEffectPickup(IEffectPowerUp effect) {
         this.activePickups.Add(effect);
-    }
-
-    /// Effect collected event subscriber function, adds effect to invetory
-    /// </summary>
-    /// <param name="sender">object that triggered event</param>
-    /// <param name="effect">the effect to add to inventory</param>
-    private void OnEffectPickup(object sender, PowerUpCollectedArgs args) {
-        throw new NotImplementedException();
     }
 
     /// <summary>
@@ -87,50 +146,17 @@ public class PlayerInventory {
     /// adds the provided letter
     /// </summary>
     /// <param name="letter">the letter to add</param>
-    public void AddLetter(string letter) {
+    private void AddLetter(string letter) {
         this.collectedLetters.Add(letter);
-    }
-
-    /// <summary>
-    /// Letter collected subscriber function, adds letter to invetory
-    /// </summary>
-    /// <param name="sender">object that triggered event</param>
-    /// <param name="letter">the letter to add to inventory</param>
-    private void OnLetterCollected(object sender, LetterCollectedArgs letter) {
-        this.AddLetter(letter.Letter);
     }
 
     /// <summary>
     /// adds the provided amount of money
     /// </summary>
     /// <param name="toAdd">the amount of money to add</param>
-    public void AddMoney(int value) {
+    private void AddMoney(int value) {
         this.money += value;
     }
-
-    /// <summary>
-    /// Coin collected event subscriber function, adds coin amount to invetory
-    /// </summary>
-    /// <param name="sender">object that triggered event</param>
-    /// <param name="coin">the coin to add to inventory</param>
-    private void OnCoinCollected(object sender, CoinCollectedArgs coin) {
-        this.AddMoney(coin.Amount);
-    }
-    // -- events -- //
-    public event EventHandler<InventoryUpdatedEventArgs> InventoryUpdatedEvent;
-
-    private void SubscribeToEvents(){
-        PlayerWeaponController.WeaponChangedEvent += CallbackWeaponChangedEvent;
-    }
-
-    private void UnsubscribeFromEvents(){
-        PlayerWeaponController.WeaponChangedEvent -= CallbackWeaponChangedEvent;
-    }
-    private void CallbackWeaponChangedEvent(object o, WeaponChangedEventArgs arg) {
-        AlertPowerupsOnWeaponChange(arg.NewGunController);
-    }
-
-    // -- private -- // 
 
     /// <summary>
     /// Fires an event saying the player inventory has been updated.
