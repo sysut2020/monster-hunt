@@ -16,17 +16,14 @@ public class PlayerWeaponController : MonoBehaviour {
 
     [SerializeField]
     [Tooltip("list of guns.")]
-    private GameObject[] availableWeapons;
+    private Gun[] availableWeapons;
 
     [SerializeField]
     [Tooltip("the hand that holds the gun.")]
     private GameObject gunHand;
 
-
-
-  
     private BulletBuffer bulletBuffer = new BulletBuffer();
-    private List<GunController> gunControllers = new List<GunController>(); 
+    private List<GunController> gunControllers = new List<GunController>();
     private GameObject currentWeapon = null;
     private int currentWeaponIndex = -1;
     private GunController activeGunController;
@@ -34,7 +31,7 @@ public class PlayerWeaponController : MonoBehaviour {
     private SpriteRenderer weaponSpriteRend;
 
     // -- properties -- //
-    public GameObject[] AvailableWeapons {
+    public Gun[] AvailableWeapons {
         get => availableWeapons;
         set => availableWeapons = value;
     }
@@ -44,11 +41,9 @@ public class PlayerWeaponController : MonoBehaviour {
         internal set => this.activeGunController = value;
     }
 
-
     // -- public -- //
 
-
-    public void MaybeFire() { 
+    public void MaybeFire() {
         this.activeGunController?.MaybeFire();
     }
 
@@ -71,19 +66,18 @@ public class PlayerWeaponController : MonoBehaviour {
         if (newIndex != this.currentWeaponIndex) {
             this.currentWeaponIndex = newIndex;
             this.currentWeapon?.SetActive(false);
-            this.currentWeapon = AvailableWeapons[newIndex];
+            this.currentWeapon = AvailableWeapons[newIndex].gameObject;
             this.activeGunController = this.gunControllers[newIndex];
 
             this.currentWeapon.SetActive(true);
-            
-        }
 
+        }
 
         WeaponChangedEventArgs args = new WeaponChangedEventArgs();
         args.NewGunController = this.ActiveGunController;
         args.AnimId = this.activeGunController.WeaponData.HoldingAnimation;
 
-        WeaponChangedEvent?.Invoke(this, args);        
+        WeaponChangedEvent?.Invoke(this, args);
     }
 
     // -- unity -- //
@@ -92,20 +86,17 @@ public class PlayerWeaponController : MonoBehaviour {
     /// Awake is called when the script instance is being loaded.
     /// </summary>
     void Awake() {
-        GameObject[] tmp = new GameObject[this.availableWeapons.Length];
-        for (int i = 0; i < this.availableWeapons.Length; i++){
-            GameObject w = Instantiate(this.availableWeapons[i]);
-            if (!w.TryGetComponent(out Gun gun)) {
-                throw new MissingComponentException("Bullet sprite missing");
-            }
-            w.transform.parent = this.gunHand.transform;
-            w.transform.localPosition = Vector3.zero;
-            w.transform.localScale = this.availableWeapons[i].transform.localScale;
+        Gun[] tmp = new Gun[this.availableWeapons.Length];
+        for (int i = 0; i < this.availableWeapons.Length; i++) {
+            var gun = Instantiate(this.availableWeapons[i]);
+            gun.transform.SetParent(this.gunHand.transform);
+            gun.transform.localPosition = Vector3.zero;
+            gun.transform.localScale = this.availableWeapons[i].transform.localScale;
             gun.Bullet.SetActive(false);
             GunController weaponGc = new GunController(gun, this.bulletBuffer);
             this.gunControllers.Add(weaponGc);
-            w.SetActive(false);
-            tmp[i] = w;
+            gun.gameObject.SetActive(false);
+            tmp[i] = gun;
         }
         this.availableWeapons = tmp;
     }
