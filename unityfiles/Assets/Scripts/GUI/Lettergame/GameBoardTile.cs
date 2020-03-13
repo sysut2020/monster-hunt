@@ -43,8 +43,6 @@ public class GameBoardTile : Dragable {
     /// <param name="letter">the letter to display</param>
     public void SetTile(LetterGameLetter letter) {
         letter.OnValidLetterInWordCallback(SetTileValidColor);
-        letter.WorldPosition = this.transform.position;
-        letter.gbt = this;
         holdingLetter = letter;
         LetterGameManager.Instance.UpdateLetterPos(XPos, YPos, letter);
         this.updateDisplayedLetter();
@@ -57,7 +55,6 @@ public class GameBoardTile : Dragable {
     /// </summary>
     public void ResetTile() {
         SetTileValidColor(false, -1);
-        holdingLetter.gbt = this;
         holdingLetter = null;
         this.updateDisplayedLetter();
     }
@@ -65,7 +62,6 @@ public class GameBoardTile : Dragable {
     /// Sets the color on the tile if it is valid, else 
     /// remove color
     /// </summary>
-    /// /// <param name="isValid">true if valid tile</param>
     private void SetTileValidColor(bool isValid, int direction) {
         if (isValid) {
             this.tileImage.color = Color.green;
