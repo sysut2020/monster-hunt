@@ -21,30 +21,26 @@ public class InventoryUpdatedEventArgs : EventArgs {
 /// container class holding all the player inventory
 /// </summary>
 public class PlayerInventory {
-    [SerializeField]
     private int money;
-
-    [SerializeField]
-
     private List<String> collectedLetters;
     private List<IEffectPowerUp> activePickups;
 
-    // -- properties -- //
+
     public PlayerInventory() {
         SubscribeToEvents();
         this.money = 0;
         this.collectedLetters = new List<string>();
         this.activePickups = new List<IEffectPowerUp>();
     }
-
+    // -- properties -- //
+    
     public int Money {
         get => money;
         internal set => this.money = value;
     }
 
-    public List<string> CollectedLetters {
-        get => collectedLetters;
-        internal set => this.collectedLetters = value;
+    public Dictionary<string, int> CollectedLetters {
+        get => formatPlayerInventoryLetter(collectedLetters);
     }
 
     public List<IEffectPowerUp> ActivePickups {
@@ -109,6 +105,25 @@ public class PlayerInventory {
     }
 
     // -- private -- // 
+
+    /// <summary>
+    /// Formats the letters in player inventory to the used format
+    /// </summary>
+    /// <param name="lettersToFormat">The letters we want to format</param>
+    /// <returns>Dictionary of letters</returns>
+    private Dictionary<string, int> formatPlayerInventoryLetter(List<string> lettersToFormat) {
+        Dictionary<string, int> formatedDictionary  = new Dictionary<string, int>();
+        foreach (string letter in lettersToFormat){
+            if (formatedDictionary.Keys.Contains(letter)){
+                formatedDictionary[letter] += 1;
+            }
+            else{
+                formatedDictionary.Add(letter, 1);
+            }
+        }
+        return formatedDictionary;
+    }
+    
 
     /// <summary>
     /// Adds the given effect pickup
