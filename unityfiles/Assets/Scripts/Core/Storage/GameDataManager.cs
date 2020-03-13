@@ -12,30 +12,32 @@ public class PlayerDestroyedEventArgs : EventArgs {
 /// Used to handle the game data that needs to be transfered over scenes
 /// </summary>
 public class GameDataManager {
-    
-
     private Dictionary<string, int> playerLetters;
     private int money;
+    private List<ScoreboardEntry> highScores;
 
     public GameDataManager() {
         this.playerLetters = new Dictionary<string, int>();
         this.money = 0;
+        this.highScores = new List<ScoreboardEntry>();
 
         this.LoadData();
     }
-
 
     // -- properties -- // 
     public Dictionary<string, int> PlayerLetters {
         get => playerLetters;
     }
-    
+
     public int Money {
         get => money;
     }
+
+    public List<ScoreboardEntry> HighScores {
+        get => highScores;
+    }
     // -- events -- // 
 
-    
     // -- public -- //
 
     /// <summary>
@@ -86,13 +88,18 @@ public class GameDataManager {
     public void SaveData(){
         SaveData saveObj = new SaveData();
         saveObj.Money = this.money;
-        // saveObj.HighScores = steffanos work your magic here
+        saveObj.HighScores = this.highScores;
         DataSaver.Save(saveObj);
     }
 
     // -- private -- // 
 
-    
+    private void LoadData() {
+        SaveData saveObj = DataSaver.Load();
+        if (saveObj != null) {
+            if (saveObj?.Money != 0) {
+                this.AddMoney(saveObj.Money);
+            }
 
     /// <summary>
     /// loads the game data from the savefile if possible
@@ -104,14 +111,5 @@ public class GameDataManager {
             Debug.Log(money);
             //if(saveObj?.HighScores != 0) {steffanos work your magic here;}
         }
-        
-  
-        
     }
-
-    
-    
-    
-    
-
 }
