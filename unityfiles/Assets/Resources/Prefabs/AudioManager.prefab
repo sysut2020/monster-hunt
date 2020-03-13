@@ -44,33 +44,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sounds:
-  - name: Main menu music
-    audioClip: {fileID: 8300000, guid: 8e77f5a3279a51145b5b06a218d59950, type: 3}
-    volume: 0.226
-    pitch: 1.01
+  - name: 
+    audioClipToPlay: {fileID: 8300000, guid: 8e77f5a3279a51145b5b06a218d59950, type: 3}
+    volume: 0.417
+    pitch: 1.011
     loop: 0
     audioSource: {fileID: 0}
   - name: Level 1 music
-    audioClip: {fileID: 8300000, guid: 9fc6a3fb2e87ae24cbbfbb0424e7acb0, type: 3}
-    volume: 0.226
-    pitch: 1.01
+    audioClipToPlay: {fileID: 8300000, guid: 9fc6a3fb2e87ae24cbbfbb0424e7acb0, type: 3}
+    volume: 0.5
+    pitch: 1
     loop: 0
     audioSource: {fileID: 0}
-  - name: Letter game music
-    audioClip: {fileID: 8300000, guid: 2ca5acddf3a747f478116ffba5917238, type: 3}
-    volume: 0.226
-    pitch: 1.01
+  - name: 
+    audioClipToPlay: {fileID: 0}
+    volume: 0
+    pitch: 0
     loop: 0
     audioSource: {fileID: 0}
-  - name: Sniper sound effect
-    audioClip: {fileID: 8300000, guid: a92e3484e08d1ee4fa786a09f82b72e3, type: 3}
-    volume: 0.226
-    pitch: 1.01
+  - name: 
+    audioClipToPlay: {fileID: 0}
+    volume: 0
+    pitch: 0
     loop: 0
     audioSource: {fileID: 0}
-  - name: Laser gun sound effect
-    audioClip: {fileID: 8300000, guid: 9db972f8419c3544bb71da7c25a52a13, type: 3}
-    volume: 0.226
-    pitch: 1.01
+  - name: 
+    audioClipToPlay: {fileID: 0}
+    volume: 0
+    pitch: 0
     loop: 0
     audioSource: {fileID: 0}

@@ -6,14 +6,15 @@ using UnityEngine;
 public class Sound {
     
     // Name of the sound
+    [SerializeField]
     private string name;
     public string Name {
         get => name;
         set => name = value;
     }
-
+    
+    [SerializeField]
     private AudioClip audioClipToPlay;
-
     public AudioClip AudioClip {
         get => audioClipToPlay;
         set => audioClipToPlay = value;
@@ -21,6 +22,7 @@ public class Sound {
     
     // The volume of the sound
     [Range(0f, 1f)]
+    [SerializeField]
     private float volume;
     public float Volume {
         get => volume;
@@ -29,6 +31,7 @@ public class Sound {
 
     // The pitch of the sound
     [Range(0.1f, 3f)]
+    [SerializeField]
     private float pitch;
     public float Pitch {
         get => pitch;
@@ -36,10 +39,18 @@ public class Sound {
     }
 
     // If we want the sound to loop or not
+    [SerializeField]
     private bool loop;
     public bool Loop {
         get => loop;
         set => loop = value;
+    }
+
+    [SerializeField] 
+    private bool mute;
+    public bool Mute {
+        get => mute;
+        set => mute = value;
     }
     
     [HideInInspector]

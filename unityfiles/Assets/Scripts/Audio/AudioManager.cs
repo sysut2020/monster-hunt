@@ -7,22 +7,30 @@ public class PlaySoundEventArgs : EventArgs {
 }
 
 public class AudioManager : Singleton<AudioManager> {
-    private AudioSource audioSource;
     
-    private AudioClip mainMenuMusic;
-    private AudioClip level1Music;
+    public Sound[] sounds;
     
     
-    public EventHandler<PlaySoundEventArgs> PlaySoundEvent;
-
+    public static event EventHandler<PlaySoundEventArgs> PlaySoundEvent;
+    
     private void Awake() {
         SubscribeToEvents();
-        LoadAllAudioClips();
+
+        foreach (Sound s in sounds) {
+            s.audioSource = gameObject.AddComponent<AudioSource>();
+            s.audioSource.clip = s.AudioClip;
+
+            s.audioSource.volume = s.Volume;
+            s.audioSource.pitch = s.Pitch;
+            s.audioSource.loop = s.Loop;
+            s.audioSource.mute = s.Mute;
+        }
     }
 
     private void SubscribeToEvents() {
         GameManager.OnMainMenuMusic += CallBackMainMenuMusicEvent;
         GameManager.OnLevel1Music += CallBackLevel1MusicEvent;
+        Debug.Log("Handlers added");
     }
 
     private void UnsubscribeFromEvents() {
@@ -31,15 +39,20 @@ public class AudioManager : Singleton<AudioManager> {
     }
     
     private void CallBackMainMenuMusicEvent(object o, EventArgs args) {
-        audioSource.PlayOneShot(mainMenuMusic);
+        PlaySound("Main menu music");
     }
 
     private void CallBackLevel1MusicEvent(object o, EventArgs args) {
-        audioSource.PlayOneShot(level1Music);
+       PlaySound("Level 1 music");
+       Debug.Log("Play the sound");
     }
 
-    private void LoadAllAudioClips() {
-        mainMenuMusic = (AudioClip) Resources.Load("Audio/Game music/Main menu music.mp3");
-        level1Music = (AudioClip) Resources.Load("Audio/Game music/Level 1 music.mp3");
+    private void PlaySound(string name) {
+        Sound s = Array.Find(sounds, sound => sound.Name == name);
+        if (s == null) {
+            Debug.LogWarning("Sound: " + name + " not found!");
+            return;
+        }
+        s.audioSource.Play();
     }
 }

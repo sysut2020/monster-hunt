@@ -88,6 +88,7 @@ public class GameManager : Singleton<GameManager> {
             case GAME_STATE.TEST_LEVEL:
                 SceneManager.Instance.ChangeScene(TEST_LEVEL_SCENE_INDEX);
                 PlayLevel1Music();
+                Debug.Log("Method called in game state");
                 break;
             
             case GAME_STATE.LETTER_LEVEL:
@@ -125,5 +126,6 @@ public class GameManager : Singleton<GameManager> {
 
     private void PlayLevel1Music() {
         OnLevel1Music?.Invoke(this, EventArgs.Empty);
+        Debug.Log("Eventhandler called");
     }
 }
