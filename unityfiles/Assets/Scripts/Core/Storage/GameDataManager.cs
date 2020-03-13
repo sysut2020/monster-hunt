@@ -9,7 +9,7 @@ public class PlayerDestroyedEventArgs : EventArgs {
 }
 
 /// <summary>
-/// Used to get persistent information from the players inventory
+/// Used to handle the game data that needs to be transfered over scenes
 /// </summary>
 public class GameDataManager {
     private Dictionary<string, int> playerLetters;
@@ -40,36 +40,52 @@ public class GameDataManager {
 
     // -- public -- //
 
-    public void AddLetters(Dictionary<string, int> toAdd) {
-        foreach (string key in toAdd.Keys) {
-            playerLetters[key] = +toAdd[key];
+    /// <summary>
+    /// Adds the provided letter count to the saved letter count
+    /// </summary>
+    /// <param name="toAdd">the letters to add</param>
+    public void AddLetters(Dictionary<string, int> toAdd){
+        if  (toAdd != null){
+            foreach (string key in toAdd.Keys){
+            playerLetters[key] =+ toAdd[key];
+            }
         }
     }
 
-    public void SetLetters(Dictionary<string, int> l) {
-        this.playerLetters = l;
-    }
-
-    public void AddMoney(int amount) {
-        this.money += amount;
-    }
-
-    public void SetMoney(int amount) {
-        this.money = amount;
-    }
-
-    private void AddNewHighScore(string name, int score) {
-        highScores.Add(new ScoreboardEntry(name, score));
-    }
-
-    public void SetHighScores(List<ScoreboardEntry> highScores) {
-        this.highScores = highScores;
+    /// <summary>
+    /// Sets the current letter count to the one provided
+    /// If null is provided count is set to 0 for every letter
+    /// </summary>
+    /// <param name="letters">The new letter count</param>
+    public void SetLetters(Dictionary<string, int> letters){
+        if  (letters != null){
+            this.playerLetters = letters;
+        } else {
+            this.playerLetters = new Dictionary<string, int>();
+        }
+        
     }
 
     /// <summary>
-    /// Saves highscores and owned money to file
+    /// adds the provided amount to the money count
     /// </summary>
-    public void SaveData() {
+    /// <param name="toAdd">the sum of money to add</param>
+    public void AddMoney(int toAdd){
+        this.money += toAdd;
+    }
+
+    /// <summary>
+    /// Sets the money count to the value provided
+    /// </summary>
+    /// <param name="m">the new money count</param>
+    public void SetMoney(int m){
+        this.money = m;
+    }
+
+    /// <summary>
+    /// Saves the currently stored game data
+    /// </summary>
+    public void SaveData(){
         SaveData saveObj = new SaveData();
         saveObj.Money = this.money;
         saveObj.HighScores = this.highScores;
@@ -85,13 +101,15 @@ public class GameDataManager {
                 this.AddMoney(saveObj.Money);
             }
 
-            if (saveObj?.HighScores != null) {
-                SetHighScores(saveObj.HighScores);
-            }
-
-            // foreach (var entry in HighScores) {
-            //     Debug.Log("entry: " + entry.PlayerName);
-            // }
+    /// <summary>
+    /// loads the game data from the savefile if possible
+    /// </summary>
+    private void LoadData(){
+        SaveData saveObj = DataSaver.Load();
+        if(saveObj != null) {
+            if(saveObj?.Money != 0) {this.AddMoney(saveObj.Money);}
+            Debug.Log(money);
+            //if(saveObj?.HighScores != 0) {steffanos work your magic here;}
         }
     }
 }
