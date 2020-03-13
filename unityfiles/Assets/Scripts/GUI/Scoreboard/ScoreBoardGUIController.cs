@@ -8,39 +8,31 @@ using UnityEngine;
 /// Script is highly inspired by Code Monkey. (source: https://www.youtube.com/watch?v=iAbaqGYdnyI)
 /// </summary>
 public class ScoreBoardGUIController : MonoBehaviour {
+
+    [SerializeField]
     private Transform entryContainer;
-    private Transform entryTemplate;
+
+    [SerializeField]
+    private ScoreBoardEntryGUI GUIScoreBoardEntry;
     private List<ScoreboardEntry> scoreboardEntries;
 
+    [Header("Testing")]
+    [SerializeField]
+    private bool fillWithTestData = false;
+
     private void Awake() {
-        InitilizeFields();
         LoadHighScores();
-
-        // scoreboardEntries = new List<ScoreboardEntry>() {
-        //     new ScoreboardEntry {PlayerName = "spiftire", Score = 2000},
-        //     new ScoreboardEntry {PlayerName = "dummy", Score = 12300},
-        //     new ScoreboardEntry {PlayerName = "dumb", Score = 69}
-        // };
-        
         SortScoreBoardInDescendingOrder();
-
-        var scoreboardEntryTransformList = new List<Transform>();
+        if (fillWithTestData) FillWithTestData();
+        var scoreboardEntryTransformList = new List<ScoreBoardEntryGUI>();
         foreach (ScoreboardEntry entry in scoreboardEntries) {
             CreateScoreboardEntryTransform(entry, entryContainer, scoreboardEntryTransformList);
         }
-        
-        // GameManager.Instance.GameDataManager.SetHighScores(scoreboardEntries);
     }
 
     private void SortScoreBoardInDescendingOrder() {
-        scoreboardEntries.Sort();
-        scoreboardEntries.Reverse();
-    }
-
-    private void InitilizeFields() {
-        entryContainer = transform.Find("entryContainer");
-        entryTemplate = entryContainer.Find("template");
-        entryTemplate.gameObject.SetActive(false);
+        scoreboardEntries?.Sort();
+        scoreboardEntries?.Reverse();
     }
 
     private void LoadHighScores() {
@@ -54,17 +46,20 @@ public class ScoreBoardGUIController : MonoBehaviour {
     /// <param name="container">What container the score should be child of</param>
     /// <param name="transformList">The list of all the other scores</param>
     private void CreateScoreboardEntryTransform(ScoreboardEntry scoreboardEntry, Transform container,
-        List<Transform> transformList) {
-        var templateHeight = entryTemplate.GetComponent<RectTransform>().rect.height;
-        Transform entryTransform = Instantiate(entryTemplate, container);
-        RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
-        entryRectTransform.anchoredPosition = new Vector2(0, -templateHeight * transformList.Count);
-        entryTransform.gameObject.SetActive(true);
+        List<ScoreBoardEntryGUI> transformList) {
 
-        entryTransform.Find("nameTemplateText").GetComponent<TextMeshProUGUI>().text = scoreboardEntry.PlayerName;
-        entryTransform.Find("scoreTemplateText").GetComponent<TextMeshProUGUI>().text =
-            scoreboardEntry.Score.ToString();
+        var guiEntry = Instantiate(GUIScoreBoardEntry, container);
+        guiEntry.SetEntry(scoreboardEntry);
+        guiEntry.transform.SetParent(container);
+        transformList.Add(guiEntry);
 
-        transformList.Add(entryTransform);
+    }
+
+    private void FillWithTestData() {
+        scoreboardEntries = new List<ScoreboardEntry>() {
+            new ScoreboardEntry { PlayerName = "spiftire", Score = 2000 },
+            new ScoreboardEntry { PlayerName = "dummy", Score = 12300 },
+            new ScoreboardEntry { PlayerName = "dumb", Score = 69 }
+        };
     }
 }
