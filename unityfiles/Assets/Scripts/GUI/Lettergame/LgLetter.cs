@@ -10,11 +10,6 @@ public class LetterGameLetter {
     private bool isOnBoard = false;
     private Action<bool, int> OnValidLetterInWord { get; set; }
     private bool isValid;
-
-    private Vector3 worldPosition;
-
-    public GameBoardTile gbt;
-
     public LetterGameLetter(int x, int y, string tileLetter) {
         this.XPos = x;
         this.YPos = y;
@@ -47,5 +42,4 @@ public class LetterGameLetter {
     public bool isValidLetterInWord { get => isValid; set => isValid = value; }
     public int YPos { get => yPos; set => yPos = value; }
     public int XPos { get => xPos; set => xPos = value; }
-    public Vector3 WorldPosition { get => worldPosition; set => worldPosition = value; }
 }
