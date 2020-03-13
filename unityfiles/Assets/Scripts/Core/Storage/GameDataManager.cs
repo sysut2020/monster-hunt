@@ -24,7 +24,6 @@ public class GameDataManager {
         this.LoadData();
     }
 
-
     // -- properties -- // 
     public Dictionary<string, int> PlayerLetters {
         get => playerLetters;
@@ -39,7 +38,6 @@ public class GameDataManager {
     }
     // -- events -- // 
 
-
     // -- public -- //
 
     public void AddLetters(Dictionary<string, int> toAdd) {
@@ -52,12 +50,12 @@ public class GameDataManager {
         this.playerLetters = l;
     }
 
-    public void AddMoney(int toAdd) {
-        this.money += toAdd;
+    public void AddMoney(int amount) {
+        this.money += amount;
     }
 
-    public void SetMoney(int m) {
-        this.money = m;
+    public void SetMoney(int amount) {
+        this.money = amount;
     }
 
     private void AddNewHighScore(string name, int score) {
@@ -68,6 +66,9 @@ public class GameDataManager {
         this.highScores = highScores;
     }
 
+    /// <summary>
+    /// Saves highscores and owned money to file
+    /// </summary>
     public void SaveData() {
         SaveData saveObj = new SaveData();
         saveObj.Money = this.money;
@@ -77,14 +78,13 @@ public class GameDataManager {
 
     // -- private -- // 
 
-
     private void LoadData() {
         SaveData saveObj = DataSaver.Load();
         if (saveObj != null) {
             if (saveObj?.Money != 0) {
                 this.AddMoney(saveObj.Money);
             }
-            
+
             if (saveObj?.HighScores != null) {
                 SetHighScores(saveObj.HighScores);
             }
