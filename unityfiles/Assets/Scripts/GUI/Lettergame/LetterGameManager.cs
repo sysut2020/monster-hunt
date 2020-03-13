@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Monsterhunt.Fileoperation;
 using UnityEngine;
 
 // -- properties -- //
@@ -22,6 +23,8 @@ public class LetterCountCangedEventArgs : EventArgs {
 }
 
 public class LetterGameManager : Singleton<LetterGameManager> {
+
+    private WordChecker wordChecker;
 
     /// <summary>
     /// Dimension constants for multidimansional(2D) arrays
@@ -255,7 +258,7 @@ public class LetterGameManager : Singleton<LetterGameManager> {
         bool isValidConnection = false;
         if (connectedLetters != null) {
             string word = GetWordStringOfLetters(connectedLetters);
-            isValidConnection = WordChecker.isWordValid(word);
+            isValidConnection = wordChecker.isWordValid(word);
         }
         return isValidConnection;
     }
@@ -432,6 +435,9 @@ public class LetterGameManager : Singleton<LetterGameManager> {
         } else {
             FillPlayerLetters(GameManager.Instance?.GameDataManager.PlayerLetters);
         }
+
+        var fc = new FileReader("Assets/Resources/wordlist.txt");
+        this.wordChecker = new WordChecker(fc.ReadAllLines().AsArray(), false);
 
         this.MakeBoardTiles();
         this.MakeLetterTile();
