@@ -100,16 +100,6 @@ public class GameDataManager {
             if (saveObj?.Money != 0) {
                 this.AddMoney(saveObj.Money);
             }
-
-    /// <summary>
-    /// loads the game data from the savefile if possible
-    /// </summary>
-    private void LoadData(){
-        SaveData saveObj = DataSaver.Load();
-        if(saveObj != null) {
-            if(saveObj?.Money != 0) {this.AddMoney(saveObj.Money);}
-            Debug.Log(money);
-            //if(saveObj?.HighScores != 0) {steffanos work your magic here;}
         }
     }
 }

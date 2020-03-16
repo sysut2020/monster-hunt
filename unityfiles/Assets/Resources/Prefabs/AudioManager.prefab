@@ -49,28 +49,33 @@ MonoBehaviour:
     volume: 0.417
     pitch: 1.011
     loop: 0
+    mute: 0
     audioSource: {fileID: 0}
-  - name: Level 1 music
+  - name: 
     audioClipToPlay: {fileID: 8300000, guid: 9fc6a3fb2e87ae24cbbfbb0424e7acb0, type: 3}
     volume: 0.5
     pitch: 1
     loop: 0
+    mute: 0
     audioSource: {fileID: 0}
   - name: 
     audioClipToPlay: {fileID: 0}
     volume: 0
     pitch: 0
     loop: 0
+    mute: 0
     audioSource: {fileID: 0}
   - name: 
     audioClipToPlay: {fileID: 0}
     volume: 0
     pitch: 0
     loop: 0
+    mute: 0
     audioSource: {fileID: 0}
   - name: 
     audioClipToPlay: {fileID: 0}
     volume: 0
     pitch: 0
     loop: 0
+    mute: 0
     audioSource: {fileID: 0}

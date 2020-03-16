@@ -10,15 +10,17 @@ public class AudioManager : Singleton<AudioManager> {
     
     public Sound[] sounds;
     
-    
-    public static event EventHandler<PlaySoundEventArgs> PlaySoundEvent;
-    
     private void Awake() {
         SubscribeToEvents();
-
+        
+        DontDestroyOnLoad(gameObject);
+        
         foreach (Sound s in sounds) {
             s.audioSource = gameObject.AddComponent<AudioSource>();
             s.audioSource.clip = s.AudioClip;
+            
+            // So that we dont have to manually write the name of the songs
+            s.Name = s.audioSource.clip.name;
 
             s.audioSource.volume = s.Volume;
             s.audioSource.pitch = s.Pitch;
