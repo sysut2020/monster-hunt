@@ -6,14 +6,16 @@ using UnityEngine;
 public class LetterGameLetter {
 
     private readonly string letter;
+    private readonly int scoreValue;
     private int xPos, yPos;
     private bool isOnBoard = false;
     private Action<bool, int> OnValidLetterInWord { get; set; }
     private bool isValid;
-    public LetterGameLetter(int x, int y, string tileLetter) {
+    public LetterGameLetter(int x, int y, string tileLetter, int scoreValue) {
         this.XPos = x;
         this.YPos = y;
         this.letter = tileLetter;
+        this.scoreValue = scoreValue;
     }
 
     /// <summary>
@@ -42,4 +44,6 @@ public class LetterGameLetter {
     public bool isValidLetterInWord { get => isValid; set => isValid = value; }
     public int YPos { get => yPos; set => yPos = value; }
     public int XPos { get => xPos; set => xPos = value; }
+
+    public int ScoreValue => scoreValue;
 }
