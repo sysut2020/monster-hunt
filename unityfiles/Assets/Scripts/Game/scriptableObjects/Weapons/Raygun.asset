@@ -21,8 +21,6 @@ MonoBehaviour:
   firePointRotation: {x: 0.93, y: 0, z: 0}
   bulletVelocity: 20
   bulletDamage: 2
-  bulletTtl: 20
-  bulletSprite: {fileID: 21300000, guid: 5f72d1714fa40674599a8881ff38d0f1, type: 3}
-  bulletSpriteScale: {x: 0.2, y: 0.15, z: 1}
+  bulletTtl: 2
   fireRate: 5
   bulletSpread: 0

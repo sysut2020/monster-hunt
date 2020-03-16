@@ -16,7 +16,7 @@ public class DoubleFireRate : MonoBehaviour, IWeaponEffectPowerUp {
     // -- internal -- // 
     private int rollingNameAppend;
     private GunController usedGunController;
-    private Timers effectTimer = new Timers ();
+    private WUTimers effectTimer = new WUTimers ();
     private Dictionary<string, int> activeMultipliers = new Dictionary<string, int> ();
 
     // -- properties -- //

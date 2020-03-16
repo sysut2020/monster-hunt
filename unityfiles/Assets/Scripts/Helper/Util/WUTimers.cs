@@ -1,3 +1,5 @@
+﻿using System.Timers;
+using System;
 
 using UnityEngine;
 
@@ -11,8 +13,9 @@ using System.Linq;
 /// A object who keeps track of multiple timers.
 /// can set, check if done, remove, and reset timers
 /// </summary>
-public class Timers {
-    private Dictionary<string, Timer> timers = new Dictionary<string, Timer> ();
+public class WUTimers {
+    private Dictionary<string, WUTimer> timers = new Dictionary<string, WUTimer> ();
+    private Dictionary<string, System.Timers.Timer> actionTimers = new Dictionary<string, System.Timers.Timer> ();
 
     private int rollingUID = 0;
 
@@ -43,10 +46,10 @@ public class Timers {
     /// <param name="timerID">the id of the timer to update</param>
     /// <param name="newTimeInMillisec">the new time in millisec</param>
     /// <returns>true if successful false if not</returns>
-    public bool Update (string timerID, float newTimeInMillisec) {
+    public bool Update (string timerID, int newTimeInMillisec) {
         bool suc = false;
         if (timers.Keys.Contains (timerID)) {
-            Timer toUpdate = timers[timerID];
+            WUTimer toUpdate = timers[timerID];
             toUpdate.Update(newTimeInMillisec);
             suc = true;
         }
@@ -60,10 +63,10 @@ public class Timers {
     /// <param name="timerID"></param>
     /// <param name="waitTimeInMillisec">the time for the new timer to wait in millisec</param>
     /// <returns></returns>
-    public bool Set (string timerID, float waitTimeInMillisec) {
+    public bool Set (string timerID, int waitTimeInMillisec) {
         bool suc = false;
         if (!timers.Keys.Contains (timerID)) {
-            Timer newTimer = new Timer (waitTimeInMillisec);
+            WUTimer newTimer = new WUTimer (waitTimeInMillisec);
             timers.Add (timerID, newTimer);
             suc = true;
         }
@@ -112,6 +115,17 @@ public class Timers {
         return ret;
     }
 
+
+    public void SetActionTimer(string timerID, Action action, int waitTimeInMillisec){
+        System.Timers.Timer aTimer = new System.Timers.Timer();
+        aTimer.Elapsed += (sender, args) => action();
+        aTimer.Interval = waitTimeInMillisec;
+        aTimer.Start();
+
+        this.actionTimers.Add(timerID,aTimer);
+
+    }
+
     // -- overloads -- //
 
     /// <summary>
@@ -148,7 +162,7 @@ public class Timers {
     private bool isTimerDone (string timerID, bool restart) {
         bool retObj = false;
         if (timers.ContainsKey (timerID)) {
-            Timer t = timers[timerID];
+            WUTimer t = timers[timerID];
             if (t.done ()) {
                 if (restart) {
                     t.Restart ();
