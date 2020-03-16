@@ -32,17 +32,17 @@ public class BulletControl : MonoBehaviour {
             this.BuildBullet();
         }
     }
-
+    
+    /// <summary>
+    /// Builds the bullet according to the the bullet data
+    /// currently held by the bullet
+    /// </summary>
     private void BuildBullet(){
         if (this.currentBuildBulletData != this.bulletData){
             
             SpriteRenderer spriteRender = null;
             BoxCollider2D boxCol = null;
             Rigidbody2D rigidB2d = null;
-
-            
-
-            
 
             this.gameObject.transform.localScale = this.bulletData.SpriteTransform.lossyScale;
       
@@ -73,14 +73,17 @@ public class BulletControl : MonoBehaviour {
     }
 
     /// <summary>
-    /// Starts the time to live timer
+    /// Starts the time to live coroutine timer
     /// </summary>
     private void StartTtlTimer() {
         this.activeEnumerator = TtlTimer(this.BulletData.TimeToLive);
         StartCoroutine(this.activeEnumerator);
     }
 
-
+    /// <summary>
+    /// The coroutine timer that keeps track of the bullet's time to live
+    /// </summary>
+    /// <param name="waitTime">the time the bullet should wait before it is disabled</param>
     private IEnumerator TtlTimer(int waitTime){
         yield return new WaitForSeconds(waitTime);
         this.DisableSelf();      

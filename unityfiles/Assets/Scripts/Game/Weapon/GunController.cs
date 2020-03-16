@@ -2,16 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/*
-TODO: implement support for scriptable objects (in this case bullet types)
-
-will assume the current structure is 
-someGunName(with tag weapon)
-    -> (visual gun stuff)
-    -> Gun object with name gun
-
-*/
-
 public class GunController {
 
     
