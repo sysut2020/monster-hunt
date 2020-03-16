@@ -62,7 +62,8 @@ public class LetterTile : Dragable {
     override protected void OnDragCompletion(PointerEventData eventData) {
 
         GameObject hit = eventData.pointerCurrentRaycast.gameObject;
-        if (holdingLetter == null || hit == null) { return };
+        if (holdingLetter == null || hit == null) {
+            return; }
 
         if (hit.TryGetComponent<GameBoardTile>(out GameBoardTile tile)) {
             tile.SetTile(holdingLetter);
