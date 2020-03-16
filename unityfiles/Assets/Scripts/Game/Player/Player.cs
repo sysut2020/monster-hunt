@@ -100,26 +100,7 @@ public class Player : MonoBehaviour, IDamageable {
     }
 
     // -- private -- // 
-
-    /// <summary>
-    /// iterates through the active effects and checks if any one of them are done
-    /// if they are the effect is cleaned out and removed
-    /// </summary>
-    /// TODO: handle powerupstuff
-    // private void UpdateEffects() {
-    //     if (this.playerInventory.ActivePickups.Count > 0) {
-    //         List<IEffectPowerUp> tmp = this.playerInventory.ActivePickups;
-    //         tmp.Reverse<IEffectPowerUp>();
-    //         foreach (IEffectPowerUp effect in tmp) {
-    //             if (effect.IsEffectFinished()) {
-    //                 effect.Cleanup();
-    //                 this.playerInventory.RemoveEffectPickup(effect);
-    //             }
-    //         }
-    //     }
-
-    // }
-
+    
     // -- unity -- //
 
     /// <summary>
