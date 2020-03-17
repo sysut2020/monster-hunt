@@ -84,7 +84,6 @@ public class LevelManager : Singleton<LevelManager> {
     /// <param name="o">the object calling</param>
     /// <param name="args">the event args</param>
     private void CallbackPlayerKilledEvent(object o, EventArgs _) {
-        Debug.Log("killed");
         LevelStateChange(LEVEL_STATE.GAME_OVER);
     }
 

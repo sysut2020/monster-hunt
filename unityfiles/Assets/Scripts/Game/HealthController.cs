@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public abstract class HealthController : Singleton<HealthController> {
+public abstract class HealthController : MonoBehaviour {
     [FormerlySerializedAs("entityStartHealth")]
     [Tooltip("the amount of health a given entity has.")]
     [SerializeField]
@@ -48,7 +48,6 @@ public abstract class HealthController : Singleton<HealthController> {
     protected void CheckIfDead() {
         if (this.health <= 0f && damageable != null) {
             this.damageable.Dead();
-            SceneManager.Instance.RestartCurrentScene();
             this.IsDead = true;
         } else {
             this.IsDead = false;

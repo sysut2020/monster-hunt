@@ -52,6 +52,7 @@ public class Enemy : MonoBehaviour, IDamageable {
         args.Position = this.transform.position;
         EnemyKilledEvent?.Invoke(this, args);
         Destroy(this.gameObject);
+        Debug.Log("Killed");
     }
     // -- events -- //
     public static event EventHandler<EnemyEventArgs> EnemySpawnEvent;
