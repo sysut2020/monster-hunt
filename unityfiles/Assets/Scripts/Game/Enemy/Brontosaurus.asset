@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Brontosaurus
   m_EditorClassIdentifier: 
   health: 24
-  patrolSpeed: 2
-  chaseSpeed: 3
+  patrolSpeed: 1
+  chaseSpeed: 2
   visionLength: 10
   collectibleItems: []
