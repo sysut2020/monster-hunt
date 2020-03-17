@@ -36,7 +36,7 @@ public class PlayerHealthController : HealthController {
 		throw new NotImplementedException();
 	}
 
-	private void Awake() {
+	private void Start() {
 		this.MaxHealth = this.health = this.StartHealth;
 		
 	}

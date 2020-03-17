@@ -37,6 +37,10 @@ public class LevelManager : Singleton<LevelManager> {
     private static readonly int PAUSE = 0;
     private static readonly int PLAY = 1;
 
+    private int maxPlayerLives = 3;
+    private int playerDeadCount = 0;
+    
+
     // -- properties -- //
 
     // -- public -- //
@@ -84,7 +88,14 @@ public class LevelManager : Singleton<LevelManager> {
     /// <param name="o">the object calling</param>
     /// <param name="args">the event args</param>
     private void CallbackPlayerKilledEvent(object o, EventArgs _) {
-        LevelStateChange(LEVEL_STATE.GAME_OVER);
+        if (playerDeadCount <= maxPlayerLives) {
+            playerDeadCount++;
+            LevelStateChange(LEVEL_STATE.RELOAD);
+        }
+        else {
+            playerDeadCount = 0;
+            LevelStateChange(LEVEL_STATE.GAME_OVER);
+        }
     }
 
     /// <summary>
@@ -133,6 +144,7 @@ public class LevelManager : Singleton<LevelManager> {
             
             case LEVEL_STATE.START:
                 InitLevel();
+                playerDeadCount = 0;
                 ChangeLevelState(LEVEL_STATE.PLAY);
                 break;
                 
@@ -146,7 +158,7 @@ public class LevelManager : Singleton<LevelManager> {
 
             case LEVEL_STATE.RELOAD:
                 Time.timeScale = PLAY;
-                CleanUpEvent.Invoke(this, EventArgs.Empty);
+                CleanUpEvent?.Invoke(this, EventArgs.Empty);
                 SceneManager.Instance.RestartCurrentScene();
                 break;
 
