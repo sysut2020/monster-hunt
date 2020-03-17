@@ -44,10 +44,10 @@ public class GameDataManager {
     /// Adds the provided letter count to the saved letter count
     /// </summary>
     /// <param name="toAdd">the letters to add</param>
-    public void AddLetters(Dictionary<string, int> toAdd){
-        if  (toAdd != null){
-            foreach (string key in toAdd.Keys){
-            playerLetters[key] =+ toAdd[key];
+    public void AddLetters(Dictionary<string, int> toAdd) {
+        if (toAdd != null) {
+            foreach (string key in toAdd.Keys) {
+                playerLetters[key] = +toAdd[key];
             }
         }
     }
@@ -57,20 +57,20 @@ public class GameDataManager {
     /// If null is provided count is set to 0 for every letter
     /// </summary>
     /// <param name="letters">The new letter count</param>
-    public void SetLetters(Dictionary<string, int> letters){
-        if  (letters != null){
+    public void SetLetters(Dictionary<string, int> letters) {
+        if (letters != null) {
             this.playerLetters = letters;
         } else {
             this.playerLetters = new Dictionary<string, int>();
         }
-        
+
     }
 
     /// <summary>
     /// adds the provided amount to the money count
     /// </summary>
     /// <param name="toAdd">the sum of money to add</param>
-    public void AddMoney(int toAdd){
+    public void AddMoney(int toAdd) {
         this.money += toAdd;
     }
 
@@ -78,14 +78,14 @@ public class GameDataManager {
     /// Sets the money count to the value provided
     /// </summary>
     /// <param name="m">the new money count</param>
-    public void SetMoney(int m){
+    public void SetMoney(int m) {
         this.money = m;
     }
 
     /// <summary>
     /// Saves the currently stored game data
     /// </summary>
-    public void SaveData(){
+    public void SaveData() {
         SaveData saveObj = new SaveData();
         saveObj.Money = this.money;
         saveObj.HighScores = this.highScores;
@@ -100,16 +100,6 @@ public class GameDataManager {
             if (saveObj?.Money != 0) {
                 this.AddMoney(saveObj.Money);
             }
-
-    /// <summary>
-    /// loads the game data from the savefile if possible
-    /// </summary>
-    private void LoadData(){
-        SaveData saveObj = DataSaver.Load();
-        if(saveObj != null) {
-            if(saveObj?.Money != 0) {this.AddMoney(saveObj.Money);}
-            Debug.Log(money);
-            //if(saveObj?.HighScores != 0) {steffanos work your magic here;}
         }
     }
 }
