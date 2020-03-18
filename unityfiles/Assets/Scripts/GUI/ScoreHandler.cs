@@ -1,9 +1,9 @@
 using UnityEngine;
 
 /// <summary>
-/// Keeps track of the current total score and level score.
-/// Adds score or subtracts score when needed.
-/// Saves score when destroyed.
+/// Keeps track of the current level score.
+/// Adds score score when needed.
+/// Saves score for transfer when destroyed.
 /// </summary>
 public class ScoreHandler : MonoBehaviour {
     private int levelScore = 0;
