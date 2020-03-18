@@ -23,7 +23,7 @@ public class Sound {
     // The volume of the sound
     [Range(0f, 1f)]
     [SerializeField]
-    private float volume;
+    private float volume = 1;
     public float Volume {
         get => volume;
         set => volume = value;
@@ -32,7 +32,7 @@ public class Sound {
     // The pitch of the sound
     [Range(0.1f, 3f)]
     [SerializeField]
-    private float pitch;
+    private float pitch = 1;
     public float Pitch {
         get => pitch;
         set => pitch = value;
