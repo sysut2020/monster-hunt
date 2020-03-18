@@ -51,6 +51,11 @@ public class ScoreHandler : MonoBehaviour {
         scoreGui.UpdateScoreText(this.levelScore);
     }
 
+    /// <summary>
+    /// Adds the amount of coins to the score
+    /// </summary>
+    /// <param name="_">irrelevant</param>
+    /// <param name="args">used to get the amount</param>
     private void CallbackCoinCollected(object _, CoinCollectedArgs args) {
         levelScore += args.Amount;
         scoreGui.UpdateScoreText(this.levelScore);
