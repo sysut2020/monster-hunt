@@ -79,17 +79,14 @@ public class GameManager : Singleton<GameManager> {
         this.currentState = NewState;
         GameStateChangeEventArgs args = new GameStateChangeEventArgs();
         args.NewState = NewState;
-
+        
         switch (NewState) {
             case GAME_STATE.MAIN_MENU:
                 UnityEngine.SceneManagement.SceneManager.LoadScene(MAIN_MENU_SCENE_INDEX);
-                PlayMainMenuMusic();
                 break;
 
             case GAME_STATE.TEST_LEVEL:
                 SceneManager.Instance.ChangeScene(TEST_LEVEL_SCENE_INDEX);
-                PlayLevel1Music();
-                Debug.Log("Method called in game state");
                 break;
             
             case GAME_STATE.LETTER_LEVEL:
@@ -106,6 +103,7 @@ public class GameManager : Singleton<GameManager> {
                 break;
         }
 
+        Debug.Log("Game event invoked");
         GameStateChangeEvent?.Invoke(this, args);
     }
 

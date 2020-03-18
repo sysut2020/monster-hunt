@@ -52,7 +52,4 @@ public class Sound {
         get => mute;
         set => mute = value;
     }
-    
-    [HideInInspector]
-    public AudioSource audioSource;
 }
