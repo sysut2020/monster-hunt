@@ -22,9 +22,6 @@ public class CharacterController2D : MonoBehaviour {
 	[SerializeField]
 	private LayerMask whatIsGround;
 
-	// A position marking where to check if the player is grounded.
-	[SerializeField]
-	private Transform groundCheck;
 
 	// The point that we want our aim to be based of
 	[SerializeField]
@@ -45,35 +42,16 @@ public class CharacterController2D : MonoBehaviour {
 		playerRigidbody2D = GetComponent<Rigidbody2D>();
 		mousePosition = new MousePosition();
 	}
-
-	private void FixedUpdate() {
-		Vector3 mouseWorldPosition = mousePosition.MouseWorldPosition(characterCenter);
-		grounded = false;
-		Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheck.position, GROUNDED_RADIUS, whatIsGround);
-		for (int i = 0; i < colliders.Length; i++) {
-			if (colliders[i].gameObject != gameObject) {
-				grounded = true;
-			}
-		}
-	}
+	
 
 	/// <summary>
 	/// Moves the player with a force in direction given by movement parameter
 	/// </summary>
 	/// <param name="movement">x axis direction</param>
 	public void Move(float movement) {
-		if (grounded || airControl) {
+		if (airControl) {
 			Vector3 targetVelocity = new Vector2(movement, playerRigidbody2D.velocity.y);
 			playerRigidbody2D.velocity = Vector3.SmoothDamp(playerRigidbody2D.velocity, targetVelocity, ref velocity, movementSmoothing);
-		}
-	}
-
-	/// <summary>
-	/// Adds uppward force to the the rigidbody.
-	/// </summary>
-	public void Jump() {
-		if (grounded) {
-			playerRigidbody2D.AddForce(new Vector2(0f, jumpForce));
 		}
 	}
 
