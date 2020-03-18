@@ -22,6 +22,8 @@ public class CoinCollectable : Collectable {
         if (TryGetComponent(out moveToGuiElement)) {
             moveToGuiElement.FindTarget<CoinsCollecedGUI>();
         }
+
+        this.ScoreValue = coinValue; // idk mabye not
     }
 
     private void OnDestroy() {
