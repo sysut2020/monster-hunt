@@ -39,7 +39,7 @@ public class GameManager : Singleton<GameManager> {
     /// </summary>
     private void SubscribeToEvents() {
         // todo subscribe to OnPlayerDead, OnTimeOut, OnAllEnemiesDead
-        LevelManager.LevelStateChangeEvent += c_LevelStateChangeEvent;
+        LevelManager.OnLevelStateChangeEvent += CallbackLevelStateChangeEvent;
     }
 
     /// <summary>
@@ -48,11 +48,11 @@ public class GameManager : Singleton<GameManager> {
     private void UnsubscribeFromEvents() {
         // todo unsubscribe from OnPlayerDead, OnTimeOut, OnAllEnemiesDead
         // maybe that this also should be done on disable
-        LevelManager.LevelStateChangeEvent -= c_LevelStateChangeEvent;
+        LevelManager.OnLevelStateChangeEvent -= CallbackLevelStateChangeEvent;
     }
 
     /// <summary>
-    /// This function is fired when the LevelStateChangeEvent is invoked
+    /// This function is fired when the OnLevelStateChangeEvent is invoked
     /// This function will trigger on the following level states:
     /// 
     /// STATE.EXIT: 
@@ -60,7 +60,7 @@ public class GameManager : Singleton<GameManager> {
     /// </summary>
     /// <param name="o">the object calling (this should always be the level manager)</param>
     /// <param name="args">the event args containing the new state</param>
-    private void c_LevelStateChangeEvent(object o, LevelStateChangeEventArgs args) {
+    private void CallbackLevelStateChangeEvent(object o, LevelStateChangeEventArgs args) {
         if (args.NewState == LEVEL_STATE.EXIT) {
             this.GameStateChange(GAME_STATE.MAIN_MENU);
         }
