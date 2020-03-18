@@ -15,11 +15,15 @@ public class GameDataManager {
     private Dictionary<string, int> playerLetters;
     private int money;
     private List<ScoreboardEntry> highScores;
+    private int gameScore;
 
     public GameDataManager() {
         this.playerLetters = new Dictionary<string, int>();
         this.money = 0;
         this.highScores = new List<ScoreboardEntry>();
+
+        
+        this.gameScore = 0;
 
         this.LoadData();
     }
@@ -27,6 +31,10 @@ public class GameDataManager {
     // -- properties -- // 
     public Dictionary<string, int> PlayerLetters {
         get => playerLetters;
+    }
+
+    public int GameScore {
+        get => gameScore;
     }
 
     public int Money {
@@ -80,6 +88,10 @@ public class GameDataManager {
     /// <param name="m">the new money count</param>
     public void SetMoney(int m) {
         this.money = m;
+    }
+
+    public void AddGameScore(int score) {
+        this.gameScore += score;
     }
 
     /// <summary>
