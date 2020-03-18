@@ -5,21 +5,15 @@ using UnityEngine;
 /// Adds score or subtracts score when needed.
 /// Saves score when destroyed.
 /// </summary>
+// [RequireComponent(typeof(DataHandler))]
 public class ScoreHandler : MonoBehaviour {
-    private int totalScore;
     private int levelScore = 0;
-    private DataHandler dataHandler;
+    private  GameDataManager dataManager;
 
     [SerializeField]
     private ScoreGUI scoreGui;
 
-
-    private void Awake() {
-        dataHandler = gameObject.AddComponent<DataHandler>();
-    }
-
     private void Start() {
-        LoadTotalScore();
         SubscribeToEvents();
     }
 
@@ -28,15 +22,11 @@ public class ScoreHandler : MonoBehaviour {
         UnsubscribeFromEvents();
     }
 
-    private void LoadTotalScore() {
-        Save data = dataHandler.LoadData();
-        totalScore = data.Score;
-    }
-
+    /// <summary>
+    /// Saves data to be retrieved when switching scenes
+    /// </summary>
     private void SaveScore() {
-        Save data = dataHandler.LoadData();
-        data.Score = totalScore;
-        dataHandler.SaveData(data);
+        dataManager.AddGameScore(levelScore);
     }
     
     private void SubscribeToEvents() {

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using TMPro;
 using UnityEngine;
 
@@ -11,11 +11,6 @@ public class ScoreGUI : MonoBehaviour {
         scoreText = gameObject.GetComponent<TextMeshProUGUI>();
 
         UpdateScoreText();
-        SubscribeToEvents();
-    }
-
-    private void OnDestroy() {
-        UnsubscribeFromEvents();
     }
 
     /// <summary>
