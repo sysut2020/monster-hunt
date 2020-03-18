@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class GameWon : MonoBehaviour {
-
     private int timeLeft;
     private int score;
 
@@ -13,6 +12,7 @@ public class GameWon : MonoBehaviour {
 
     [SerializeField]
     private Button continueButton;
+
     private void Awake() {
         if (continueButton.IsInteractable()) {
             continueButton.interactable = false;
@@ -34,7 +34,7 @@ public class GameWon : MonoBehaviour {
             // todo add time to score.
             int scoreLog = (int) Math.Ceiling(Math.Pow(score, 2)); // todo use better function for this
             score += scoreLog;
-            timeLeft-= scoreLog;
+            timeLeft -= scoreLog;
             timeLeftText.text = timeLeft.ToString();
         }
 
