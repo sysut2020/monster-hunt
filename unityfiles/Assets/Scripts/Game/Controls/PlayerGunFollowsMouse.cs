@@ -21,6 +21,7 @@ public class PlayerGunFollowsMouse : MonoBehaviour {
 
     bool mouseOnRightSide = true;
 
+
     // -- private -- //
 
     private void RotateGun() {

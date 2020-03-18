@@ -511,4 +511,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 341770c8abe63474ca6148d23c45b8f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scoreValue: 2
   letterComponent: {fileID: 4993117160022771467}
