@@ -8,7 +8,6 @@ using UnityEngine;
 // [RequireComponent(typeof(DataHandler))]
 public class ScoreHandler : MonoBehaviour {
     private int levelScore = 0;
-    private  GameDataManager dataManager;
 
     [SerializeField]
     private ScoreGUI scoreGui;
@@ -26,7 +25,7 @@ public class ScoreHandler : MonoBehaviour {
     /// Saves data to be retrieved when switching scenes
     /// </summary>
     private void SaveScore() {
-        dataManager.AddGameScore(levelScore);
+        GameManager.Instance.GameDataManager.AddGameScore(levelScore);
     }
     
     private void SubscribeToEvents() {
