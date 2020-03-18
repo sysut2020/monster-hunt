@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+
 
 /// <summary>
 /// Keeps track of the current level score.
@@ -41,23 +43,33 @@ public class ScoreHandler : MonoBehaviour {
         PowerupCollectable.OnPowerupCollected -= CallbackEffectPickup;
     }
 
-    private void CallbackEffectPickup(object sender, PowerUpCollectedArgs e) {
+    /// <summary>
+    /// Adds the collectibles score value to the total score
+    /// </summary>
+    /// <param name="col">Sender object</param>
+    /// <param name="args">event args</param>
+    private void CallbackEffectPickup(object col, PowerUpCollectedArgs e) {
         levelScore++; // when a power up is picked up we add one point to the total score
         scoreGui.UpdateScoreText(this.levelScore);
     }
 
-    private void CallbackLetterCollected(object __, LetterCollectedArgs _) {
-        levelScore++; // when a letter is collected we add one point to the total score counter
+    /// <summary>
+    /// Adds the collectibles score value to the total score
+    /// </summary>
+    /// <param name="col">Sender object</param>
+    /// <param name="args">event args</param>
+    private void CallbackLetterCollected(object col, LetterCollectedArgs _) {
+        levelScore += ((LetterCollectable) col).ScoreValue; // when a letter is collected we add one point to the total score counter
         scoreGui.UpdateScoreText(this.levelScore);
     }
 
     /// <summary>
-    /// Adds the amount of coins to the score
+    /// Adds the collectibles score value to the total score
     /// </summary>
-    /// <param name="_">irrelevant</param>
-    /// <param name="args">used to get the amount</param>
-    private void CallbackCoinCollected(object _, CoinCollectedArgs args) {
-        levelScore += args.Amount;
+    /// <param name="col">Sender object</param>
+    /// <param name="args">event args</param>
+    private void CallbackCoinCollected(object col, CoinCollectedArgs args) {
+        levelScore += ((LetterCollectable) col).ScoreValue;
         scoreGui.UpdateScoreText(this.levelScore);
     }
 }
