@@ -24,13 +24,15 @@ public class GameWon : MonoBehaviour {
     }
 
     private void OnEnable() {
-        timeLeft = 1000; // todo get time from game
+        var levelManager = LevelManager.Instance;
+        timeLeft = levelManager.GetLevelTimeLeft();
+        score = GameManager.Instance.GameDataManager.GameScore; // todo get time from game
     }
 
     private void Update() {
         if (timeLeft > 0) {
             // todo add time to score.
-            int scoreLog = (int) Math.Ceiling(Math.Log(score+2)*2); // todo use better function for this
+            int scoreLog = (int) Math.Ceiling(Math.Pow(score, 2)); // todo use better function for this
             score += scoreLog;
             timeLeft-= scoreLog;
             timeLeftText.text = timeLeft.ToString();
