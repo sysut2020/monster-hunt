@@ -15,14 +15,16 @@ public class GameDataManager {
     private Dictionary<string, int> playerLetters;
     private int money;
     private List<ScoreboardEntry> highScores;
+    
+    /// <summary>
+    /// Game score holds the score of the current game
+    /// </summary>
     private int gameScore;
 
     public GameDataManager() {
         this.playerLetters = new Dictionary<string, int>();
         this.money = 0;
         this.highScores = new List<ScoreboardEntry>();
-
-        
         this.gameScore = 0;
 
         this.LoadData();
@@ -90,8 +92,20 @@ public class GameDataManager {
         this.money = m;
     }
 
+    /// <summary>
+    /// Adds a score to the game score.
+    /// </summary>
+    /// <param name="score">Score to be added to the totals</param>
     public void AddGameScore(int score) {
         this.gameScore += score;
+    }
+
+    /// <summary>
+    /// Sets the game score
+    /// </summary>
+    /// <param name="score">Score to be set</param>
+    public void SetGameScore(int score) {
+        this.gameScore = score;
     }
 
     /// <summary>
@@ -101,6 +115,7 @@ public class GameDataManager {
         SaveData saveObj = new SaveData();
         saveObj.Money = this.money;
         saveObj.HighScores = this.highScores;
+        saveObj.Score = this.gameScore;
         DataSaver.Save(saveObj);
     }
 
