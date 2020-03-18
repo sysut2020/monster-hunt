@@ -1,17 +1,29 @@
 using System;
+using Monsterhunt.Fileoperation;
+using UnityEngine;
 
 public class WordChecker {
 
-    //REMOVE AND READ FROM FILE
-    private static String[] words = { "AAB", "ABA", "BOB", "HELLO", "UNCLE" };
-    //REMOVE AND READ FROM FILE
+    private String[] wordlist;
 
-    // -- private -- // 
+    public WordChecker(string[] wordlist, bool sort) {
+        this.wordlist = wordlist;
+        if (sort) {
+            SortWordlist();
+        }
+    }
 
-    public static bool isWordValid(string w) {
-        // Have to sort the array, event if it is meade sorted
-        Array.Sort(words);
+    private void SortWordlist() {
+        Array.Sort(this.wordlist);
+    }
+
+    /// <summary>
+    /// Returns true if word is a valid word, else false
+    /// </summary>
+    /// <param name="word"></param>
+    /// <returns>true if valid word, else false</returns>
+    public bool isWordValid(string word) {
         // Returns the index in the array where it found the word. Negetive value if nothing was found
-        return Array.BinarySearch(words, w) >= 0;
+        return Array.BinarySearch(this.wordlist, word.ToLower()) >= 0;
     }
 }

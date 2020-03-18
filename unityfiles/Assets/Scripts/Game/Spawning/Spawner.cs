@@ -31,7 +31,7 @@ public class Spawner : Singleton<Spawner> {
     private List<GameObject> enemyTypes = new List<GameObject>();
 
     private List<GameObject> spawnPoints = new List<GameObject>();
-    private readonly Timers spawnTimer = new Timers();
+    private readonly WUTimers spawnTimer = new WUTimers();
 
     // -- Public -- //
 

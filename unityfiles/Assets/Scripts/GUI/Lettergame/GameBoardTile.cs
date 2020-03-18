@@ -16,6 +16,15 @@ public class GameBoardTile : Dragable {
     [SerializeField]
     private int xPos, yPos;
 
+    [SerializeField]
+    private Image tileImage;
+
+    [SerializeField]
+    private Image verticalIndicator;
+
+    [SerializeField]
+    private Image horizontalIndicator;
+
     private LetterGameLetter holdingLetter = null;
 
     public int XPos { get => xPos; set => xPos = value; }
@@ -27,12 +36,15 @@ public class GameBoardTile : Dragable {
     // -- public -- //
 
     /// <summary>
-    /// set the letter to be displayed int the tile
+    /// Set the letter to be displayed in the tile, and 
+    /// register callback for when/if the tiles becomes 
+    /// valid in a word.
     /// </summary>
     /// <param name="letter">the letter to display</param>
     public void SetTile(LetterGameLetter letter) {
-        LetterGameManager.Instance.UpdateLetterPos(XPos, YPos, letter);
+        letter.OnValidLetterInWordCallback(SetTileValidColor);
         holdingLetter = letter;
+        LetterGameManager.Instance.UpdateLetterPos(XPos, YPos, letter);
         this.updateDisplayedLetter();
     }
 
@@ -42,8 +54,28 @@ public class GameBoardTile : Dragable {
     /// resets the displayed char on the tile
     /// </summary>
     public void ResetTile() {
+        SetTileValidColor(false, -1);
         holdingLetter = null;
         this.updateDisplayedLetter();
+    }
+    /// <summary>
+    /// Sets the color on the tile if it is valid, else 
+    /// remove color
+    /// </summary>
+    private void SetTileValidColor(bool isValid, int direction) {
+        if (isValid) {
+            this.tileImage.color = Color.green;
+            if (direction == 1) { // RIGHT
+                this.horizontalIndicator.enabled = true;
+            } else if (direction == 0) {
+                this.verticalIndicator.enabled = true;
+            }
+        } else {
+            this.tileImage.color = Color.white;
+            this.horizontalIndicator.enabled = false;
+            this.verticalIndicator.enabled = false;
+        }
+
     }
 
     /// <summary>
