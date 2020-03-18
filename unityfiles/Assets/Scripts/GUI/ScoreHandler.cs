@@ -47,7 +47,6 @@ public class ScoreHandler : MonoBehaviour {
     }
 
     private void CallbackLetterCollected(object __, LetterCollectedArgs _) {
-        Debug.Log("Letter collected");
         levelScore++; // when a letter is collected we add one point to the total score counter
         scoreGui.UpdateScoreText(this.levelScore);
     }
