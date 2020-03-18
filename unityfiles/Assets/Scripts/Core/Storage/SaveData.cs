@@ -18,4 +18,11 @@ public class SaveData {
         get => money;
         set => money = value;
     }
+    
+    private int score;
+
+    public int Score {
+        get => score;
+        set => score = value;
+    }
 }
