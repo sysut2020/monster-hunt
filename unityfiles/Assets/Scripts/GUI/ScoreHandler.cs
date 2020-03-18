@@ -5,14 +5,15 @@ using UnityEngine;
 /// Adds score or subtracts score when needed.
 /// Saves score when destroyed.
 /// </summary>
-// [RequireComponent(typeof(DataHandler))]
 public class ScoreHandler : MonoBehaviour {
     private int levelScore = 0;
+    private GameDataManager dataManager;
 
     [SerializeField]
     private ScoreGUI scoreGui;
 
     private void Start() {
+        dataManager = GameManager.Instance.GameDataManager;
         SubscribeToEvents();
     }
 
@@ -25,7 +26,7 @@ public class ScoreHandler : MonoBehaviour {
     /// Saves data to be retrieved when switching scenes
     /// </summary>
     private void SaveScore() {
-        GameManager.Instance.GameDataManager.AddGameScore(levelScore);
+        dataManager.AddGameScore(levelScore);
     }
     
     private void SubscribeToEvents() {
@@ -42,16 +43,17 @@ public class ScoreHandler : MonoBehaviour {
 
     private void CallbackEffectPickup(object sender, PowerUpCollectedArgs e) {
         levelScore++; // when a power up is picked up we add one point to the total score
-        scoreGui.UpdateScoreText();
+        scoreGui.UpdateScoreText(this.levelScore);
     }
 
     private void CallbackLetterCollected(object __, LetterCollectedArgs _) {
+        Debug.Log("Letter collected");
         levelScore++; // when a letter is collected we add one point to the total score counter
-        scoreGui.UpdateScoreText();
+        scoreGui.UpdateScoreText(this.levelScore);
     }
 
     private void CallbackCoinCollected(object _, CoinCollectedArgs args) {
         levelScore += args.Amount;
-        scoreGui.UpdateScoreText();
+        scoreGui.UpdateScoreText(this.levelScore);
     }
 }

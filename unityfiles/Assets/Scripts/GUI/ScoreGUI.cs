@@ -9,14 +9,13 @@ public class ScoreGUI : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
         scoreText = gameObject.GetComponent<TextMeshProUGUI>();
-
-        UpdateScoreText();
     }
 
     /// <summary>
     /// Updates the score text to the total score
     /// </summary>
-    public void UpdateScoreText() {
+    public void UpdateScoreText(int score) {
+        totalLevelScore += score;
         scoreText.text = totalLevelScore.ToString();
     }
 }
