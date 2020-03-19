@@ -67,9 +67,8 @@ public class ScoreHandler : MonoBehaviour {
     /// <param name="col">Sender object</param>
     /// <param name="args">event args</param>
     private void CallbackLetterCollected(object col, LetterCollectedArgs _) {
-        levelScore +=
-            ((LetterCollectable) col)
-            .ScoreValue; // when a letter is collected we add one point to the total score counter
+        // when a letter is collected we add one point to the total score counter
+        levelScore += ((LetterCollectable) col).ScoreValue; 
         scoreGui.UpdateScoreText(this.levelScore);
     }
 
