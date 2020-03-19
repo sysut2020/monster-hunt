@@ -164,7 +164,7 @@ public class LetterGameManager : Singleton<LetterGameManager> {
     /// </summary>
     private void ResetAllTilesOnBoard() {
         foreach (var item in tileMap) {
-            item?.SetValidLetter(false, -1);
+            item?.SetValidLetter(false, Direction.CENTER);
         }
     }
 
@@ -281,7 +281,8 @@ public class LetterGameManager : Singleton<LetterGameManager> {
         bool createdWord = false;
         if (IsConnectedLetterValid(connectedLetters)) {
             foreach (var letter in connectedLetters) {
-                letter.SetValidLetter(true, direction);
+                var validDirection = direction == XDIMENSION ? Direction.RIGHT : Direction.DOWN;
+                letter.SetValidLetter(true, validDirection);
             }
             createdWord = true;
         }
