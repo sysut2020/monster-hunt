@@ -1,49 +1,89 @@
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class GameWon : MonoBehaviour {
+    /// <summary>
+    /// Score when level ended
+    /// </summary>
+    private int collectedGameScore;
+
+    /// <summary>
+    /// Score including time bonus
+    /// </summary>
+    private int totalLevelScore;
+
+    /// <summary>
+    /// Time left when game ended
+    /// </summary>
     private int timeLeft;
-    private int score;
 
     [SerializeField]
     private TextMeshProUGUI timeLeftText;
 
     [SerializeField]
+    private TextMeshProUGUI scoreText;
+
+    [SerializeField]
     private Button continueButton;
+
+    /// <summary>
+    /// Amount of time the countdown should take
+    /// </summary>
+    [SerializeField]
+    private float duration = 5f;
+
+    /// <summary>
+    /// Time when the game won canvas was enabled
+    /// </summary>
+    private float timeEnabled;
 
     private void Awake() {
         if (continueButton.IsInteractable()) {
             continueButton.interactable = false;
         }
-        
-        Debug.Log(timeLeftText.text);
-        score = 0;
-        timeLeftText.text = timeLeft.ToString();
     }
 
     private void OnEnable() {
-        var levelManager = LevelManager.Instance;
-        timeLeft = levelManager.GetLevelTimeLeft();
-        score = GameManager.Instance.GameDataManager.GameScore; // todo get time from game
+        GameDataManager dataManager = GameManager.Instance.GameDataManager;
+
+        timeEnabled = Time.time;
+
+        timeLeft = LevelManager.Instance.GetLevelTimeLeft() / 1000; // divide by 1000 to get sec
+        timeLeftText.text = FormatAsClockTime(timeLeft);
+
+        collectedGameScore = dataManager.GameScore;
+        scoreText.text = collectedGameScore.ToString();
+        totalLevelScore = collectedGameScore + timeLeft;
+        dataManager.AddGameScore(totalLevelScore);
     }
 
     private void Update() {
-        if (timeLeft > 0) {
-            // todo add time to score.
-            int scoreLog = (int) Math.Ceiling(Math.Pow(score, 2)); // todo use better function for this
-            score += scoreLog;
-            timeLeft -= scoreLog;
-            timeLeftText.text = timeLeft.ToString();
-        }
+        var t = (Time.time - timeEnabled) / duration; // used to smooth the count down/up
+        scoreText.text = Mathf.RoundToInt(Mathf.SmoothStep(collectedGameScore, totalLevelScore, t)).ToString();
+        var timeInSeconds = Mathf.RoundToInt(Mathf.SmoothStep(timeLeft, 0, t));
+        timeLeftText.text = FormatAsClockTime(timeInSeconds);
 
-        if (timeLeft < 0) {
-            timeLeftText.text = 0.ToString(); // setting string to 0
-        }
-
-        if (timeLeftText.text == 0.ToString()) {
+        if (timeInSeconds <= 0 && !continueButton.interactable) {
+            // timeLeftText.text == "0:00"
             continueButton.interactable = true;
         }
+    }
+
+    /// <summary>
+    /// Returns the value as "MM:SS"
+    /// </summary>
+    /// <param name="seconds"></param>
+    /// <returns></returns>
+    private string FormatAsClockTime(int seconds) {
+        var min = Mathf.RoundToInt(seconds / 60);
+        var sec = seconds % 60;
+        var asClockTime = $"{min}:{sec}"; // string interpolation
+        // https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/tokens/interpolated
+        if (sec < 10) {
+            asClockTime = $"{min}:0{sec}"; // just added a 0 if sec is less than 10
+        }
+
+        return asClockTime;
     }
 }
