@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class GunController {
 
@@ -33,6 +35,8 @@ public class GunController {
         
     }
 
+    public static event EventHandler BulletFireEvent;
+    
     // -- properties -- //
     public float FireRate {
         get { return WeaponData.FireRate; }
@@ -100,8 +104,8 @@ public class GunController {
         bulletControl.BulletData = this.bulletData;
 
         this.FireProjectile(bullet);
-
-
+        
+        BulletFireEvent?.Invoke(this, EventArgs.Empty);
     }
 
 

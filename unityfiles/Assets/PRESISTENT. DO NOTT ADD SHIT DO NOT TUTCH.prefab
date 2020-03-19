@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 9123475169075356347}
   - component: {fileID: 9123475169075356346}
   - component: {fileID: 4461527704590444796}
+  - component: {fileID: 420736807}
   m_Layer: 0
   m_Name: PRESISTENT. DO NOTT ADD SHIT DO NOT TUTCH
   m_TagString: Untagged
@@ -56,10 +57,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fa897e3edc3f3646bf91ff89573e1a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainMenuMusic:
+    name: 
+    audioClipToPlay: {fileID: 8300000, guid: 8e77f5a3279a51145b5b06a218d59950, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    mute: 0
   level1Music:
     name: 
     audioClipToPlay: {fileID: 8300000, guid: 9fc6a3fb2e87ae24cbbfbb0424e7acb0, type: 3}
     volume: 0.393
-    pitch: 0
+    pitch: 1
     loop: 1
+    mute: 0
+  letterGameMusic:
+    name: 
+    audioClipToPlay: {fileID: 8300000, guid: 2ca5acddf3a747f478116ffba5917238, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    mute: 0
+--- !u!114 &420736807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9123475169075356341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 291fc82498e749245a6b63131088e720, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gunFireSound:
+    name: 
+    audioClipToPlay: {fileID: 8300000, guid: a92e3484e08d1ee4fa786a09f82b72e3, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
     mute: 0
