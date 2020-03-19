@@ -92,17 +92,17 @@ public class LevelManager : Singleton<LevelManager> {
     /// This function is fiered when the PlayerKilled is invoked
     /// Ends the level
     /// </summary>
-    /// <param name="o">the object calling</param>
+    /// <param name="_">the object calling</param>
     /// <param name="args">the event args</param>
-    private void CallbackPlayerKilledEvent(object o, EventArgs _) { }
+    private void CallbackPlayerKilledEvent(object __, EventArgs _) { }
 
     /// <summary>
     /// This function is fiered when the EnemyKilled is invoked
     /// Increses the enemy killed counter by one
     /// </summary>
-    /// <param name="o">the object calling</param>
+    /// <param name="_">the object calling</param>
     /// <param name="args">the event args</param>
-    private void CallbackEnemyKilledEvent(object o, EnemyEventArgs args) {
+    private void CallbackEnemyKilledEvent(object _, EnemyEventArgs args) {
         playThroughData.EnemysKilled += 1;
         if (this.levelDetails.NumberOfEnemies <= playThroughData.EnemysKilled) {
             this.LevelStateChange(LEVEL_STATE.GAME_WON);
