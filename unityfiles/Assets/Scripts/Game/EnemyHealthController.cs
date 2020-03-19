@@ -18,7 +18,7 @@ public class EnemyHealthController : HealthController {
         if (healthBarGuiController == null) {
             throw new MissingComponentException("Missing EnemyHealthBarGUIController"); // todo this will always be thrown from the player
         }
-        health = startHealth;
+        Health = startHealth;
         healthBarGuiController.SetStartHealth(startHealth);
     }
 
@@ -31,8 +31,8 @@ public class EnemyHealthController : HealthController {
     /// </summary>
     /// <param name="dmg">The amount of damage given to the entity</param>
     public override void ApplyDamage(float dmg) {
-        health -= dmg;
-        healthBarGuiController.UpdateHealthBar(health);
+        Health -= dmg;
+        healthBarGuiController.UpdateHealthBar(Health);
         this.CheckIfDead();
     }
 
@@ -43,8 +43,8 @@ public class EnemyHealthController : HealthController {
     /// <param name="healing">The amount of health given to the entity</param>
     public override void ApplyHealing(float healing) {
         if (!this.IsDead) {
-            health += healing;
-            healthBarGuiController.UpdateHealthBar(health);
+            Health += healing;
+            healthBarGuiController.UpdateHealthBar(Health);
         }
     }
 }

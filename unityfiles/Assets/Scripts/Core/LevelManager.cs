@@ -37,9 +37,6 @@ public class LevelManager : Singleton<LevelManager> {
     private static readonly int PAUSE = 0;
     private static readonly int PLAY = 1;
 
-    private int maxPlayerLives = 3;
-    private int playerDeadCount = 0;
-
     // -- properties -- //
 
     // -- public -- //
@@ -63,6 +60,7 @@ public class LevelManager : Singleton<LevelManager> {
     /// </summary>
     private void SubscribeToEvents() {
         Player.PlayerKilledEvent += CallbackPlayerKilledEvent;
+        PlayerHealthController.OnPlayerLivesUpdate += CallbackPlayerLivesUpdate;
         Enemy.EnemyKilledEvent += CallbackEnemyKilledEvent;
         PauseMenuController.PauseMenuChangeEvent += CallbackChangeLevelState;
     }
@@ -72,6 +70,7 @@ public class LevelManager : Singleton<LevelManager> {
     /// </summary>
     private void UnsubscribeFromEvents() {
         Player.PlayerKilledEvent -= CallbackPlayerKilledEvent;
+        PlayerHealthController.OnPlayerLivesUpdate -= CallbackPlayerLivesUpdate;
         Enemy.EnemyKilledEvent -= CallbackEnemyKilledEvent;
         PauseMenuController.PauseMenuChangeEvent -= CallbackChangeLevelState;
     }
@@ -84,17 +83,18 @@ public class LevelManager : Singleton<LevelManager> {
     /// This function is fiered when the PlayerKilled is invoked
     /// Ends the level
     /// </summary>
+    /// <param name="_">the object calling</param>
+    /// <param name="args">the event args</param>
+    private void CallbackPlayerLivesUpdate(object _, PlayerLivesUpdateArgs args) {
+        if (args.CurrentLives == 0) LevelStateChange(LEVEL_STATE.GAME_OVER);
+    }
+    /// <summary>
+    /// This function is fiered when the PlayerKilled is invoked
+    /// Ends the level
+    /// </summary>
     /// <param name="o">the object calling</param>
     /// <param name="args">the event args</param>
-    private void CallbackPlayerKilledEvent(object o, EventArgs _) {
-        if (playerDeadCount <= maxPlayerLives) {
-            playerDeadCount++;
-            LevelStateChange(LEVEL_STATE.RELOAD);
-        } else {
-            playerDeadCount = 0;
-            LevelStateChange(LEVEL_STATE.GAME_OVER);
-        }
-    }
+    private void CallbackPlayerKilledEvent(object o, EventArgs _) { }
 
     /// <summary>
     /// This function is fiered when the EnemyKilled is invoked
@@ -142,7 +142,6 @@ public class LevelManager : Singleton<LevelManager> {
 
             case LEVEL_STATE.START:
                 InitLevel();
-                playerDeadCount = 0;
                 ChangeLevelState(LEVEL_STATE.PLAY);
                 break;
 
