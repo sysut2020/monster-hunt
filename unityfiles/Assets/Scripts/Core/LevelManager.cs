@@ -46,7 +46,7 @@ public class LevelManager : Singleton<LevelManager> {
     /// <summary>
     /// This event tells the listeners the level state has changed
     /// </summary>
-    public static event EventHandler<LevelStateChangeEventArgs> LevelStateChangeEvent;
+    public static event EventHandler<LevelStateChangeEventArgs> OnLevelStateChangeEvent;
 
     /// <summary>
     /// This event tells the listeners they are about to be deleted and should relese 
@@ -60,6 +60,7 @@ public class LevelManager : Singleton<LevelManager> {
     /// </summary>
     private void SubscribeToEvents() {
         Player.PlayerKilledEvent += CallbackPlayerKilledEvent;
+        PlayerHealthController.OnPlayerLivesUpdate += CallbackPlayerLivesUpdate;
         Enemy.EnemyKilledEvent += CallbackEnemyKilledEvent;
         PauseMenuController.PauseMenuChangeEvent += CallbackChangeLevelState;
     }
@@ -69,6 +70,7 @@ public class LevelManager : Singleton<LevelManager> {
     /// </summary>
     private void UnsubscribeFromEvents() {
         Player.PlayerKilledEvent -= CallbackPlayerKilledEvent;
+        PlayerHealthController.OnPlayerLivesUpdate -= CallbackPlayerLivesUpdate;
         Enemy.EnemyKilledEvent -= CallbackEnemyKilledEvent;
         PauseMenuController.PauseMenuChangeEvent -= CallbackChangeLevelState;
     }
@@ -81,19 +83,26 @@ public class LevelManager : Singleton<LevelManager> {
     /// This function is fiered when the PlayerKilled is invoked
     /// Ends the level
     /// </summary>
-    /// <param name="o">the object calling</param>
+    /// <param name="_">the object calling</param>
     /// <param name="args">the event args</param>
-    private void CallbackPlayerKilledEvent(object o, EventArgs _) {
-        LevelStateChange(LEVEL_STATE.GAME_OVER);
+    private void CallbackPlayerLivesUpdate(object _, PlayerLivesUpdateArgs args) {
+        if (args.CurrentLives == 0) LevelStateChange(LEVEL_STATE.GAME_OVER);
     }
+    /// <summary>
+    /// This function is fiered when the PlayerKilled is invoked
+    /// Ends the level
+    /// </summary>
+    /// <param name="_">the object calling</param>
+    /// <param name="args">the event args</param>
+    private void CallbackPlayerKilledEvent(object __, EventArgs _) { }
 
     /// <summary>
     /// This function is fiered when the EnemyKilled is invoked
     /// Increses the enemy killed counter by one
     /// </summary>
-    /// <param name="o">the object calling</param>
+    /// <param name="_">the object calling</param>
     /// <param name="args">the event args</param>
-    private void CallbackEnemyKilledEvent(object o, EnemyEventArgs args) {
+    private void CallbackEnemyKilledEvent(object _, EnemyEventArgs args) {
         playThroughData.EnemysKilled += 1;
         if (this.levelDetails.NumberOfEnemies <= playThroughData.EnemysKilled) {
             this.LevelStateChange(LEVEL_STATE.GAME_WON);
@@ -130,24 +139,24 @@ public class LevelManager : Singleton<LevelManager> {
             case LEVEL_STATE.PAUSE:
                 Time.timeScale = PAUSE;
                 break;
-            
+
             case LEVEL_STATE.START:
                 InitLevel();
                 ChangeLevelState(LEVEL_STATE.PLAY);
                 break;
-                
-            // Start the main mode spawn the player and start the level
+
+                // Start the main mode spawn the player and start the level
             case LEVEL_STATE.PLAY:
                 Time.timeScale = PLAY;
                 break;
-            // Exit the game and go to main menu
+                // Exit the game and go to main menu
             case LEVEL_STATE.EXIT:
                 break;
 
             case LEVEL_STATE.RELOAD:
-                Time.timeScale = PLAY;
-                CleanUpEvent.Invoke(this, EventArgs.Empty);
+                CleanUpEvent?.Invoke(this, EventArgs.Empty);
                 SceneManager.Instance.RestartCurrentScene();
+                Time.timeScale = PLAY;
                 break;
 
             default:
@@ -155,7 +164,7 @@ public class LevelManager : Singleton<LevelManager> {
                 break;
         }
 
-        LevelStateChangeEvent?.Invoke(this, args);
+        OnLevelStateChangeEvent?.Invoke(this, args);
     }
 
     // -- private -- //
@@ -188,7 +197,7 @@ public class LevelManager : Singleton<LevelManager> {
     /// if timer is done -1 is returned
     /// </summary>
     /// <returns>time left in milliseconds -1 if done</returns>
-    public int GetLevelTimeLeft(){
+    public int GetLevelTimeLeft() {
         return this.levelTimer.TimeLeft(this.LEVEL_TIMER_ID);
     }
 
