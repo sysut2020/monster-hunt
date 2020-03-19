@@ -55,7 +55,7 @@ public class GameWon : MonoBehaviour {
         collectedGameScore = dataManager.GameScore;
         scoreText.text = collectedGameScore.ToString();
         totalLevelScore = collectedGameScore + timeLeft;
-        dataManager.AddGameScore(totalLevelScore);
+        dataManager.AddGameScore(timeLeft);
     }
 
     private void Update() {
