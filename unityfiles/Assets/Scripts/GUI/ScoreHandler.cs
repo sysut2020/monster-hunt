@@ -30,17 +30,25 @@ public class ScoreHandler : MonoBehaviour {
     private void SaveScore() {
         dataManager.AddGameScore(levelScore);
     }
-    
+
     private void SubscribeToEvents() {
         CoinCollectable.OnCoinCollected += CallbackCoinCollected;
         LetterCollectable.OnLetterCollected += CallbackLetterCollected;
         PowerupCollectable.OnPowerupCollected += CallbackEffectPickup;
+        LevelManager.OnLevelStateChangeEvent += CallbackLevelStateChange;
+    }
+
+    private void CallbackLevelStateChange(object _, LevelStateChangeEventArgs e) {
+        if (e.NewState == LEVEL_STATE.GAME_WON) {
+            SaveScore();
+        }
     }
 
     private void UnsubscribeFromEvents() {
         CoinCollectable.OnCoinCollected -= CallbackCoinCollected;
         LetterCollectable.OnLetterCollected -= CallbackLetterCollected;
         PowerupCollectable.OnPowerupCollected -= CallbackEffectPickup;
+        LevelManager.OnLevelStateChangeEvent -= CallbackLevelStateChange;
     }
 
     /// <summary>
@@ -59,7 +67,8 @@ public class ScoreHandler : MonoBehaviour {
     /// <param name="col">Sender object</param>
     /// <param name="args">event args</param>
     private void CallbackLetterCollected(object col, LetterCollectedArgs _) {
-        levelScore += ((LetterCollectable) col).ScoreValue; // when a letter is collected we add one point to the total score counter
+        // when a letter is collected we add one point to the total score counter
+        levelScore += ((LetterCollectable) col).ScoreValue; 
         scoreGui.UpdateScoreText(this.levelScore);
     }
 

@@ -46,7 +46,7 @@ public class LevelManager : Singleton<LevelManager> {
     /// <summary>
     /// This event tells the listeners the level state has changed
     /// </summary>
-    public static event EventHandler<LevelStateChangeEventArgs> LevelStateChangeEvent;
+    public static event EventHandler<LevelStateChangeEventArgs> OnLevelStateChangeEvent;
 
     /// <summary>
     /// This event tells the listeners they are about to be deleted and should relese 
@@ -155,7 +155,7 @@ public class LevelManager : Singleton<LevelManager> {
                 break;
         }
 
-        LevelStateChangeEvent?.Invoke(this, args);
+        OnLevelStateChangeEvent?.Invoke(this, args);
     }
 
     // -- private -- //
