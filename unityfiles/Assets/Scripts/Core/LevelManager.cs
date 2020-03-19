@@ -189,7 +189,6 @@ public class LevelManager : Singleton<LevelManager> {
     /// </summary>
     /// <returns>time left in milliseconds -1 if done</returns>
     public int GetLevelTimeLeft(){
-        Debug.Log(LEVEL_TIMER_ID);
         return this.levelTimer.TimeLeft(this.LEVEL_TIMER_ID);
     }
 
