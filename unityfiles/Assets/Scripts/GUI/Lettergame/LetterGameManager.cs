@@ -24,6 +24,8 @@ public class LetterCountCangedEventArgs : EventArgs {
 
 public class LetterGameManager : Singleton<LetterGameManager> {
 
+    private int wordsPoints = 0;
+
     private WordChecker wordChecker;
 
     /// <summary>
@@ -34,8 +36,33 @@ public class LetterGameManager : Singleton<LetterGameManager> {
     private const int YDIMENSION = 1;
     private const int XDIMENSION = 0;
 
-    // maby move this to a global constant
-    private readonly string[] letters = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
+    private readonly Dictionary<string, int> letters = new Dictionary<string, int> { { "A", 1 },
+        { "B", 3 },
+        { "C", 3 },
+        { "D", 2 },
+        { "E", 1 },
+        { "F", 4 },
+        { "G", 2 },
+        { "H", 4 },
+        { "I", 1 },
+        { "J", 8 },
+        { "K", 5 },
+        { "L", 1 },
+        { "M", 3 },
+        { "N", 1 },
+        { "O", 1 },
+        { "P", 3 },
+        { "Q", 10 },
+        { "R", 1 },
+        { "S", 1 },
+        { "T", 1 },
+        { "U", 1 },
+        { "V", 4 },
+        { "W", 4 },
+        { "X", 8 },
+        { "Y", 4 },
+        { "Z", 10 }
+    };
 
     /// <summary>
     /// The x size of the board
@@ -124,11 +151,12 @@ public class LetterGameManager : Singleton<LetterGameManager> {
             // Remove the letter from the board
             BoardTryRemoveLetter(letter);
         }
-
+        wordsPoints = 0;
         this.ResetAllTilesOnBoard();
         this.FindWordsInDimension(XDIMENSION);
         this.FindWordsInDimension(YDIMENSION);
         this.RefreshLetterCountDisplay();
+        Debug.Log(wordsPoints);
     }
 
     /// <summary>
@@ -136,7 +164,7 @@ public class LetterGameManager : Singleton<LetterGameManager> {
     /// </summary>
     private void ResetAllTilesOnBoard() {
         foreach (var item in tileMap) {
-            item?.SetValidLetter(false, -1);
+            item?.SetValidLetter(false, Direction.CENTER);
         }
     }
 
@@ -192,7 +220,8 @@ public class LetterGameManager : Singleton<LetterGameManager> {
     /// Tries to find a word in the position in the provided dimension X or Y 
     /// and return the X or Y position of the last letter in the word.
     /// If finding word in Y dimension, return Y position of last letter, if no 
-    /// words are found, return the X or Y of the provided X Y
+    /// words are found, return the X or Y of the provided X Y.
+    /// Updates the totalScore
     /// </summary>
     /// <param name="x">X position to search from</param>
     /// <param name="y">Y position to search from</param>
@@ -203,6 +232,7 @@ public class LetterGameManager : Singleton<LetterGameManager> {
         if (IsBoardTileValid(x, y)) {
             var connectedLetters = TryGetConnectedLetters(x, y, dimension);
             if (CreateWordOfLetters(connectedLetters, dimension)) {
+                wordsPoints += GetWordScore(connectedLetters);
                 var pos = GetLastLetterPosition(connectedLetters);
                 lastposition = (dimension == XDIMENSION) ? pos.x : pos.y;
             }
@@ -212,6 +242,16 @@ public class LetterGameManager : Singleton<LetterGameManager> {
         }
 
         return lastposition;
+    }
+
+    /// <summary>
+    /// Returns the score of connected letters/ a word
+    /// </summary>
+    /// <param name="word">the word to get points fron</param>
+    /// <returns>total points for the word</returns>
+    private int GetWordScore(LetterGameLetter[] word) {
+        var sum = word.Sum(e => e.ScoreValue);
+        return sum;
     }
 
     /// <summary>
@@ -241,7 +281,8 @@ public class LetterGameManager : Singleton<LetterGameManager> {
         bool createdWord = false;
         if (IsConnectedLetterValid(connectedLetters)) {
             foreach (var letter in connectedLetters) {
-                letter.SetValidLetter(true, direction);
+                var validDirection = direction == XDIMENSION ? Direction.RIGHT : Direction.DOWN;
+                letter.SetValidLetter(true, validDirection);
             }
             createdWord = true;
         }
@@ -294,10 +335,10 @@ public class LetterGameManager : Singleton<LetterGameManager> {
     /// Makes and places the letter tiles
     /// </summary>
     private void MakeLetterTile() {
-        foreach (string letter in letters) {
+        foreach (var letter in letters) {
             GameObject n = Instantiate(this.letterTile);
             LetterTile tile = n.GetComponent<LetterTile>();
-            tile.LetterTileLetter = letter;
+            tile.LetterTileLetter = letter.Key;
             n.transform.SetParent(letterBoard.transform);
         }
     }
@@ -310,8 +351,9 @@ public class LetterGameManager : Singleton<LetterGameManager> {
     /// Invokes a event telling all the letter displays to update their number of letters
     /// </summary>
     private void RefreshLetterCountDisplay() {
-        LetterCountCangedEventArgs args = new LetterCountCangedEventArgs();
-        args.AvailLetters = this.CurrentAvailableLetterCount;
+        LetterCountCangedEventArgs args = new LetterCountCangedEventArgs {
+            AvailLetters = this.CurrentAvailableLetterCount
+        };
         LetterCountCangedEvent?.Invoke(this, args);
     }
 
@@ -324,7 +366,8 @@ public class LetterGameManager : Singleton<LetterGameManager> {
         foreach (string key in playerDataDict.Keys) {
             if (playerLetters.Keys.Contains(key)) {
                 for (int i = 0; i < playerDataDict[key]; i++) {
-                    LetterGameLetter newLetter = new LetterGameLetter(-1, -1, key);
+                    int letterValue = letters[key];
+                    LetterGameLetter newLetter = new LetterGameLetter(-1, -1, key, letterValue);
                     playerLetters[key].Add(newLetter);
                 }
 
@@ -336,8 +379,8 @@ public class LetterGameManager : Singleton<LetterGameManager> {
     /// Make a holder for every letter
     /// </summary>
     private void MakePlayerLetter() {
-        foreach (String letter in letters) {
-            this.playerLetters.Add(letter, new List<LetterGameLetter>());
+        foreach (var letter in letters) {
+            this.playerLetters.Add(letter.Key, new List<LetterGameLetter>());
         }
     }
 

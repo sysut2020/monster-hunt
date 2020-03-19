@@ -54,7 +54,7 @@ public class GameBoardTile : Dragable {
     /// resets the displayed char on the tile
     /// </summary>
     public void ResetTile() {
-        SetTileValidColor(false, -1);
+        SetTileValidColor(false, Direction.CENTER);
         holdingLetter = null;
         this.updateDisplayedLetter();
     }
@@ -62,13 +62,18 @@ public class GameBoardTile : Dragable {
     /// Sets the color on the tile if it is valid, else 
     /// remove color
     /// </summary>
-    private void SetTileValidColor(bool isValid, int direction) {
+    private void SetTileValidColor(bool isValid, Direction direction) {
         if (isValid) {
             this.tileImage.color = Color.green;
-            if (direction == 1) { // RIGHT
-                this.horizontalIndicator.enabled = true;
-            } else if (direction == 0) {
-                this.verticalIndicator.enabled = true;
+            switch (direction) {
+                case Direction.RIGHT:
+                    this.verticalIndicator.enabled = true;
+                    break;
+                case Direction.DOWN:
+                    this.horizontalIndicator.enabled = true;
+                    break;
+                default:
+                    break;
             }
         } else {
             this.tileImage.color = Color.white;

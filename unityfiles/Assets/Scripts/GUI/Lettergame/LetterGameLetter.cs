@@ -6,14 +6,16 @@ using UnityEngine;
 public class LetterGameLetter {
 
     private readonly string letter;
+    private readonly int scoreValue;
     private int xPos, yPos;
     private bool isOnBoard = false;
-    private Action<bool, int> OnValidLetterInWord { get; set; }
+    private Action<bool, Direction> OnValidLetterInWord { get; set; }
     private bool isValid;
-    public LetterGameLetter(int x, int y, string tileLetter) {
+    public LetterGameLetter(int x, int y, string tileLetter, int scoreValue) {
         this.XPos = x;
         this.YPos = y;
         this.letter = tileLetter;
+        this.scoreValue = scoreValue;
     }
 
     /// <summary>
@@ -21,7 +23,7 @@ public class LetterGameLetter {
     /// letter in a word.
     /// </summary>
     /// <param name="func">callback function to be called</param>
-    public void OnValidLetterInWordCallback(Action<bool, int> func) {
+    public void OnValidLetterInWordCallback(Action<bool, Direction> func) {
         OnValidLetterInWord = func;
     }
 
@@ -30,11 +32,11 @@ public class LetterGameLetter {
     /// Triggers the registered callback method when it becomes valid.
     /// </summary>
     /// <param name="isValidLetterInWord">true if valid, false if unvalid</param>
-    public void SetValidLetter(bool isValidLetterInWord, int direction) {
+    public void SetValidLetter(bool isValidLetterInWord, Direction direction) {
         try {
             this.isValid = isValidLetterInWord;
             OnValidLetterInWord(isValidLetterInWord, direction);
-        } catch (System.NullReferenceException) { }
+        } catch (NullReferenceException) { }
     }
 
     public string Letter { get => letter; }
@@ -42,4 +44,6 @@ public class LetterGameLetter {
     public bool isValidLetterInWord { get => isValid; set => isValid = value; }
     public int YPos { get => yPos; set => yPos = value; }
     public int XPos { get => xPos; set => xPos = value; }
+
+    public int ScoreValue => scoreValue;
 }
