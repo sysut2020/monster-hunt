@@ -65,7 +65,6 @@ public class GameWon : MonoBehaviour {
         timeLeftText.text = FormatAsClockTime(timeInSeconds);
 
         if (timeInSeconds <= 0 && !continueButton.interactable) {
-            // timeLeftText.text == "0:00"
             continueButton.interactable = true;
         }
     }
