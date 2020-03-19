@@ -39,7 +39,6 @@ public class LevelManager : Singleton<LevelManager> {
 
     private int maxPlayerLives = 3;
     private int playerDeadCount = 0;
-    
 
     // -- properties -- //
 
@@ -91,8 +90,7 @@ public class LevelManager : Singleton<LevelManager> {
         if (playerDeadCount <= maxPlayerLives) {
             playerDeadCount++;
             LevelStateChange(LEVEL_STATE.RELOAD);
-        }
-        else {
+        } else {
             playerDeadCount = 0;
             LevelStateChange(LEVEL_STATE.GAME_OVER);
         }
@@ -141,25 +139,25 @@ public class LevelManager : Singleton<LevelManager> {
             case LEVEL_STATE.PAUSE:
                 Time.timeScale = PAUSE;
                 break;
-            
+
             case LEVEL_STATE.START:
                 InitLevel();
                 playerDeadCount = 0;
                 ChangeLevelState(LEVEL_STATE.PLAY);
                 break;
-                
-            // Start the main mode spawn the player and start the level
+
+                // Start the main mode spawn the player and start the level
             case LEVEL_STATE.PLAY:
                 Time.timeScale = PLAY;
                 break;
-            // Exit the game and go to main menu
+                // Exit the game and go to main menu
             case LEVEL_STATE.EXIT:
                 break;
 
             case LEVEL_STATE.RELOAD:
-                Time.timeScale = PLAY;
                 CleanUpEvent?.Invoke(this, EventArgs.Empty);
                 SceneManager.Instance.RestartCurrentScene();
+                Time.timeScale = PLAY;
                 break;
 
             default:
@@ -200,7 +198,7 @@ public class LevelManager : Singleton<LevelManager> {
     /// if timer is done -1 is returned
     /// </summary>
     /// <returns>time left in milliseconds -1 if done</returns>
-    public int GetLevelTimeLeft(){
+    public int GetLevelTimeLeft() {
         return this.levelTimer.TimeLeft(this.LEVEL_TIMER_ID);
     }
 
