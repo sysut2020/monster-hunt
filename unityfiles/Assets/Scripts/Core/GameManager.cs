@@ -83,7 +83,7 @@ public class GameManager : Singleton<GameManager> {
                 break;
 
             case GAME_STATE.TEST_LEVEL:
-                SceneManager.Instance.ChangeScene(TEST_LEVEL_SCENE_INDEX);
+                SceneManager.Instance.ChangeScene(SCENES.LEVEL1);
                 break;
             
             case GAME_STATE.LETTER_LEVEL:
