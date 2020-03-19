@@ -22,9 +22,6 @@ public class PlayerMovement : MonoBehaviour {
 
     void Update() {
         horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
-        if (Input.GetButtonDown("Jump")) {
-            characterController2D.Jump();
-        }
     }
 
     void FixedUpdate() {
