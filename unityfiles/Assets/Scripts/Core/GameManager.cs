@@ -16,6 +16,9 @@ public class GameManager : Singleton<GameManager> {
     private GAME_STATE currentState;
     private int nextSceneIndex = 0;
 
+    /// <summary>
+    /// Index of all levels in the game
+    /// </summary>
     private SCENES[] levels = {
         SCENES.LEVEL1, SCENES.LEVEL2 // todo add more levels here
     };
@@ -89,6 +92,8 @@ public class GameManager : Singleton<GameManager> {
                 nextSceneIndex = 1;
                 SceneManager.Instance.ChangeScene(SCENES.LEVEL1);
                 break;
+            
+            // todo add a countinue state where one can play from the level last played
             
             case GAME_STATE.LETTER_LEVEL:
                 SceneManager.Instance.ChangeScene(SCENES.LETTER_GAME);
