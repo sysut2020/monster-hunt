@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class LivesGUI : MonoBehaviour {
@@ -12,12 +13,30 @@ public class LivesGUI : MonoBehaviour {
 
     readonly List<Transform> lifesObjects = new List<Transform>();
 
+    private bool initialized = false;
+    private void Awake() {
+        PlayerHealthController.OnPlayerLivesUpdate += CallbackOnLivesUpdate;
+    }
+
     // Start is called before the first frame update
     void Start() {
-        if (this.lifeObject == null){
+        if (this.lifeObject == null) {
             throw new MissingReferenceException("Please provide a reference to a life object to display.");
         }
-        this.GenerateLifeObject(3);
+    }
+
+    private void CallbackOnLivesUpdate(object _, PlayerLivesUpdateArgs args) {
+        if (!initialized) {
+            GenerateLifeObject(args.CurrentLives);
+            initialized = true;
+        } else {
+            var heartsLeft = this.lifesObjects.FindAll(life => life.gameObject.activeSelf).Count;
+            if (heartsLeft < args.CurrentLives) {
+                this.AddLife(args.CurrentLives - heartsLeft);
+            } else if (heartsLeft > args.CurrentLives) {
+                this.RemoveLife(heartsLeft - args.CurrentLives);
+            }
+        }
     }
 
     /// <summary>
@@ -36,14 +55,14 @@ public class LivesGUI : MonoBehaviour {
     /// Enables lives if there are any diabled, else create remaining
     /// </summary>
     /// <param name="amount">number of lives to add</param>
-    public void AddLife(int amount) {
+    private void AddLife(int amount) {
         int totalLives = this.lifesObjects.Count;
 
         int addedCounter = 0;
 
         for (int i = 0; i < totalLives; i++) {
             var go = this.lifesObjects[i].gameObject;
-            if (!go.active && addedCounter < amount) {
+            if (!go.activeSelf && addedCounter < amount) {
                 go.SetActive(true);
                 addedCounter++;
             }
@@ -58,14 +77,14 @@ public class LivesGUI : MonoBehaviour {
     /// Remove number of lives from the GUI
     /// </summary>
     /// <param name="amount">amount of lives to remove</param>
-    public void RemoveLife(int amount) {
+    private void RemoveLife(int amount) {
         int totalLives = this.lifesObjects.Count;
 
         int removedCounter = 0;
 
         for (int i = 0; i < totalLives; i++) {
             var go = this.lifesObjects[i].gameObject;
-            if (go.active && removedCounter < amount) {
+            if (go.activeSelf && removedCounter < amount) {
                 go.SetActive(false);
                 removedCounter++;
             }

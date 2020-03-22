@@ -85043,6 +85043,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameWon
       objectReference: {fileID: 0}
+    - target: {fileID: 7271288109333861747, guid: c0037af04ebe241508ded6287f68ad6c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7271288109333861759, guid: c0037af04ebe241508ded6287f68ad6c,
         type: 3}
       propertyPath: m_LocalPosition.x

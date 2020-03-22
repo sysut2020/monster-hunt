@@ -17,8 +17,6 @@ public class Player : MonoBehaviour, IDamageable {
     [SerializeField]
     private PlayerHealthController playerHealthController;
 
-    
-
     private Animator animator;
 
     public delegate void EventHandler();
@@ -26,6 +24,8 @@ public class Player : MonoBehaviour, IDamageable {
     public static event EventHandler OnPlayerDead;
 
     private PlayerWeaponController playerWeaponController;
+
+    private Vector3 spawnPosition;
 
     // -- singelton -- //
 
@@ -77,48 +77,37 @@ public class Player : MonoBehaviour, IDamageable {
     //     }
     // }
 
+    /// <summary>
+    /// Respawns the player and notify that the player died
+    /// </summary>
     public void Dead() {
+        Respawn();
         PlayerEventArgs args = new PlayerEventArgs();
-        // TODO: fill args
         PlayerKilledEvent?.Invoke(this, args);
     }
     // -- events -- //
 
     public static event EventHandler<PlayerEventArgs> PlayerKilledEvent;
-    private void SubscribeToEvents() { 
+    private void SubscribeToEvents() {
         PlayerWeaponController.WeaponChangedEvent += CallbackWeaponChangedEvent;
     }
 
     private void UnsubscribeFromEvents() {
-        PlayerWeaponController.WeaponChangedEvent -= CallbackWeaponChangedEvent;
-;
+        PlayerWeaponController.WeaponChangedEvent -= CallbackWeaponChangedEvent;;
     }
 
-
-    private void CallbackWeaponChangedEvent(object _, WeaponChangedEventArgs args){
-        animator.SetInteger("ACTIVE_WEAPON", (int)args.AnimId);
+    private void CallbackWeaponChangedEvent(object _, WeaponChangedEventArgs args) {
+        animator.SetInteger("ACTIVE_WEAPON", (int) args.AnimId);
     }
 
     // -- private -- // 
 
     /// <summary>
-    /// iterates through the active effects and checks if any one of them are done
-    /// if they are the effect is cleaned out and removed
+    /// Moves the player to the spawn position
     /// </summary>
-    /// TODO: handle powerupstuff
-    // private void UpdateEffects() {
-    //     if (this.playerInventory.ActivePickups.Count > 0) {
-    //         List<IEffectPowerUp> tmp = this.playerInventory.ActivePickups;
-    //         tmp.Reverse<IEffectPowerUp>();
-    //         foreach (IEffectPowerUp effect in tmp) {
-    //             if (effect.IsEffectFinished()) {
-    //                 effect.Cleanup();
-    //                 this.playerInventory.RemoveEffectPickup(effect);
-    //             }
-    //         }
-    //     }
-
-    // }
+    private void Respawn() {
+        this.transform.position = this.spawnPosition;
+    }
 
     // -- unity -- //
 
@@ -130,15 +119,15 @@ public class Player : MonoBehaviour, IDamageable {
     }
 
     private void Awake() {
-        
-        
+
         if (!this.TryGetComponent<Animator>(out this.animator)) {
             Debug.LogError("PLAYER ANIMATOR NOT FOUND");
         }
         SubscribeToEvents();
+        this.spawnPosition = this.transform.position;
     }
 
-    void OnDestroy(){
+    void OnDestroy() {
         this.UnsubscribeFromEvents();
     }
 
