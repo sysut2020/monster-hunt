@@ -78,7 +78,7 @@ public class ScoreHandler : MonoBehaviour {
     /// <param name="col">Sender object</param>
     /// <param name="args">event args</param>
     private void CallbackCoinCollected(object col, CoinCollectedArgs args) {
-        levelScore += ((LetterCollectable) col).ScoreValue;
+        levelScore += ((CoinCollectable) col).ScoreValue; // todo should this be CoinCollectedArgs args.Amount?
         scoreGui.UpdateScoreText(this.levelScore);
     }
 }
