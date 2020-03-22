@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Monsterhunt.Fileoperation;
@@ -469,6 +469,7 @@ public class LetterGameManager : Singleton<LetterGameManager> {
 
     // Start is called before the first frame update
     void Start() {
+        SubscribeToEvents();
         this.tileMap = new LetterGameLetter[this.bSizeX, this.bSizeY];
         this.playerLetters = new Dictionary<String, List<LetterGameLetter>>();
         MakePlayerLetter();
@@ -485,7 +486,25 @@ public class LetterGameManager : Singleton<LetterGameManager> {
         this.MakeBoardTiles();
         this.MakeLetterTile();
         RefreshLetterCountDisplay();
+    }
 
+    private void OnDestroy() {
+        UnsubscribeFromEvents();
+    }
+
+    private void SubscribeToEvents() {
+        ButtonChangeToNextLevel.buttonEventHandler += CallbackChangeToNextLevel;
+    }
+
+    private void UnsubscribeFromEvents() {
+        ButtonChangeToNextLevel.buttonEventHandler -= CallbackChangeToNextLevel;
+    }
+
+    private void CallbackChangeToNextLevel(object sender, ButtonClickEventArgs e) {
+        if (e.ButtonEvent.GetType() == typeof(GAME_STATE)) {
+            var state = (GAME_STATE) e.ButtonEvent;
+            GameManager.Instance.GameStateChange(state);
+        }
     }
 
     /// <summary>
