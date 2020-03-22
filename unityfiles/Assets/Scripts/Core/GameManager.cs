@@ -12,11 +12,13 @@ public class GameStateChangeEventArgs : EventArgs {
 /// The manager for the whole game main task is to start and stop scenes and levels
 /// </summary>
 public class GameManager : Singleton<GameManager> {
-    private const int MAIN_MENU_SCENE_INDEX = 0;
-    private const int TEST_LEVEL_SCENE_INDEX = 1;
-    private const int LETTER_GAME_SCENE_INDEX = 2;
-
+    
     private GAME_STATE currentState;
+    private int nextSceneIndex = 0;
+
+    private SCENES[] levels = {
+        SCENES.LEVEL1, SCENES.LEVEL2 // todo add more levels here
+    };
 
     private GameDataManager gameDataManager;
 
@@ -79,7 +81,7 @@ public class GameManager : Singleton<GameManager> {
 
         switch (NewState) {
             case GAME_STATE.MAIN_MENU:
-                UnityEngine.SceneManagement.SceneManager.LoadScene(MAIN_MENU_SCENE_INDEX);
+                SceneManager.Instance.ChangeScene(SCENES.MAIN_MENU);
                 break;
 
             case GAME_STATE.TEST_LEVEL:
@@ -87,11 +89,23 @@ public class GameManager : Singleton<GameManager> {
                 break;
             
             case GAME_STATE.LETTER_LEVEL:
-                SceneManager.Instance.ChangeScene(LETTER_GAME_SCENE_INDEX);
+                SceneManager.Instance.ChangeScene(SCENES.LETTER_GAME);
                 break;
 
             case GAME_STATE.EXIT:
                 Application.Quit();
+                break;
+            
+            case GAME_STATE.NEXT_LEVEL:
+                if (nextSceneIndex >= levels.Length) { // no more levels
+                    nextSceneIndex = 0; // resetting game
+                    this.GameStateChange(GAME_STATE.MAIN_MENU);
+                    break;
+                }
+                var nextScene = levels[nextSceneIndex];
+                nextSceneIndex++;
+                SceneManager.Instance.ChangeScene(nextScene);
+                
                 break;
 
             default:
@@ -110,6 +124,7 @@ public class GameManager : Singleton<GameManager> {
         this.gameDataManager = new GameDataManager();
         SubscribeToEvents();
     }
+    
 
     private void OnDestroy() {
         UnsubscribeFromEvents();
