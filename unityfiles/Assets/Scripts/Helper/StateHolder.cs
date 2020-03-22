@@ -17,7 +17,7 @@ public enum GAME_STATE {
     /// <summary>
     /// Go to the test level
     /// </summary>
-    TEST_LEVEL,
+    START_GAME,
 
     /// <summary>
     /// Go to the letter level

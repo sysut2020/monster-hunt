@@ -84,7 +84,9 @@ public class GameManager : Singleton<GameManager> {
                 SceneManager.Instance.ChangeScene(SCENES.MAIN_MENU);
                 break;
 
-            case GAME_STATE.TEST_LEVEL:
+            case GAME_STATE.START_GAME:
+                // reset counter just in case
+                nextSceneIndex = 1;
                 SceneManager.Instance.ChangeScene(SCENES.LEVEL1);
                 break;
             
