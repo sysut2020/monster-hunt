@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MainMenu : MonoBehaviour {
     public void PlayGame() {
-        GameManager.Instance.GameStateChange(GAME_STATE.TEST_LEVEL);
+        GameManager.Instance.GameStateChange(GAME_STATE.NEXT_LEVEL);
     }
 
     public void QuitGame() {
