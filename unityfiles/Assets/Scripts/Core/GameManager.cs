@@ -34,6 +34,9 @@ public class GameManager : Singleton<GameManager> {
     /// </summary>
     public static event EventHandler<GameStateChangeEventArgs> GameStateChangeEvent;
 
+    public static event EventHandler OnMainMenuMusic;
+    public static event EventHandler OnLevel1Music;
+
     /// <summary>
     /// Subscribes to the relevant events for this class
     /// </summary>
@@ -76,7 +79,7 @@ public class GameManager : Singleton<GameManager> {
         this.currentState = NewState;
         GameStateChangeEventArgs args = new GameStateChangeEventArgs();
         args.NewState = NewState;
-
+        
         switch (NewState) {
             case GAME_STATE.MAIN_MENU:
                 UnityEngine.SceneManagement.SceneManager.LoadScene(MAIN_MENU_SCENE_INDEX);
@@ -88,6 +91,7 @@ public class GameManager : Singleton<GameManager> {
             
             case GAME_STATE.LETTER_LEVEL:
                 SceneManager.Instance.ChangeScene(LETTER_GAME_SCENE_INDEX);
+                
                 break;
 
             case GAME_STATE.EXIT:
@@ -99,6 +103,7 @@ public class GameManager : Singleton<GameManager> {
                 break;
         }
 
+        Debug.Log("Game event invoked");
         GameStateChangeEvent?.Invoke(this, args);
     }
 
@@ -114,5 +119,14 @@ public class GameManager : Singleton<GameManager> {
     private void OnDestroy() {
         UnsubscribeFromEvents();
         this.gameDataManager.SaveData();
+    }
+
+    private void PlayMainMenuMusic() {
+        OnMainMenuMusic?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void PlayLevel1Music() {
+        OnLevel1Music?.Invoke(this, EventArgs.Empty);
+        Debug.Log("Eventhandler called");
     }
 }
