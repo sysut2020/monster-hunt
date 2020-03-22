@@ -17,7 +17,7 @@ public class AimControl {
     /// <summary>
     /// The point where we want the aiming to be tracked
     /// </summary>
-    private GameObject FirePoint;
+    private Transform FirePoint;
 
     /// <summary>
     /// The point where the rotation is applied
@@ -31,7 +31,7 @@ public class AimControl {
 
     private bool debug = false;
 
-    public AimControl(GameObject firePoint, Transform rotatePoint) {
+    public AimControl(Transform firePoint, Transform rotatePoint) {
         this.FirePoint = firePoint;
         this.RotationPoint = rotatePoint;
         this.CreateHelperObjects();
@@ -58,7 +58,9 @@ public class AimControl {
         LevelManager.CleanUpEvent -= CallbackCleanupEvent;
     }
 
-    private void CallbackWeaponChangedEvent(object _, WeaponChangedEventArgs args){
+    private void CallbackWeaponChangedEvent(object _, WeaponChangedEventArgs args)
+    {
+        this.FirePoint = args.NewGun.FirePoint;
         CreateHelperObjects();
     }
 
@@ -95,8 +97,8 @@ public class AimControl {
         helperRotPoint.transform.Rotate(0, 0, 0);
         helperRotPoint.transform.position = RotationPoint.position;
 
-        helperAimPoint.transform.rotation = FirePoint.transform.rotation;
-        helperAimPoint.transform.position = FirePoint.transform.position;
+        helperAimPoint.transform.rotation = FirePoint.rotation;
+        helperAimPoint.transform.position = FirePoint.position;
 
         helperRotPoint.transform.rotation = tmp;
         RotationPoint.transform.rotation = tmp;
@@ -165,18 +167,18 @@ public class AimControl {
             float yCord1 = (-D*dx + Mathf.Abs(dy)*Mathf.Sqrt(toSqr))/Mathf.Pow(dr,2);
             float yCord2 = (-D*dx - Mathf.Abs(dy)*Mathf.Sqrt(toSqr))/Mathf.Pow(dr,2);
             
-            Vector2 v_mp_pos1 = new Vector2(helperAimPoint.transform.position.x, helperAimPoint.transform.position.y) - new Vector2(xCord1, yCord1);
-            Vector2 v_mp_pos2 = new Vector2(helperAimPoint.transform.position.x, helperAimPoint.transform.position.y) - new Vector2(xCord2, yCord2);
+            Vector2 helper1 = new Vector2(helperAimPoint.transform.right.x, helperAimPoint.transform.right.y) - new Vector2(xCord1, yCord1);
+            Vector2 helper2 = new Vector2(helperAimPoint.transform.right.x, helperAimPoint.transform.right.y) - new Vector2(xCord2, yCord2);
 
             if(debug){
-                Debug.DrawLine(helperRotPoint.transform.position, helperRotPoint.transform.position + new Vector3(xCord1, yCord1), Color.red);
-                Debug.DrawLine(helperRotPoint.transform.position, helperRotPoint.transform.position + new Vector3(xCord2, yCord2), Color.black);
+                Debug.DrawLine(Vector3.zero, new Vector3(xCord1, yCord1), Color.red);
+                Debug.DrawLine(Vector3.zero, new Vector3(xCord2, yCord2), Color.black);
             }
             
 
             // if checks which one of the two fond points is closest and uses that one
             // the other point wold be on the other intersection point for the ray on the circle 
-            if (yCord1 > yCord2){
+            if (helper1.magnitude > helper2.magnitude){
                 xCord = xCord2;
                 yCord = yCord2;
             } else {
@@ -199,12 +201,12 @@ public class AimControl {
 
             
 
-            Debug.DrawLine(helperRotPoint.transform.position,helperRotPoint.transform.position+ v_RP_GP, Color.green);
+            Debug.DrawLine(Vector3.zero, helperRotPoint.transform.position+ v_RP_GP, Color.green);
             Debug.DrawLine(RotationPoint.position, Camera.main.ScreenToWorldPoint(Input.mousePosition), Color.magenta);
 
-            Debug.DrawRay(RotationPoint.transform.position, RotationPoint.transform.right * 100, Color.gray);
+            Debug.DrawRay(Vector3.zero, RotationPoint.transform.right * 100, Color.gray);
             Debug.DrawRay(FirePoint.transform.position, FirePoint.transform.right * 100, Color.cyan);
-            Debug.DrawRay(FirePoint.transform.position, helperAimPoint.transform.right * 100, Color.white);
+            Debug.DrawRay(Vector3.zero, helperAimPoint.transform.right * 100, Color.white);
         }
 
         return (isFlipped) ? new Vector3(180, 0, -z_angle) : new Vector3(0, 0, z_angle);
