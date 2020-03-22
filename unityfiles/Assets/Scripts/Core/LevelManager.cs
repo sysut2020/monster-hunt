@@ -34,6 +34,8 @@ public class LevelManager : Singleton<LevelManager> {
     private LEVEL_STATE currentState; // may need default here in that case find out the starting state
 
     private PlayThroughData playThroughData;
+    private GameDataManager dataManager;
+
     private static readonly int PAUSE = 0;
     private static readonly int PLAY = 1;
 
@@ -88,13 +90,15 @@ public class LevelManager : Singleton<LevelManager> {
     private void CallbackPlayerLivesUpdate(object _, PlayerLivesUpdateArgs args) {
         if (args.CurrentLives == 0) LevelStateChange(LEVEL_STATE.GAME_OVER);
     }
+
     /// <summary>
     /// This function is fiered when the PlayerKilled is invoked
     /// Ends the level
     /// </summary>
     /// <param name="_">the object calling</param>
     /// <param name="args">the event args</param>
-    private void CallbackPlayerKilledEvent(object __, EventArgs _) { }
+    private void CallbackPlayerKilledEvent(object __, EventArgs _) {
+    }
 
     /// <summary>
     /// This function is fiered when the EnemyKilled is invoked
@@ -145,11 +149,11 @@ public class LevelManager : Singleton<LevelManager> {
                 ChangeLevelState(LEVEL_STATE.PLAY);
                 break;
 
-                // Start the main mode spawn the player and start the level
+            // Start the main mode spawn the player and start the level
             case LEVEL_STATE.PLAY:
                 Time.timeScale = PLAY;
                 break;
-                // Exit the game and go to main menu
+            // Exit the game and go to main menu
             case LEVEL_STATE.EXIT:
                 break;
 
@@ -204,6 +208,7 @@ public class LevelManager : Singleton<LevelManager> {
     // -- unity -- //
 
     private void Start() {
+        dataManager = GameManager.Instance.GameDataManager;
         playerInventory = new PlayerInventory();
         this.playThroughData = new PlayThroughData();
         LEVEL_TIMER_ID = this.levelTimer.RollingUID;
@@ -226,7 +231,7 @@ public class LevelManager : Singleton<LevelManager> {
         CleanUpScene();
         UnsubscribeFromEvents();
 
-        GameManager.Instance.GameDataManager.AddLetters(playerInventory.CollectedLetters);
-        GameManager.Instance.GameDataManager.AddMoney(playerInventory.Money);
+        dataManager.AddLetters(playerInventory.CollectedLetters);
+        dataManager.AddMoney(playerInventory.Money);
     }
 }
