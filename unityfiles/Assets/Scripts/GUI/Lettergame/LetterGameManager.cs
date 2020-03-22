@@ -516,9 +516,9 @@ public class LetterGameManager : Singleton<LetterGameManager> {
         ButtonChangeToNextLevel.buttonEventHandler -= CallbackChangeToNextLevel;
     }
 
-    private void CallbackChangeToNextLevel(object sender, ButtonClickEventArgs e) {
-        if (e.ButtonEvent.GetType() == typeof(GAME_STATE)) {
-            var state = (GAME_STATE) e.ButtonEvent;
+    private void CallbackChangeToNextLevel(object sender, ButtonClickEventArgs args) {
+        if (args.ButtonEvent.GetType() == typeof(GAME_STATE)) {
+            var state = (GAME_STATE) args.ButtonEvent;
             GameManager.Instance.GameStateChange(state);
         }
     }
