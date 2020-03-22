@@ -64,7 +64,7 @@ public sealed class SceneManager {
         UnityEngine.SceneManagement.SceneManager.LoadScene(index);
     }
 
-    public void ChangeScene(SCENES scene) {
+    public void ChangeScene(SCENE_INDEX scene) {
         if (scene == null) {
             throw new ArgumentException("Scene can not be null");
         }
