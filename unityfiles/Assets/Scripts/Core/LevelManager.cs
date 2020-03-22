@@ -130,17 +130,17 @@ public class LevelManager : Singleton<LevelManager> {
             case LEVEL_STATE.PAUSE:
                 Time.timeScale = PAUSE;
                 break;
-            
+
             case LEVEL_STATE.START:
                 InitLevel();
                 ChangeLevelState(LEVEL_STATE.PLAY);
                 break;
-                
-            // Start the main mode spawn the player and start the level
+
+                // Start the main mode spawn the player and start the level
             case LEVEL_STATE.PLAY:
                 Time.timeScale = PLAY;
                 break;
-            // Exit the game and go to main menu
+                // Exit the game and go to main menu
             case LEVEL_STATE.EXIT:
                 break;
 
@@ -165,7 +165,8 @@ public class LevelManager : Singleton<LevelManager> {
     /// spawns all the enemys and inits the player
     /// </summary>
     private void InitLevel() {
-        Spawner.Instance?.SpawnOnAll();
+        EntitySpawner.Instance.MaxSpawns = this.levelDetails.NumberOfEnemies;
+        EntitySpawner.Instance?.Init(5); // Init with 5 mobs on the map
     }
 
     /// <summary>
@@ -188,7 +189,7 @@ public class LevelManager : Singleton<LevelManager> {
     /// if timer is done -1 is returned
     /// </summary>
     /// <returns>time left in milliseconds -1 if done</returns>
-    public int GetLevelTimeLeft(){
+    public int GetLevelTimeLeft() {
         return this.levelTimer.TimeLeft(this.LEVEL_TIMER_ID);
     }
 
