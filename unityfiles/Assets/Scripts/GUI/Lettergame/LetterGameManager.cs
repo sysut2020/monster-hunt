@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Monsterhunt.Fileoperation;
@@ -12,7 +12,7 @@ public class BoardChangedEventArgs : EventArgs {
     private LetterGameLetter[, ] TileMap { get; set; }
 }
 
-public class LetterCountCangedEventArgs : EventArgs {
+public class LetterCountChangedEventArgs : EventArgs {
     public Dictionary<string, int> AvailLetters { get; set; }
 }
 
@@ -106,7 +106,7 @@ public class LetterGameManager : Singleton<LetterGameManager> {
         }
     }
     // -- events -- // 
-    public static event EventHandler<LetterCountCangedEventArgs> LetterCountCangedEvent;
+    public static event EventHandler<LetterCountChangedEventArgs> LetterCountCangedEvent;
 
     // -- public -- //
 
@@ -343,7 +343,7 @@ public class LetterGameManager : Singleton<LetterGameManager> {
     /// Invokes a event telling all the letter displays to update their number of letters
     /// </summary>
     private void RefreshLetterCountDisplay() {
-        LetterCountCangedEventArgs args = new LetterCountCangedEventArgs {
+        LetterCountChangedEventArgs args = new LetterCountChangedEventArgs {
             AvailLetters = this.CurrentAvailableLetterCount
         };
         LetterCountCangedEvent?.Invoke(this, args);

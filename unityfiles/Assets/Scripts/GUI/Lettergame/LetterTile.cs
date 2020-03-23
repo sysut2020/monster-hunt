@@ -36,7 +36,7 @@ public class LetterTile : Dragable {
     /// Calback for the letter count change event
     /// </summary>
     /// <param name="args">event args</param>
-    private void CallbackLetterCountChangedEvent(object _, LetterCountCangedEventArgs args) {
+    private void CallbackLetterCountChangedEvent(object _, LetterCountChangedEventArgs args) {
         Dictionary<string, int> lettercounts = args.AvailLetters;
 
         if (lettercounts.ContainsKey(LetterTileLetter)) {
