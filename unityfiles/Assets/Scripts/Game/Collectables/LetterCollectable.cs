@@ -17,7 +17,7 @@ public class LetterCollectable : Collectable {
 
     private MoveToGuiElement moveToGuiElement;
 
-    private string name = "Letter";
+    private readonly string name = "Letter";
     
     public string LetterString {
         get => letterComponent.text;

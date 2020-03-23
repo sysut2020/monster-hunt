@@ -16,7 +16,7 @@ public class CoinCollectable : Collectable {
     [SerializeField]
     private int coinValue = 1;
 
-    private string name = "Coin";
+    private readonly string name = "Coin";
 
     public override string Name {
         get => name;

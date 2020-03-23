@@ -12,7 +12,7 @@ public class PowerupCollectable : Collectable {
 
     private MoveToGuiElement moveToGuiElement;
 
-    private string name = "Power up";
+    private readonly string name = "Power up";
 
     private IPowerUp effectPickup;
 
