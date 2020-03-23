@@ -1,10 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
+/// <summary>
+/// Represents a tile in the letter mini game
+/// Should hold a uniq letter
+/// Keeps track of how many units of that particular letter the player has left to be placed on the board 
+/// </summary>
 public class LetterTile : Dragable {
     [SerializeField]
     private TMP_Text LetterCount;
