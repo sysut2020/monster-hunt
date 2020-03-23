@@ -1,14 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Monsterhunt.Fileoperation;
 using UnityEngine;
-
-// -- properties -- //
-// -- events -- // 
-// -- public -- //
-// -- private -- // 
-// -- unity -- //
 
 public class LetterGameStartEventArgs : EventArgs {
     public Dictionary<string, int> CurrentLetters { get; set; }
