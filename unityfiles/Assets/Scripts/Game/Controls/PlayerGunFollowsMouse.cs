@@ -53,7 +53,7 @@ public class PlayerGunFollowsMouse : MonoBehaviour {
 
     private void Start() {
         mousePosition = new MousePosition();
-        this.aimControl = new AimControl(aimPoint.gameObject, rotatePoint.transform);
+        this.aimControl = new AimControl(aimPoint.transform, rotatePoint.transform);
     }
 
     private void FixedUpdate() {

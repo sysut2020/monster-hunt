@@ -1984,6 +1984,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: Main character - with weapon
       objectReference: {fileID: 0}
+    - target: {fileID: 4570665202509030192, guid: fd02fbe1502ddec41abcab488e83e5a3,
+        type: 3}
+      propertyPath: availableWeapons.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4570665202509030192, guid: fd02fbe1502ddec41abcab488e83e5a3,
+        type: 3}
+      propertyPath: availableWeapons.Array.data[2]
+      value: 
+      objectReference: {fileID: 2710092501898412679, guid: 9c6476b6a98242af88dce11b5f5b7706,
+        type: 3}
     - target: {fileID: 6394018647851918217, guid: fd02fbe1502ddec41abcab488e83e5a3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2081,7 +2092,7 @@ PrefabInstance:
     - target: {fileID: 9123475169075356341, guid: bbac554e90ee4ebd1a1b11acd44a20b3,
         type: 3}
       propertyPath: m_Name
-      value: PRESISTENT. DO NOTT ADD SHIT DO NOT TUTCH
+      value: PERSISTENT, DO NOT ADD THINGS
       objectReference: {fileID: 0}
     - target: {fileID: 9123475169075356347, guid: bbac554e90ee4ebd1a1b11acd44a20b3,
         type: 3}
@@ -2535,7 +2546,7 @@ PrefabInstance:
     - target: {fileID: 4436420073522326907, guid: d02094e2d75ed9043ab0cdda07ae1837,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4436420073859391282, guid: d02094e2d75ed9043ab0cdda07ae1837,
         type: 3}
@@ -2570,7 +2581,7 @@ PrefabInstance:
     - target: {fileID: 7151582298428422809, guid: d02094e2d75ed9043ab0cdda07ae1837,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d02094e2d75ed9043ab0cdda07ae1837, type: 3}
