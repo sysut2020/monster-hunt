@@ -23,12 +23,12 @@ public class LetterGameManager : Singleton<LetterGameManager> {
     private WordChecker wordChecker;
 
     /// <summary>
-    /// Dimension constants for multidimansional(2D) arrays
+    /// Dimension constants for multidimensional(2D) arrays
     /// Y = 1
     /// X = 0
     /// </summary>
-    private const int YDIMENSION = 1;
-    private const int XDIMENSION = 0;
+    private const int Y_DIMENSION = 1;
+    private const int X_DIMENSION = 0;
 
     private readonly Dictionary<string, int> letters = new Dictionary<string, int> { { "A", 1 },
         { "B", 3 },
@@ -145,8 +145,8 @@ public class LetterGameManager : Singleton<LetterGameManager> {
         }
         wordsPoints = 0;
         this.ResetAllTilesOnBoard();
-        this.FindWordsInDimension(XDIMENSION);
-        this.FindWordsInDimension(YDIMENSION);
+        this.FindWordsInDimension(X_DIMENSION);
+        this.FindWordsInDimension(Y_DIMENSION);
         this.RefreshLetterCountDisplay();
         Debug.Log(wordsPoints);
     }
@@ -170,22 +170,22 @@ public class LetterGameManager : Singleton<LetterGameManager> {
         int maxDimension1;
         int minDimension2;
         int maxDimension2;
-        bool isXdimension = dimension == XDIMENSION;
+        bool isXdimension = dimension == X_DIMENSION;
 
         /*
             This block flips the X and Y depending on the dimension
             we want to search in
         */
-        if (dimension == YDIMENSION) {
-            minDimension1 = tileMap.GetLowerBound(XDIMENSION);
-            maxDimension1 = tileMap.GetUpperBound(XDIMENSION);
-            minDimension2 = tileMap.GetLowerBound(YDIMENSION);
-            maxDimension2 = tileMap.GetUpperBound(YDIMENSION);
+        if (dimension == Y_DIMENSION) {
+            minDimension1 = tileMap.GetLowerBound(X_DIMENSION);
+            maxDimension1 = tileMap.GetUpperBound(X_DIMENSION);
+            minDimension2 = tileMap.GetLowerBound(Y_DIMENSION);
+            maxDimension2 = tileMap.GetUpperBound(Y_DIMENSION);
         } else {
-            minDimension1 = tileMap.GetLowerBound(YDIMENSION);
-            maxDimension1 = tileMap.GetUpperBound(YDIMENSION);
-            minDimension2 = tileMap.GetLowerBound(XDIMENSION);
-            maxDimension2 = tileMap.GetUpperBound(XDIMENSION);
+            minDimension1 = tileMap.GetLowerBound(Y_DIMENSION);
+            maxDimension1 = tileMap.GetUpperBound(Y_DIMENSION);
+            minDimension2 = tileMap.GetLowerBound(X_DIMENSION);
+            maxDimension2 = tileMap.GetUpperBound(X_DIMENSION);
         }
 
         for (int dimension1Counter = minDimension1; dimension1Counter <= maxDimension1; dimension1Counter++) {
@@ -226,11 +226,11 @@ public class LetterGameManager : Singleton<LetterGameManager> {
             if (CreateWordOfLetters(connectedLetters, dimension)) {
                 wordsPoints += GetWordScore(connectedLetters);
                 var pos = GetLastLetterPosition(connectedLetters);
-                lastposition = (dimension == XDIMENSION) ? pos.x : pos.y;
+                lastposition = (dimension == X_DIMENSION) ? pos.x : pos.y;
             }
         }
         if (lastposition == 0) {
-            lastposition = (dimension == XDIMENSION) ? x : y;
+            lastposition = (dimension == X_DIMENSION) ? x : y;
         }
 
         return lastposition;
@@ -274,7 +274,7 @@ public class LetterGameManager : Singleton<LetterGameManager> {
         bool createdWord = false;
         if (IsConnectedLetterValid(connectedLetters)) {
             foreach (var letter in connectedLetters) {
-                var validDirection = direction == XDIMENSION ? Direction.RIGHT : Direction.DOWN;
+                var validDirection = direction == X_DIMENSION ? Direction.RIGHT : Direction.DOWN;
                 letter.SetValidLetter(true, validDirection);
             }
             createdWord = true;
