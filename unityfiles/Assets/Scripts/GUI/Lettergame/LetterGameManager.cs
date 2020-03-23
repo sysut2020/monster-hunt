@@ -67,14 +67,12 @@ public class LetterGameManager : Singleton<LetterGameManager> {
     /// <summary>
     /// The x size of the board
     /// </summary>
-    [Tooltip("")]
     [SerializeField]
     private int bSizeX;
 
     /// <summary>
     /// The y size of the board
     /// </summary>
-    [Tooltip("")]
     [SerializeField]
     private int bSizeY;
 
@@ -90,11 +88,11 @@ public class LetterGameManager : Singleton<LetterGameManager> {
     [SerializeField]
     GameObject letterTile;
 
-    [Header("Testing")]
-    [SerializeField]
     /// <summary>
     /// True if should generate test letters, if testing/debugging the scene
     /// </summary>
+    [Header("Testing")]
+    [SerializeField]
     private bool fillWithTestLetters = false;
 
     private Dictionary<String, List<LetterGameLetter>> playerLetters;
@@ -276,6 +274,7 @@ public class LetterGameManager : Singleton<LetterGameManager> {
     /// it created a word, else false.
     /// </summary>
     /// <param name="connectedLetters">letters to create word of</param>
+    /// <param name="direction"></param>
     /// <returns>true if created word, else false</returns>
     private bool CreateWordOfLetters(LetterGameLetter[] connectedLetters, int direction) {
         bool createdWord = false;
@@ -293,8 +292,7 @@ public class LetterGameManager : Singleton<LetterGameManager> {
     /// Checks if there are any words formed from drawing a vertical or horizontal line 
     /// through the adjacent letters 
     /// </summary>
-    /// <param name="x">the x pos of the cord to check from</param>
-    /// <param name="y">the x pos of the cord to check from</param>
+    /// <param name="connectedLetters"></param>
     private bool IsConnectedLetterValid(LetterGameLetter[] connectedLetters) {
         bool isValidConnection = false;
         if (connectedLetters != null) {
@@ -343,8 +341,8 @@ public class LetterGameManager : Singleton<LetterGameManager> {
         }
     }
 
-    private LetterGameLetter[] TryGetConnectedLetters(int xpos, int ypos, int dimension) {
-        return WUArrays.GetConnected(this.tileMap, xpos, ypos, dimension);
+    private LetterGameLetter[] TryGetConnectedLetters(int xPos, int yPos, int dimension) {
+        return WUArrays.GetConnected(this.tileMap, xPos, yPos, dimension);
     }
 
     /// <summary>
@@ -360,7 +358,7 @@ public class LetterGameManager : Singleton<LetterGameManager> {
     /// <summary>
     /// Fills in the players letters
     /// </summary>
-    /// <param name="args">the event args</param>
+    /// <param name="playerDataDict"></param>
     private void FillPlayerLetters(Dictionary<string, int> playerDataDict) {
         if (playerDataDict == null) throw new NullReferenceException("Letter dictionary is null");
         foreach (string key in playerDataDict.Keys) {
