@@ -7,7 +7,7 @@ using UnityEngine.UI;
 /// </summary>
 [RequireComponent(typeof(Button))]
 public class ButtonChangeToNextLevel : ChangeEventButton {
-    private GAME_STATE eventToFire = GAME_STATE.NEXT_LEVEL;
+    private readonly GAME_STATE eventToFire = GAME_STATE.NEXT_LEVEL;
 
     public static event EventHandler<ButtonClickEventArgs> buttonEventHandler;
     protected override Enum EventToFire => eventToFire;

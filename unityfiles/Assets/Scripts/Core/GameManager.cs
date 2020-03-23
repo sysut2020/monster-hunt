@@ -19,7 +19,7 @@ public class GameManager : Singleton<GameManager> {
     /// <summary>
     /// Index of all levels in the game
     /// </summary>
-    private SCENE_INDEX[] levels = {
+    private readonly SCENE_INDEX[] levels = {
         SCENE_INDEX.LEVEL1, SCENE_INDEX.LEVEL2 // todo add more levels here
     };
 
