@@ -30,7 +30,8 @@ public class LetterGameManager : Singleton<LetterGameManager> {
     private const int Y_DIMENSION = 1;
     private const int X_DIMENSION = 0;
 
-    private readonly Dictionary<string, int> letters = new Dictionary<string, int> { { "A", 1 },
+    private readonly Dictionary<string, int> letters = new Dictionary<string, int> { 
+        { "A", 1 },
         { "B", 3 },
         { "C", 3 },
         { "D", 2 },
