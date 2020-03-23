@@ -8,7 +8,6 @@ using UnityEngine;
 [Serializable]
 public class CollectibleSpawnerItem {
 
-	[SerializeField]
 	private string itemName;
 	public string ItemName { get => itemName; private set => itemName = value; }
 
@@ -25,8 +24,8 @@ public class CollectibleSpawnerItem {
 	private Collectable item;
 	public Collectable Item { get => item; private set => item = value; }
 
-	public CollectibleSpawnerItem(string itemName, int spawnChance, Collectable item) {
-		this.itemName = itemName;
+	public CollectibleSpawnerItem(int spawnChance, Collectable item) {
+		this.itemName = item.Name;
 		this.spawnChance = spawnChance;
 		this.item = item;
 	}

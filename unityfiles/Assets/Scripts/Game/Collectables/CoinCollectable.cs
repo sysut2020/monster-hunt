@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -18,6 +16,12 @@ public class CoinCollectable : Collectable {
     [SerializeField]
     private int coinValue = 1;
 
+    private string name = "Coin";
+
+    public override string Name {
+        get => name;
+    }
+
     private void Awake() {
         if (TryGetComponent(out moveToGuiElement)) {
             moveToGuiElement.FindTarget<CoinsCollecedGUI>();
@@ -31,5 +35,4 @@ public class CoinCollectable : Collectable {
         args.Amount = this.coinValue;
         OnCoinCollected?.Invoke(this, args);
     }
-
 }
