@@ -71,6 +71,10 @@ public class LetterGameManager : Singleton<LetterGameManager> {
     [SerializeField]
     private int bSizeY;
 
+    public int BSizeX => bSizeX;
+
+    public int BSizeY => bSizeY;
+
     [SerializeField]
     GameObject playingBoard;
 

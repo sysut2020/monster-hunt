@@ -6,8 +6,8 @@ namespace GUI.Lettergame {
     public class PlayingBoardGUI : MonoBehaviour {
         private RectTransform playboardCanvas;
 
-        private float boardSizeX = 27;
-        private float boardSizeY = 10;
+        private float boardSizeX;
+        private float boardSizeY;
         
         private GridLayoutGroup gridLayout;
 
@@ -19,6 +19,10 @@ namespace GUI.Lettergame {
         private int tempRows;
 
         private void Start() {
+            var letterGameManager = LetterGameManager.Instance;
+            boardSizeX = letterGameManager.BSizeX;
+            boardSizeY = letterGameManager.BSizeY;
+
             gridLayout = gameObject.GetComponent<GridLayoutGroup>();
             playboardCanvas = gameObject.GetComponent<RectTransform>();
 
