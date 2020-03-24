@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Monsterhunt.Fileoperation;
@@ -321,32 +321,6 @@ public class LetterGameManager : Singleton<LetterGameManager> {
     }
 
     // -- private -- //
-
-    /// <summary>
-    /// Makes and places the board tiles
-    /// </summary>
-    private void MakeBoardTiles() {
-        for (int i = 0; i < bSizeX * bSizeY; i++) {
-            GameObject n = Instantiate(this.boardTile);
-            GameBoardTile tile = n.GetComponent<GameBoardTile>();
-            tile.XPos = i % bSizeX;
-            tile.YPos = (int) Mathf.Floor(i / bSizeX);
-            n.transform.SetParent(playingBoard.transform);
-        }
-    }
-
-    /// <summary>
-    /// Makes and places the letter tiles
-    /// </summary>
-    private void MakeLetterTile() {
-        foreach (var letter in letters) {
-            GameObject n = Instantiate(this.letterTile);
-            LetterTile tile = n.GetComponent<LetterTile>();
-            tile.LetterTileLetter = letter.Key;
-            n.transform.SetParent(letterBoard.transform);
-        }
-    }
-
     private LetterGameLetter[] TryGetConnectedLetters(int xPos, int yPos, int dimension) {
         return WUArrays.GetConnected(this.tileMap, xPos, yPos, dimension);
     }
@@ -488,8 +462,6 @@ public class LetterGameManager : Singleton<LetterGameManager> {
         var fc = new FileReader("Assets/Resources/wordlist.txt");
         this.wordChecker = new WordChecker(fc.ReadAllLines().AsArray(), false);
 
-        this.MakeBoardTiles();
-        this.MakeLetterTile();
         RefreshLetterCountDisplay();
     }
 
