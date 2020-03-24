@@ -73,10 +73,10 @@ public class LetterTile : Dragable {
     // -- unity -- //
 
     void Awake() {
-        LetterGameManager.LetterCountCangedEvent += CallbackLetterCountChangedEvent;
+        LetterGameManager.LetterCountChangedEvent += CallbackLetterCountChangedEvent;
     }
 
     private void OnDestroy() {
-        LetterGameManager.LetterCountCangedEvent -= CallbackLetterCountChangedEvent;
+        LetterGameManager.LetterCountChangedEvent -= CallbackLetterCountChangedEvent;
     }
 }

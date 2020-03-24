@@ -107,12 +107,12 @@ public class LetterGameManager : Singleton<LetterGameManager> {
         }
     }
     // -- events -- // 
-    public static event EventHandler<LetterCountChangedEventArgs> LetterCountCangedEvent;
+    public static event EventHandler<LetterCountChangedEventArgs> LetterCountChangedEvent;
 
     // -- public -- //
 
     /// <summary>
-    /// try's to get a specific letter from the game manager
+    /// Tries to get a specific letter from the game manager
     /// If a letter is available (not on the board) the letters object is returned
     /// if not null
     /// </summary>
@@ -347,7 +347,7 @@ public class LetterGameManager : Singleton<LetterGameManager> {
         LetterCountChangedEventArgs args = new LetterCountChangedEventArgs {
             AvailLetters = this.CurrentAvailableLetterCount
         };
-        LetterCountCangedEvent?.Invoke(this, args);
+        LetterCountChangedEvent?.Invoke(this, args);
     }
 
     /// <summary>
