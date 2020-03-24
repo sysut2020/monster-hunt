@@ -12,6 +12,10 @@ public class GunControllerAudioListner : AudioListner {
     private Sound laserFireSound;
 
     private Sound fireSoundToPlay;
+
+    private int sniperIndex = 0;
+    private int laserIndex = 1;
+    
     
     private void Awake() {
         SubscribeToEvents();
@@ -28,10 +32,10 @@ public class GunControllerAudioListner : AudioListner {
     }
 
     private void CallbackWeaponChangeEvent(object o, WeaponChangedEventArgs args) {
-        if (args.GunIndex == 0) {
+        if (args.GunIndex == sniperIndex) {
             fireSoundToPlay = sniperFireSound;
         }
-        if (args.GunIndex == 1) {
+        if (args.GunIndex == laserIndex) {
             fireSoundToPlay = laserFireSound;
         }
     }
