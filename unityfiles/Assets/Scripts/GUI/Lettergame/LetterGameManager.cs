@@ -375,7 +375,9 @@ public class LetterGameManager : Singleton<LetterGameManager> {
     /// </summary>
     /// <param name="args">the event args</param>
     private void FillPlayerLetters(Dictionary<string, int> playerDataDict) {
-        if (playerDataDict == null) throw new NullReferenceException("Letter dictionary is null");
+        if (playerDataDict == null) {
+            throw new NullReferenceException("Letter dictionary is null");
+        }
         foreach (string key in playerDataDict.Keys) {
             if (playerLetters.Keys.Contains(key)) {
                 for (int i = 0; i < playerDataDict[key]; i++) {

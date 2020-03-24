@@ -32,7 +32,6 @@ public sealed class SceneManager {
                 }
             }
         }
-        private set { }
     }
 
     private SceneManager() {
@@ -60,7 +59,6 @@ public sealed class SceneManager {
         if (index < 0) {
             throw new ArgumentException("Scene index must be >= 0");
         }
-
         UnityEngine.SceneManagement.SceneManager.LoadScene(index);
     }
 

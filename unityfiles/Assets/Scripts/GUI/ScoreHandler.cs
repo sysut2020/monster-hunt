@@ -76,8 +76,8 @@ public class ScoreHandler : MonoBehaviour {
     /// Adds the collectibles score value to the total score
     /// </summary>
     /// <param name="col">Sender object</param>
-    /// <param name="args">event args</param>
-    private void CallbackCoinCollected(object col, CoinCollectedArgs args) {
+    /// <param name="_">event args</param>
+    private void CallbackCoinCollected(object col, CoinCollectedArgs _) {
         levelScore += ((Collectable) col).ScoreValue;
         scoreGui.UpdateScoreText(this.levelScore);
     }
