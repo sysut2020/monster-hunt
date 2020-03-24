@@ -30,7 +30,7 @@ namespace Helper {
         /// Returns the optimal width of a cell in a grid layout group with a set number of columns
         /// </summary>
         /// <returns></returns>
-        public int GetOptimalCellSizeWidth() {
+        private int GetOptimalCellSizeWidth() {
             var rect = container.rect;
             float height = rect.height;
             float width = rect.width;
@@ -54,6 +54,18 @@ namespace Helper {
             var cellSizeWidth = GetOptimalCellSizeWidth();
             float height = container.rect.height;
             return Mathf.FloorToInt((height - verticalPadding) / cellSizeWidth);
+        }
+
+        public Vector2 GetOptimalCellSize() {
+            var cellWidth = GetOptimalCellSizeWidth();
+            var cellSize = gridLayout.cellSize;
+            var cellOrgWidth = cellSize.x;
+            var cellOrgHeight = cellSize.y;
+        
+        
+            var cellOrgHeightToWidthRatio = cellOrgHeight / cellOrgWidth;
+            var cellHeight = cellWidth * cellOrgHeightToWidthRatio;
+            return new Vector2(cellWidth, cellHeight);
         }
     }
 }
