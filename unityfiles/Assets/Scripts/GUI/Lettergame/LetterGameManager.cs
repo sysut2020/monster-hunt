@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Monsterhunt.Fileoperation;
@@ -9,7 +9,7 @@ public class LetterGameStartEventArgs : EventArgs {
 }
 
 public class BoardChangedEventArgs : EventArgs {
-    private LetterGameLetter[, ] TileMap { get; set; }
+    private LetterGameLetter[,] TileMap { get; set; }
 }
 
 public class LetterCountChangedEventArgs : EventArgs {
@@ -17,7 +17,6 @@ public class LetterCountChangedEventArgs : EventArgs {
 }
 
 public class LetterGameManager : Singleton<LetterGameManager> {
-
     private int wordsPoints = 0;
 
     private WordChecker wordChecker;
@@ -28,35 +27,36 @@ public class LetterGameManager : Singleton<LetterGameManager> {
     /// X = 0
     /// </summary>
     private const int Y_DIMENSION = 1;
+
     private const int X_DIMENSION = 0;
 
-    private readonly Dictionary<string, int> letters = new Dictionary<string, int> { 
-        { "A", 1 },
-        { "B", 3 },
-        { "C", 3 },
-        { "D", 2 },
-        { "E", 1 },
-        { "F", 4 },
-        { "G", 2 },
-        { "H", 4 },
-        { "I", 1 },
-        { "J", 8 },
-        { "K", 5 },
-        { "L", 1 },
-        { "M", 3 },
-        { "N", 1 },
-        { "O", 1 },
-        { "P", 3 },
-        { "Q", 10 },
-        { "R", 1 },
-        { "S", 1 },
-        { "T", 1 },
-        { "U", 1 },
-        { "V", 4 },
-        { "W", 4 },
-        { "X", 8 },
-        { "Y", 4 },
-        { "Z", 10 }
+    private readonly Dictionary<string, int> letters = new Dictionary<string, int> {
+        {"A", 1},
+        {"B", 3},
+        {"C", 3},
+        {"D", 2},
+        {"E", 1},
+        {"F", 4},
+        {"G", 2},
+        {"H", 4},
+        {"I", 1},
+        {"J", 8},
+        {"K", 5},
+        {"L", 1},
+        {"M", 3},
+        {"N", 1},
+        {"O", 1},
+        {"P", 3},
+        {"Q", 10},
+        {"R", 1},
+        {"S", 1},
+        {"T", 1},
+        {"U", 1},
+        {"V", 4},
+        {"W", 4},
+        {"X", 8},
+        {"Y", 4},
+        {"Z", 10}
     };
 
     /// <summary>
@@ -91,7 +91,7 @@ public class LetterGameManager : Singleton<LetterGameManager> {
     private bool fillWithTestLetters = false;
 
     private Dictionary<String, List<LetterGameLetter>> playerLetters;
-    private LetterGameLetter[, ] tileMap;
+    private LetterGameLetter[,] tileMap;
 
     // -- properties -- //
     public Dictionary<string, int> CurrentAvailableLetterCount {
@@ -100,12 +100,16 @@ public class LetterGameManager : Singleton<LetterGameManager> {
             foreach (string key in playerLetters.Keys) {
                 ret.Add(key, 0);
                 foreach (LetterGameLetter l in playerLetters[key]) {
-                    if (!l.IsOnBoard) { ret[key]++; }
+                    if (!l.IsOnBoard) {
+                        ret[key]++;
+                    }
                 }
             }
+
             return ret;
         }
     }
+
     // -- events -- // 
     public static event EventHandler<LetterCountChangedEventArgs> LetterCountChangedEvent;
 
@@ -117,7 +121,7 @@ public class LetterGameManager : Singleton<LetterGameManager> {
     /// if not null
     /// </summary>
     /// <param name="letter">the letter to check if is available</param>
-    /// <returns>the letters objet is it is available else null</returns>
+    /// <returns>the letters object is it is available else null</returns>
     public LetterGameLetter TryGetLetter(string letter) {
         LetterGameLetter ret = null;
         foreach (LetterGameLetter l in playerLetters[letter]) {
@@ -126,6 +130,7 @@ public class LetterGameManager : Singleton<LetterGameManager> {
                 break;
             }
         }
+
         this.RefreshLetterCountDisplay();
         return ret;
     }
@@ -144,6 +149,7 @@ public class LetterGameManager : Singleton<LetterGameManager> {
             // Remove the letter from the board
             BoardTryRemoveLetter(letter);
         }
+
         wordsPoints = 0;
         this.ResetAllTilesOnBoard();
         this.FindWordsInDimension(X_DIMENSION);
@@ -201,6 +207,7 @@ public class LetterGameManager : Singleton<LetterGameManager> {
                 } else {
                     dimension2Counter = TryFindWordAtPosition(dimension1Counter, dimension2Counter, dimension);
                 }
+
                 dimension2Counter++;
                 // Failproof counter.. since we modify dimensionCounter based on positions
                 // it can cause infinite loops, if not careful. :D 
@@ -230,6 +237,7 @@ public class LetterGameManager : Singleton<LetterGameManager> {
                 lastposition = (dimension == X_DIMENSION) ? pos.x : pos.y;
             }
         }
+
         if (lastposition == 0) {
             lastposition = (dimension == X_DIMENSION) ? x : y;
         }
@@ -260,6 +268,7 @@ public class LetterGameManager : Singleton<LetterGameManager> {
             lastPosition.x = lastLetter.XPos;
             lastPosition.y = lastLetter.YPos;
         }
+
         return lastPosition;
     }
 
@@ -278,8 +287,10 @@ public class LetterGameManager : Singleton<LetterGameManager> {
                 var validDirection = direction == X_DIMENSION ? Direction.RIGHT : Direction.DOWN;
                 letter.SetValidLetter(true, validDirection);
             }
+
             createdWord = true;
         }
+
         return createdWord;
     }
 
@@ -294,6 +305,7 @@ public class LetterGameManager : Singleton<LetterGameManager> {
             string word = GetWordStringOfLetters(connectedLetters);
             isValidConnection = wordChecker.isWordValid(word);
         }
+
         return isValidConnection;
     }
 
@@ -306,7 +318,6 @@ public class LetterGameManager : Singleton<LetterGameManager> {
         if (connectedLetters == null) return "";
         var letters = connectedLetters.Select(tile => tile.Letter).ToArray();
         return string.Concat(letters.ToArray());
-
     }
 
     // -- private -- //
@@ -363,7 +374,6 @@ public class LetterGameManager : Singleton<LetterGameManager> {
                     LetterGameLetter newLetter = new LetterGameLetter(-1, -1, key, letterValue);
                     playerLetters[key].Add(newLetter);
                 }
-
             }
         }
     }
@@ -396,6 +406,7 @@ public class LetterGameManager : Singleton<LetterGameManager> {
             this.RefreshLetterCountDisplay();
             suc = true;
         }
+
         return suc;
     }
 
@@ -404,7 +415,7 @@ public class LetterGameManager : Singleton<LetterGameManager> {
     /// </summary>
     /// <param name="x">the x pos to place the letter</param>
     /// <param name="y">the y pos to place the letter</param>
-    /// <param name="tile">the letter objet to place</param>
+    /// <param name="tile">the letter object to place</param>
     private void BoardSetTile(int x, int y, LetterGameLetter tile) {
         LetterGameLetter oldTile = this.BoardTryGetTile(x, y);
         if (oldTile != null) {
@@ -456,11 +467,13 @@ public class LetterGameManager : Singleton<LetterGameManager> {
             x < tileMap.GetLowerBound(0) ||
             y > tileMap.GetUpperBound(1) ||
             y < tileMap.GetLowerBound(1)
-        ) { valid = false; }
+        ) {
+            valid = false;
+        }
+
         return valid;
     }
 
-    // Start is called before the first frame update
     void Start() {
         this.tileMap = new LetterGameLetter[this.bSizeX, this.bSizeY];
         this.playerLetters = new Dictionary<String, List<LetterGameLetter>>();
@@ -478,7 +491,6 @@ public class LetterGameManager : Singleton<LetterGameManager> {
         this.MakeBoardTiles();
         this.MakeLetterTile();
         RefreshLetterCountDisplay();
-
     }
 
     /// <summary>
@@ -486,34 +498,34 @@ public class LetterGameManager : Singleton<LetterGameManager> {
     /// game and you need letters to test words :D 
     /// </summary>
     private void DebugFillWithLetters() {
-        Dictionary<string, int> playerDataDict = new Dictionary<string, int> { { "A", 25 },
-            { "B", 25 },
-            { "C", 25 },
-            { "D", 25 },
-            { "E", 25 },
-            { "F", 25 },
-            { "G", 25 },
-            { "H", 25 },
-            { "I", 25 },
-            { "J", 25 },
-            { "K", 25 },
-            { "L", 25 },
-            { "M", 25 },
-            { "N", 25 },
-            { "O", 25 },
-            { "P", 25 },
-            { "Q", 25 },
-            { "R", 25 },
-            { "S", 25 },
-            { "T", 25 },
-            { "U", 25 },
-            { "V", 25 },
-            { "W", 25 },
-            { "X", 25 },
-            { "Y", 25 },
-            { "Z", 25 }
+        Dictionary<string, int> playerDataDict = new Dictionary<string, int> {
+            {"A", 25},
+            {"B", 25},
+            {"C", 25},
+            {"D", 25},
+            {"E", 25},
+            {"F", 25},
+            {"G", 25},
+            {"H", 25},
+            {"I", 25},
+            {"J", 25},
+            {"K", 25},
+            {"L", 25},
+            {"M", 25},
+            {"N", 25},
+            {"O", 25},
+            {"P", 25},
+            {"Q", 25},
+            {"R", 25},
+            {"S", 25},
+            {"T", 25},
+            {"U", 25},
+            {"V", 25},
+            {"W", 25},
+            {"X", 25},
+            {"Y", 25},
+            {"Z", 25}
         };
         this.FillPlayerLetters(playerDataDict);
     }
-
 }
