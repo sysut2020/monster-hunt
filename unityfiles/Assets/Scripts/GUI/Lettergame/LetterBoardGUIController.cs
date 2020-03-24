@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Helper;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,11 +7,6 @@ public class LetterBoardGUIController : MonoBehaviour {
     [SerializeField]
     [Tooltip("The letter tile prefab")]
     private GameObject letterTile;
-    
-    private float cellOrgHeight = 53;
-    private float cellOrgWidth = 50;
-
-    private float cellOrgHeightToWidthRatio;
 
     private GridLayoutGroup gridLayout;
 
@@ -49,19 +43,17 @@ public class LetterBoardGUIController : MonoBehaviour {
 
     private RectTransform rectTransform;
 
-    // Start is called before the first frame update
     void Start() {
         rectTransform = gameObject.GetComponent<RectTransform>();
+
+
+        var columns = 13; // 13 columns for all the letters 26 / 2
+        var rows = 2; // 2 rows for all the letters 26 / 13
+        calculator = new CellSizeCalculator(rectTransform, rows, columns);
         
-        calculator = new CellSizeCalculator(rectTransform, 2, 13);
-
-        var cellWidth = calculator.GetOptimalCellSizeWidth();
-
-        cellOrgHeightToWidthRatio = cellOrgHeight / cellOrgWidth;
         gridLayout = gameObject.GetComponent<GridLayoutGroup>();
-
-        var cellHeight = cellWidth * cellOrgHeightToWidthRatio;
-        gridLayout.cellSize = new Vector2(cellWidth, cellHeight);
+        // setting the cell size to match screen resolution
+        gridLayout.cellSize = calculator.GetOptimalCellSize();
 
         MakeLetterTile();
     }
@@ -71,13 +63,12 @@ public class LetterBoardGUIController : MonoBehaviour {
     /// </summary>
     private void MakeLetterTile() {
         foreach (var letter in letters) {
-            GameObject n = Instantiate(this.letterTile);
-            var rectTransform = n.GetComponent<RectTransform>();
+            GameObject n = Instantiate(this.letterTile, transform, true);
+            var nRect = n.GetComponent<RectTransform>();
 
             LetterTile tile = n.GetComponent<LetterTile>();
             tile.LetterTileLetter = letter.Key;
-            n.transform.SetParent(transform);
-            rectTransform.localScale = new Vector3(1, 1, 1);
+            nRect.localScale = new Vector3(1, 1, 1);
         }
     }
 }
