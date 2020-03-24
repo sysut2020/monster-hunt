@@ -59,6 +59,8 @@ public class LetterGameManager : Singleton<LetterGameManager> {
         {"Z", 10}
     };
 
+    public Dictionary<string, int> Letters => letters;
+
     /// <summary>
     /// The x size of the board
     /// </summary>
