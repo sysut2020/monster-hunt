@@ -62,7 +62,7 @@ namespace GUI.Lettergame {
                 
                 
                 tile.XPos = i % Mathf.RoundToInt(boardSizeX);
-                tile.YPos = (int) Mathf.Floor(i / boardSizeY);
+                tile.YPos = (int) Mathf.Floor(i / boardSizeX);
                 n.transform.SetParent(transform);
                 rectTransform.localScale = new Vector3(1,1, 1);
             }
