@@ -90,10 +90,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 291fc82498e749245a6b63131088e720, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gunFireSound:
+  sniperFireSound:
     name: 
     audioClipToPlay: {fileID: 8300000, guid: a92e3484e08d1ee4fa786a09f82b72e3, type: 3}
-    volume: 1
+    volume: 0.643
+    pitch: 1
+    loop: 0
+    mute: 0
+  laserFireSound:
+    name: 
+    audioClipToPlay: {fileID: 8300000, guid: 9db972f8419c3544bb71da7c25a52a13, type: 3}
+    volume: 0.65
     pitch: 1
     loop: 0
     mute: 0

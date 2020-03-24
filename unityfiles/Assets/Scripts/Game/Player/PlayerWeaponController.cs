@@ -11,6 +11,8 @@ public class WeaponChangedEventArgs : EventArgs {
     public GunController NewGunController { get; set; }
     public Gun NewGun { get; set; }
     public PLAYER_ANIMATION AnimId { get; set; }
+    
+    public int GunIndex { get; set; }
 }
 
 public class PlayerWeaponController : MonoBehaviour {
@@ -78,6 +80,8 @@ public class PlayerWeaponController : MonoBehaviour {
         args.NewGunController = this.ActiveGunController;
         args.NewGun = AvailableWeapons[newIndex];
         args.AnimId = this.activeGunController.WeaponData.HoldingAnimation;
+        args.GunIndex = newIndex;
+        
 
         WeaponChangedEvent?.Invoke(this, args);
     }
