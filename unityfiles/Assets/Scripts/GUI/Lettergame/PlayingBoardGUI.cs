@@ -8,10 +8,9 @@ namespace GUI.Lettergame {
     /// Responsible for filling up the playing board with tiles
     /// </summary>
     public class PlayingBoardGUI : MonoBehaviour {
-        private RectTransform playboardCanvas;
 
         private float boardSizeX;
-        private float boardSizeY;
+        private float boardSizeY;        
         
         CellSizeCalculator calculator;
 
@@ -24,9 +23,9 @@ namespace GUI.Lettergame {
             boardSizeY = letterGameManager.BSizeY;
 
             var gridLayout = gameObject.GetComponent<GridLayoutGroup>();
-            playboardCanvas = gameObject.GetComponent<RectTransform>();
+            var playBoardCanvas = gameObject.GetComponent<RectTransform>();
 
-            calculator = new CellSizeCalculator(playboardCanvas, boardSizeY, boardSizeX);
+            calculator = new CellSizeCalculator(playBoardCanvas, boardSizeY, boardSizeX);
             gridLayout.cellSize = calculator.GetOptimalCellSize();
 
             FillPlayingBoard();
