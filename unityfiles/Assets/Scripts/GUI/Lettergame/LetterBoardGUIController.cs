@@ -3,6 +3,9 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace GUI.Lettergame {
+    /// <summary>
+    /// Responsible for creating the letter board and showing all the letters
+    /// </summary>
     public class LetterBoardGUIController : MonoBehaviour {
         [SerializeField]
         [Tooltip("The letter tile prefab")]

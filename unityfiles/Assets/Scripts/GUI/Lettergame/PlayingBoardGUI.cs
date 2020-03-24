@@ -3,6 +3,10 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace GUI.Lettergame {
+    
+    /// <summary>
+    /// Responsible for filling up the playing board with tiles
+    /// </summary>
     public class PlayingBoardGUI : MonoBehaviour {
         private RectTransform playboardCanvas;
 
@@ -28,7 +32,7 @@ namespace GUI.Lettergame {
             FillPlayingBoard();
         }
 
-        void FillPlayingBoard() {
+        private void FillPlayingBoard() {
             var rows = calculator.GetOptimalAmountOfRows();
             var columns = boardSizeX;
 
