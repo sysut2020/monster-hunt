@@ -4,9 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyAudioListner : AudioListner {
-
     [SerializeField] 
-    private Sound playerSpottedSound;
+    private Sound attackPlayerSound;
 
     private void Awake() {
         SubscribeToEvents();
@@ -17,8 +16,8 @@ public class EnemyAudioListner : AudioListner {
     }
 
     private void CallbackEnemyBehaviourStateChangeEvent(object o, EnemyBehavourChangeArgs args) {
-        if (args.NewBehaviourState == EnemyBehaviour.BehaviourState.CHASE) {
-            PlaySound(playerSpottedSound);
+        if (args.NewBehaviourState == EnemyBehaviour.BehaviourState.ATTACK) {
+            PlaySound(attackPlayerSound);
         }
     }
 }

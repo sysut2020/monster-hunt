@@ -124,3 +124,10 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     mute: 0
+  attackPlayerSound:
+    name: 
+    audioClipToPlay: {fileID: 8300000, guid: c9633340406b1b24db9d6ef53c600521, type: 3}
+    volume: 0.591
+    pitch: 1
+    loop: 0
+    mute: 0
