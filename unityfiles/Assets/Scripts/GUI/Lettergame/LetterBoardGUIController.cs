@@ -8,22 +8,15 @@ public class LetterBoardGUIController : MonoBehaviour {
     [Tooltip("The letter tile prefab")]
     private GameObject letterTile;
 
-    private GridLayoutGroup gridLayout;
-
-    private CellSizeCalculator calculator;
-
-    private RectTransform rectTransform;
 
     void Start() {
-        rectTransform = gameObject.GetComponent<RectTransform>();
-
-
         var columns = 13; // 13 columns for all the letters 26 / 2
         var rows = 2; // 2 rows for all the letters 26 / 13
-        calculator = new CellSizeCalculator(rectTransform, rows, columns);
-        
-        gridLayout = gameObject.GetComponent<GridLayoutGroup>();
+        var rectTransform = gameObject.GetComponent<RectTransform>();
+        var calculator = new CellSizeCalculator(rectTransform, rows, columns);
+
         // setting the cell size to match screen resolution
+        var gridLayout = gameObject.GetComponent<GridLayoutGroup>();
         gridLayout.cellSize = calculator.GetOptimalCellSize();
 
         MakeLetterTile();

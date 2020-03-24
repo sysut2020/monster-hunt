@@ -9,21 +9,17 @@ namespace GUI.Lettergame {
         private float boardSizeX;
         private float boardSizeY;
         
-        private GridLayoutGroup gridLayout;
-
         CellSizeCalculator calculator;
 
         [SerializeField]
         private GameObject boardTile;
-
-        private int tempRows;
-
+        
         private void Start() {
             var letterGameManager = LetterGameManager.Instance;
             boardSizeX = letterGameManager.BSizeX;
             boardSizeY = letterGameManager.BSizeY;
 
-            gridLayout = gameObject.GetComponent<GridLayoutGroup>();
+            var gridLayout = gameObject.GetComponent<GridLayoutGroup>();
             playboardCanvas = gameObject.GetComponent<RectTransform>();
 
             calculator = new CellSizeCalculator(playboardCanvas, boardSizeY, boardSizeX);
