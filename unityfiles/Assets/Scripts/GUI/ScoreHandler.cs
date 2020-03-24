@@ -68,7 +68,7 @@ public class ScoreHandler : MonoBehaviour {
     /// <param name="args">event args</param>
     private void CallbackLetterCollected(object col, LetterCollectedArgs _) {
         // when a letter is collected we add one point to the total score counter
-        levelScore += ((LetterCollectable) col).ScoreValue; 
+        levelScore += ((Collectable) col).ScoreValue; 
         scoreGui.UpdateScoreText(this.levelScore);
     }
 
@@ -76,9 +76,9 @@ public class ScoreHandler : MonoBehaviour {
     /// Adds the collectibles score value to the total score
     /// </summary>
     /// <param name="col">Sender object</param>
-    /// <param name="args">event args</param>
-    private void CallbackCoinCollected(object col, CoinCollectedArgs args) {
-        levelScore += ((LetterCollectable) col).ScoreValue;
+    /// <param name="_">event args</param>
+    private void CallbackCoinCollected(object col, CoinCollectedArgs _) {
+        levelScore += ((Collectable) col).ScoreValue;
         scoreGui.UpdateScoreText(this.levelScore);
     }
 }

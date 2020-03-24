@@ -81,9 +81,9 @@ public class PlayerInventory {
     /// <summary>
     /// Coin collected event subscriber function, adds coin amount to invetory
     /// </summary>
-    /// <param name="sender">object that triggered event</param>
+    /// <param name="_">object that triggered event</param>
     /// <param name="coin">the coin to add to inventory</param>
-    private void CallbackCoinCollected(object sender, CoinCollectedArgs coin) {
+    private void CallbackCoinCollected(object _, CoinCollectedArgs coin) {
         this.AddMoney(coin.Amount);
     }
 

@@ -11,9 +11,10 @@ using Object = System.Object;
 public sealed class SceneManager {
     // Scenemanager instance
     private static SceneManager instance = null;
+
     // Lock for thread safety
     private static readonly object padlock = new Object();
-    
+
     /// <summary>
     /// Check if instance of SceneManager exist, if it does, return it.
     /// Else lock the resource and create a new instance of it and return it.
@@ -22,19 +23,18 @@ public sealed class SceneManager {
     public static SceneManager Instance {
         get {
             {
-                lock(padlock) {
+                lock (padlock) {
                     if (instance == null) {
                         instance = new SceneManager();
                     }
+
                     return instance;
                 }
             }
         }
-        private set { }
     }
 
     private SceneManager() {
-        
     }
 
     /// <summary>
@@ -43,11 +43,10 @@ public sealed class SceneManager {
     /// </summary>
     /// <param name="sceneName">the name of the scene</param>
     public void ChangeScene(string sceneName) {
-        
-        
         if (sceneName == null) {
             throw new ArgumentNullException("Scene name can not be null");
         }
+
         UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
     }
 
@@ -60,6 +59,7 @@ public sealed class SceneManager {
         if (index < 0) {
             throw new ArgumentException("Scene index must be >= 0");
         }
+
         UnityEngine.SceneManagement.SceneManager.LoadScene(index);
     }
 
@@ -71,5 +71,4 @@ public sealed class SceneManager {
             UnityEngine.SceneManagement.SceneManager.GetActiveScene().name
         );
     }
-
 }

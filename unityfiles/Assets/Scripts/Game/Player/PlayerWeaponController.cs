@@ -9,6 +9,7 @@ using UnityEngine;
 /// </summary>
 public class WeaponChangedEventArgs : EventArgs {
     public GunController NewGunController { get; set; }
+    public Gun NewGun { get; set; }
     public PLAYER_ANIMATION AnimId { get; set; }
 }
 
@@ -75,6 +76,7 @@ public class PlayerWeaponController : MonoBehaviour {
 
         WeaponChangedEventArgs args = new WeaponChangedEventArgs();
         args.NewGunController = this.ActiveGunController;
+        args.NewGun = AvailableWeapons[newIndex];
         args.AnimId = this.activeGunController.WeaponData.HoldingAnimation;
 
         WeaponChangedEvent?.Invoke(this, args);

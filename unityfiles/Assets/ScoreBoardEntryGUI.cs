@@ -11,8 +11,12 @@ public class ScoreBoardEntryGUI : MonoBehaviour {
     [SerializeField]
     private TMP_Text score;
     void Awake() {
-        if (name == null) throw new MissingComponentException("Missing TextMeshPro name component");
-        if (score == null) throw new MissingComponentException("Missing TextMeshPro score component");
+        if (name == null) {
+            throw new MissingComponentException("Missing TextMeshPro name component");
+        }
+        if (score == null) {
+            throw new MissingComponentException("Missing TextMeshPro score component");
+        }
     }
 
     /// <summary>
