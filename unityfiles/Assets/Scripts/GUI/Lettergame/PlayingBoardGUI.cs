@@ -10,9 +10,9 @@ namespace GUI.Lettergame {
     public class PlayingBoardGUI : MonoBehaviour {
 
         private float boardSizeX;
-        private float boardSizeY;        
-        
-        CellSizeCalculator calculator;
+        private float boardSizeY;
+
+        private CellSizeCalculator calculator;
 
         [SerializeField]
         private GameObject boardTile;
