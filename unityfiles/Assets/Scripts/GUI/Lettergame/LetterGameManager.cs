@@ -435,15 +435,10 @@ public class LetterGameManager : Singleton<LetterGameManager> {
     /// <param name="y">the y pos of the place to check</param>
     /// <returns>true if the tile is valid false if not</returns>
     private bool IsBoardTileValid(int x, int y) {
-        bool valid = true;
-        if (
-            x > tileMap.GetUpperBound(0) ||
-            x < tileMap.GetLowerBound(0) ||
-            y > tileMap.GetUpperBound(1) ||
-            y < tileMap.GetLowerBound(1)
-        ) {
-            valid = false;
-        }
+        bool valid = !(x > tileMap.GetUpperBound(0) ||
+                       x < tileMap.GetLowerBound(0) ||
+                       y > tileMap.GetUpperBound(1) ||
+                       y < tileMap.GetLowerBound(1));
 
         return valid;
     }
