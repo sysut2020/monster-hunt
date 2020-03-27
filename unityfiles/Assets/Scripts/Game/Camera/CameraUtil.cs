@@ -1,7 +1,6 @@
 using UnityEngine;
 
 public static class CameraUtil {
-
     /// <summary>
     /// Check if a gameObject is visible for the camera
     /// Returns true if visible, else false.
@@ -15,10 +14,11 @@ public static class CameraUtil {
         var planes = GeometryUtility.CalculateFrustumPlanes(camera);
         var point = target.transform.position;
         foreach (var plane in planes) {
-            if (plane.GetDistanceToPoint(point) < 0)
+            if (plane.GetDistanceToPoint(point) < 0) {
                 return false;
+            }
         }
+
         return true;
     }
-
 }
