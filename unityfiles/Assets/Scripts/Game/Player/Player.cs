@@ -93,7 +93,7 @@ public class Player : MonoBehaviour, IDamageable {
     }
 
     private void UnsubscribeFromEvents() {
-        PlayerWeaponController.WeaponChangedEvent -= CallbackWeaponChangedEvent;;
+        PlayerWeaponController.WeaponChangedEvent -= CallbackWeaponChangedEvent;
     }
 
     private void CallbackWeaponChangedEvent(object _, WeaponChangedEventArgs args) {

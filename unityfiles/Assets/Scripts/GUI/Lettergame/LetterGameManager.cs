@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Monsterhunt.Fileoperation;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LetterGameStartEventArgs : EventArgs {
     public Dictionary<string, int> CurrentLetters { get; set; }
@@ -346,7 +347,9 @@ public class LetterGameManager : Singleton<LetterGameManager> {
     /// </summary>
     /// <param name="playerDataDict"></param>
     private void FillPlayerLetters(Dictionary<string, int> playerDataDict) {
-        if (playerDataDict == null) throw new NullReferenceException("Letter dictionary is null");
+        if (playerDataDict == null) {
+            throw new NullReferenceException("Letter dictionary is null");
+        }
         foreach (string key in playerDataDict.Keys) {
             if (playerLetters.Keys.Contains(key)) {
                 for (int i = 0; i < playerDataDict[key]; i++) {
@@ -450,6 +453,7 @@ public class LetterGameManager : Singleton<LetterGameManager> {
     }
 
     void Start() {
+        SubscribeToEvents();
         this.tileMap = new LetterGameLetter[this.bSizeX, this.bSizeY];
         this.playerLetters = new Dictionary<String, List<LetterGameLetter>>();
         MakePlayerLetter();
@@ -464,6 +468,25 @@ public class LetterGameManager : Singleton<LetterGameManager> {
         this.wordChecker = new WordChecker(fc.ReadAllLines().AsArray(), false);
 
         RefreshLetterCountDisplay();
+    }
+
+    private void OnDestroy() {
+        UnsubscribeFromEvents();
+    }
+
+    private void SubscribeToEvents() {
+        ButtonChangeToNextLevel.buttonEventHandler += CallbackChangeToNextLevel;
+    }
+
+    private void UnsubscribeFromEvents() {
+        ButtonChangeToNextLevel.buttonEventHandler -= CallbackChangeToNextLevel;
+    }
+
+    private void CallbackChangeToNextLevel(object sender, ButtonClickEventArgs args) {
+        if (args.ButtonEvent.GetType() == typeof(GAME_STATE)) {
+            var state = (GAME_STATE) args.ButtonEvent;
+            GameManager.Instance.GameStateChange(state);
+        }
     }
 
     /// <summary>

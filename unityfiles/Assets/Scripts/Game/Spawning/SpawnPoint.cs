@@ -20,7 +20,9 @@ public class SpawnPoint : MonoBehaviour {
     /// </summary>
     /// <param name="toSpawn"></param>
     public void Spawn(GameObject toSpawn) {
-        if (!this.IsAvailable || toSpawn == null) return;
+        if (!this.IsAvailable || toSpawn == null) {
+            return;
+        }
 
         GameObject EnemyCopy = Instantiate(toSpawn);
 
