@@ -17,12 +17,17 @@ public enum GAME_STATE {
     /// <summary>
     /// Go to the test level
     /// </summary>
-    TEST_LEVEL,
+    START_GAME,
 
     /// <summary>
     /// Go to the letter level
     /// </summary>
-    LETTER_LEVEL
+    LETTER_LEVEL,
+    
+    /// <summary>
+    /// Change to next level
+    /// </summary>
+    NEXT_LEVEL
 }
 
 /// <summary>

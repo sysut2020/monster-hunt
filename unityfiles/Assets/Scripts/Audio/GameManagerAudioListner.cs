@@ -29,7 +29,7 @@ public class GameManagerAudioListner : AudioListner {
         if (args.NewState == GAME_STATE.MAIN_MENU) {
             PlayMusic(mainMenuMusic);
         }
-        if (args.NewState == GAME_STATE.TEST_LEVEL) {
+        if (args.NewState == GAME_STATE.NEXT_LEVEL) {
             PlayMusic(level1Music);
         }
         if (args.NewState == GAME_STATE.LETTER_LEVEL) {

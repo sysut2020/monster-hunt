@@ -1,5 +1,4 @@
 ﻿using System;
-using UnityEngine;
 
 /// <summary>
 /// Arguments for powerup collected event
@@ -13,7 +12,10 @@ public class PowerupCollectable : Collectable {
 
     private MoveToGuiElement moveToGuiElement;
 
+    private readonly string name = "Power up";
+
     private IPowerUp effectPickup;
+
     public IPowerUp EffectPickup {
         get => effectPickup;
         set => effectPickup = value;
@@ -31,4 +33,7 @@ public class PowerupCollectable : Collectable {
         PowerupCollectable.OnPowerupCollected?.Invoke(this, powerupArgs);
     }
 
+    public override string Name {
+        get => name;
+    }
 }
