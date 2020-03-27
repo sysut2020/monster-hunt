@@ -47,7 +47,7 @@ public class GameWon : MonoBehaviour {
     private void OnEnable() {
         GameDataManager dataManager = GameManager.Instance.GameDataManager;
 
-        timeEnabled = Time.time;
+        timeEnabled = Time.unscaledTime;
 
         timeLeft = LevelManager.Instance.GetLevelTimeLeft() / 1000; // divide by 1000 to get sec
         timeLeftText.text = FormatAsClockTime(timeLeft);
@@ -59,7 +59,7 @@ public class GameWon : MonoBehaviour {
     }
 
     private void Update() {
-        var t = (Time.time - timeEnabled) / duration; // used to smooth the count down/up
+        var t = (Time.unscaledTime - timeEnabled) / duration; // used to smooth the count down/up
         scoreText.text = Mathf.RoundToInt(Mathf.SmoothStep(collectedGameScore, totalLevelScore, t)).ToString();
         var timeInSeconds = Mathf.RoundToInt(Mathf.SmoothStep(timeLeft, 0, t));
         timeLeftText.text = FormatAsClockTime(timeInSeconds);
