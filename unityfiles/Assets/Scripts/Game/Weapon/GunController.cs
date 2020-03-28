@@ -22,6 +22,7 @@ public class GunController {
         this.firePoint = gun.FirePoint;
         this.bulletBuffer = bulletBuffer;
         this.timerUID = this.fireRateTimer.RollingUID;
+        this.fireRate = WeaponData.FireRate;
         this.fireRateTimer.Set(this.timerUID, this.GetBulletWaitTime(this.WeaponData.FireRate));
 
         if (!this.gun.Bullet.TryGetComponent(out SpriteRenderer bulletSpriteRender)) {
@@ -38,9 +39,11 @@ public class GunController {
     public static event EventHandler BulletFireEvent;
     
     // -- properties -- //
+    private float fireRate = 0;
     public float FireRate {
-        get { return WeaponData.FireRate; }
-        set {            
+        get { return fireRate; }
+        set {
+            this.fireRate = value;
             this.fireRateTimer.Update(this.timerUID, this.GetBulletWaitTime(value));
         }
     }
@@ -58,6 +61,8 @@ public class GunController {
             this.Fire();
         }
     }
+
+    
 
     // -- private -- //
 
