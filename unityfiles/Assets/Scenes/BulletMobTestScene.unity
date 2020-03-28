@@ -274,12 +274,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da6ca9c89e2f8c7579b5f20c9b93a82f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnSingle: 0
-  checkIfSpace: 1
   timeBetweenSpawns: 0
-  enemyTypes:
-  - {fileID: 743488613924613082, guid: 4f65ab46abc1b4648b11253906923b80, type: 3}
-  - {fileID: 8585172573794392771, guid: e146f938db6744a789653bda651e4609, type: 3}
+  entities: []
 --- !u!4 &101639658
 Transform:
   m_ObjectHideFlags: 0
@@ -1203,6 +1199,27 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 7271288108782841671}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1274258619 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2271420244141534145, guid: fd02fbe1502ddec41abcab488e83e5a3,
+    type: 3}
+  m_PrefabInstance: {fileID: 1791421350}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1274258620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1274258619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d8977159cd36984f8c90ea5c94416ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  runSpeed: 800
+  horizontalMove: 10
+  movementSmoothing: 0.05
 --- !u!1 &1300513687
 GameObject:
   m_ObjectHideFlags: 0
@@ -1984,6 +2001,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Main character - with weapon
       objectReference: {fileID: 0}
+    - target: {fileID: 2271420244141534159, guid: fd02fbe1502ddec41abcab488e83e5a3,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4570665202509030192, guid: fd02fbe1502ddec41abcab488e83e5a3,
         type: 3}
       propertyPath: availableWeapons.Array.size
@@ -2050,7 +2072,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2271420244141534159, guid: fd02fbe1502ddec41abcab488e83e5a3, type: 3}
+    - {fileID: 2271420244141534158, guid: fd02fbe1502ddec41abcab488e83e5a3, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: fd02fbe1502ddec41abcab488e83e5a3, type: 3}
 --- !u!1 &1792320505
 GameObject:
