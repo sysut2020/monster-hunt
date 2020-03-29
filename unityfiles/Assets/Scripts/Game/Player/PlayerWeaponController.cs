@@ -107,6 +107,14 @@ public class PlayerWeaponController : MonoBehaviour {
         this.availableWeapons = tmp;
     }
 
+    void Start(){
+        ChangeWeapon(1);
+    }
+
+    
+
+    
+
     /// <summary>
     /// Update is called every frame, if the MonoBehaviour is enabled.
     /// </summary>

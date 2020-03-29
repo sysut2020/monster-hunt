@@ -98,7 +98,7 @@ public class LevelManager : Singleton<LevelManager> {
     /// <param name="_">the object calling</param>
     /// <param name="args">the event args</param>
     private void CallbackPlayerKilledEvent(object __, EventArgs _) {
-        throw new NotImplementedException("Callback not implemented");
+        //throw new NotImplementedException("Callback not implemented");
     }
 
     /// <summary>
