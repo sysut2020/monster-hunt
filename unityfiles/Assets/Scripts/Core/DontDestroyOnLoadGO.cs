@@ -11,6 +11,7 @@ public class DontDestroyOnLoadGO : MonoBehaviour{
             GameObject.Destroy(this);   
         }else{
             DontDestroyOnLoadGO.Instance = this.gameObject;
+            DontDestroyOnLoad(this.gameObject);
         }
     }
 }
