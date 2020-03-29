@@ -86,16 +86,7 @@ public class LevelManager : Singleton<LevelManager> {
         if (args.CurrentLives == 0) LevelStateChange(LEVEL_STATE.GAME_OVER);
     }
 
-    /// <summary>
-    /// This function is fiered when the PlayerKilled is invoked
-    /// Ends the level
-    /// </summary>
-    /// <param name="_">the object calling</param>
-    /// <param name="args">the event args</param>
-    private void CallbackPlayerKilledEvent(object __, EventArgs _) {
-        //throw new NotImplementedException("Callback not implemented");
-    }
-
+    
     /// <summary>
     /// This function is fiered when the EnemyKilled is invoked
     /// Increses the enemy killed counter by one
