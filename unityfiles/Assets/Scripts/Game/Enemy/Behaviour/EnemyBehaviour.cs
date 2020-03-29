@@ -1,6 +1,10 @@
 using System;
 using UnityEngine;
 
+public class EnemyBehavourChangeArgs : EventArgs {
+	public EnemyBehaviour.BehaviourState NewBehaviourState { get; set; }
+}
+
 /// <summary>
 /// Enemy AI logic. Controls enemies idle, patrol, chase and attack states.
 /// 
@@ -9,7 +13,7 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider2D))]
 public class EnemyBehaviour : MonoBehaviour {
 
-	private enum BehaviourState {
+	public enum BehaviourState {
 		IDLE,
 		PATROL,
 		CHASE,
@@ -45,6 +49,8 @@ public class EnemyBehaviour : MonoBehaviour {
 	private Transform Vision { get; set; }
 	private Animator Animator { get; set; }
 
+	public static event EventHandler<EnemyBehavourChangeArgs> EnemyBehaviourStateChangeEvent;
+	
 	private void Awake() {
 		if (this.transform.parent.TryGetComponent(out Enemy enemy)) {
 			this.Enemy = enemy;
@@ -71,6 +77,8 @@ public class EnemyBehaviour : MonoBehaviour {
 	}
 
 	private void FixedUpdate() {
+		EnemyBehavourChangeArgs args = new EnemyBehavourChangeArgs();
+		args.NewBehaviourState = CurrentState;
 		var target = TryGetTarget();
 		switch (this.CurrentState) {
 			case BehaviourState.IDLE:
@@ -94,6 +102,7 @@ public class EnemyBehaviour : MonoBehaviour {
 				Idle();
 				break;
 		}
+		EnemyBehaviourStateChangeEvent?.Invoke(this, args);
 	}
 
 	private void ChooseRandomStartState() {
