@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -274,12 +274,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da6ca9c89e2f8c7579b5f20c9b93a82f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnSingle: 0
-  checkIfSpace: 1
   timeBetweenSpawns: 0
-  enemyTypes:
-  - {fileID: 743488613924613082, guid: 4f65ab46abc1b4648b11253906923b80, type: 3}
-  - {fileID: 8585172573794392771, guid: e146f938db6744a789653bda651e4609, type: 3}
+  entities: []
 --- !u!4 &101639658
 Transform:
   m_ObjectHideFlags: 0
