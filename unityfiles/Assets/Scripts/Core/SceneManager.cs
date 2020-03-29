@@ -59,7 +59,15 @@ public sealed class SceneManager {
         if (index < 0) {
             throw new ArgumentException("Scene index must be >= 0");
         }
+        UnityEngine.SceneManagement.SceneManager.LoadScene(index);
+    }
 
+    public void ChangeScene(SCENE_INDEX scene) {
+        if (scene == null) {
+            throw new ArgumentException("Scene can not be null");
+        }
+
+        var index = (int) scene;
         UnityEngine.SceneManagement.SceneManager.LoadScene(index);
     }
 

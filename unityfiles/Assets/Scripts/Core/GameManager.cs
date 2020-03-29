@@ -12,11 +12,16 @@ public class GameStateChangeEventArgs : EventArgs {
 /// The manager for the whole game main task is to start and stop scenes and levels
 /// </summary>
 public class GameManager : Singleton<GameManager> {
-    private const int MAIN_MENU_SCENE_INDEX = 0;
-    private const int TEST_LEVEL_SCENE_INDEX = 1;
-    private const int LETTER_GAME_SCENE_INDEX = 2;
-
+    
     private GAME_STATE currentState;
+    private int nextSceneIndex = 0;
+
+    /// <summary>
+    /// Index of all levels in the game
+    /// </summary>
+    private readonly SCENE_INDEX[] levels = {
+        SCENE_INDEX.LEVEL1, SCENE_INDEX.LEVEL2 // todo add more levels here
+    };
 
     private GameDataManager gameDataManager;
 
@@ -82,20 +87,35 @@ public class GameManager : Singleton<GameManager> {
         
         switch (NewState) {
             case GAME_STATE.MAIN_MENU:
-                UnityEngine.SceneManagement.SceneManager.LoadScene(MAIN_MENU_SCENE_INDEX);
+                SceneManager.Instance.ChangeScene(SCENE_INDEX.MAIN_MENU);
                 break;
 
-            case GAME_STATE.TEST_LEVEL:
-                SceneManager.Instance.ChangeScene(TEST_LEVEL_SCENE_INDEX);
+            case GAME_STATE.START_GAME:
+                // reset counter just in case
+                nextSceneIndex = 1;
+                SceneManager.Instance.ChangeScene(SCENE_INDEX.LEVEL1);
                 break;
             
+            // todo add a countinue state where one can play from the level last played
+            
             case GAME_STATE.LETTER_LEVEL:
-                SceneManager.Instance.ChangeScene(LETTER_GAME_SCENE_INDEX);
-                
+                SceneManager.Instance.ChangeScene(SCENE_INDEX.LETTER_GAME);
                 break;
 
             case GAME_STATE.EXIT:
                 Application.Quit();
+                break;
+            
+            case GAME_STATE.NEXT_LEVEL:
+                if (nextSceneIndex >= levels.Length) { // no more levels
+                    nextSceneIndex = 0; // resetting game
+                    this.GameStateChange(GAME_STATE.MAIN_MENU);
+                    break;
+                }
+                var nextScene = levels[nextSceneIndex];
+                nextSceneIndex++;
+                SceneManager.Instance.ChangeScene(nextScene);
+                
                 break;
 
             default:
@@ -115,6 +135,7 @@ public class GameManager : Singleton<GameManager> {
         this.gameDataManager = new GameDataManager();
         SubscribeToEvents();
     }
+    
 
     private void OnDestroy() {
         UnsubscribeFromEvents();
