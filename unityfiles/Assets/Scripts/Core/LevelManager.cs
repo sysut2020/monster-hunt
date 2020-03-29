@@ -183,7 +183,7 @@ public class LevelManager : Singleton<LevelManager> {
     /// spawns all the enemys and inits the player
     /// </summary>
     private void InitLevel() {
-        EntitySpawner.Instance.MaxSpawns = this.levelDetails.NumberOfEnemies + 10;
+        EntitySpawner.Instance.MaxSpawns = this.levelDetails.NumberOfEnemies;
         EntitySpawner.Instance?.Init(5); // Init with 5 mobs on the map
     }
 
