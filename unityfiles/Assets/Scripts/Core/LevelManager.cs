@@ -19,11 +19,6 @@ class PlayThroughData {
 /// A manager for a level in the game 
 /// </summary>
 public class LevelManager : Singleton<LevelManager> {
-    [SerializeField]
-    private GameObject gameOverCanvas;
-
-    [SerializeField]
-    private GameObject gameWonCanvas;
 
     [SerializeField]
     private LevelDetails levelDetails;
@@ -98,7 +93,7 @@ public class LevelManager : Singleton<LevelManager> {
     /// <param name="_">the object calling</param>
     /// <param name="args">the event args</param>
     private void CallbackPlayerKilledEvent(object __, EventArgs _) {
-        throw new NotImplementedException("Callback not implemented");
+        //throw new NotImplementedException("Callback not implemented");
     }
 
     /// <summary>
