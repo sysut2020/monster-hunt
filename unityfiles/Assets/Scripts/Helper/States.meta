@@ -1,5 +1,9 @@
 fileFormatVersion: 2
-guid: eae695c033bc1cf4b8f634ace34ed122
+<<<<<<< HEAD:unityfiles/Assets/Scripts/Helper/States.meta
+guid: 7b8818f08729e42bcab27e40abe84235
+=======
+guid: 58ffc2e18dc5f2e32af4961ea832c6bb
+>>>>>>> origin/develop:unityfiles/Assets/Animations/Collectible.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
