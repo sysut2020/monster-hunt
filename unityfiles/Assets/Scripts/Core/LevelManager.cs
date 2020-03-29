@@ -19,11 +19,6 @@ class PlayThroughData {
 /// A manager for a level in the game 
 /// </summary>
 public class LevelManager : Singleton<LevelManager> {
-    [SerializeField]
-    private GameObject gameOverCanvas;
-
-    [SerializeField]
-    private GameObject gameWonCanvas;
 
     [SerializeField]
     private LevelDetails levelDetails;
@@ -134,13 +129,9 @@ public class LevelManager : Singleton<LevelManager> {
             // The game is over show game over screen
             case LEVEL_STATE.GAME_OVER:
                 Time.timeScale = PAUSE;
-                this.levelTimer.Pause(this.LEVEL_TIMER_ID);
-                gameOverCanvas.SetActive(true);
                 break;
             case LEVEL_STATE.GAME_WON:
                 Time.timeScale = PAUSE;
-                this.levelTimer.Pause(this.LEVEL_TIMER_ID);
-                gameWonCanvas.SetActive(true);
                 break;
 
             case LEVEL_STATE.PAUSE:
