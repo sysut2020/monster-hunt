@@ -8,6 +8,8 @@ class WUTimer {
 
     private int waitTime;
     private DateTime completeTime = new DateTime ();
+    private int pauseTimeLeft = 0;
+    private bool isPaused = false;
 
     /// <summary>
     /// initiates the timer with the amount of millisecond to 
@@ -24,10 +26,31 @@ class WUTimer {
     /// </summary>
     /// <returns>returns true if the timer is complete, else false</returns>
     public bool done () {
-        if (completeTime.CompareTo(DateTime.Now) < 0) {
+        if (completeTime.CompareTo(DateTime.Now) < 0 && !isPaused) {
             return true;
         }
         return false;
+    }
+
+    /// <summary>
+    /// pauses the timer
+    /// </summary>
+    public void Pause(){
+        if (isPaused){return;}
+        pauseTimeLeft = this.TimeLeft();
+        this.isPaused = true;
+
+    }
+
+    /// <summary>
+    /// continues the timer if paused else nothing
+    /// </summary>
+    public void Continue(){
+        if(isPaused){
+            this.Update(this.pauseTimeLeft);
+            this.isPaused = false;
+        }
+        
     }
 
     /// <summary>
@@ -35,7 +58,12 @@ class WUTimer {
     /// </summary>
     /// <returns>the time left in milliseconds</returns>
     public int TimeLeft() {
-        return (int) this.completeTime.Subtract(DateTime.Now).TotalMilliseconds;
+        if(isPaused){
+            return pauseTimeLeft;
+        }else{
+            return (int) this.completeTime.Subtract(DateTime.Now).TotalMilliseconds;
+        }
+        
     }
 
     /// <summary>
@@ -51,6 +79,7 @@ class WUTimer {
     /// restarts the timer
     /// </summary>
     public void Restart () {
+        this.isPaused = false;
         completeTime = DateTime.Now.AddMilliseconds(waitTime);
     }
 }

@@ -19,11 +19,6 @@ class PlayThroughData {
 /// A manager for a level in the game 
 /// </summary>
 public class LevelManager : Singleton<LevelManager> {
-    [SerializeField]
-    private GameObject gameOverCanvas;
-
-    [SerializeField]
-    private GameObject gameWonCanvas;
 
     [SerializeField]
     private LevelDetails levelDetails;
@@ -98,7 +93,7 @@ public class LevelManager : Singleton<LevelManager> {
     /// <param name="_">the object calling</param>
     /// <param name="args">the event args</param>
     private void CallbackPlayerKilledEvent(object __, EventArgs _) {
-        throw new NotImplementedException("Callback not implemented");
+        //throw new NotImplementedException("Callback not implemented");
     }
 
     /// <summary>
@@ -134,18 +129,22 @@ public class LevelManager : Singleton<LevelManager> {
             // The game is over show game over screen
             case LEVEL_STATE.GAME_OVER:
                 Time.timeScale = PAUSE;
+                this.levelTimer.Pause(this.LEVEL_TIMER_ID);
                 gameOverCanvas.SetActive(true);
                 break;
             case LEVEL_STATE.GAME_WON:
                 Time.timeScale = PAUSE;
+                this.levelTimer.Pause(this.LEVEL_TIMER_ID);
                 gameWonCanvas.SetActive(true);
                 break;
 
             case LEVEL_STATE.PAUSE:
                 Time.timeScale = PAUSE;
+                this.levelTimer.Pause(this.LEVEL_TIMER_ID);
                 break;
 
             case LEVEL_STATE.START:
+                this.levelTimer.Contue(this.LEVEL_TIMER_ID);
                 InitLevel();
                 ChangeLevelState(LEVEL_STATE.PLAY);
                 break;
