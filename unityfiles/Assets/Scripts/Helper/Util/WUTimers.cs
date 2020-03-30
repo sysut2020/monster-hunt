@@ -98,6 +98,34 @@ public class WUTimers {
     }
 
     /// <summary>
+    /// pauses the timer with the given id
+    /// </summary>
+    /// <param name="timerID">the timer to pause</param>
+    /// <returns>true if the timer is found false if not</returns>
+    public bool Pause (string timerID) {
+        bool ret = false;
+        if (timers.Keys.Contains (timerID)) {
+            this.timers[timerID].Pause();
+            ret = true;
+        }
+        return ret;
+    }
+
+    /// <summary>
+    /// continues the timer with the given id
+    /// </summary>
+    /// <param name="timerID">the id of the timer to continue</param>
+    /// <returns>true if the timer is found false if not</returns>
+    public bool Contue (string timerID) {
+        bool ret = false;
+        if (timers.Keys.Contains (timerID)) {
+            this.timers[timerID].Continue();
+            ret = true;
+        }
+        return ret;
+    }
+
+    /// <summary>
     /// returns the time left in the timer of the given id
     /// if no timer has the id -1 is returned 
     /// if timer has passed 0 is returned

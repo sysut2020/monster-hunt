@@ -118,16 +118,22 @@ public class LevelManager : Singleton<LevelManager> {
             // The game is over show game over screen
             case LEVEL_STATE.GAME_OVER:
                 Time.timeScale = PAUSE;
+                this.levelTimer.Pause(this.LEVEL_TIMER_ID);
+                gameOverCanvas.SetActive(true);
                 break;
             case LEVEL_STATE.GAME_WON:
                 Time.timeScale = PAUSE;
+                this.levelTimer.Pause(this.LEVEL_TIMER_ID);
+                gameWonCanvas.SetActive(true);
                 break;
 
             case LEVEL_STATE.PAUSE:
                 Time.timeScale = PAUSE;
+                this.levelTimer.Pause(this.LEVEL_TIMER_ID);
                 break;
 
             case LEVEL_STATE.START:
+                this.levelTimer.Contue(this.LEVEL_TIMER_ID);
                 InitLevel();
                 ChangeLevelState(LEVEL_STATE.PLAY);
                 break;
