@@ -12,6 +12,7 @@ using UnityEngine;
 /// </summary>
 public class InventoryUpdatedEventArgs : EventArgs {
     public List<String> CollectedLetters { get; set; }
+    public List<IEffectPowerUp> ActivePickups { get; set; }
     public int Money { get; set; }
 
 }
@@ -22,12 +23,14 @@ public class InventoryUpdatedEventArgs : EventArgs {
 public class PlayerInventory {
     private int money;
     private List<String> collectedLetters;
+    private List<IEffectPowerUp> activePickups;
 
 
     public PlayerInventory() {
         SubscribeToEvents();
         this.money = 0;
         this.collectedLetters = new List<string>();
+        this.activePickups = new List<IEffectPowerUp>();
     }
     // -- properties -- //
     
@@ -40,7 +43,11 @@ public class PlayerInventory {
         get => formatPlayerInventoryLetter(collectedLetters);
     }
 
-  
+    public List<IEffectPowerUp> ActivePickups {
+        get => activePickups;
+        internal set => this.activePickups = value;
+    }
+
     // -- public -- //
 
     // -- events -- //
@@ -50,7 +57,7 @@ public class PlayerInventory {
     /// subscribe from all the events
     /// </summary>
     private void SubscribeToEvents() {
-        //PlayerWeaponController.WeaponChangedEvent += CallbackWeaponChangedEvent;
+        PlayerWeaponController.WeaponChangedEvent += CallbackWeaponChangedEvent;
         CoinCollectable.OnCoinCollected += CallbackCoinCollected;
         LetterCollectable.OnLetterCollected += CallbackLetterCollected;
         PowerupCollectable.OnPowerupCollected += CallbackEffectPickup;
@@ -61,13 +68,15 @@ public class PlayerInventory {
     /// unsubscribe from all the events
     /// </summary>
     private void UnsubscribeFromEvents(object _, EventArgs __) {
-        //PlayerWeaponController.WeaponChangedEvent -= CallbackWeaponChangedEvent;
+        PlayerWeaponController.WeaponChangedEvent -= CallbackWeaponChangedEvent;
         CoinCollectable.OnCoinCollected -= CallbackCoinCollected;
         LetterCollectable.OnLetterCollected -= CallbackLetterCollected;
         PowerupCollectable.OnPowerupCollected -= CallbackEffectPickup;
         LevelManager.CleanUpEvent -= UnsubscribeFromEvents;
     }
-   
+    private void CallbackWeaponChangedEvent(object o, WeaponChangedEventArgs arg) {
+        AlertPowerupsOnWeaponChange(arg.NewGunController);
+    }
 
     /// <summary>
     /// Coin collected event subscriber function, adds coin amount to invetory
@@ -92,7 +101,7 @@ public class PlayerInventory {
     /// <param name="sender">object that triggered event</param>
     /// <param name="effect">the effect to add to inventory</param>
     private void CallbackEffectPickup(object sender, PowerUpCollectedArgs args) {
-        //throw new NotImplementedException();
+        throw new NotImplementedException();
     }
 
     // -- private -- // 
@@ -116,7 +125,22 @@ public class PlayerInventory {
     }
     
 
-    
+    /// <summary>
+    /// Adds the given effect pickup
+    /// </summary>
+    /// <param name="effect">the pickup to add</param>
+    /// <summary>
+    public void AddEffectPickup(IEffectPowerUp effect) {
+        this.activePickups.Add(effect);
+    }
+
+    /// <summary>
+    /// removes the the given effect pickup
+    /// </summary>
+    /// /// <param name="effect">the pickup to remove</param>
+    public void RemoveEffectPickup(IEffectPowerUp effect) {
+        this.activePickups.Remove(effect);
+    }
 
     /// <summary>
     /// adds the provided letter
@@ -140,9 +164,23 @@ public class PlayerInventory {
     /// </summary>
     private void FireInventoryUpdateEvent() {
         InventoryUpdatedEventArgs args = new InventoryUpdatedEventArgs();
+        args.ActivePickups = activePickups;
         args.CollectedLetters = collectedLetters;
         args.Money = money;
         InventoryUpdatedEvent?.Invoke(this, args);
+    }
+
+    /// <summary>
+    /// Alerts the power ups that the weapon has changed
+    /// </summary>
+    /// <param name="newGunC">The new gun controller to pass to the weapon</param>
+    private void AlertPowerupsOnWeaponChange(GunController newGunC) {
+        foreach (IEffectPowerUp effect in this.ActivePickups.Reverse<IEffectPowerUp>()) {
+            if (effect is IWeaponEffectPowerUp) {
+                IWeaponEffectPowerUp weaponEffect = effect as IWeaponEffectPowerUp;
+                weaponEffect.OnChangeWeapon(newGunC);
+            }
+        }
     }
 
 }

@@ -107,15 +107,6 @@ public class PlayerWeaponController : MonoBehaviour {
         this.availableWeapons = tmp;
     }
 
-    void Start(){
-        //Changes the weapon to the first weapon in inventory
-        ChangeWeapon(1);
-    }
-
-    
-
-    
-
     /// <summary>
     /// Update is called every frame, if the MonoBehaviour is enabled.
     /// </summary>

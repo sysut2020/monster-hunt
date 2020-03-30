@@ -1,24 +1,25 @@
-﻿using UnityEngine;
-using System;
+﻿using System;
 
 /// <summary>
 /// Arguments for powerup collected event
 /// </summary>
 public class PowerUpCollectedArgs : EventArgs {
-    public PICKUP_TYPE Effect { get; set; }
+    public IPowerUp Effect { get; set; }
 }
 
 public class PowerupCollectable : Collectable {
-
-    [SerializeField]
-    private PICKUP_TYPE effectPickup;
     public static event EventHandler<PowerUpCollectedArgs> OnPowerupCollected;
 
     private MoveToGuiElement moveToGuiElement;
 
-    private readonly string name = "Power_up";
+    private readonly string name = "Power up";
 
-    
+    private IPowerUp effectPickup;
+
+    public IPowerUp EffectPickup {
+        get => effectPickup;
+        set => effectPickup = value;
+    }
 
     private void Awake() {
         if (TryGetComponent(out moveToGuiElement)) {

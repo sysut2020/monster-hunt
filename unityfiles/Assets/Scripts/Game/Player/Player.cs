@@ -17,8 +17,6 @@ public class Player : MonoBehaviour, IDamageable {
     [SerializeField]
     private PlayerHealthController playerHealthController;
 
-    
-
     private Animator animator;
 
     public delegate void EventHandler();
@@ -58,6 +56,26 @@ public class Player : MonoBehaviour, IDamageable {
 
     // -- public -- //
 
+    /// <summary>
+    /// Gives a pickup to the player
+    /// </summary>
+    /// <param name="pickup">the pickup to give to the player</param>
+    /// /// TODO: handle powerupstuff
+    // public void GivePickup(IPowerUp pickup) {
+    //     // activate
+    //     pickup.ApplyEffect(this);
+    //     // if effect is persistent give it to the watcher
+    //     if (pickup is IEffectPowerUp) {
+    //         IEffectPowerUp equalTypeEffect = playerInventory.ActivePickups.Find(effect => effect.GetPickupName().Equals(pickup.GetPickupName()));
+    //         if (equalTypeEffect != null) {
+    //             // if it exists extend the existing
+    //             equalTypeEffect.ExtendEffect(equalTypeEffect);
+    //         } else {
+    //             // else just bop it on the end
+    //             this.PlayerInventory.AddEffectPickup(pickup as IEffectPowerUp);
+    //         }
+    //     }
+    // }
 
     /// <summary>
     /// Respawns the player and notify that the player died
@@ -70,18 +88,16 @@ public class Player : MonoBehaviour, IDamageable {
     // -- events -- //
 
     public static event EventHandler<PlayerEventArgs> PlayerKilledEvent;
-    private void SubscribeToEvents() { 
+    private void SubscribeToEvents() {
         PlayerWeaponController.WeaponChangedEvent += CallbackWeaponChangedEvent;
     }
 
     private void UnsubscribeFromEvents() {
         PlayerWeaponController.WeaponChangedEvent -= CallbackWeaponChangedEvent;
-;
     }
 
-
-    private void CallbackWeaponChangedEvent(object _, WeaponChangedEventArgs args){
-        animator.SetInteger("ACTIVE_WEAPON", (int)args.AnimId);
+    private void CallbackWeaponChangedEvent(object _, WeaponChangedEventArgs args) {
+        animator.SetInteger("ACTIVE_WEAPON", (int) args.AnimId);
     }
 
     // -- private -- // 
@@ -92,18 +108,18 @@ public class Player : MonoBehaviour, IDamageable {
     private void Respawn() {
         this.transform.position = this.spawnPosition;
     }
-    
+
     // -- unity -- //
 
     /// <summary>
     /// Update is called every frame, if the MonoBehaviour is enabled.
     /// </summary>
     void Update() {
+        //UpdateEffects();
     }
 
     private void Awake() {
-        
-        
+
         if (!this.TryGetComponent<Animator>(out this.animator)) {
             Debug.LogError("PLAYER ANIMATOR NOT FOUND");
         }
@@ -111,7 +127,7 @@ public class Player : MonoBehaviour, IDamageable {
         this.spawnPosition = this.transform.position;
     }
 
-    void OnDestroy(){
+    void OnDestroy() {
         this.UnsubscribeFromEvents();
     }
 
