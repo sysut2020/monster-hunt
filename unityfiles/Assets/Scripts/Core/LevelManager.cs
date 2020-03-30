@@ -61,7 +61,6 @@ public class LevelManager : Singleton<LevelManager> {
     /// Subscribes to the relevant events for this class
     /// </summary>
     private void SubscribeToEvents() {
-        Player.PlayerKilledEvent += CallbackPlayerKilledEvent;
         PlayerHealthController.OnPlayerLivesUpdate += CallbackPlayerLivesUpdate;
         Enemy.EnemyKilledEvent += CallbackEnemyKilledEvent;
         PauseMenuController.PauseMenuChangeEvent += CallbackChangeLevelState;
@@ -71,7 +70,6 @@ public class LevelManager : Singleton<LevelManager> {
     /// Subscribes to the relevant events for this class
     /// </summary>
     private void UnsubscribeFromEvents() {
-        Player.PlayerKilledEvent -= CallbackPlayerKilledEvent;
         PlayerHealthController.OnPlayerLivesUpdate -= CallbackPlayerLivesUpdate;
         Enemy.EnemyKilledEvent -= CallbackEnemyKilledEvent;
         PauseMenuController.PauseMenuChangeEvent -= CallbackChangeLevelState;
@@ -134,11 +132,11 @@ public class LevelManager : Singleton<LevelManager> {
             // The game is over show game over screen
             case LEVEL_STATE.GAME_OVER:
                 Time.timeScale = PAUSE;
-                gameOverCanvas.SetActive(true);
+                this.levelTimer.Pause(this.LEVEL_TIMER_ID);
                 break;
             case LEVEL_STATE.GAME_WON:
                 Time.timeScale = PAUSE;
-                gameWonCanvas.SetActive(true);
+                this.levelTimer.Pause(this.LEVEL_TIMER_ID);
                 break;
 
             case LEVEL_STATE.PAUSE:
