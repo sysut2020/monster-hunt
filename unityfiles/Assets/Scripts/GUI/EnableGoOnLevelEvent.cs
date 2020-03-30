@@ -3,7 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-
+/// <summary>
+/// Utillity class used to enable/disable a     game object 
+/// on an event sent from the level manager
+/// Manly used to enable/disable gui elements
+/// </summary>
 public class EnableGoOnLevelEvent : MonoBehaviour{
 
     [SerializeField]
