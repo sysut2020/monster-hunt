@@ -4,7 +4,7 @@
 /// Arguments for powerup collected event
 /// </summary>
 public class PowerUpCollectedArgs : EventArgs {
-    public IPowerUp Effect { get; set; }
+    public PICKUP_TYPE Effect { get; set; }
 }
 
 public class PowerupCollectable : Collectable {
@@ -14,9 +14,9 @@ public class PowerupCollectable : Collectable {
 
     private readonly string name = "Power up";
 
-    private IPowerUp effectPickup;
+    private PICKUP_TYPE effectPickup;
 
-    public IPowerUp EffectPickup {
+    public PICKUP_TYPE EffectPickup {
         get => effectPickup;
         set => effectPickup = value;
     }
