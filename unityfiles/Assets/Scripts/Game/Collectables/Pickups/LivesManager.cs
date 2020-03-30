@@ -8,7 +8,10 @@ public class OnPickupLivesUpdateArgs : EventArgs {
 	public int LivesToAdd { get; set; }
 }
 
-
+/// <summary>
+/// Manages the lives pickups and adds the lives to the player
+/// Has to exists in the scene for the power up to work
+/// </summary>
 public class LivesManager : MonoBehaviour{
 
     [SerializeField]

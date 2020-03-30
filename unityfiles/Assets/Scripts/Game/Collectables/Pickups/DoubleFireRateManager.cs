@@ -3,6 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+/// <summary>
+/// Manages the double fire rate powerups
+/// Has to exists in the scene for the power up to work
+/// </summary>
 public class DoubleFireRateManager : MonoBehaviour {
 
     private const PICKUP_TYPE type = PICKUP_TYPE.DOUBLE_FIRE_RATE;
