@@ -131,6 +131,7 @@ public class GameManager : Singleton<GameManager> {
     // -- unity -- //
 
     private void Awake() { 
+        DontDestroyOnLoad(this);
         this.gameDataManager = new GameDataManager();
         SubscribeToEvents();
     }

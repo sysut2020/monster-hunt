@@ -7,8 +7,6 @@ public abstract class HealthController : MonoBehaviour {
     [Tooltip("the amount of health a given entity has.")]
     [SerializeField]
     protected float startHealth = 1;
-
-    [SerializeField]
     private float health;
     protected float Health { get => health; set => health = value; }
 
@@ -19,7 +17,9 @@ public abstract class HealthController : MonoBehaviour {
         set { this.startHealth = value; }
     }
 
-    
+    private void Awake() {
+        this.damageable = this.gameObject.GetComponent<IDamageable>();
+    }
 
     public bool IsDead { get; internal set; } = false;
 
@@ -48,10 +48,5 @@ public abstract class HealthController : MonoBehaviour {
         } else {
             this.IsDead = false;
         }
-    }
-
-
-    void Awake() {
-        this.damageable = this.gameObject.GetComponent<IDamageable>();
     }
 }
