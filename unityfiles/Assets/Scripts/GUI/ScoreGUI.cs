@@ -7,7 +7,7 @@ public class ScoreGUI : MonoBehaviour {
     private TextMeshProUGUI scoreText;
 
     // Start is called before the first frame update
-    void Start() {
+    void Awake() {
         scoreText = gameObject.GetComponent<TextMeshProUGUI>();
     }
 
