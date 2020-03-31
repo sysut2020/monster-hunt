@@ -16,6 +16,7 @@ public class PlayerMovement : MonoBehaviour {
     private Vector3 velocity = Vector3.zero;
 
     private Animator animator;
+    private static readonly int Walking = Animator.StringToHash("Walking");
 
     private void Awake() {
         playerRigidbody2D = GetComponent<Rigidbody2D>();
@@ -39,9 +40,9 @@ public class PlayerMovement : MonoBehaviour {
         horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
         
         if (horizontalMove != 0) {
-            animator.SetBool("Walking", true);
+            animator.SetBool(Walking, true);
         } else {
-            animator.SetBool("Walking", false);
+            animator.SetBool(Walking, false);
         }
     }
 
