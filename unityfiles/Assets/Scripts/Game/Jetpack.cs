@@ -22,17 +22,26 @@ public class Jetpack : MonoBehaviour {
 
     [SerializeField]
     private ParticleSystem flames;
-    
+
+    private Animator animator;
+    private static readonly int Flying = Animator.StringToHash("Flying");
+
     private void Start() {
-        this.flames.Stop();
+        animator = gameObject.GetComponent<Animator>();
+        if (animator == null) {
+            throw new MissingComponentException("Animator is missing");
+        }
+            this.flames.Stop();
     }
 
     private void FixedUpdate() {
         if (Input.GetAxis("Vertical") > 0) {
+            animator.SetBool(Flying, true);
             AddForce();
             if (!this.flames.isEmitting) this.flames.Play();
         } else if (this.flames.isEmitting) {
             this.flames.Stop();
+            animator.SetBool(Flying, false);
         }
     }
 
