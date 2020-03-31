@@ -84,7 +84,6 @@ public class LevelManager : Singleton<LevelManager> {
         if (args.CurrentLives == 0) LevelStateChange(LEVEL_STATE.GAME_OVER);
     }
 
-    
     /// <summary>
     /// This function is fiered when the EnemyKilled is invoked
     /// Increses the enemy killed counter by one
@@ -136,11 +135,11 @@ public class LevelManager : Singleton<LevelManager> {
                 ChangeLevelState(LEVEL_STATE.PLAY);
                 break;
 
-            // Start the main mode spawn the player and start the level
+                // Start the main mode spawn the player and start the level
             case LEVEL_STATE.PLAY:
                 Time.timeScale = PLAY;
                 break;
-            // Exit the game and go to main menu
+                // Exit the game and go to main menu
             case LEVEL_STATE.EXIT:
                 break;
 
