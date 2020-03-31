@@ -1,4 +1,5 @@
 using System;
+using UnityEditor;
 using UnityEngine;
 
 public class EnemyBehavourChangeArgs : EventArgs {
@@ -33,7 +34,7 @@ public class EnemyBehaviour : MonoBehaviour {
 	private readonly int MAX_IDLE_TIME = 4;
 	private readonly int MIN_IDLE_TIME = 2;
 	private readonly float TIME_BETWEEN_ATTACKS = 1f;
-	private readonly float ATTACK_DISTANCE = 1.5f;
+	private readonly float ATTACK_DISTANCE = .5f;
 
 	private BehaviourState CurrentState { get; set; }
 
@@ -49,8 +50,12 @@ public class EnemyBehaviour : MonoBehaviour {
 	private Transform Vision { get; set; }
 	private Animator Animator { get; set; }
 
+	private Transform target { get; set; }
+
+	private bool isFacingRight = true;
+
 	public static event EventHandler<EnemyBehavourChangeArgs> EnemyBehaviourStateChangeEvent;
-	
+
 	private void Awake() {
 		if (this.transform.parent.TryGetComponent(out Enemy enemy)) {
 			this.Enemy = enemy;
@@ -60,6 +65,7 @@ public class EnemyBehaviour : MonoBehaviour {
 		this.Animator = this.GetComponent<Animator>();
 	}
 	private void Start() {
+		this.target = FindObjectOfType<Player>().transform;
 		this.InitializeEnemyBehaviour();
 	}
 
@@ -79,21 +85,23 @@ public class EnemyBehaviour : MonoBehaviour {
 	private void FixedUpdate() {
 		EnemyBehavourChangeArgs args = new EnemyBehavourChangeArgs();
 		args.NewBehaviourState = CurrentState;
-		var target = TryGetTarget();
+
 		switch (this.CurrentState) {
 			case BehaviourState.IDLE:
 				TryChangeToPatrol();
-				SetChaseIfCanSeeTarget(target);
+				SetChaseIfCanSeeTarget();
 				break;
 			case BehaviourState.PATROL:
 				Move(this.PatrolSpeed);
 				TryChangeToIdle();
-				SetChaseIfCanSeeTarget(target);
+				SetChaseIfCanSeeTarget();
 				break;
 			case BehaviourState.CHASE:
-				Move(this.ChaseSpeed);
-				SetIdleIfLostSightOfTarget(target);
-				SetAttackIfTargetIsInReach(target);
+				if (!IsPlayerInAttackReach()) {
+					Move(this.ChaseSpeed);
+				}
+				SetIdleIfLostSightOfTarget();
+				SetAttackIfTargetIsInReach();
 				break;
 			case BehaviourState.ATTACK:
 				this.Attack();
@@ -117,9 +125,8 @@ public class EnemyBehaviour : MonoBehaviour {
 		this.EnemyTransform.Translate(Vector3.right * Time.deltaTime * speed);
 	}
 
-	private void SetAttackIfTargetIsInReach(Transform target) {
-		if (target == null) { return; }
-		if (IsPlayerInAttackReach(target) && AttackTimer < Time.time) {
+	private void SetAttackIfTargetIsInReach() {
+		if (IsPlayerInAttackReach() && AttackTimer < Time.time) {
 			this.SetState(BehaviourState.ATTACK);
 			AttackTimer = TIME_BETWEEN_ATTACKS + Time.time;
 			this.Enemy.IsAttacking = true;
@@ -128,20 +135,52 @@ public class EnemyBehaviour : MonoBehaviour {
 		}
 	}
 
-	private void SetChaseIfCanSeeTarget(Transform target) {
-		if (target != null) {
+	private void SetChaseIfCanSeeTarget() {
+
+		if (CanSeeTarget()) {
 			Chase();
 		}
 	}
 
-	private void SetIdleIfLostSightOfTarget(Transform target) {
-		if (target == null) {
+	private bool CanSeeTarget() {
+		Vector2 direction = (EnemyTransform.rotation.eulerAngles.y < 90) ? Vector2.right : Vector2.left;
+		float eyeHorizontal = this.Vision.position.x;
+		float eyeVertical = this.Vision.position.y;
+		float eyeReach = eyeHorizontal + (VisionLength * direction.x);
+		bool isVisible = false;
+		// Check if target are in proper height of the eye
+		if (eyeVertical + 5 >= target.transform.position.y && eyeVertical - 3 <= target.transform.position.y) {
+			Vector3 debugVisionEndposition = Vision.position;
+			if (isFacingRight && eyeHorizontal <= target.position.x && target.position.x < eyeReach) {
+				debugVisionEndposition = target.position;
+				isVisible = true;
+			} else if (eyeHorizontal >= target.position.x && target.position.x > eyeReach) {
+				debugVisionEndposition = target.position;
+				isVisible = true;
+			}
+
+			// For visualizing the vision
+			if (this.visualizeVision) {
+				Debug.DrawLine(Vision.position, debugVisionEndposition, Color.magenta);
+			}
+		}
+		return isVisible;
+	}
+
+	private void SetIdleIfLostSightOfTarget() {
+		if (!CanSeeTarget()) {
 			Idle();
 		}
 	}
 
 	private void ChangeWalkingDirection() {
-		this.EnemyTransform.Rotate(0, 180, 0);
+		if (this.isFacingRight) {
+			this.EnemyTransform.rotation = new Quaternion(0f, 180f, 0f, 0f);
+			this.isFacingRight = false;
+		} else {
+			this.EnemyTransform.rotation = new Quaternion(0f, 0, 0f, 0f);
+			this.isFacingRight = true;
+		}
 	}
 
 	private void TryChangeToIdle() {
@@ -161,7 +200,7 @@ public class EnemyBehaviour : MonoBehaviour {
 	/// </summary>
 	/// <param name="enemy">The enemy to potentially attack the player</param>
 	/// <returns>True if in reach, false if not</returns>
-	private bool IsPlayerInAttackReach(Transform target) {
+	private bool IsPlayerInAttackReach() {
 		bool inReach = false;
 		if (Math.Abs(Vector2.Distance(Vision.position, target.position)) <= ATTACK_DISTANCE) {
 			inReach = true;
@@ -182,14 +221,12 @@ public class EnemyBehaviour : MonoBehaviour {
 		// Gets the direction
 		Vector2 direction = (EnemyTransform.rotation.eulerAngles.y < 90) ? Vector2.right : Vector2.left;
 		RaycastHit2D hitForward = Physics2D.Raycast(visionPosition, direction, VisionLength);
-		if (visualizeVision) {
-			var lineDirection = new Vector3(VisionLength * direction.x, 0, 0);
-			Debug.DrawRay(visionPosition, lineDirection, Color.magenta);
-		}
 
 		if (hitForward.collider != null) {
-			hitForward.transform.TryGetComponent(out Player p);
-			target = p?.transform;
+			if (!hitForward.transform.TryGetComponent(out Player p)) {
+				// if
+			}
+
 		}
 
 		return target;
@@ -230,5 +267,4 @@ public class EnemyBehaviour : MonoBehaviour {
 		this.Animator.SetTrigger(this.ATTACK_TRIGGER_NAME);
 		this.SetState(BehaviourState.CHASE);
 	}
-
 }
