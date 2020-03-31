@@ -111,6 +111,10 @@ public class BulletControl : MonoBehaviour {
             if (Col.TryGetComponent(out EnemyHealthController enemyHealth)) {
                 enemyHealth.ApplyDamage(this.BulletData.Damage);
             }
+
+            if (Col.TryGetComponent(out MakeHitableByBullet MHBB)) {
+                MHBB.AffectedHealthController.ApplyDamage(this.BulletData.Damage);
+            }
         }
 
         if (!Col.TryGetComponent(out BulletControl _) && !Col.TryGetComponent(out PlayerHealthController a)){
