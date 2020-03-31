@@ -17,6 +17,7 @@ public class ScoreHandler : MonoBehaviour {
     private void Start() {
         dataManager = GameManager.Instance.GameDataManager;
         SubscribeToEvents();
+        scoreGui.UpdateScoreText(dataManager.GameScore);
     }
 
     private void OnDestroy() {
