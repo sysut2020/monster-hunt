@@ -20,5 +20,15 @@ public enum GAME_STATE {
     /// <summary>
     /// Go to the letter level
     /// </summary>
-    LETTER_LEVEL
+    LETTER_LEVEL,
+
+    /// <summary>
+    /// Go to the next level
+    /// </summary>
+    NEXT_LEVEL,
+
+    /// <summary>
+    /// Start the game
+    /// </summary>
+    START_GAME,
 }
