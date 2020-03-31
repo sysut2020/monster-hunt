@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -31,17 +32,16 @@ public class Jetpack : MonoBehaviour {
         if (animator == null) {
             throw new MissingComponentException("Animator is missing");
         }
-            this.flames.Stop();
+
+        this.flames.Stop();
     }
 
     private void FixedUpdate() {
         if (Input.GetAxis("Vertical") > 0) {
-            animator.SetBool(Flying, true); // todo maybe move to avoid frame lose
             AddForce();
             if (!this.flames.isEmitting) this.flames.Play();
         } else if (this.flames.isEmitting) {
             this.flames.Stop();
-            animator.SetBool(Flying, false); // todo maybe move to avoid frame lose
         }
     }
 
@@ -52,6 +52,16 @@ public class Jetpack : MonoBehaviour {
     private void AddForce() {
         if (this.massToAffect.velocity.y <= this.maxYVelocity) {
             this.massToAffect.AddForce(this.force);
+        }
+    }
+
+    private void Update() {
+        if (Input.GetButtonDown("Vertical")) {
+            animator.SetBool(Flying, true);
+        }
+
+        if (Input.GetButtonUp("Vertical")) {
+            animator.SetBool(Flying, false);
         }
     }
 }
