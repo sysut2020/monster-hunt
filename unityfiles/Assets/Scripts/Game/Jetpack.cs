@@ -36,12 +36,12 @@ public class Jetpack : MonoBehaviour {
 
     private void FixedUpdate() {
         if (Input.GetAxis("Vertical") > 0) {
-            animator.SetBool(Flying, true);
+            animator.SetBool(Flying, true); // todo maybe move to avoid frame lose
             AddForce();
             if (!this.flames.isEmitting) this.flames.Play();
         } else if (this.flames.isEmitting) {
             this.flames.Stop();
-            animator.SetBool(Flying, false);
+            animator.SetBool(Flying, false); // todo maybe move to avoid frame lose
         }
     }
 
