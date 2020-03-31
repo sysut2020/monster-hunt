@@ -13,6 +13,9 @@ using UnityEngine;
 /// </summary>
 public class EntitySpawner : Singleton<EntitySpawner> {
 
+    // Time before trying to spawn a new entity
+    private readonly int TRY_SPAWN_TIME = 10000; // Milliseconds
+
     [Tooltip("Time between spawns")]
     [SerializeField]
     private float timeBetweenSpawns = 0; // Unused for now to be implemented
@@ -32,14 +35,28 @@ public class EntitySpawner : Singleton<EntitySpawner> {
 
     private Camera MainCamera { get; set; }
 
+    private WUTimers spawnTimer;
+
+    private string spawnTimerId;
+
     private void Awake() {
         MainCamera = Camera.main;
         Enemy.EnemyKilledEvent += CallbackOnEnemyKilled;
         spawnPoints = GetComponentsInChildren<SpawnPoint>().ToList();
     }
 
+    private void Start() {
+        this.SetupSpawnTimer();
+    }
+
     private void OnDestroy() {
         Enemy.EnemyKilledEvent -= CallbackOnEnemyKilled;
+    }
+
+    private void SetupSpawnTimer() {
+        spawnTimer = new WUTimers();
+        spawnTimerId = spawnTimer.RollingUID;
+        spawnTimer.Set(spawnTimerId, TRY_SPAWN_TIME);
     }
 
     /// <summary>
@@ -93,6 +110,10 @@ public class EntitySpawner : Singleton<EntitySpawner> {
         if (0 < RestToSpawn) {
             TrySpawn(RestToSpawn);
         }
+        if (spawnTimer.Done(spawnTimerId, true)) {
+            TrySpawn(1);
+        }
+
     }
 
     /// <summary>
