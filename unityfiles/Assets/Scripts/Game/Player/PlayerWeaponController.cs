@@ -108,6 +108,7 @@ public class PlayerWeaponController : MonoBehaviour {
     }
 
     void Start(){
+        //Changes the weapon to the first weapon in inventory
         ChangeWeapon(1);
     }
 

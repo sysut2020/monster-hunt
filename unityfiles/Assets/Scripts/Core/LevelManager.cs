@@ -56,7 +56,6 @@ public class LevelManager : Singleton<LevelManager> {
     /// Subscribes to the relevant events for this class
     /// </summary>
     private void SubscribeToEvents() {
-        Player.PlayerKilledEvent += CallbackPlayerKilledEvent;
         PlayerHealthController.OnPlayerLivesUpdate += CallbackPlayerLivesUpdate;
         Enemy.EnemyKilledEvent += CallbackEnemyKilledEvent;
         PauseMenuController.PauseMenuChangeEvent += CallbackChangeLevelState;
@@ -66,7 +65,6 @@ public class LevelManager : Singleton<LevelManager> {
     /// Subscribes to the relevant events for this class
     /// </summary>
     private void UnsubscribeFromEvents() {
-        Player.PlayerKilledEvent -= CallbackPlayerKilledEvent;
         PlayerHealthController.OnPlayerLivesUpdate -= CallbackPlayerLivesUpdate;
         Enemy.EnemyKilledEvent -= CallbackEnemyKilledEvent;
         PauseMenuController.PauseMenuChangeEvent -= CallbackChangeLevelState;
@@ -84,16 +82,6 @@ public class LevelManager : Singleton<LevelManager> {
     /// <param name="args">the event args</param>
     private void CallbackPlayerLivesUpdate(object _, PlayerLivesUpdateArgs args) {
         if (args.CurrentLives == 0) LevelStateChange(LEVEL_STATE.GAME_OVER);
-    }
-
-    /// <summary>
-    /// This function is fiered when the PlayerKilled is invoked
-    /// Ends the level
-    /// </summary>
-    /// <param name="_">the object calling</param>
-    /// <param name="args">the event args</param>
-    private void CallbackPlayerKilledEvent(object __, EventArgs _) {
-        //throw new NotImplementedException("Callback not implemented");
     }
 
     /// <summary>
@@ -129,9 +117,11 @@ public class LevelManager : Singleton<LevelManager> {
             // The game is over show game over screen
             case LEVEL_STATE.GAME_OVER:
                 Time.timeScale = PAUSE;
+                this.levelTimer.Pause(this.LEVEL_TIMER_ID);
                 break;
             case LEVEL_STATE.GAME_WON:
                 Time.timeScale = PAUSE;
+                this.levelTimer.Pause(this.LEVEL_TIMER_ID);
                 break;
 
             case LEVEL_STATE.PAUSE:
@@ -145,11 +135,11 @@ public class LevelManager : Singleton<LevelManager> {
                 ChangeLevelState(LEVEL_STATE.PLAY);
                 break;
 
-            // Start the main mode spawn the player and start the level
+                // Start the main mode spawn the player and start the level
             case LEVEL_STATE.PLAY:
                 Time.timeScale = PLAY;
                 break;
-            // Exit the game and go to main menu
+                // Exit the game and go to main menu
             case LEVEL_STATE.EXIT:
                 break;
 

@@ -121,76 +121,7 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1001 &148889683
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 7343262343107847926, guid: bbac554e90ee4ebd1a1b11acd44a20b3,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -4.0821323
-      objectReference: {fileID: 0}
-    - target: {fileID: 7343262343107847926, guid: bbac554e90ee4ebd1a1b11acd44a20b3,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 4.8327513
-      objectReference: {fileID: 0}
-    - target: {fileID: 7343262343107847926, guid: bbac554e90ee4ebd1a1b11acd44a20b3,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -443.3125
-      objectReference: {fileID: 0}
-    - target: {fileID: 7343262343107847926, guid: bbac554e90ee4ebd1a1b11acd44a20b3,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7343262343107847926, guid: bbac554e90ee4ebd1a1b11acd44a20b3,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7343262343107847926, guid: bbac554e90ee4ebd1a1b11acd44a20b3,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7343262343107847926, guid: bbac554e90ee4ebd1a1b11acd44a20b3,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7343262343107847926, guid: bbac554e90ee4ebd1a1b11acd44a20b3,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 7343262343107847926, guid: bbac554e90ee4ebd1a1b11acd44a20b3,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7343262343107847926, guid: bbac554e90ee4ebd1a1b11acd44a20b3,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7343262343107847926, guid: bbac554e90ee4ebd1a1b11acd44a20b3,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7343262343107847928, guid: bbac554e90ee4ebd1a1b11acd44a20b3,
-        type: 3}
-      propertyPath: m_Name
-      value: PresistentGO
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: bbac554e90ee4ebd1a1b11acd44a20b3, type: 3}
---- !u!1 &220518492
+--- !u!1 &86571067
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
