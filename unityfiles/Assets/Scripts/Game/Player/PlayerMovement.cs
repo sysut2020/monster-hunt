@@ -39,9 +39,11 @@ public class PlayerMovement : MonoBehaviour {
     void Update() {
         horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
         
-        if (horizontalMove != 0) {
+        if (Input.GetButtonDown("Horizontal")) {
             animator.SetBool(Walking, true);
-        } else {
+        } 
+        
+        if(Input.GetButtonUp("Horizontal")) {
             animator.SetBool(Walking, false);
         }
     }
