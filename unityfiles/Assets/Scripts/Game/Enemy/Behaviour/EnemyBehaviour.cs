@@ -1,4 +1,5 @@
 using System;
+using UnityEditor;
 using UnityEngine;
 
 public class EnemyBehavourChangeArgs : EventArgs {
@@ -33,8 +34,6 @@ public class EnemyBehaviour : MonoBehaviour {
 	private readonly int MAX_IDLE_TIME = 4;
 	private readonly int MIN_IDLE_TIME = 2;
 	private readonly float TIME_BETWEEN_ATTACKS = 1f;
-	private readonly float ATTACK_DISTANCE = 1.5f;
-
 	private BehaviourState CurrentState { get; set; }
 
 	public float PatrolSpeed { get; set; }
@@ -46,11 +45,33 @@ public class EnemyBehaviour : MonoBehaviour {
 
 	private Enemy Enemy { get; set; }
 	private Transform EnemyTransform { get; set; }
-	private Transform Vision { get; set; }
 	private Animator Animator { get; set; }
 
+	private Transform target { get; set; }
+
+	private bool isFacingRight = true;
+
+	private bool detectedObstacle = false;
+
+	[SerializeField]
+	private float visionUpperBound = 5;
+
+	[SerializeField]
+	private float visionLowerBound = 3;
+
+	[SerializeField]
+	private float attackDistance = 1;
+
+	[Tooltip("The point where the eye is")]
+	[SerializeField]
+	private Transform eye;
+
+	[Tooltip("The point from where to detect obstacles")]
+	[SerializeField]
+	private Transform obstacleDetection;
+
 	public static event EventHandler<EnemyBehavourChangeArgs> EnemyBehaviourStateChangeEvent;
-	
+
 	private void Awake() {
 		if (this.transform.parent.TryGetComponent(out Enemy enemy)) {
 			this.Enemy = enemy;
@@ -60,6 +81,7 @@ public class EnemyBehaviour : MonoBehaviour {
 		this.Animator = this.GetComponent<Animator>();
 	}
 	private void Start() {
+		this.target = FindObjectOfType<Player>().transform;
 		this.InitializeEnemyBehaviour();
 	}
 
@@ -71,29 +93,29 @@ public class EnemyBehaviour : MonoBehaviour {
 		this.VisionLength = type.VisionLength;
 
 		EnemyTransform = Enemy.transform;
-		this.Vision = Enemy.FrontPoint;
-
 		this.ChooseRandomStartState();
 	}
 
 	private void FixedUpdate() {
 		EnemyBehavourChangeArgs args = new EnemyBehavourChangeArgs();
 		args.NewBehaviourState = CurrentState;
-		var target = TryGetTarget();
+		this.detectedObstacle = DetectObstacles();
 		switch (this.CurrentState) {
 			case BehaviourState.IDLE:
 				TryChangeToPatrol();
-				SetChaseIfCanSeeTarget(target);
+				SetChaseIfCanSeeTarget();
 				break;
 			case BehaviourState.PATROL:
 				Move(this.PatrolSpeed);
-				TryChangeToIdle();
-				SetChaseIfCanSeeTarget(target);
+				TryChangeToIdle(this.detectedObstacle);
+				SetChaseIfCanSeeTarget();
 				break;
 			case BehaviourState.CHASE:
-				Move(this.ChaseSpeed);
-				SetIdleIfLostSightOfTarget(target);
-				SetAttackIfTargetIsInReach(target);
+				if (!IsPlayerInAttackReach()) {
+					Move(this.ChaseSpeed);
+				}
+				SetIdleIfLostSightOfTarget();
+				SetAttackIfTargetIsInReach();
 				break;
 			case BehaviourState.ATTACK:
 				this.Attack();
@@ -117,9 +139,8 @@ public class EnemyBehaviour : MonoBehaviour {
 		this.EnemyTransform.Translate(Vector3.right * Time.deltaTime * speed);
 	}
 
-	private void SetAttackIfTargetIsInReach(Transform target) {
-		if (target == null) { return; }
-		if (IsPlayerInAttackReach(target) && AttackTimer < Time.time) {
+	private void SetAttackIfTargetIsInReach() {
+		if (IsPlayerInAttackReach() && AttackTimer < Time.time) {
 			this.SetState(BehaviourState.ATTACK);
 			AttackTimer = TIME_BETWEEN_ATTACKS + Time.time;
 			this.Enemy.IsAttacking = true;
@@ -128,24 +149,55 @@ public class EnemyBehaviour : MonoBehaviour {
 		}
 	}
 
-	private void SetChaseIfCanSeeTarget(Transform target) {
-		if (target != null) {
+	private void SetChaseIfCanSeeTarget() {
+		if (CanSeeTarget()) {
 			Chase();
 		}
 	}
 
-	private void SetIdleIfLostSightOfTarget(Transform target) {
-		if (target == null) {
+	private bool CanSeeTarget() {
+		Vector2 direction = (EnemyTransform.rotation.eulerAngles.y < 90) ? Vector2.right : Vector2.left;
+		float eyeHorizontal = this.eye.position.x;
+		float eyeVertical = this.eye.position.y;
+		float eyeReach = eyeHorizontal + (VisionLength * direction.x);
+		bool isVisible = false;
+		// Check if target is in proper height of the eye + bounds
+		var inHeight = eyeVertical + visionUpperBound >= target.transform.position.y && eyeVertical + visionLowerBound <= target.transform.position.y;
+		Vector3 debugVisionEndposition = eye.position;
+		if (isFacingRight && inHeight && eyeHorizontal <= target.position.x && target.position.x < eyeReach) {
+			debugVisionEndposition = target.position;
+			isVisible = true;
+		} else if (inHeight && eyeHorizontal >= target.position.x && target.position.x > eyeReach) {
+			debugVisionEndposition = target.position;
+			isVisible = true;
+		}
+
+		// For visualizing the vision
+		if (this.visualizeVision) {
+			Debug.DrawLine(eye.position, debugVisionEndposition, Color.magenta);
+		}
+
+		return isVisible;
+	}
+
+	private void SetIdleIfLostSightOfTarget() {
+		if (!CanSeeTarget()) {
 			Idle();
 		}
 	}
 
 	private void ChangeWalkingDirection() {
-		this.EnemyTransform.Rotate(0, 180, 0);
+		if (this.isFacingRight) {
+			this.EnemyTransform.rotation = new Quaternion(0f, 180f, 0f, 0f);
+			this.isFacingRight = false;
+		} else {
+			this.EnemyTransform.rotation = new Quaternion(0f, 0, 0f, 0f);
+			this.isFacingRight = true;
+		}
 	}
 
-	private void TryChangeToIdle() {
-		if (this.PatrolTime < Time.time) {
+	private void TryChangeToIdle(bool forceChange) {
+		if (this.PatrolTime < Time.time || forceChange) {
 			Idle();
 		}
 	}
@@ -161,9 +213,11 @@ public class EnemyBehaviour : MonoBehaviour {
 	/// </summary>
 	/// <param name="enemy">The enemy to potentially attack the player</param>
 	/// <returns>True if in reach, false if not</returns>
-	private bool IsPlayerInAttackReach(Transform target) {
+	private bool IsPlayerInAttackReach() {
 		bool inReach = false;
-		if (Math.Abs(Vector2.Distance(Vision.position, target.position)) <= ATTACK_DISTANCE) {
+		var eyepos = Math.Abs(eye.position.x);
+		var tarpos = Math.Abs(target.position.x);
+		if (Math.Abs(eyepos - tarpos) <= attackDistance) {
 			inReach = true;
 		}
 		return inReach;
@@ -175,24 +229,21 @@ public class EnemyBehaviour : MonoBehaviour {
 	/// return the instance, else null.
 	/// </summary>
 	/// <returns>target or null if not found</returns>
-	private Transform TryGetTarget() {
-		Transform target = null;
-		Vector2 visionPosition = Vision.position;
-
+	private bool DetectObstacles() {
+		Vector2 rayStartPosition = obstacleDetection.position;
 		// Gets the direction
 		Vector2 direction = (EnemyTransform.rotation.eulerAngles.y < 90) ? Vector2.right : Vector2.left;
-		RaycastHit2D hitForward = Physics2D.Raycast(visionPosition, direction, VisionLength);
-		if (visualizeVision) {
-			var lineDirection = new Vector3(VisionLength * direction.x, 0, 0);
-			Debug.DrawRay(visionPosition, lineDirection, Color.magenta);
+		RaycastHit2D hitForward = Physics2D.Raycast(rayStartPosition, direction, 3);
+		if (this.visualizeVision) {
+			Debug.DrawRay(rayStartPosition, 3 * direction, Color.red);
 		}
 
 		if (hitForward.collider != null) {
-			hitForward.transform.TryGetComponent(out Player p);
-			target = p?.transform;
+			if (!hitForward.transform.TryGetComponent(out Player p)) {
+				return true;
+			}
 		}
-
-		return target;
+		return false;
 	}
 
 	/// <summary>
@@ -231,4 +282,28 @@ public class EnemyBehaviour : MonoBehaviour {
 		this.SetState(BehaviourState.CHASE);
 	}
 
+	/// <summary>
+	/// Draws the left and right clamp in editor window, when the 
+	/// object is selected.
+	/// </summary>
+#if UNITY_EDITOR
+	private void OnDrawGizmosSelected() {
+		if (eye == null) { return; }
+		Handles.color = Color.magenta;
+		var upperBound = this.eye.position.y + this.visionUpperBound;
+		var lowerBound = this.eye.position.y + this.visionLowerBound;
+		var xLeft = this.eye.position.x - 2f;
+		var xRight = this.eye.position.x + 2f;
+
+		Handles.DrawLine(new Vector3(xLeft, upperBound, 0), new Vector3(xRight, upperBound, 0));
+		Handles.Label(new Vector3(this.eye.position.x, upperBound, 0), "UPPER BOUND");
+
+		Handles.DrawLine(new Vector3(xLeft, lowerBound, 0), new Vector3(xRight, lowerBound, 0));
+		Handles.Label(new Vector3(this.eye.position.x, lowerBound, 0), "LOWER BOUND");
+
+		Handles.DrawLine(new Vector3(this.eye.position.x + attackDistance, this.eye.position.y + 1, 0), new Vector3(this.eye.position.x + attackDistance, this.eye.position.y - 1, 0));
+		Handles.Label(new Vector3(this.eye.position.x, this.eye.position.y, 0), "ATTACK TRIGGER");
+
+	}
+#endif
 }

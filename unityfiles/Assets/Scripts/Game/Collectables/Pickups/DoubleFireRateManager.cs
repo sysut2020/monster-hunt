@@ -70,9 +70,7 @@ public class DoubleFireRateManager : MonoBehaviour {
     private IEnumerator Effect(int waitTime, int rid){
         this.activeMultipliers += 1;
         this.UpdateEffectOnController();
-        print("aa");
         yield return new WaitForSeconds(waitTime);
-        print("bb");
         this.activeMultipliers -= 1;
         this.UpdateEffectOnController();
         StopActiveCorutine(rid);
@@ -101,7 +99,6 @@ public class DoubleFireRateManager : MonoBehaviour {
         } else{
             this.usedGunController.FireRate = initialFireRate;
         }
-        print(this.usedGunController.FireRate);
 
 
     }
