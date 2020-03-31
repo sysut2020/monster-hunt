@@ -18,10 +18,6 @@ public class Enemy : MonoBehaviour, IDamageable {
     [SerializeField]
     private EnemyType enemyType;
 
-    [Tooltip("The front point a raycast is sent from")]
-    [SerializeField]
-    private Transform frontPoint;
-
     private bool isAttacking = false;
     private EnemyHealthController enemyHealthController;
 
@@ -35,10 +31,6 @@ public class Enemy : MonoBehaviour, IDamageable {
     public EnemyType EnemyType {
         get => this.enemyType;
         set => this.enemyType = value;
-    }
-
-    public Transform FrontPoint {
-        get => this.frontPoint;
     }
 
     // -- public -- //

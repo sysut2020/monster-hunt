@@ -34,8 +34,6 @@ public class EnemyBehaviour : MonoBehaviour {
 	private readonly int MAX_IDLE_TIME = 4;
 	private readonly int MIN_IDLE_TIME = 2;
 	private readonly float TIME_BETWEEN_ATTACKS = 1f;
-	private readonly float ATTACK_DISTANCE = .5f;
-
 	private BehaviourState CurrentState { get; set; }
 
 	public float PatrolSpeed { get; set; }
@@ -47,12 +45,30 @@ public class EnemyBehaviour : MonoBehaviour {
 
 	private Enemy Enemy { get; set; }
 	private Transform EnemyTransform { get; set; }
-	private Transform Vision { get; set; }
 	private Animator Animator { get; set; }
 
 	private Transform target { get; set; }
 
 	private bool isFacingRight = true;
+
+	private bool detectedObstacle = false;
+
+	[SerializeField]
+	private float visionUpperBound = 5;
+
+	[SerializeField]
+	private float visionLowerBound = 3;
+
+	[SerializeField]
+	private float attackDistance = 1;
+
+	[Tooltip("The point where the eye is")]
+	[SerializeField]
+	private Transform eye;
+
+	[Tooltip("The point from where to detect obstacles")]
+	[SerializeField]
+	private Transform obstacleDetection;
 
 	public static event EventHandler<EnemyBehavourChangeArgs> EnemyBehaviourStateChangeEvent;
 
@@ -77,15 +93,13 @@ public class EnemyBehaviour : MonoBehaviour {
 		this.VisionLength = type.VisionLength;
 
 		EnemyTransform = Enemy.transform;
-		this.Vision = Enemy.FrontPoint;
-
 		this.ChooseRandomStartState();
 	}
 
 	private void FixedUpdate() {
 		EnemyBehavourChangeArgs args = new EnemyBehavourChangeArgs();
 		args.NewBehaviourState = CurrentState;
-
+		this.detectedObstacle = DetectObstacles();
 		switch (this.CurrentState) {
 			case BehaviourState.IDLE:
 				TryChangeToPatrol();
@@ -93,7 +107,7 @@ public class EnemyBehaviour : MonoBehaviour {
 				break;
 			case BehaviourState.PATROL:
 				Move(this.PatrolSpeed);
-				TryChangeToIdle();
+				TryChangeToIdle(this.detectedObstacle);
 				SetChaseIfCanSeeTarget();
 				break;
 			case BehaviourState.CHASE:
@@ -136,7 +150,6 @@ public class EnemyBehaviour : MonoBehaviour {
 	}
 
 	private void SetChaseIfCanSeeTarget() {
-
 		if (CanSeeTarget()) {
 			Chase();
 		}
@@ -144,26 +157,26 @@ public class EnemyBehaviour : MonoBehaviour {
 
 	private bool CanSeeTarget() {
 		Vector2 direction = (EnemyTransform.rotation.eulerAngles.y < 90) ? Vector2.right : Vector2.left;
-		float eyeHorizontal = this.Vision.position.x;
-		float eyeVertical = this.Vision.position.y;
+		float eyeHorizontal = this.eye.position.x;
+		float eyeVertical = this.eye.position.y;
 		float eyeReach = eyeHorizontal + (VisionLength * direction.x);
 		bool isVisible = false;
-		// Check if target are in proper height of the eye
-		if (eyeVertical + 5 >= target.transform.position.y && eyeVertical - 3 <= target.transform.position.y) {
-			Vector3 debugVisionEndposition = Vision.position;
-			if (isFacingRight && eyeHorizontal <= target.position.x && target.position.x < eyeReach) {
-				debugVisionEndposition = target.position;
-				isVisible = true;
-			} else if (eyeHorizontal >= target.position.x && target.position.x > eyeReach) {
-				debugVisionEndposition = target.position;
-				isVisible = true;
-			}
-
-			// For visualizing the vision
-			if (this.visualizeVision) {
-				Debug.DrawLine(Vision.position, debugVisionEndposition, Color.magenta);
-			}
+		// Check if target is in proper height of the eye + bounds
+		var inHeight = eyeVertical + visionUpperBound >= target.transform.position.y && eyeVertical + visionLowerBound <= target.transform.position.y;
+		Vector3 debugVisionEndposition = eye.position;
+		if (isFacingRight && inHeight && eyeHorizontal <= target.position.x && target.position.x < eyeReach) {
+			debugVisionEndposition = target.position;
+			isVisible = true;
+		} else if (inHeight && eyeHorizontal >= target.position.x && target.position.x > eyeReach) {
+			debugVisionEndposition = target.position;
+			isVisible = true;
 		}
+
+		// For visualizing the vision
+		if (this.visualizeVision) {
+			Debug.DrawLine(eye.position, debugVisionEndposition, Color.magenta);
+		}
+
 		return isVisible;
 	}
 
@@ -183,8 +196,8 @@ public class EnemyBehaviour : MonoBehaviour {
 		}
 	}
 
-	private void TryChangeToIdle() {
-		if (this.PatrolTime < Time.time) {
+	private void TryChangeToIdle(bool forceChange) {
+		if (this.PatrolTime < Time.time || forceChange) {
 			Idle();
 		}
 	}
@@ -202,7 +215,9 @@ public class EnemyBehaviour : MonoBehaviour {
 	/// <returns>True if in reach, false if not</returns>
 	private bool IsPlayerInAttackReach() {
 		bool inReach = false;
-		if (Math.Abs(Vector2.Distance(Vision.position, target.position)) <= ATTACK_DISTANCE) {
+		var eyepos = Math.Abs(eye.position.x);
+		var tarpos = Math.Abs(target.position.x);
+		if (Math.Abs(eyepos - tarpos) <= attackDistance) {
 			inReach = true;
 		}
 		return inReach;
@@ -214,22 +229,21 @@ public class EnemyBehaviour : MonoBehaviour {
 	/// return the instance, else null.
 	/// </summary>
 	/// <returns>target or null if not found</returns>
-	private Transform TryGetTarget() {
-		Transform target = null;
-		Vector2 visionPosition = Vision.position;
-
+	private bool DetectObstacles() {
+		Vector2 rayStartPosition = obstacleDetection.position;
 		// Gets the direction
 		Vector2 direction = (EnemyTransform.rotation.eulerAngles.y < 90) ? Vector2.right : Vector2.left;
-		RaycastHit2D hitForward = Physics2D.Raycast(visionPosition, direction, VisionLength);
+		RaycastHit2D hitForward = Physics2D.Raycast(rayStartPosition, direction, 3);
+		if (this.visualizeVision) {
+			Debug.DrawRay(rayStartPosition, 3 * direction, Color.red);
+		}
 
 		if (hitForward.collider != null) {
 			if (!hitForward.transform.TryGetComponent(out Player p)) {
-				// if
+				return true;
 			}
-
 		}
-
-		return target;
+		return false;
 	}
 
 	/// <summary>
@@ -267,4 +281,29 @@ public class EnemyBehaviour : MonoBehaviour {
 		this.Animator.SetTrigger(this.ATTACK_TRIGGER_NAME);
 		this.SetState(BehaviourState.CHASE);
 	}
+
+	/// <summary>
+	/// Draws the left and right clamp in editor window, when the 
+	/// object is selected.
+	/// </summary>
+#if UNITY_EDITOR
+	private void OnDrawGizmosSelected() {
+		if (eye == null) { return; }
+		Handles.color = Color.magenta;
+		var upperBound = this.eye.position.y + this.visionUpperBound;
+		var lowerBound = this.eye.position.y + this.visionLowerBound;
+		var xLeft = this.eye.position.x - 2f;
+		var xRight = this.eye.position.x + 2f;
+
+		Handles.DrawLine(new Vector3(xLeft, upperBound, 0), new Vector3(xRight, upperBound, 0));
+		Handles.Label(new Vector3(this.eye.position.x, upperBound, 0), "UPPER BOUND");
+
+		Handles.DrawLine(new Vector3(xLeft, lowerBound, 0), new Vector3(xRight, lowerBound, 0));
+		Handles.Label(new Vector3(this.eye.position.x, lowerBound, 0), "LOWER BOUND");
+
+		Handles.DrawLine(new Vector3(this.eye.position.x + attackDistance, this.eye.position.y + 1, 0), new Vector3(this.eye.position.x + attackDistance, this.eye.position.y - 1, 0));
+		Handles.Label(new Vector3(this.eye.position.x, this.eye.position.y, 0), "ATTACK TRIGGER");
+
+	}
+#endif
 }
