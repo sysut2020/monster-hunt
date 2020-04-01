@@ -58,7 +58,7 @@ public class ScoreHandler : MonoBehaviour {
     /// <param name="col">Sender object</param>
     /// <param name="args">event args</param>
     private void CallbackEffectPickup(object col, PowerUpCollectedArgs e) {
-        levelScore++; // when a power up is picked up we add one point to the total score
+        this.levelScore++; // when a power up is picked up we add one point to the total score
         scoreGui.UpdateScoreText(this.levelScore);
     }
 
@@ -69,7 +69,7 @@ public class ScoreHandler : MonoBehaviour {
     /// <param name="args">event args</param>
     private void CallbackLetterCollected(object col, LetterCollectedArgs _) {
         // when a letter is collected we add one point to the total score counter
-        levelScore += ((Collectable) col).ScoreValue; 
+        this.levelScore += ((Collectable) col).ScoreValue;
         scoreGui.UpdateScoreText(this.levelScore);
     }
 
@@ -79,7 +79,7 @@ public class ScoreHandler : MonoBehaviour {
     /// <param name="col">Sender object</param>
     /// <param name="_">event args</param>
     private void CallbackCoinCollected(object col, CoinCollectedArgs _) {
-        levelScore += ((Collectable) col).ScoreValue;
+        this.levelScore += ((Collectable) col).ScoreValue;
         scoreGui.UpdateScoreText(this.levelScore);
     }
 }
