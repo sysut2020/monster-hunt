@@ -19,12 +19,12 @@ public class AnimationHierarchyEditor : EditorWindow {
 	private ArrayList pathsKeys;
 	private Hashtable paths;
 
-	Dictionary<string, string> tempPathOverrides;
+	private Dictionary<string, string> tempPathOverrides;
 
 	private Vector2 scrollPos = Vector2.zero;
 	
 	[MenuItem("Window/Animation Hierarchy Editor")]
-	static void ShowWindow() {
+	private static void ShowWindow() {
 		EditorWindow.GetWindow<AnimationHierarchyEditor>();
 	}
 
@@ -33,8 +33,8 @@ public class AnimationHierarchyEditor : EditorWindow {
 		animationClips = new List<AnimationClip>();
 		tempPathOverrides = new Dictionary<string, string>();
 	}
-	
-	void OnSelectionChange() {
+
+	private void OnSelectionChange() {
 		if (Selection.objects.Length > 1 )
 		{
 			Debug.Log ("Length? " + Selection.objects.Length);
@@ -58,7 +58,7 @@ public class AnimationHierarchyEditor : EditorWindow {
 	private string sOriginalRoot = "Root";
 	private string sNewRoot = "SomeNewObject/Root";
 
-	void OnGUI() {
+	private void OnGUI() {
 		if (Event.current.type == EventType.ValidateCommand) {
 			switch (Event.current.commandName) {
 			case "UndoRedoPerformed":
@@ -136,7 +136,7 @@ public class AnimationHierarchyEditor : EditorWindow {
 	}
 
 
-	void GUICreatePathItem(string path) {
+	private void GUICreatePathItem(string path) {
 		string newPath = path;
 		GameObject obj = FindObjectInRoot(path);
 		GameObject newObj;
@@ -192,12 +192,12 @@ public class AnimationHierarchyEditor : EditorWindow {
 			Debug.LogError(ex.Message);
 		}
 	}
-	
-	void OnInspectorUpdate() {
+
+	private void OnInspectorUpdate() {
 		this.Repaint();
 	}
-	
-	void FillModel() {
+
+	private void FillModel() {
 		paths = new Hashtable();
 		pathsKeys = new ArrayList();
 
@@ -223,11 +223,11 @@ public class AnimationHierarchyEditor : EditorWindow {
 		}
 	}
 
-	string sReplacementOldRoot;
-	string sReplacementNewRoot;
+	private string sReplacementOldRoot;
+	private string sReplacementNewRoot;
 
 
-	void ReplaceRoot(string oldRoot, string newRoot)
+	private void ReplaceRoot(string oldRoot, string newRoot)
 	{
 		float fProgress = 0.0f;
 		sReplacementOldRoot = oldRoot;
@@ -290,8 +290,8 @@ public class AnimationHierarchyEditor : EditorWindow {
 		FillModel();
 		this.Repaint();
 	}
-	
-	void UpdatePath(string oldPath, string newPath) 
+
+	private void UpdatePath(string oldPath, string newPath) 
 	{
 		if (paths[newPath] != null) {
 			throw new UnityException("Path " + newPath + " already exists in that animation!");
@@ -346,8 +346,8 @@ public class AnimationHierarchyEditor : EditorWindow {
 		FillModel();
 		this.Repaint();
 	}
-	
-	GameObject FindObjectInRoot(string path) {
+
+	private GameObject FindObjectInRoot(string path) {
 		if (animatorObject == null) {
 			return null;
 		}
@@ -360,8 +360,8 @@ public class AnimationHierarchyEditor : EditorWindow {
 			return null;
 		}
 	}
-	
-	string ChildPath(GameObject obj, bool sep = false) {
+
+	private string ChildPath(GameObject obj, bool sep = false) {
 		if (animatorObject == null) {
 			throw new UnityException("Please assign Referenced Animator (Root) first!");
 		}
