@@ -12,7 +12,7 @@ public class GameStateChangeEventArgs : EventArgs {
 /// The manager for the whole game main task is to start and stop scenes and levels
 /// </summary>
 public class GameManager : Singleton<GameManager> {
-    
+
     private GAME_STATE currentState;
     private int nextSceneIndex = 0;
 
@@ -48,6 +48,7 @@ public class GameManager : Singleton<GameManager> {
     private void SubscribeToEvents() {
         // todo subscribe to OnPlayerDead, OnTimeOut, OnAllEnemiesDead
         LevelManager.OnLevelStateChangeEvent += CallbackLevelStateChangeEvent;
+        LetterGameManager.OnLetterGameEndedEvent += CallbackLetterGameEnded;
     }
 
     /// <summary>
@@ -57,6 +58,7 @@ public class GameManager : Singleton<GameManager> {
         // todo unsubscribe from OnPlayerDead, OnTimeOut, OnAllEnemiesDead
         // maybe that this also should be done on disable
         LevelManager.OnLevelStateChangeEvent -= CallbackLevelStateChangeEvent;
+        LetterGameManager.OnLetterGameEndedEvent -= CallbackLetterGameEnded;
     }
 
     /// <summary>
@@ -71,6 +73,22 @@ public class GameManager : Singleton<GameManager> {
     private void CallbackLevelStateChangeEvent(object o, LevelStateChangeEventArgs args) {
         if (args.NewState == LEVEL_STATE.EXIT) {
             this.GameStateChange(GAME_STATE.MAIN_MENU);
+        }
+    }
+
+    /// <summary>
+    /// This function is fired when OnLetterGameEndedEvent is invoked
+    /// This function will trigger on:
+    ///     LetterGameManager OnDestroy()
+    ///         the letter game is done and the total score from the letter
+    ///         game level is transmitted with the event 
+    /// </summary>
+    /// <param name="o">the object calling (this should always be the level manager)</param>
+    /// <param name="args">the event args containing the total score from letter level</param>
+    private void CallbackLetterGameEnded(object _, LetterGameEndedArgs args) {
+        Debug.Log("Letter game ended (in ScoreHandler) trigger a save:" + args.Score);
+        if (args.Score > 0) {
+            gameDataManager.AddGameScore(args.Score);
         }
     }
 
