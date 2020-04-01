@@ -19,16 +19,17 @@ public class LettersCollectedGUI : MonoBehaviour {
     private static Vector3 resultPosition;
 
     private static RectTransform myRectTransform;
-    
+
     /// <summary>
     /// How many letters to collect 
     /// </summary>
     private int lettersToCollect = 0;
 
     private void Awake() {
-        if (letterCounter == null){
+        if (letterCounter == null) {
             throw new MissingComponentException("Missing text component");
         }
+        this.lettersToCollect = LevelManager.Instance.LevelDetails.NumberOfLetters;
         LetterCollectable.OnLetterCollected += OnNewLetter;
         SetLetterText();
     }
@@ -47,7 +48,7 @@ public class LettersCollectedGUI : MonoBehaviour {
     /// </summary>
     /// <param name="size">number of letters to collect >= 0</param>
     public void SetLettersToCollectCount(int count) {
-        if (count < 0){
+        if (count < 0) {
             throw new ArgumentOutOfRangeException("Count cant be negative");
         }
         this.lettersToCollect = count;
