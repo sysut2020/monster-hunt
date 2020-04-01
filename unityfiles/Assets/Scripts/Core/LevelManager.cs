@@ -24,7 +24,7 @@ public class LevelManager : Singleton<LevelManager> {
     [SerializeField]
     private LevelDetails levelDetails;
 
-    public LevelDetails LevelDetails { get { return this.levelDetails; } private set { } }
+    public LevelDetails LevelDetails { get { return this.levelDetails; } private set { this.levelDetails = value; } }
 
     private PlayerInventory playerInventory;
     private WUTimers levelTimer = new WUTimers();
