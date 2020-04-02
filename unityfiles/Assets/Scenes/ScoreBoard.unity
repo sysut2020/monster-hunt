@@ -691,10 +691,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2756184491378615111, guid: c285a3a372f6eaf42ad17ed79142aad8,
+        type: 3}
+      propertyPath: m_textAlignment
+      value: 516
+      objectReference: {fileID: 0}
+    - target: {fileID: 2756184491616896238, guid: c285a3a372f6eaf42ad17ed79142aad8,
+        type: 3}
+      propertyPath: m_textAlignment
+      value: 513
+      objectReference: {fileID: 0}
     - target: {fileID: 2756184492807105355, guid: c285a3a372f6eaf42ad17ed79142aad8,
         type: 3}
       propertyPath: m_Name
       value: Score Board
+      objectReference: {fileID: 0}
+    - target: {fileID: 2756184492807105398, guid: c285a3a372f6eaf42ad17ed79142aad8,
+        type: 3}
+      propertyPath: fillWithTestData
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2756184492807105399, guid: c285a3a372f6eaf42ad17ed79142aad8,
         type: 3}
