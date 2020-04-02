@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Monsterhunt.Fileoperation;
@@ -15,6 +15,10 @@ public class BoardChangedEventArgs : EventArgs {
 
 public class LetterCountChangedEventArgs : EventArgs {
     public Dictionary<string, int> AvailLetters { get; set; }
+}
+
+public class LetterGameEndedArgs : EventArgs {
+    public int Score { get; set; }
 }
 
 public class LetterGameManager : Singleton<LetterGameManager> {
@@ -98,7 +102,7 @@ public class LetterGameManager : Singleton<LetterGameManager> {
     private bool fillWithTestLetters = false;
 
     private Dictionary<String, List<LetterGameLetter>> playerLetters;
-    private LetterGameLetter[,] tileMap;
+    private LetterGameLetter[, ] tileMap;
 
     // -- properties -- //
     public Dictionary<string, int> CurrentAvailableLetterCount {
@@ -119,6 +123,7 @@ public class LetterGameManager : Singleton<LetterGameManager> {
 
     // -- events -- // 
     public static event EventHandler<LetterCountChangedEventArgs> LetterCountChangedEvent;
+    public static event EventHandler<LetterGameEndedArgs> OnLetterGameEndedEvent;
 
     // -- public -- //
 
@@ -469,8 +474,19 @@ public class LetterGameManager : Singleton<LetterGameManager> {
 
         RefreshLetterCountDisplay();
     }
+    /// <summary>
+    /// Fires a letter game ended event
+    /// Contains the score collected from the letter game
+    /// </summary>
+    private void LetterGameEnded() {
+        LetterGameEndedArgs args = new LetterGameEndedArgs() {
+            Score = wordsPoints
+        };
+        OnLetterGameEndedEvent?.Invoke(this, args);
+    }
 
     private void OnDestroy() {
+        LetterGameEnded();
         UnsubscribeFromEvents();
     }
 
