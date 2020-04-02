@@ -21,7 +21,6 @@ public class ScoreHandler : MonoBehaviour {
     }
 
     private void OnDestroy() {
-        SaveScore();
         UnsubscribeFromEvents();
     }
 
