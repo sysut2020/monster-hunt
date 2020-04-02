@@ -83,10 +83,8 @@ public class GameManager : Singleton<GameManager> {
     ///         the letter game is done and the total score from the letter
     ///         game level is transmitted with the event 
     /// </summary>
-    /// <param name="o">the object calling (this should always be the level manager)</param>
     /// <param name="args">the event args containing the total score from letter level</param>
     private void CallbackLetterGameEnded(object _, LetterGameEndedArgs args) {
-        Debug.Log("Letter game ended (in ScoreHandler) trigger a save:" + args.Score);
         if (args.Score > 0) {
             gameDataManager.AddGameScore(args.Score);
         }
