@@ -13,6 +13,7 @@ public class LevelStateChangeEventArgs : EventArgs {
 /// </summary>
 class PlayThroughData {
     public int EnemysKilled { get; set; }
+    public int LetterCollected { get; set; }
 }
 
 /// <summary>
@@ -22,6 +23,8 @@ public class LevelManager : Singleton<LevelManager> {
 
     [SerializeField]
     private LevelDetails levelDetails;
+
+    public LevelDetails LevelDetails { get { return this.levelDetails; } private set { this.levelDetails = value; } }
 
     private PlayerInventory playerInventory;
     private WUTimers levelTimer = new WUTimers();
@@ -56,6 +59,7 @@ public class LevelManager : Singleton<LevelManager> {
     /// Subscribes to the relevant events for this class
     /// </summary>
     private void SubscribeToEvents() {
+        LetterCollectable.OnLetterCollected += CallbackLetterCollected;
         PlayerHealthController.OnPlayerLivesUpdate += CallbackPlayerLivesUpdate;
         Enemy.EnemyKilledEvent += CallbackEnemyKilledEvent;
         PauseMenuController.PauseMenuChangeEvent += CallbackChangeLevelState;
@@ -65,9 +69,17 @@ public class LevelManager : Singleton<LevelManager> {
     /// Subscribes to the relevant events for this class
     /// </summary>
     private void UnsubscribeFromEvents() {
+        LetterCollectable.OnLetterCollected -= CallbackLetterCollected;
         PlayerHealthController.OnPlayerLivesUpdate -= CallbackPlayerLivesUpdate;
         Enemy.EnemyKilledEvent -= CallbackEnemyKilledEvent;
         PauseMenuController.PauseMenuChangeEvent -= CallbackChangeLevelState;
+    }
+
+    private void CallbackLetterCollected(object _, LetterCollectedArgs args) {
+        playThroughData.LetterCollected++;
+        if (this.playThroughData.LetterCollected == this.levelDetails.NumberOfLetters) {
+            this.ChangeLevelState(LEVEL_STATE.GAME_WON);
+        }
     }
 
     private void CallbackChangeLevelState(object _, PauseMenuChangeEventArgs args) {
@@ -84,7 +96,6 @@ public class LevelManager : Singleton<LevelManager> {
         if (args.CurrentLives == 0) LevelStateChange(LEVEL_STATE.GAME_OVER);
     }
 
-    
     /// <summary>
     /// This function is fiered when the EnemyKilled is invoked
     /// Increses the enemy killed counter by one
@@ -92,7 +103,7 @@ public class LevelManager : Singleton<LevelManager> {
     /// <param name="_">the object calling</param>
     /// <param name="args">the event args</param>
     private void CallbackEnemyKilledEvent(object _, EnemyEventArgs args) {
-        playThroughData.EnemysKilled += 1;
+        playThroughData.EnemysKilled++;
         if (this.levelDetails.NumberOfEnemies <= playThroughData.EnemysKilled) {
             this.LevelStateChange(LEVEL_STATE.GAME_WON);
         }
@@ -136,11 +147,11 @@ public class LevelManager : Singleton<LevelManager> {
                 ChangeLevelState(LEVEL_STATE.PLAY);
                 break;
 
-            // Start the main mode spawn the player and start the level
+                // Start the main mode spawn the player and start the level
             case LEVEL_STATE.PLAY:
                 Time.timeScale = PLAY;
                 break;
-            // Exit the game and go to main menu
+                // Exit the game and go to main menu
             case LEVEL_STATE.EXIT:
                 break;
 
