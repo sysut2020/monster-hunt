@@ -17,10 +17,10 @@ public class ScoreHandler : MonoBehaviour {
     private void Start() {
         dataManager = GameManager.Instance.GameDataManager;
         SubscribeToEvents();
+        UpdateScore(0);
     }
 
     private void OnDestroy() {
-        SaveScore();
         UnsubscribeFromEvents();
     }
 
@@ -50,6 +50,13 @@ public class ScoreHandler : MonoBehaviour {
         PowerupCollectable.OnPowerupCollected -= CallbackEffectPickup;
         LevelManager.OnLevelStateChangeEvent -= CallbackLevelStateChange;
     }
+    /// <summary>
+    /// Updates score text with game score + new levelscore
+    /// </summary>
+    /// <param name="score">The new score to be added to the total</param>
+    private void UpdateScore(int score) {
+        scoreGui.UpdateScoreText(dataManager.GameScore + score);
+    }
 
     /// <summary>
     /// Adds the collectibles score value to the total score
@@ -57,8 +64,8 @@ public class ScoreHandler : MonoBehaviour {
     /// <param name="col">Sender object</param>
     /// <param name="args">event args</param>
     private void CallbackEffectPickup(object col, PowerUpCollectedArgs e) {
-        levelScore++; // when a power up is picked up we add one point to the total score
-        scoreGui.UpdateScoreText(this.levelScore);
+        this.levelScore++; // when a power up is picked up we add one point to the total score
+        UpdateScore(this.levelScore);
     }
 
     /// <summary>
@@ -68,8 +75,8 @@ public class ScoreHandler : MonoBehaviour {
     /// <param name="args">event args</param>
     private void CallbackLetterCollected(object col, LetterCollectedArgs _) {
         // when a letter is collected we add one point to the total score counter
-        levelScore += ((Collectable) col).ScoreValue; 
-        scoreGui.UpdateScoreText(this.levelScore);
+        this.levelScore += ((Collectable) col).ScoreValue;
+        UpdateScore(this.levelScore);
     }
 
     /// <summary>
@@ -78,7 +85,7 @@ public class ScoreHandler : MonoBehaviour {
     /// <param name="col">Sender object</param>
     /// <param name="_">event args</param>
     private void CallbackCoinCollected(object col, CoinCollectedArgs _) {
-        levelScore += ((Collectable) col).ScoreValue;
-        scoreGui.UpdateScoreText(this.levelScore);
+        this.levelScore += ((Collectable) col).ScoreValue;
+        UpdateScore(this.levelScore);
     }
 }
