@@ -31,4 +31,8 @@ public enum GAME_STATE {
     /// Start the game
     /// </summary>
     START_GAME,
+    /// <summary>
+    /// Go to scoreboard
+    /// </summary>
+    SCOREBOARD,
 }

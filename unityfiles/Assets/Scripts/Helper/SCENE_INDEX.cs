@@ -4,6 +4,8 @@
 public enum SCENE_INDEX {
     MAIN_MENU = 0,
     LETTER_GAME = 1,
-    LEVEL1 = 2,
-    LEVEL2 = 3
+    SCOREBOARD = 2,
+    LEVEL1 = 3,
+    LEVEL2 = 4,
+
 }
