@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -22,8 +23,16 @@ public class Jetpack : MonoBehaviour {
 
     [SerializeField]
     private ParticleSystem flames;
-    
+
+    private Animator animator;
+    private static readonly int Flying = Animator.StringToHash("Flying");
+
     private void Start() {
+        animator = gameObject.GetComponent<Animator>();
+        if (animator == null) {
+            throw new MissingComponentException("Animator is missing");
+        }
+
         this.flames.Stop();
     }
 
@@ -43,6 +52,16 @@ public class Jetpack : MonoBehaviour {
     private void AddForce() {
         if (this.massToAffect.velocity.y <= this.maxYVelocity) {
             this.massToAffect.AddForce(this.force);
+        }
+    }
+
+    private void Update() {
+        if (Input.GetButtonDown("Vertical")) {
+            animator.SetBool(Flying, true);
+        }
+
+        if (Input.GetButtonUp("Vertical")) {
+            animator.SetBool(Flying, false);
         }
     }
 }
