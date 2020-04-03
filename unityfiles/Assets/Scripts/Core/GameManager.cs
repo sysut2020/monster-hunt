@@ -123,7 +123,6 @@ public class GameManager : Singleton<GameManager> {
                 break;
         }
 
-        Debug.Log("Game event invoked");
         GameStateChangeEvent?.Invoke(this, args);
     }
 
@@ -147,6 +146,5 @@ public class GameManager : Singleton<GameManager> {
 
     private void PlayLevel1Music() {
         OnLevel1Music?.Invoke(this, EventArgs.Empty);
-        Debug.Log("Eventhandler called");
     }
 }

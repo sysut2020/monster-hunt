@@ -10,7 +10,6 @@ public abstract class AudioListner : MonoBehaviour {
 
     protected void PlayMusic(Sound sound) {
         AudioManager.Instance.PlayMusic(sound);
-        Debug.Log("Sound player in listner");
     }
     
 }

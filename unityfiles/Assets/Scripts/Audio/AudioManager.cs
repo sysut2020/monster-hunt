@@ -45,7 +45,6 @@ public class AudioManager : Singleton<AudioManager> {
         gameMusic.clip = sound.AudioClip;
         
         gameMusic.Play(1500);
-        Debug.Log("Sound player in audi manager");
-        Debug.Log(gameMusic.isPlaying);
+
     }
 }
