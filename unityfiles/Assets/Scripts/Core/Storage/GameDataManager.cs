@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +16,7 @@ public class GameDataManager {
     private int money;
     private List<ScoreboardEntry> highScores;
     
+    private string highScoreName;
     /// <summary>
     /// Game score holds the score of the current game
     /// </summary>
@@ -26,7 +27,7 @@ public class GameDataManager {
         this.money = 0;
         this.highScores = new List<ScoreboardEntry>();
         this.gameScore = 0;
-
+        this.highScoreName = "";
         this.LoadData();
     }
 
@@ -45,6 +46,11 @@ public class GameDataManager {
 
     public List<ScoreboardEntry> HighScores {
         get => highScores;
+    }
+
+    public string HighScoreName {
+        get => highScoreName;
+        set => highScoreName = value;
     }
     // -- events -- // 
 
@@ -116,6 +122,14 @@ public class GameDataManager {
         saveObj.Money = this.money;
         saveObj.HighScores = this.highScores;
         saveObj.Score = this.gameScore;
+        if (!this.highScoreName.Equals("")) {
+            saveObj.Name = this.highScoreName;
+            this.highScores.Add(new ScoreboardEntry() {
+                PlayerName = this.highScoreName,
+                    Score = this.gameScore
+            });
+            this.gameScore = 0; // reset gameScore when score is added to highScores list
+        }
         DataSaver.Save(saveObj);
     }
 
