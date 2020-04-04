@@ -3,6 +3,11 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
+/// <summary>
+/// Responsible for updating and seting the current accumeleted game score, and total word score 
+/// on letter game GUI. The word score incrementaly increase/decrease with a 
+/// count effect as words are created/destroyed.
+/// </summary>
 public class LetterGameGuiScoreHandler : MonoBehaviour {
 
     [SerializeField]
