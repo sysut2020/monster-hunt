@@ -21,7 +21,12 @@ public class LetterGameEndedArgs : EventArgs {
     public int Score { get; set; }
 }
 
+public class WordScoreUpdateArgs : EventArgs {
+    public int Score { get; set; }
+}
+
 public class LetterGameManager : Singleton<LetterGameManager> {
+
     private int wordsPoints = 0;
 
     private WordChecker wordChecker;
@@ -123,6 +128,7 @@ public class LetterGameManager : Singleton<LetterGameManager> {
     // -- events -- // 
     public static event EventHandler<LetterCountChangedEventArgs> LetterCountChangedEvent;
     public static event EventHandler<LetterGameEndedArgs> OnLetterGameEndedEvent;
+    public static event EventHandler<WordScoreUpdateArgs> OnWordScoreUpdateEvent;
 
     // -- public -- //
 
@@ -166,7 +172,7 @@ public class LetterGameManager : Singleton<LetterGameManager> {
         this.FindWordsInDimension(X_DIMENSION);
         this.FindWordsInDimension(Y_DIMENSION);
         this.RefreshLetterCountDisplay();
-        Debug.Log(wordsPoints);
+        OnWordScoreUpdateEvent.Invoke(this, new WordScoreUpdateArgs { Score = this.wordsPoints });
     }
 
     /// <summary>
