@@ -15,7 +15,7 @@ public class GameDataManager {
     private Dictionary<string, int> playerLetters;
     private int money;
     private List<ScoreboardEntry> highScores;
-    
+
     private string highScoreName;
     /// <summary>
     /// Game score holds the score of the current game
@@ -48,10 +48,6 @@ public class GameDataManager {
         get => highScores;
     }
 
-    public string HighScoreName {
-        get => highScoreName;
-        set => highScoreName = value;
-    }
     // -- events -- // 
 
     // -- public -- //
@@ -115,22 +111,29 @@ public class GameDataManager {
     }
 
     /// <summary>
+    /// Adds a new high score entry with current game score, and the provided 
+    /// name. The game score is reset when entry is added.
+    /// </summary>
+    /// <param name="name">name of the score enrty (player name)</param>
+    public void AddNewHighScoreEntry(string name) {
+
+        this.highScores.Add(new ScoreboardEntry() {
+            PlayerName = name,
+                Score = this.gameScore
+        });
+
+        this.gameScore = 0; // reset gameScore when score is added to highScores list
+    }
+
+    /// <summary>
     /// Saves the currently stored game data
     /// </summary>
     public void SaveData() {
-        SaveData saveObj = new SaveData();
-        saveObj.Money = this.money;
-        saveObj.HighScores = this.highScores;
-        saveObj.Score = this.gameScore;
-        if (!this.highScoreName.Equals("")) {
-            saveObj.Name = this.highScoreName;
-            this.highScores.Add(new ScoreboardEntry() {
-                PlayerName = this.highScoreName,
-                    Score = this.gameScore
-            });
-            this.gameScore = 0; // reset gameScore when score is added to highScores list
-        }
-        DataSaver.Save(saveObj);
+        DataSaver.Save(new SaveData {
+            Money = this.money,
+                HighScores = this.highScores,
+                Score = this.gameScore
+        });
     }
 
     // -- private -- // 
@@ -143,5 +146,5 @@ public class GameDataManager {
             }
         }
     }
-    
+
 }
