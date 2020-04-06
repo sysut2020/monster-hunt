@@ -8,11 +8,11 @@ using UnityEngine;
 /// </summary>
 public class DontDestroyOnLoadGO : MonoBehaviour{
 
-    private static GameObject Instance;
+    public static GameObject Instance;
 
     void Start(){
-        if(DontDestroyOnLoadGO.Instance != this){
-            GameObject.Destroy(this);   
+        if(DontDestroyOnLoadGO.Instance != this.gameObject && DontDestroyOnLoadGO.Instance != null){
+            GameObject.Destroy(this.gameObject);   
         }else{
             DontDestroyOnLoadGO.Instance = this.gameObject;
             DontDestroyOnLoad(this.gameObject);
