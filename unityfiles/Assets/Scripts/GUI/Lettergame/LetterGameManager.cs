@@ -24,7 +24,6 @@ public class LetterGameEndedArgs : EventArgs {
 public class WordScoreUpdateArgs : EventArgs {
     public int Score { get; set; }
 }
-
 public class LetterGameManager : Singleton<LetterGameManager> {
 
     private int wordsPoints = 0;

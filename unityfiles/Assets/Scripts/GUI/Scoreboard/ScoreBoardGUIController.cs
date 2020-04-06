@@ -20,7 +20,7 @@ public class ScoreBoardGUIController : MonoBehaviour {
     [SerializeField]
     private bool fillWithTestData = false;
 
-    private void Awake() {
+    private void Start() {
         LoadHighScores();
         SortScoreBoardInDescendingOrder();
         if (fillWithTestData) FillWithTestData();
@@ -29,7 +29,6 @@ public class ScoreBoardGUIController : MonoBehaviour {
             CreateScoreboardEntryTransform(entry, entryContainer, scoreboardEntryTransformList);
         }
     }
-
     private void SortScoreBoardInDescendingOrder() {
         scoreboardEntries?.Sort();
         scoreboardEntries?.Reverse();

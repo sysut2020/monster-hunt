@@ -103,6 +103,7 @@ public class GameManager : Singleton<GameManager> {
         
         switch (NewState) {
             case GAME_STATE.MAIN_MENU:
+                nextSceneIndex = 0; //resets game
                 SceneManager.Instance.ChangeScene(SCENE_INDEX.MAIN_MENU);
                 break;
 
@@ -118,14 +119,17 @@ public class GameManager : Singleton<GameManager> {
                 SceneManager.Instance.ChangeScene(SCENE_INDEX.LETTER_GAME);
                 break;
 
+            case GAME_STATE.SCOREBOARD:
+                SceneManager.Instance.ChangeScene(SCENE_INDEX.SCOREBOARD);
+                break;
+
             case GAME_STATE.EXIT:
                 Application.Quit();
                 break;
             
             case GAME_STATE.NEXT_LEVEL:
                 if (nextSceneIndex >= levels.Length) { // no more levels
-                    nextSceneIndex = 0; // resetting game
-                    this.GameStateChange(GAME_STATE.MAIN_MENU);
+                    this.GameStateChange(GAME_STATE.SCOREBOARD);
                     break;
                 }
                 var nextScene = levels[nextSceneIndex];
