@@ -10,14 +10,12 @@ public class PlayerEventArgs : EventArgs {
 }
 
 /// <summary>
-/// this class describes the player
+/// A player is the controllable character that a person play as.
 /// </summary>
-public class Player : MonoBehaviour, IDamageable {
+public class Player : MonoBehaviour, IKillable {
 
     [SerializeField]
     private PlayerHealthController playerHealthController;
-
-    
 
     private Animator animator;
 
@@ -58,11 +56,10 @@ public class Player : MonoBehaviour, IDamageable {
 
     // -- public -- //
 
-
     /// <summary>
     /// Respawns the player and notify that the player died
     /// </summary>
-    public void Dead() {
+    public void IsDead() {
         Respawn();
         PlayerEventArgs args = new PlayerEventArgs();
         PlayerKilledEvent?.Invoke(this, args);
@@ -70,18 +67,16 @@ public class Player : MonoBehaviour, IDamageable {
     // -- events -- //
 
     public static event EventHandler<PlayerEventArgs> PlayerKilledEvent;
-    private void SubscribeToEvents() { 
+    private void SubscribeToEvents() {
         PlayerWeaponController.WeaponChangedEvent += CallbackWeaponChangedEvent;
     }
 
     private void UnsubscribeFromEvents() {
-        PlayerWeaponController.WeaponChangedEvent -= CallbackWeaponChangedEvent;
-;
+        PlayerWeaponController.WeaponChangedEvent -= CallbackWeaponChangedEvent;;
     }
 
-
-    private void CallbackWeaponChangedEvent(object _, WeaponChangedEventArgs args){
-        animator.SetInteger("ACTIVE_WEAPON", (int)args.AnimId);
+    private void CallbackWeaponChangedEvent(object _, WeaponChangedEventArgs args) {
+        animator.SetInteger("ACTIVE_WEAPON", (int) args.AnimId);
     }
 
     // -- private -- // 
@@ -92,18 +87,16 @@ public class Player : MonoBehaviour, IDamageable {
     private void Respawn() {
         this.transform.position = this.spawnPosition;
     }
-    
+
     // -- unity -- //
 
     /// <summary>
     /// Update is called every frame, if the MonoBehaviour is enabled.
     /// </summary>
-    void Update() {
-    }
+    void Update() { }
 
     private void Awake() {
-        
-        
+
         if (!this.TryGetComponent<Animator>(out this.animator)) {
             Debug.LogError("PLAYER ANIMATOR NOT FOUND");
         }
@@ -111,7 +104,7 @@ public class Player : MonoBehaviour, IDamageable {
         this.spawnPosition = this.transform.position;
     }
 
-    void OnDestroy(){
+    void OnDestroy() {
         this.UnsubscribeFromEvents();
     }
 
@@ -124,4 +117,5 @@ public class Player : MonoBehaviour, IDamageable {
             }
         }
     }
+
 }

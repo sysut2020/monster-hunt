@@ -24,12 +24,9 @@ public class PlayerHealthController : HealthController {
 		set { startLives = value; }
 	}
 
-    
-
-    [SerializeField]
+	[SerializeField]
 	private int currentLives;
 	public int CurrentLives { get => currentLives; set => currentLives = value; }
-	
 
 	// Timer for when last was hit.
 	private float lastHitTimer;
@@ -81,22 +78,22 @@ public class PlayerHealthController : HealthController {
 	}
 
 	private void SubscribeToEvents() {
-        LivesManager.OnPickupLivesUpdate += CallbacOnPickupLivesUpdate;
-    }
+		LivesManager.OnPickupLivesUpdate += CallbacOnPickupLivesUpdate;
+	}
 
-    private void UnsubscribeFromEvents() {
-        LivesManager.OnPickupLivesUpdate -= CallbacOnPickupLivesUpdate;
-    }
+	private void UnsubscribeFromEvents() {
+		LivesManager.OnPickupLivesUpdate -= CallbacOnPickupLivesUpdate;
+	}
 
-    private void CallbacOnPickupLivesUpdate(object _, OnPickupLivesUpdateArgs args) {
-        int newlives = this.CurrentLives + args.LivesToAdd;
-		if (newlives > this.startLives){
+	private void CallbacOnPickupLivesUpdate(object _, OnPickupLivesUpdateArgs args) {
+		int newlives = this.CurrentLives + args.LivesToAdd;
+		if (newlives > this.startLives) {
 			newlives = this.startLives;
-		} 
+		}
 
 		this.CurrentLives = newlives;
 		this.InvokeLivesUpdate();
-    }
+	}
 
 	public override void ApplyHealing(float healing) {
 		this.Health += Mathf.Clamp(healing, 0, MaxHealth);
@@ -110,9 +107,7 @@ public class PlayerHealthController : HealthController {
 		this.SubscribeToEvents();
 	}
 
-
-
-    private void OnDestroy() {
-        this.UnsubscribeFromEvents();
-    }
+	private void OnDestroy() {
+		this.UnsubscribeFromEvents();
+	}
 }
