@@ -155,12 +155,6 @@ public class LevelManager : Singleton<LevelManager> {
             case LEVEL_STATE.EXIT:
                 break;
 
-            case LEVEL_STATE.RELOAD:
-                CleanUpEvent?.Invoke(this, EventArgs.Empty);
-                SceneManager.Instance.RestartCurrentScene();
-                Time.timeScale = PLAY;
-                break;
-
             default:
                 Debug.Log("🌮🌮🌮🌮  UNKNOWN LEVEL STATE  🌮🌮🌮🌮");
                 break;
