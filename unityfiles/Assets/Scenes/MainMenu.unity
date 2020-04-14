@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -2727,6 +2727,7 @@ GameObject:
   - component: {fileID: 639176605}
   - component: {fileID: 639176604}
   - component: {fileID: 639176607}
+  - component: {fileID: 639176608}
   m_Layer: 5
   m_Name: Scoreboard Button
   m_TagString: Untagged
@@ -2796,18 +2797,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 639176605}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1074363348}
-        m_MethodName: Scoreboard
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &639176605
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2869,6 +2859,19 @@ MonoBehaviour:
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
+--- !u!114 &639176608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 639176602}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58679cfcd83b25c46a870dc22744d8c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneName: ScoreBoard
 --- !u!1 &678987413
 GameObject:
   m_ObjectHideFlags: 0
