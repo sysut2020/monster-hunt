@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -355,6 +355,7 @@ GameObject:
   - component: {fileID: 1127387802}
   - component: {fileID: 1127387801}
   - component: {fileID: 1127387800}
+  - component: {fileID: 1127387803}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -444,6 +445,21 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: -1
   m_TargetDisplay: 0
+--- !u!114 &1127387803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1127387798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a18ed4f23f6494989be071e79a026c99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoreboard: {fileID: 11452197}
+  inputScreen: {fileID: 6873189838171410204}
+  scoreboardScreen: {fileID: 1747331199}
 --- !u!1 &1237705798
 GameObject:
   m_ObjectHideFlags: 0
@@ -1151,3 +1167,9 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 2564755904864874884, guid: 9a2b3edec9e7a4a2f822fcd05983af27, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 9a2b3edec9e7a4a2f822fcd05983af27, type: 3}
+--- !u!1 &6873189838171410204 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2564755905420630470, guid: 9a2b3edec9e7a4a2f822fcd05983af27,
+    type: 3}
+  m_PrefabInstance: {fileID: 6873189838171410203}
+  m_PrefabAsset: {fileID: 0}
