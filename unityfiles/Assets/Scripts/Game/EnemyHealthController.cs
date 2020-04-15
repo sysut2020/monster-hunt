@@ -34,6 +34,11 @@ public class EnemyHealthController : HealthController {
         Health -= dmg;
         healthBarGuiController.UpdateHealthBar(Health);
         this.CheckIfDead();
+
+        foreach (var notifyable in Notifyables) {
+            notifyable.Damaged();
+        }
+
     }
 
     /// <summary>
