@@ -19,7 +19,6 @@ public class Enemy : MonoBehaviour, IDamageable {
     private EnemyType enemyType;
 
     private bool isAttacking = false;
-    private EnemyHealthController enemyHealthController;
 
     // -- properties -- //
 
@@ -53,8 +52,8 @@ public class Enemy : MonoBehaviour, IDamageable {
 
     // -- unity -- // 
     private void Awake() {
-        this.enemyHealthController = this.gameObject.GetComponent<EnemyHealthController>();
-        this.enemyHealthController.StartHealth = this.EnemyType.Health;
+        EnemyHealthController enemyHealthController = this.gameObject.GetComponent<EnemyHealthController>();
+        enemyHealthController.StartHealth = this.EnemyType.Health;
     }
 
     void Start() {

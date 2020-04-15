@@ -88,7 +88,9 @@ public class EntitySpawner : Singleton<EntitySpawner> {
     /// </summary>
     /// <param name="sizeOfSpawn"></param>
     private void TrySpawn(int sizeOfSpawn) {
-        if (Spawned > MaxSpawns) return; // Skip if maximum spawns is reached
+        if (Spawned > MaxSpawns) {
+            return; // Skip if maximum spawns is reached
+        } 
 
         var possibleSpawnPoints = SelectNonVisibleSpawnpoints();
         possibleSpawnPoints.Shuffle();

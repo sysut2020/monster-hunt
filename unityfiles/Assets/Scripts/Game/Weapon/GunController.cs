@@ -11,7 +11,7 @@ public class GunController {
     private Gun gun;
     private BulletData bulletData;
     private WeaponData weaponData;
-    private BulletBuffer bulletBuffer;
+    private readonly BulletBuffer bulletBuffer;
     private Transform firePoint;
 
     private readonly WUTimers fireRateTimer = new WUTimers();

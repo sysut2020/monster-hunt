@@ -21,7 +21,7 @@ public class InventoryUpdatedEventArgs : EventArgs {
 /// </summary>
 public class PlayerInventory {
     private int money;
-    private List<String> collectedLetters;
+    private readonly List<String> collectedLetters;
 
 
     public PlayerInventory() {
@@ -50,7 +50,6 @@ public class PlayerInventory {
     /// subscribe from all the events
     /// </summary>
     private void SubscribeToEvents() {
-        //PlayerWeaponController.WeaponChangedEvent += CallbackWeaponChangedEvent;
         CoinCollectable.OnCoinCollected += CallbackCoinCollected;
         LetterCollectable.OnLetterCollected += CallbackLetterCollected;
         PowerupCollectable.OnPowerupCollected += CallbackEffectPickup;
@@ -61,7 +60,6 @@ public class PlayerInventory {
     /// unsubscribe from all the events
     /// </summary>
     private void UnsubscribeFromEvents(object _, EventArgs __) {
-        //PlayerWeaponController.WeaponChangedEvent -= CallbackWeaponChangedEvent;
         CoinCollectable.OnCoinCollected -= CallbackCoinCollected;
         LetterCollectable.OnLetterCollected -= CallbackLetterCollected;
         PowerupCollectable.OnPowerupCollected -= CallbackEffectPickup;
@@ -87,12 +85,12 @@ public class PlayerInventory {
         this.AddLetter(letter.Letter);
     }
 
-    /// Effect collected event subscriber function, adds effect to invetory
+    /// Effect collected event subscriber function, adds effect to inventory
     /// </summary>
     /// <param name="sender">object that triggered event</param>
     /// <param name="effect">the effect to add to inventory</param>
     private void CallbackEffectPickup(object sender, PowerUpCollectedArgs args) {
-        //throw new NotImplementedException();
+        throw new NotImplementedException();
     }
 
     // -- private -- // 

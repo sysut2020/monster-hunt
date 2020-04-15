@@ -14,7 +14,7 @@ public class PlayerDestroyedEventArgs : EventArgs {
 public class GameDataManager {
     private Dictionary<string, int> playerLetters;
     private int money;
-    private List<ScoreboardEntry> highScores;
+    private readonly List<ScoreboardEntry> highScores;
 
     private string highScoreName;
     /// <summary>

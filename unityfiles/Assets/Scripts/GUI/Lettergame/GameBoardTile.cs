@@ -72,8 +72,6 @@ public class GameBoardTile : Dragable {
                 case Direction.DOWN:
                     this.horizontalIndicator.enabled = true;
                     break;
-                default:
-                    break;
             }
         } else {
             this.tileImage.color = Color.white;

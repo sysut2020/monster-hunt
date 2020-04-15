@@ -14,8 +14,8 @@ using System.Linq;
 /// can set, check if done, remove, and reset timers
 /// </summary>
 public class WUTimers {
-    private Dictionary<string, WUTimer> timers = new Dictionary<string, WUTimer> ();
-    private Dictionary<string, System.Timers.Timer> actionTimers = new Dictionary<string, System.Timers.Timer> ();
+    private readonly Dictionary<string, WUTimer> timers = new Dictionary<string, WUTimer> ();
+    private readonly Dictionary<string, System.Timers.Timer> actionTimers = new Dictionary<string, System.Timers.Timer> ();
 
     private int rollingUID = 0;
 

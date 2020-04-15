@@ -13,8 +13,8 @@ public class GunControllerAudioListner : AudioListner {
 
     private Sound fireSoundToPlay;
 
-    private int sniperIndex = 0;
-    private int laserIndex = 1;
+    private readonly int sniperIndex = 0;
+    private readonly int laserIndex = 1;
     
     
     private void Awake() {
