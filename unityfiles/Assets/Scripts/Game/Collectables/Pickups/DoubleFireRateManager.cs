@@ -4,8 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class OnPickupDoubleFireRateArgs : EventArgs {
-    public PICKUP_TYPE type { get; set; }
-    public bool active { get; set; }
+    public bool Active { get; set; }
 }
 
 /// <summary>
@@ -28,8 +27,7 @@ public class DoubleFireRateManager : MonoBehaviour {
 
     private Dictionary<int, IEnumerator> activeCoroutines = new Dictionary<int, IEnumerator>();
 
-    public static event EventHandler<OnPickupDoubleFireRateArgs> OnPickupDoubleFireRateActive;
-    public static event EventHandler<OnPickupDoubleFireRateArgs> OnPickupDoubleFireRateExpired;
+    public static event EventHandler<OnPickupDoubleFireRateArgs> OnDoubleFireRateStateChange;
     // -- properties -- //
 
     public int RollingID { 
@@ -62,13 +60,12 @@ public class DoubleFireRateManager : MonoBehaviour {
         this.UpdateEffectOnController();
     }
 
-    private void CallbackOnPowerupCollected(object _, PowerUpCollectedArgs args) {
-        if (PICKUP_TYPE.DOUBLE_FIRE_RATE == args.Effect) {
+    private void CallbackOnPowerupCollected(object _, PowerUpCollectedArgs powerup) {
+        if (PICKUP_TYPE.DOUBLE_FIRE_RATE == powerup.Effect) {
             StartCoroutine(Effect(this.secEffectDuration, this.rollingID));
-            var payload = new OnPickupDoubleFireRateArgs();
-            payload.type = type;
-            payload.active = true;
-            OnPickupDoubleFireRateActive?.Invoke(this, payload);
+            var args = new OnPickupDoubleFireRateArgs();
+            args.Active = true;
+            OnDoubleFireRateStateChange?.Invoke(this, args);
         }
     }
 
@@ -103,10 +100,9 @@ public class DoubleFireRateManager : MonoBehaviour {
             this.usedGunController.FireRate = initialFireRate * this.unitMultiplier * this.unitMultiplier;
         } else {
             this.usedGunController.FireRate = initialFireRate;
-            var payload = new OnPickupDoubleFireRateArgs();
-            payload.type = type;
-            payload.active = false;
-            OnPickupDoubleFireRateExpired?.Invoke(this, payload);
+            var args = new OnPickupDoubleFireRateArgs();
+            args.Active = false;
+            OnDoubleFireRateStateChange?.Invoke(this, args);
         }
 
     }
