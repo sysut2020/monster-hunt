@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: ebd3c2db108fc9a62b134d25244e8ca0
   - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
     path: Assets/Scenes/BulletMobTestScene.unity
     guid: c2e374bac8a791b519d5923fe3795a23
   - enabled: 1

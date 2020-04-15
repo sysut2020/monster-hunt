@@ -145,8 +145,7 @@ public class GameManager : Singleton<GameManager> {
                 Debug.LogError("🌮🌮🌮🌮  UNKNOWN GAME STATE  🌮🌮🌮🌮");
                 break;
         }
-
-        Debug.Log(nextSceneIndex);
+        
         GameStateChangeEvent?.Invoke(this, args);
     }
 

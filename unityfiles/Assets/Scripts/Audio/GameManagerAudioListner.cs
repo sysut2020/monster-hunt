@@ -8,11 +8,14 @@ public class GameManagerAudioListner : AudioListner {
     [SerializeField] 
     private Sound mainMenuMusic;
 
-    [SerializeField]
-    private Sound level1Music;
-
     [SerializeField] 
     private Sound letterGameMusic;
+
+    [SerializeField] 
+    private Sound scoreBoardMusic;
+
+    [SerializeField]
+    private Sound level1Music;
 
     [SerializeField] 
     private Sound level2Music;
@@ -50,6 +53,9 @@ public class GameManagerAudioListner : AudioListner {
         }
         if (args.NewState == GAME_STATE.LETTER_LEVEL) {
             PlayMusic(letterGameMusic);    
+        }
+        if (args.NewState == GAME_STATE.SCOREBOARD) {
+            PlayMusic(scoreBoardMusic);
         }
         if (args.NextSceneIndex == 2) {
             PlayMusic(level2Music);
