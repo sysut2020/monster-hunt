@@ -435,7 +435,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableEvent: 6
-  disableEvent: 1
+  disableEvent: 0
   toDisable: {fileID: 1403742472678572637}
 --- !u!1 &1403742472678572637
 GameObject:

@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ca7133b6d09d47dea5409bd48c89e7bc, type: 3}
-  m_Name: Level 2
+  m_Name: Level 4
   m_EditorClassIdentifier: 
   time: 120
-  numberOfEnemies: 20
-  numberOfLetters: 20
+  numberOfEnemies: 40
+  numberOfLetters: 40
