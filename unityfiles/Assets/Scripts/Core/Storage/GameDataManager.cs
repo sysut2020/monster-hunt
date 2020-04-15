@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +15,8 @@ public class GameDataManager {
     private Dictionary<string, int> playerLetters;
     private int money;
     private List<ScoreboardEntry> highScores;
-    
+
+    private string highScoreName;
     /// <summary>
     /// Game score holds the score of the current game
     /// </summary>
@@ -26,7 +27,7 @@ public class GameDataManager {
         this.money = 0;
         this.highScores = new List<ScoreboardEntry>();
         this.gameScore = 0;
-
+        this.highScoreName = "";
         this.LoadData();
     }
 
@@ -46,6 +47,7 @@ public class GameDataManager {
     public List<ScoreboardEntry> HighScores {
         get => highScores;
     }
+
     // -- events -- // 
 
     // -- public -- //
@@ -109,14 +111,36 @@ public class GameDataManager {
     }
 
     /// <summary>
+    /// Adds a new high score entry with current game score, and the provided 
+    /// name. The game score is reset when entry is added.
+    /// </summary>
+    /// <param name="name">name of the score enrty (player name)</param>
+    public void AddNewHighScoreEntry(string name) {
+
+        this.highScores.Add(new ScoreboardEntry() {
+            PlayerName = name,
+            Score = this.gameScore
+        });
+
+        this.gameScore = 0; // reset gameScore when score is added to highScores list
+    }
+
+    /// <summary>
+    /// Sets the game high scores
+    /// </summary>
+    /// <param name="score">the new highscore list</param>
+    public void SetHighScores(List<ScoreboardEntry> score) {
+        this.highScores = score;
+    }
+
+    /// <summary>
     /// Saves the currently stored game data
     /// </summary>
     public void SaveData() {
-        SaveData saveObj = new SaveData();
-        saveObj.Money = this.money;
-        saveObj.HighScores = this.highScores;
-        saveObj.Score = this.gameScore;
-        DataSaver.Save(saveObj);
+        DataSaver.Save(new SaveData {
+            Money = this.money,
+            HighScores = this.highScores,
+        });
     }
 
     // -- private -- // 
@@ -127,7 +151,11 @@ public class GameDataManager {
             if (saveObj?.Money != 0) {
                 this.AddMoney(saveObj.Money);
             }
+
+            if (saveObj?.HighScores != null) {
+                this.SetHighScores(saveObj.HighScores);
+            }
         }
     }
-    
+
 }

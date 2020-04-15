@@ -10,7 +10,7 @@ public class PlayerLivesUpdateArgs : EventArgs {
 	public int CurrentLives { get; set; }
 }
 
-public class PlayerHealthController : HealthController {
+public class PlayerHealthController : HealthController, IObstacleDamagable {
 
 	public static event EventHandler<PlayerHealthUpdateArgs> OnPlayerHealthUpdate;
 	public static event EventHandler<PlayerLivesUpdateArgs> OnPlayerLivesUpdate;
@@ -24,12 +24,9 @@ public class PlayerHealthController : HealthController {
 		set { startLives = value; }
 	}
 
-    
-
-    [SerializeField]
+	[SerializeField]
 	private int currentLives;
 	public int CurrentLives { get => currentLives; set => currentLives = value; }
-	
 
 	// Timer for when last was hit.
 	private float lastHitTimer;
@@ -38,13 +35,40 @@ public class PlayerHealthController : HealthController {
 	private float guardTime = 0.2f;
 
 	/// <summary>
-	/// Adds damage to the player health and trigger health update event.
-	/// If the player died, update lives.
+	/// Remove the provided damage amount from the players health pool
 	/// </summary>
-	/// <param name="dmg"></param>
-	override public void ApplyDamage(float dmg) {
+	/// <param name="damage"></param>
+	override public void ApplyDamage(float damage) {
+		this.ReduceHealth(damage);
+
+	}
+
+	/// <summary>
+	/// Adds provided healing amount to the players health
+	/// </summary>
+	/// <param name="healing">amount of healing to give</param>
+	public override void ApplyHealing(float healing) {
+		this.Health += Mathf.Clamp(healing, 0, MaxHealth);
+		this.InvokeHealthUpdate();
+	}
+
+	/// <summary>
+	/// Remove the provided damage amount from the players health pool
+	/// </summary>
+	/// <param name="damage">damage amount</param>
+	public void ApplyObstacleDamage(float damage) {
+		Debug.Log($"Damage by {damage}");
+		this.ReduceHealth(damage);
+	}
+
+	/// <summary>
+	/// Reduces the health by given amount, if the player can take damage.
+	/// Trigger health update event to notify health change.
+	/// </summary>
+	/// <param name="reduceAmount">amount to remove</param>
+	private void ReduceHealth(float amount) {
 		if (!this.CanTakeDamage()) { return; }
-		this.Health -= dmg;
+		this.Health -= amount;
 		this.InvokeHealthUpdate();
 		this.CheckIfDead();
 		if (this.IsDead) {
@@ -81,26 +105,21 @@ public class PlayerHealthController : HealthController {
 	}
 
 	private void SubscribeToEvents() {
-        LivesManager.OnPickupLivesUpdate += CallbacOnPickupLivesUpdate;
-    }
+		LivesManager.OnPickupLivesUpdate += CallbacOnPickupLivesUpdate;
+	}
 
-    private void UnsubscribeFromEvents() {
-        LivesManager.OnPickupLivesUpdate -= CallbacOnPickupLivesUpdate;
-    }
+	private void UnsubscribeFromEvents() {
+		LivesManager.OnPickupLivesUpdate -= CallbacOnPickupLivesUpdate;
+	}
 
-    private void CallbacOnPickupLivesUpdate(object _, OnPickupLivesUpdateArgs args) {
-        int newlives = this.CurrentLives + args.LivesToAdd;
-		if (newlives > this.startLives){
+	private void CallbacOnPickupLivesUpdate(object _, OnPickupLivesUpdateArgs args) {
+		int newlives = this.CurrentLives + args.LivesToAdd;
+		if (newlives > this.startLives) {
 			newlives = this.startLives;
-		} 
+		}
 
 		this.CurrentLives = newlives;
 		this.InvokeLivesUpdate();
-    }
-
-	public override void ApplyHealing(float healing) {
-		this.Health += Mathf.Clamp(healing, 0, MaxHealth);
-		this.InvokeHealthUpdate();
 	}
 
 	private void Start() {
@@ -110,9 +129,7 @@ public class PlayerHealthController : HealthController {
 		this.SubscribeToEvents();
 	}
 
-
-
-    private void OnDestroy() {
-        this.UnsubscribeFromEvents();
-    }
+	private void OnDestroy() {
+		this.UnsubscribeFromEvents();
+	}
 }

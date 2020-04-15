@@ -15,6 +15,9 @@ EditorBuildSettings:
     path: Assets/Scenes/LetterGameScene.unity
     guid: a75fb24069ba40a449d2bf0e7882c458
   - enabled: 1
+    path: Assets/Scenes/ScoreBoard.unity
+    guid: 32d1f3c78b520bb30b75d2bbfab76ec7
+  - enabled: 1
     path: Assets/Scenes/Level 1.unity
     guid: 544cee58889c542488c942eecb6dc0a9
   - enabled: 1
