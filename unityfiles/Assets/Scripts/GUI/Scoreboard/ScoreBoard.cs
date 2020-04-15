@@ -25,10 +25,4 @@ public class ScoreBoard : MonoBehaviour {
             this.inputScreen.SetActive(false);
         }
     }
-
-    void OnDestroy() {
-        this.scoreboard.SetActive(false);
-        this.scoreboardScreen.SetActive(false);
-        this.inputScreen.SetActive(true);
-    }
 }
