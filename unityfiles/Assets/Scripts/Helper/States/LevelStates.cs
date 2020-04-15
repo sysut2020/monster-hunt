@@ -22,18 +22,10 @@ public enum LEVEL_STATE {
     /// Go to game over screen
     /// </summary>
     GAME_OVER,
-
-    /// <summary>
-    /// Start the hunting mode in game
-    /// </summary>
-    HUNTING,
-
-    /// <summary>
-    /// Reloads the current scene
-    /// </summary>
-    RELOAD,
+    
 
     GAME_WON,
+
 
     /// <summary>
     /// State to be ran at start of level
