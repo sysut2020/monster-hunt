@@ -7,6 +7,8 @@ public enum SCENE_INDEX {
     SCOREBOARD = 2,
     LEVEL1 = 3,
     LEVEL2 = 4,
-    
+    LEVEL3 = 5,
+    LEVEL4 = 6, 
+    LEVEL5 = 7,
 
 }
