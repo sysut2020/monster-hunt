@@ -146,6 +146,7 @@ public class GameManager : Singleton<GameManager> {
                 break;
         }
 
+        Debug.Log(nextSceneIndex);
         GameStateChangeEvent?.Invoke(this, args);
     }
 

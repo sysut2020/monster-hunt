@@ -49,19 +49,18 @@ public class GameManagerAudioListner : AudioListner {
             PlayMusic(level1Music);
         }
         if (args.NewState == GAME_STATE.LETTER_LEVEL) {
-            Debug.Log("play letter music");
             PlayMusic(letterGameMusic);    
         }
-        if (args.NextSceneIndex == 4) {
+        if (args.NextSceneIndex == 2) {
             PlayMusic(level2Music);
         }
-        if (args.NextSceneIndex == 5) {
+        if (args.NextSceneIndex == 3) {
             PlayMusic(level3Music);
         }
-        if (args.NextSceneIndex == 6) {
+        if (args.NextSceneIndex == 4) {
             PlayMusic(level4Music);
         }
-        if (args.NextSceneIndex == 7) {
+        if (args.NextSceneIndex == 5) {
             PlayMusic(level5Music);
         }
     }
