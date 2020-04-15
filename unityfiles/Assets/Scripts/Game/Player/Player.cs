@@ -72,7 +72,7 @@ public class Player : MonoBehaviour, IKillable {
     }
 
     private void UnsubscribeFromEvents() {
-        PlayerWeaponController.WeaponChangedEvent -= CallbackWeaponChangedEvent;;
+        PlayerWeaponController.WeaponChangedEvent -= CallbackWeaponChangedEvent;
     }
 
     private void CallbackWeaponChangedEvent(object _, WeaponChangedEventArgs args) {
@@ -89,11 +89,6 @@ public class Player : MonoBehaviour, IKillable {
     }
 
     // -- unity -- //
-
-    /// <summary>
-    /// Update is called every frame, if the MonoBehaviour is enabled.
-    /// </summary>
-    void Update() { }
 
     private void Awake() {
 
