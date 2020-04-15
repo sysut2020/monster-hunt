@@ -93,7 +93,9 @@ public class LevelManager : Singleton<LevelManager> {
     /// <param name="_">the object calling</param>
     /// <param name="args">the event args</param>
     private void CallbackPlayerLivesUpdate(object _, PlayerLivesUpdateArgs args) {
-        if (args.CurrentLives == 0) LevelStateChange(LEVEL_STATE.GAME_OVER);
+        if (args.CurrentLives == 0) {
+            LevelStateChange(LEVEL_STATE.GAME_OVER);
+        }
     }
 
     /// <summary>

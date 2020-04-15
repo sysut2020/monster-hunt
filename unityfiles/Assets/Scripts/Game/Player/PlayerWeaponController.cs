@@ -11,12 +11,11 @@ public class WeaponChangedEventArgs : EventArgs {
     public GunController NewGunController { get; set; }
     public Gun NewGun { get; set; }
     public PLAYER_ANIMATION AnimId { get; set; }
-    
+
     public int GunIndex { get; set; }
 }
 
 public class PlayerWeaponController : MonoBehaviour {
-
     [SerializeField]
     [Tooltip("list of guns.")]
     private Gun[] availableWeapons;
@@ -25,8 +24,8 @@ public class PlayerWeaponController : MonoBehaviour {
     [Tooltip("the hand that holds the gun.")]
     private GameObject gunHand;
 
-    private BulletBuffer bulletBuffer = new BulletBuffer();
-    private List<GunController> gunControllers = new List<GunController>();
+    private readonly BulletBuffer bulletBuffer = new BulletBuffer();
+    private readonly List<GunController> gunControllers = new List<GunController>();
     private GameObject currentWeapon = null;
     private int currentWeaponIndex = -1;
     private GunController activeGunController;
@@ -64,7 +63,9 @@ public class PlayerWeaponController : MonoBehaviour {
     /// <returns>the new active weapon controller</returns>
     private void ChangeWeapon(int numChanges) {
         int newIndex = (this.currentWeaponIndex + numChanges) % (this.availableWeapons.Length);
-        if (newIndex < 0) { newIndex = this.availableWeapons.Length - 1; }
+        if (newIndex < 0) {
+            newIndex = this.availableWeapons.Length - 1;
+        }
 
         if (newIndex != this.currentWeaponIndex) {
             this.currentWeaponIndex = newIndex;
@@ -73,7 +74,6 @@ public class PlayerWeaponController : MonoBehaviour {
             this.activeGunController = this.gunControllers[newIndex];
 
             this.currentWeapon.SetActive(true);
-
         }
 
         WeaponChangedEventArgs args = new WeaponChangedEventArgs();
@@ -81,7 +81,7 @@ public class PlayerWeaponController : MonoBehaviour {
         args.NewGun = AvailableWeapons[newIndex];
         args.AnimId = this.activeGunController.WeaponData.HoldingAnimation;
         args.GunIndex = newIndex;
-        
+
 
         WeaponChangedEvent?.Invoke(this, args);
     }
@@ -104,17 +104,14 @@ public class PlayerWeaponController : MonoBehaviour {
             gun.gameObject.SetActive(false);
             tmp[i] = gun;
         }
+
         this.availableWeapons = tmp;
     }
 
-    void Start(){
+    void Start() {
         //Changes the weapon to the first weapon in inventory
         ChangeWeapon(1);
     }
-
-    
-
-    
 
     /// <summary>
     /// Update is called every frame, if the MonoBehaviour is enabled.
@@ -135,7 +132,5 @@ public class PlayerWeaponController : MonoBehaviour {
         if (Input.GetMouseButton(1)) {
             this.MaybeFire();
         }
-
     }
-
 }

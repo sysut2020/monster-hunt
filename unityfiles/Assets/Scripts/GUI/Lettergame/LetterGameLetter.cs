@@ -36,7 +36,10 @@ public class LetterGameLetter {
         try {
             this.isValid = isValidLetterInWord;
             OnValidLetterInWord(isValidLetterInWord, direction);
-        } catch (NullReferenceException) { }
+        }
+        catch (NullReferenceException) {
+            // todo fill this?
+        }
     }
 
     public string Letter { get => letter; }

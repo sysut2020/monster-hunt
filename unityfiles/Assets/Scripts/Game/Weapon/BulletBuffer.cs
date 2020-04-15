@@ -1,14 +1,10 @@
-using System;
-using System.Collections.ObjectModel;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 
-public class BulletBuffer{
-
-    private List<GameObject> buffer = new List<GameObject>();
-
+// todo comment
+public class BulletBuffer {
+    private readonly List<GameObject> buffer = new List<GameObject>();
 
 
     /// <summary>
@@ -16,29 +12,30 @@ public class BulletBuffer{
     /// if no bullets is found null is returned
     /// </summary>
     /// <returns>the first idle bullet null if none are found</returns>
-    public GameObject GetBullet(){
+    public GameObject GetBullet() {
         GameObject candidate = null;
         // loops backward for higher reuse
-        if (buffer.Count > 0){
-            for (int i = buffer.Count -1; i >= 0 ; i--){
-                if (!buffer[i].activeInHierarchy){
+        if (buffer.Count > 0) {
+            for (int i = buffer.Count - 1; i >= 0; i--) {
+                if (!buffer[i].activeInHierarchy) {
                     candidate = buffer[i];
                     break;
                 }
-            }  
+            }
         }
 
 
-        if (candidate == null){
+        if (candidate == null) {
             candidate = this.GenerateBullet();
         }
+
         return candidate;
     }
 
-    private GameObject GenerateBullet(){
+    private GameObject GenerateBullet() {
         GameObject newBullet = new GameObject();
         newBullet.name = "bullet";
-        
+
         SpriteRenderer spriteRender = newBullet.AddComponent<SpriteRenderer>() as SpriteRenderer;
         BoxCollider2D boxCol = newBullet.AddComponent<BoxCollider2D>() as BoxCollider2D;
         Rigidbody2D rigidB2d = newBullet.AddComponent<Rigidbody2D>() as Rigidbody2D;
@@ -48,4 +45,3 @@ public class BulletBuffer{
         return newBullet;
     }
 }
-

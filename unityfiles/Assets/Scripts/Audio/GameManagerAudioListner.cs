@@ -14,7 +14,7 @@ public class GameManagerAudioListner : AudioListner {
     [SerializeField] 
     private Sound letterGameMusic;
 
-    private bool loopMainMenuMusic = true;
+    private readonly bool loopMainMenuMusic = true;
     
     private void Awake() {
         SubscribeToEvents();

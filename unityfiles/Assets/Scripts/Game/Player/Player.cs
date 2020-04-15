@@ -93,14 +93,6 @@ public class Player : MonoBehaviour, IDamageable {
         this.transform.position = this.spawnPosition;
     }
     
-    // -- unity -- //
-
-    /// <summary>
-    /// Update is called every frame, if the MonoBehaviour is enabled.
-    /// </summary>
-    void Update() {
-    }
-
     private void Awake() {
         
         

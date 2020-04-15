@@ -5,18 +5,16 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class GunController {
-
-    
-
-    private Gun gun;
-    private BulletData bulletData;
+    private readonly Gun gun;
+    private readonly BulletData bulletData;
     private WeaponData weaponData;
     private readonly BulletBuffer bulletBuffer;
     private Transform firePoint;
 
     private readonly WUTimers fireRateTimer = new WUTimers();
     private string timerUID;
-    public GunController(Gun gun, BulletBuffer bulletBuffer){
+
+    public GunController(Gun gun, BulletBuffer bulletBuffer) {
         this.gun = gun;
         this.WeaponData = gun.WeaponData;
         this.firePoint = gun.FirePoint;
@@ -27,19 +25,20 @@ public class GunController {
 
         if (!this.gun.Bullet.TryGetComponent(out SpriteRenderer bulletSpriteRender)) {
             throw new MissingComponentException("Bullet sprite missing");
-        } 
+        }
 
 
         this.bulletData = new BulletData(
-            WeaponData.BulletVelocity, WeaponData.BulletTtl, WeaponData.BulletDamage, bulletSpriteRender.sprite, this.gun.Bullet.transform
+            WeaponData.BulletVelocity, WeaponData.BulletTtl, WeaponData.BulletDamage, bulletSpriteRender.sprite,
+            this.gun.Bullet.transform
         );
-        
     }
 
     public static event EventHandler BulletFireEvent;
-    
+
     // -- properties -- //
     private float fireRate = 0;
+
     public float FireRate {
         get { return fireRate; }
         set {
@@ -48,7 +47,10 @@ public class GunController {
         }
     }
 
-    public WeaponData WeaponData { get => weaponData; internal set => weaponData = value; }
+    public WeaponData WeaponData {
+        get => weaponData;
+        internal set => weaponData = value;
+    }
 
     // -- public -- //
 
@@ -62,27 +64,25 @@ public class GunController {
         }
     }
 
-    
 
     // -- private -- //
-
 
 
     /// <summary>
     /// recives a game objet orients it and fires it
     /// </summary>
     /// <param name="bullet">the GO to fire</param>
-    private void FireProjectile(GameObject bullet){
-        bullet.transform.rotation = Quaternion.Euler( 
+    private void FireProjectile(GameObject bullet) {
+        bullet.transform.rotation = Quaternion.Euler(
             this.firePoint.transform.rotation.eulerAngles.x,
             this.firePoint.transform.rotation.eulerAngles.y,
-            this.firePoint.transform.rotation.eulerAngles.z + Random.Range(-this.WeaponData.BulletSpread, this.WeaponData.BulletSpread)
+            this.firePoint.transform.rotation.eulerAngles.z +
+            Random.Range(-this.WeaponData.BulletSpread, this.WeaponData.BulletSpread)
         );
         bullet.transform.position = this.firePoint.transform.position;
         bullet.SetActive(true);
     }
 
- 
 
     /// <summary>
     /// Calculates and sets the bullet wait time
@@ -92,29 +92,22 @@ public class GunController {
         return (int) Mathf.Floor(1000 / fireRate);
     }
 
-    
 
     /// <summary>
     /// Fires a projectile from the gun
     /// </summary>
     private void Fire() {
-        
         GameObject bullet = bulletBuffer.GetBullet();
         BulletControl bulletControl = null;
 
         if (!bullet.TryGetComponent(out bulletControl)) {
-                bulletControl = bullet.AddComponent<BulletControl>() as BulletControl;
+            bulletControl = bullet.AddComponent<BulletControl>() as BulletControl;
         }
 
         bulletControl.BulletData = this.bulletData;
 
         this.FireProjectile(bullet);
-        
+
         BulletFireEvent?.Invoke(this, EventArgs.Empty);
     }
-
-
-
-
-
 }

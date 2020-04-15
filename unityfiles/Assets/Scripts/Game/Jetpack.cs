@@ -39,7 +39,9 @@ public class Jetpack : MonoBehaviour {
     private void FixedUpdate() {
         if (Input.GetAxis("Vertical") > 0) {
             AddForce();
-            if (!this.flames.isEmitting) this.flames.Play();
+            if (!this.flames.isEmitting) {
+                this.flames.Play();
+            }
         } else if (this.flames.isEmitting) {
             this.flames.Stop();
         }
