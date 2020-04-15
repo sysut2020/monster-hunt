@@ -12,7 +12,7 @@ public class EnemyEventArgs : EventArgs {
 /// Describes an enemy
 /// </summary>
 [RequireComponent(typeof(EnemyHealthController))]
-public class Enemy : MonoBehaviour, IDamageable {
+public class Enemy : MonoBehaviour, IKillable {
 
     [Tooltip("A sciptable object representing the enemy type")]
     [SerializeField]
@@ -36,12 +36,13 @@ public class Enemy : MonoBehaviour, IDamageable {
     // -- public -- //
 
     /// <summary>
-    /// Handles what to do when the enemy is killed
+    /// Fire enemy killed event and destroy self.
     /// </summary>
-    public void Dead() {
-        EnemyEventArgs args = new EnemyEventArgs();
-        args.EnemyType = this.enemyType;
-        args.Position = this.transform.position;
+    public void IsDead() {
+        EnemyEventArgs args = new EnemyEventArgs {
+            EnemyType = this.enemyType,
+            Position = this.transform.position
+        };
         EnemyKilledEvent?.Invoke(this, args);
         Destroy(this.gameObject);
     }

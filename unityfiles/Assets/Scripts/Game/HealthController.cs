@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public abstract class HealthController : MonoBehaviour {
+public abstract class HealthController : MonoBehaviour, IDamageable {
     [FormerlySerializedAs("entityStartHealth")]
     [Tooltip("the amount of health a given entity has.")]
     [SerializeField]
@@ -12,14 +12,12 @@ public abstract class HealthController : MonoBehaviour {
     private float health;
     protected float Health { get => health; set => health = value; }
 
-    protected IDamageable damageable;
+    protected IKillable killable;
 
     public float StartHealth {
         get { return this.startHealth; }
         set { this.startHealth = value; }
     }
-
-    
 
     public bool IsDead { get; internal set; } = false;
 
@@ -38,20 +36,19 @@ public abstract class HealthController : MonoBehaviour {
 
     /// <summary>
     /// Checks if the entity's health is below 0
-    /// if it is set the isDead to true
-    /// if not set it to false
+    /// if it is set the isDead to true and notify attached killable object,
+    /// else set it to false
     /// </summary>
     protected void CheckIfDead() {
-        if (this.Health <= 0f && damageable != null) {
-            this.damageable.Dead();
+        if (this.Health <= 0f) {
+            this.killable?.IsDead();
             this.IsDead = true;
         } else {
             this.IsDead = false;
         }
     }
 
-
     void Awake() {
-        this.damageable = this.gameObject.GetComponent<IDamageable>();
+        TryGetComponent<IKillable>(out killable);
     }
 }

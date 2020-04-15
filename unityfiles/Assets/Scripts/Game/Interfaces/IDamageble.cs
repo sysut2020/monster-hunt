@@ -1,14 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-/// <summary>
+﻿/// <summary>
 /// Interface for any object that can receive damage
 /// </summary>
 public interface IDamageable {
 
     /// <summary>
-    /// describes what to do when the character dies
+    /// Applies damage to the damageble by given value
     /// </summary>
-    void Dead();
+    /// <param name="dmg">damage value</param>
+    void ApplyDamage(float dmg);
+
 }
