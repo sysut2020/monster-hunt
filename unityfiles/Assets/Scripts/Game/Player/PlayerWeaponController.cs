@@ -25,6 +25,8 @@ public class PlayerWeaponController : MonoBehaviour {
     [Tooltip("the hand that holds the gun.")]
     private GameObject gunHand;
 
+    private bool isPaused = false;
+
     private BulletBuffer bulletBuffer = new BulletBuffer();
     private List<GunController> gunControllers = new List<GunController>();
     private GameObject currentWeapon = null;
@@ -53,6 +55,15 @@ public class PlayerWeaponController : MonoBehaviour {
     // -- events -- //
 
     public static event EventHandler<WeaponChangedEventArgs> WeaponChangedEvent;
+
+    private void timescaleChangedEventCallback(object _, EventArgs __){
+        if(Time.timeScale.Equals(1f)){
+            this.isPaused = false;
+        } else {
+            this.isPaused = true;
+        }
+    }
+
 
     // -- private -- //
 
@@ -110,31 +121,37 @@ public class PlayerWeaponController : MonoBehaviour {
     void Start(){
         //Changes the weapon to the first weapon in inventory
         ChangeWeapon(1);
+        LevelManager.timescaleChangedEvent += timescaleChangedEventCallback;
     }
 
     
-
+    void OnDestroy(){
+        LevelManager.timescaleChangedEvent -= timescaleChangedEventCallback;
+    }
     
 
     /// <summary>
     /// Update is called every frame, if the MonoBehaviour is enabled.
     /// </summary>
     void Update() {
-        if (Input.GetKeyDown(KeyCode.E)) {
-            ChangeWeapon(1);
-        }
+        if (!this.isPaused){
+            if (Input.GetKeyDown(KeyCode.E)) {
+                ChangeWeapon(1);
+            }
 
-        if (Input.GetKeyDown(KeyCode.Q)) {
-            ChangeWeapon(-1);
-        }
+            if (Input.GetKeyDown(KeyCode.Q)) {
+                ChangeWeapon(-1);
+            }
 
-        if (Input.GetMouseButtonDown(0)) {
-            this.MaybeFire();
-        }
+            if (Input.GetMouseButtonDown(0)) {
+                this.MaybeFire();
+            }
 
-        if (Input.GetMouseButton(1)) {
-            this.MaybeFire();
+            if (Input.GetMouseButton(1)) {
+                this.MaybeFire();
+            }
         }
+        
 
     }
 
