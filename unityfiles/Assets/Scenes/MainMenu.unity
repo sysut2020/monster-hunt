@@ -3365,7 +3365,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &825515040
 GameObject:
@@ -6621,16 +6621,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: -2285501040245444919, guid: bbac554e90ee4ebd1a1b11acd44a20b3,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: -1829421803876494371, guid: bbac554e90ee4ebd1a1b11acd44a20b3,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7343262343107847926, guid: bbac554e90ee4ebd1a1b11acd44a20b3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6690,11 +6680,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PresistentGO
-      objectReference: {fileID: 0}
-    - target: {fileID: 9123475169075356347, guid: bbac554e90ee4ebd1a1b11acd44a20b3,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bbac554e90ee4ebd1a1b11acd44a20b3, type: 3}

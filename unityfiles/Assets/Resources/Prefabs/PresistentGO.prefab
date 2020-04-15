@@ -87,7 +87,7 @@ MonoBehaviour:
     audioClipToPlay: {fileID: 8300000, guid: 8e77f5a3279a51145b5b06a218d59950, type: 3}
     volume: 1
     pitch: 1
-    loop: 0
+    loop: 1
     mute: 0
   level1Music:
     name: 
@@ -99,6 +99,34 @@ MonoBehaviour:
   letterGameMusic:
     name: 
     audioClipToPlay: {fileID: 8300000, guid: 2ca5acddf3a747f478116ffba5917238, type: 3}
+    volume: 0.474
+    pitch: 1
+    loop: 1
+    mute: 0
+  level2Music:
+    name: 
+    audioClipToPlay: {fileID: 0}
+    volume: 1
+    pitch: 1
+    loop: 0
+    mute: 0
+  level3Music:
+    name: 
+    audioClipToPlay: {fileID: 0}
+    volume: 1
+    pitch: 1
+    loop: 0
+    mute: 0
+  level4Music:
+    name: 
+    audioClipToPlay: {fileID: 0}
+    volume: 1
+    pitch: 1
+    loop: 0
+    mute: 0
+  level5Music:
+    name: 
+    audioClipToPlay: {fileID: 0}
     volume: 1
     pitch: 1
     loop: 0
