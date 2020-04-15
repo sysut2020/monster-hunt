@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1464,7 +1464,8 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8616466175693740772, guid: c0037af04ebe241508ded6287f68ad6c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: c0037af04ebe241508ded6287f68ad6c, type: 3}
 --- !u!1 &94856999
 GameObject:
@@ -13588,6 +13589,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &669202721 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1403742472692153401, guid: c0037af04ebe241508ded6287f68ad6c,
+    type: 3}
+  m_PrefabInstance: {fileID: 93178869}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &669202725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669202721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58679cfcd83b25c46a870dc22744d8c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneName: LetterGameScene
 --- !u!1 &670100632
 GameObject:
   m_ObjectHideFlags: 0

@@ -52,6 +52,18 @@ public class GameManagerAudioListner : AudioListner {
             Debug.Log("play letter music");
             PlayMusic(letterGameMusic);    
         }
+        if (args.NextSceneIndex == 4) {
+            PlayMusic(level2Music);
+        }
+        if (args.NextSceneIndex == 5) {
+            PlayMusic(level3Music);
+        }
+        if (args.NextSceneIndex == 6) {
+            PlayMusic(level4Music);
+        }
+        if (args.NextSceneIndex == 7) {
+            PlayMusic(level5Music);
+        }
     }
 
     private void OnDestroy() {
