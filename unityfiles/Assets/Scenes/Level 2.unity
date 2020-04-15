@@ -1033,7 +1033,7 @@ SpriteRenderer:
   m_Size: {x: 1.0976562, y: 2.2675781}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &20726396
@@ -51271,6 +51271,31 @@ PrefabInstance:
       propertyPath: m_Name
       value: Main character - with weapon
       objectReference: {fileID: 0}
+    - target: {fileID: 3753630675994418770, guid: fd02fbe1502ddec41abcab488e83e5a3,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.26611698
+      objectReference: {fileID: 0}
+    - target: {fileID: 3753630675994418770, guid: fd02fbe1502ddec41abcab488e83e5a3,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.96394074
+      objectReference: {fileID: 0}
+    - target: {fileID: 3753630675994418770, guid: fd02fbe1502ddec41abcab488e83e5a3,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -30.867
+      objectReference: {fileID: 0}
+    - target: {fileID: 4631473986094417478, guid: fd02fbe1502ddec41abcab488e83e5a3,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.99423295
+      objectReference: {fileID: 0}
+    - target: {fileID: 4631473986094417478, guid: fd02fbe1502ddec41abcab488e83e5a3,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.10724248
+      objectReference: {fileID: 0}
     - target: {fileID: 6394018647851918217, guid: fd02fbe1502ddec41abcab488e83e5a3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -51325,6 +51350,51 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6784517758960252716, guid: fd02fbe1502ddec41abcab488e83e5a3,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.03580348
+      objectReference: {fileID: 0}
+    - target: {fileID: 6784517758960252716, guid: fd02fbe1502ddec41abcab488e83e5a3,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.99935883
+      objectReference: {fileID: 0}
+    - target: {fileID: 6784517758960252716, guid: fd02fbe1502ddec41abcab488e83e5a3,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 4.104
+      objectReference: {fileID: 0}
+    - target: {fileID: 6806255296308911505, guid: fd02fbe1502ddec41abcab488e83e5a3,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.00000009778363
+      objectReference: {fileID: 0}
+    - target: {fileID: 6806255296308911505, guid: fd02fbe1502ddec41abcab488e83e5a3,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7940051175813227213, guid: fd02fbe1502ddec41abcab488e83e5a3,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.00000015611243
+      objectReference: {fileID: 0}
+    - target: {fileID: 7940051175813227213, guid: fd02fbe1502ddec41abcab488e83e5a3,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8662790652071194241, guid: fd02fbe1502ddec41abcab488e83e5a3,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.9957202
+      objectReference: {fileID: 0}
+    - target: {fileID: 8662790652071194241, guid: fd02fbe1502ddec41abcab488e83e5a3,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.09241964
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fd02fbe1502ddec41abcab488e83e5a3, type: 3}
@@ -79127,7 +79197,7 @@ SpriteRenderer:
   m_Size: {x: 1.4375, y: 1.3710938}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &1692494114
