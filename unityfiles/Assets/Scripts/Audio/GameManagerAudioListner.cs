@@ -12,6 +12,18 @@ public class GameManagerAudioListner : AudioListner {
     private Sound level1Music;
 
     [SerializeField] 
+    private Sound level2Music;
+    
+    [SerializeField] 
+    private Sound level3Music;
+    
+    [SerializeField] 
+    private Sound level4Music;
+    
+    [SerializeField] 
+    private Sound level5Music;
+
+    [SerializeField] 
     private Sound letterGameMusic;
 
     private bool loopMainMenuMusic = true;
