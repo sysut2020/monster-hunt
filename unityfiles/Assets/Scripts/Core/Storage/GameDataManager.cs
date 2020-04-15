@@ -119,10 +119,18 @@ public class GameDataManager {
 
         this.highScores.Add(new ScoreboardEntry() {
             PlayerName = name,
-                Score = this.gameScore
+            Score = this.gameScore
         });
 
         this.gameScore = 0; // reset gameScore when score is added to highScores list
+    }
+
+    /// <summary>
+    /// Sets the game high scores
+    /// </summary>
+    /// <param name="score">the new highscore list</param>
+    public void SetHighScores(List<ScoreboardEntry> score) {
+        this.highScores = score;
     }
 
     /// <summary>
@@ -131,8 +139,7 @@ public class GameDataManager {
     public void SaveData() {
         DataSaver.Save(new SaveData {
             Money = this.money,
-                HighScores = this.highScores,
-                Score = this.gameScore
+            HighScores = this.highScores,
         });
     }
 
@@ -143,6 +150,10 @@ public class GameDataManager {
         if (saveObj != null) {
             if (saveObj?.Money != 0) {
                 this.AddMoney(saveObj.Money);
+            }
+
+            if (saveObj?.HighScores != null) {
+                this.SetHighScores(saveObj.HighScores);
             }
         }
     }
