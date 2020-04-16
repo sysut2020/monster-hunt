@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -27,7 +27,6 @@ public class AddScoreEntryController : MonoBehaviour {
             throw new MissingComponentException("Missing add entry button component");
         }
         entryNameField.onValueChanged.AddListener(OnInputfieldChanged);
-        addEntryButton.onClick.AddListener(OnEntryButtonClicked);
     }
 
     void Start() {
@@ -36,7 +35,6 @@ public class AddScoreEntryController : MonoBehaviour {
     }
 
     private void OnDestroy() {
-        addEntryButton.onClick.RemoveListener(OnEntryButtonClicked);
         entryNameField.onValueChanged.RemoveListener(OnInputfieldChanged);
     }
 
@@ -44,11 +42,10 @@ public class AddScoreEntryController : MonoBehaviour {
         addEntryButton.interactable = newValue.Length > 0;
     }
 
-    private void OnEntryButtonClicked() {
-        this.AddEntry();
-    }
-
-    private void AddEntry() {
+    /// <summary>
+    /// A button can attach this method to its click handler to save a new entry to the scoreboard
+    /// </summary>
+    public void AddEntry() {
         dataManager.AddNewHighScoreEntry(entryNameField.text);
     }
 }
