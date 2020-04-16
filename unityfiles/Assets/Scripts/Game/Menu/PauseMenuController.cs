@@ -18,9 +18,6 @@ public class PauseMenuController : Singleton<PauseMenuController> {
     private GameObject pauseMenuCanvas;
 
     [SerializeField]
-    private GameObject bcgMenuCanvas;
-
-    [SerializeField]
     private GameObject confirmDialog;
 
     private Boolean isPaused = false;
@@ -107,12 +104,10 @@ public class PauseMenuController : Singleton<PauseMenuController> {
 
     private void ActivateMenu() {
         pauseMenuCanvas.SetActive(true);
-        bcgMenuCanvas.SetActive(true);
     }
 
     private void DeactivateMenu() {
         pauseMenuCanvas.SetActive(false);
-        bcgMenuCanvas.SetActive(false);
     }
 
     /// <summary>

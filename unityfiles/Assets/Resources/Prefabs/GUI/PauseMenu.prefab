@@ -250,7 +250,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4831220362206482986
 RectTransform:
   m_ObjectHideFlags: 0
@@ -262,13 +262,13 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 9103925755890212226}
+  m_Father: {fileID: 3403352315725417624}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 611.1505, y: 221.70001}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7000821687375841398
 CanvasRenderer:
@@ -336,7 +336,7 @@ RectTransform:
   - {fileID: 7156727147826628139}
   - {fileID: 3179655658114130283}
   m_Father: {fileID: 3403352315725417624}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -375,7 +375,7 @@ RectTransform:
   - {fileID: 3283114369704063368}
   - {fileID: 3693065509401534890}
   m_Father: {fileID: 3403352315725417624}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -575,11 +575,12 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 4831220362206482986}
   - {fileID: 3159302789069265847}
   - {fileID: 4569573393823710521}
   - {fileID: 3887873595357044844}
   m_Father: {fileID: 9103925755890212226}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -690,7 +691,6 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 4831220362206482986}
   - {fileID: 3403352315725417624}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -1250,7 +1250,7 @@ PrefabInstance:
     - target: {fileID: 2554472053676323568, guid: c39e8ea92b7bb7e55bdd2225b6473842,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2554472053676323568, guid: c39e8ea92b7bb7e55bdd2225b6473842,
         type: 3}
