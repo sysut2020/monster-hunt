@@ -18,6 +18,9 @@ public class PauseMenuController : Singleton<PauseMenuController> {
     private GameObject pauseMenuCanvas;
 
     [SerializeField]
+    private GameObject pauseMenuUIElement;
+
+    [SerializeField]
     private GameObject confirmDialog;
 
     private Boolean isPaused = false;
@@ -82,10 +85,12 @@ public class PauseMenuController : Singleton<PauseMenuController> {
 
     private void DeactivateConfirmDialog() {
         confirmDialog.SetActive(false);
+        pauseMenuUIElement.SetActive(true);
     }
 
     private void ActivateConfirmDialog() {
         confirmDialog.SetActive(true);
+        pauseMenuUIElement.SetActive(false);
     }
 
     private void ResumeGame() {
@@ -117,6 +122,10 @@ public class PauseMenuController : Singleton<PauseMenuController> {
     private void CheckForMissingComponents() {
         if (pauseMenuCanvas == null) {
             throw new MissingComponentException("Missing pause menu canvas");
+        }
+
+        if (pauseMenuUIElement == null) {
+            throw new MissingComponentException("Missing pause menu ui element");
         }
 
         if (confirmDialog == null) {

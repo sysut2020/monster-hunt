@@ -773,7 +773,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenuCanvas: {fileID: 5699325049661680436}
-  bcgMenuCanvas: {fileID: 3448578366892212321}
+  pauseMenuUIElement: {fileID: 4523778499639366004}
   confirmDialog: {fileID: 4597381965089505214}
   continueButton: {fileID: 1974078090081440164}
 --- !u!1 &8821464328419641938
@@ -1586,7 +1586,7 @@ PrefabInstance:
     - target: {fileID: 1855809060127956602, guid: 12e9b1feb9df24462afd4cdc68af3d40,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1855809060127956602, guid: 12e9b1feb9df24462afd4cdc68af3d40,
         type: 3}
@@ -1928,7 +1928,7 @@ PrefabInstance:
     - target: {fileID: 7483226038105490395, guid: 4b92ba94c74ba4eb390549c7fc176637,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7483226038105490395, guid: 4b92ba94c74ba4eb390549c7fc176637,
         type: 3}
@@ -1958,7 +1958,7 @@ PrefabInstance:
     - target: {fileID: 7483226038105490395, guid: 4b92ba94c74ba4eb390549c7fc176637,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7483226038105490395, guid: 4b92ba94c74ba4eb390549c7fc176637,
         type: 3}
