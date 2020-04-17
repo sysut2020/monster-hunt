@@ -25,6 +25,10 @@ public class LivesGUI : MonoBehaviour {
         }
     }
 
+    private void OnDestroy() {
+        PlayerHealthController.OnPlayerLivesUpdate -= CallbackOnLivesUpdate;
+    }
+
     private void CallbackOnLivesUpdate(object _, PlayerLivesUpdateArgs args) {
         if (!initialized) {
             GenerateLifeObject(args.CurrentLives);

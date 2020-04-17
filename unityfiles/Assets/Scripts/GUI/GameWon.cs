@@ -3,15 +3,6 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class GameWon : MonoBehaviour {
-    /// <summary>
-    /// Score when level ended
-    /// </summary>
-    private int collectedGameScore;
-
-    /// <summary>
-    /// Score including time bonus
-    /// </summary>
-    private int totalLevelScore;
 
     /// <summary>
     /// Time left when game ended
@@ -52,15 +43,13 @@ public class GameWon : MonoBehaviour {
         timeLeft = LevelManager.Instance.GetLevelTimeLeft() / 1000; // divide by 1000 to get sec
         timeLeftText.text = FormatAsClockTime(timeLeft);
 
-        collectedGameScore = dataManager.GameScore;
-        scoreText.text = collectedGameScore.ToString();
-        totalLevelScore = collectedGameScore + timeLeft;
-        dataManager.AddGameScore(timeLeft);
+        scoreText.text = "0";
+        dataManager.AddGameScore(timeLeft); // add time left in seconds as points to game score
     }
 
     private void Update() {
         var t = (Time.unscaledTime - timeEnabled) / duration; // used to smooth the count down/up
-        scoreText.text = Mathf.RoundToInt(Mathf.SmoothStep(collectedGameScore, totalLevelScore, t)).ToString();
+        scoreText.text = Mathf.RoundToInt(Mathf.SmoothStep(0, timeLeft, t)).ToString();
         var timeInSeconds = Mathf.RoundToInt(Mathf.SmoothStep(timeLeft, 0, t));
         timeLeftText.text = FormatAsClockTime(timeInSeconds);
 
