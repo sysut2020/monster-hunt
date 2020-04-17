@@ -12,6 +12,7 @@ public class EnemyAttackHitNotifyer : MonoBehaviour {
     private void Awake() {
         this.enemyBehaviour = GetComponentInParent<EnemyBehaviour>();
     }
+    
     /// <summary>
     /// Checks if the targeted is am IDamagble type, and notify the handler script
     /// if it is.
