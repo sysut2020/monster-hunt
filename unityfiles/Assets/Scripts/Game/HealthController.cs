@@ -14,6 +14,8 @@ public abstract class HealthController : MonoBehaviour, IDamageable {
 
     protected IKillable killable;
 
+    protected IDamageNotifyable[] Notifyables { get; private set; } = { };
+
     public float StartHealth {
         get { return this.startHealth; }
         set { this.startHealth = value; }
@@ -50,5 +52,6 @@ public abstract class HealthController : MonoBehaviour, IDamageable {
 
     void Awake() {
         TryGetComponent<IKillable>(out killable);
+        this.Notifyables = GetComponents<IDamageNotifyable>();
     }
 }
