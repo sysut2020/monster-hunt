@@ -339,8 +339,8 @@ MonoBehaviour:
   - {fileID: 5865627695508265292}
   - {fileID: 7622949708836151336}
   m_Bounds:
-    m_Center: {x: 0.1442737, y: 6.349755, z: 0}
-    m_Extent: {x: 0.66751444, y: 0.46598577, z: 0}
+    m_Center: {x: -2.647843, y: -0.16491503, z: 0}
+    m_Extent: {x: 0.44322348, y: 0.69050336, z: 0}
   m_UseBatching: 1
 --- !u!1 &2235447927362504716
 GameObject:
@@ -545,6 +545,7 @@ MonoBehaviour:
   availableWeapons:
   - {fileID: 3220301693665953141, guid: dd8af2c07b6404a5abb28b334eb87623, type: 3}
   - {fileID: 2890025789579660477, guid: fed697ff2506772edb77667ba8bd9c7d, type: 3}
+  - {fileID: 2279751618471833427, guid: b9963bc197517bab6a7c0d5b028bbc19, type: 3}
   gunHand: {fileID: 2455075742465879498}
 --- !u!114 &7673223311210071034
 MonoBehaviour:
@@ -739,8 +740,8 @@ MonoBehaviour:
   - {fileID: 3979061525024017565}
   - {fileID: 393525829638646213}
   m_Bounds:
-    m_Center: {x: 6.7358513, y: 4.254325, z: 0}
-    m_Extent: {x: 0.8314643, y: 0.3614223, z: 0}
+    m_Center: {x: 5.576933, y: 2.178413, z: 0}
+    m_Extent: {x: 0.84074473, y: 0.372688, z: 0}
   m_UseBatching: 1
 --- !u!1 &2579054145453077277
 GameObject:
@@ -1205,8 +1206,8 @@ MonoBehaviour:
   - {fileID: 7622949708836151336}
   - {fileID: 5296981364036213909}
   m_Bounds:
-    m_Center: {x: -0.018385887, y: 2.5278287, z: 0}
-    m_Extent: {x: 2.3998396, y: 1.3817601, z: 0}
+    m_Center: {x: -1.3526552, y: -0.078389645, z: 0}
+    m_Extent: {x: 1.2455051, y: 2.443373, z: 0}
   m_UseBatching: 1
 --- !u!1 &4333415795565745167
 GameObject:
@@ -1876,8 +1877,8 @@ MonoBehaviour:
   - {fileID: 393525829638646213}
   - {fileID: 8860196591831835450}
   m_Bounds:
-    m_Center: {x: 4.815372, y: 1.2797534, z: 0}
-    m_Extent: {x: 2.6222372, y: 0.7912463, z: 0}
+    m_Center: {x: 4.127653, y: 0.35321188, z: 0}
+    m_Extent: {x: 2.1820865, y: 1.491606, z: 0}
   m_UseBatching: 1
 --- !u!1 &7464547362744027585
 GameObject:
