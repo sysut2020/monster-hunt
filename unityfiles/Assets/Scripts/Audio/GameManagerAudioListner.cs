@@ -36,6 +36,10 @@ public class GameManagerAudioListner : AudioListner {
         mainMenuMusic.Loop = loopMainMenuMusic;
     }
 
+    private void Start() {
+        PlayMusic(mainMenuMusic);
+    }
+
     private void SubscribeToEvents() {
         GameManager.GameStateChangeEvent += CallbackGameStateChangeEvent;
     }
