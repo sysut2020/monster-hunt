@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 /// <summary>
@@ -28,13 +28,13 @@ public class LevelHandler : MonoBehaviour {
     /// Index of the current scene. If it is a hunting game it is >=0 else its -1
     /// </summary>
     /// <value></value>
-    private int CurrentScene { get; set; } = 0;
+    private static int CurrentScene { get; set; } = -1;
 
     /// <summary>
     /// Index of the last scene. If it was a hunting game it is >=0 else its -1
     /// </summary>
     /// <value></value>
-    private int LastHuntingScene { get; set; } = 0;
+    private static int LastHuntingScene { get; set; } = -1;
 
     private void Awake() {
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
@@ -51,12 +51,12 @@ public class LevelHandler : MonoBehaviour {
     /// </summary>
     public void NextLevel() {
         string nextLevelName;
-        if (this.CurrentScene >= 0) {
+        if (CurrentScene >= 0) {
+            LastHuntingScene = CurrentScene;
             nextLevelName = this.letterGameSceneName;
         } else {
-            int nameIndex = this.LastHuntingScene >= 0 ? this.LastHuntingScene + 1 : 0;
+            int nameIndex = LastHuntingScene >= 0 ? LastHuntingScene + 1 : 0;
             if (nameIndex <= this.huntingGameSceneNames.Length - 1) {
-                LastHuntingScene = nameIndex;
                 nextLevelName = this.huntingGameSceneNames[nameIndex];
             } else {
                 nextLevelName = this.scoreboardSceneName;
@@ -89,7 +89,7 @@ public class LevelHandler : MonoBehaviour {
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
-        this.CurrentScene = GetHuntingSceneIndexByName(scene.name);
+        CurrentScene = GetHuntingSceneIndexByName(scene.name);
     }
 
 }
