@@ -138,6 +138,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   visualizeVision: 1
+  attackCollider: {fileID: 0}
   visionUpperBound: 0.8
   visionLowerBound: -2
   attackDistance: 1
@@ -402,6 +403,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   affectedHealthController: {fileID: 8585172573794392773}
+--- !u!114 &8275772534456685414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9211931033707335757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7b3d199a006b580688adb387fb4b507, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5710322976254314533
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -12,7 +12,7 @@ public class PlayerEventArgs : EventArgs {
 /// <summary>
 /// A player is the controllable character that a person play as.
 /// </summary>
-public class Player : MonoBehaviour, IKillable {
+public class Player : MonoBehaviour, IKillable, IDamageNotifyable {
 
     [SerializeField]
     private PlayerHealthController playerHealthController;
@@ -103,14 +103,7 @@ public class Player : MonoBehaviour, IKillable {
         this.UnsubscribeFromEvents();
     }
 
-    void OnTriggerEnter2D(Collider2D Col) {
-        Enemy enemy = Col.gameObject.GetComponentInParent<Enemy>();
-        if (enemy != null) {
-            if (enemy.IsAttacking) {
-                animator.SetTrigger(AnimationTriggers.DAMAGE);
-                this.PlayerHealthController.ApplyDamage(2);
-            }
-        }
+    public void Damaged() {
+        animator.SetTrigger(AnimationTriggers.DAMAGE);
     }
-
 }

@@ -8,13 +8,7 @@ using UnityEngine.UI;
 /// has picked up and reset when effect is over.
 /// </summary>
 public class PowerupCollectedGUI : MonoBehaviour {
-
-    [SerializeField]
-    [Tooltip("The game object to hold the Power Up text")]
     private TMP_Text powerupName;
-
-    [SerializeField]
-    [Tooltip("Game object to hold the Power Up image")]
     private Image powerupImage;
 
     [SerializeField]
@@ -27,16 +21,19 @@ public class PowerupCollectedGUI : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
-        if (powerupName == null) {
+        this.powerupName = GetComponentInChildren<TMP_Text>();
+        this.powerupImage = GetComponentInChildren<Image>();
+
+        if (this.powerupName == null) {
             throw new MissingComponentException("Missing text component");
         }
-        if (powerupImage == null) {
+        if (this.powerupImage == null) {
             throw new MissingComponentException("Missing image component");
         }
-        if (powerup == null) {
+        if (this.powerup == null) {
             throw new MissingComponentException("Missing default sprite component");
         }
-        if (doubleFirerate == null) {
+        if (this.doubleFirerate == null) {
             throw new MissingComponentException("Missing double fire rate sprite component");
         }
         this.SubscribeToEvents();
