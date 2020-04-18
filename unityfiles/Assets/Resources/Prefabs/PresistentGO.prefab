@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7343262343107847927}
   - component: {fileID: 4908017252100409779}
   - component: {fileID: 2782975723722910897}
+  - component: {fileID: 678585245}
   m_Layer: 0
   m_Name: PresistentGO
   m_TagString: Untagged
@@ -103,3 +104,20 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     mute: 0
+--- !u!114 &678585245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7343262343107847928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b52e35cb5cd67b9f8a7905788965c0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  huntingGameSceneNames:
+  - Level 1
+  - Level 2
+  scoreboardSceneName: ScoreBoard
+  letterGameSceneName: LetterGameScene
