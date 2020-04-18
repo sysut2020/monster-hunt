@@ -7,6 +7,7 @@ using UnityEngine.UI;
 /// Can tells the LevelManager when to switch to Pause/Play state.
 /// </summary>
 public class PauseMenuController : MonoBehaviour {
+
     [SerializeField]
     private GameObject pauseMenuCanvas;
 
@@ -15,6 +16,9 @@ public class PauseMenuController : MonoBehaviour {
 
     [SerializeField]
     private GameObject confirmDialog;
+
+    [SerializeField]
+    private GameObject howToPlay;
 
     private Boolean isPaused = false;
 
@@ -28,6 +32,8 @@ public class PauseMenuController : MonoBehaviour {
         if (Input.GetButtonDown("Cancel")) {
             if (confirmDialog.activeSelf) {
                 DeactivateConfirmDialog();
+            } else if (howToPlay.activeSelf) {
+                DeactivateHowToPlay();
             } else {
                 TogglePause();
             }
@@ -44,9 +50,15 @@ public class PauseMenuController : MonoBehaviour {
             isPaused = true;
         } else {
             ResumeGame();
-            this.DeactivateConfirmDialog();
+            DeactivateConfirmDialog();
+            DeactivateHowToPlay();
             isPaused = false;
         }
+    }
+
+    private void DeactivateHowToPlay() {
+        howToPlay.SetActive(false);
+        pauseMenuUIElement.SetActive(true);
     }
 
     private void DeactivateConfirmDialog() {
@@ -54,10 +66,12 @@ public class PauseMenuController : MonoBehaviour {
     }
 
     private void ResumeGame() {
+        GameManager.Instance.SetGameState(GAME_STATE.PLAY);
         DeactivateMenu();
     }
 
     private void PauseGame() {
+        GameManager.Instance.SetGameState(GAME_STATE.PAUSE);
         ActivateMenu();
     }
 
@@ -84,6 +98,10 @@ public class PauseMenuController : MonoBehaviour {
 
         if (confirmDialog == null) {
             throw new MissingComponentException("Missing confirm dialog");
+        }
+
+        if (howToPlay == null) {
+            throw new MissingComponentException("Missing how to play screen");
         }
     }
 
