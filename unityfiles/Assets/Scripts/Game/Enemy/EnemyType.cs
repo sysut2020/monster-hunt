@@ -13,6 +13,10 @@ public class EnemyType : ScriptableObject {
     [SerializeField]
     private int health;
 
+    [Tooltip("How much damage this dinosaur has")]
+    [SerializeField]
+    private int damage;
+
     [Tooltip("The speed when patroling")]
     [SerializeField]
     private float patrolSpeed;
@@ -31,6 +35,7 @@ public class EnemyType : ScriptableObject {
     private List<CollectibleSpawnerItem> collectibleItems;
 
     public int Health { get => health; }
+    public int Damage { get => damage; }
     public float PatrolSpeed { get => patrolSpeed; }
     public float ChaseSpeed { get => chaseSpeed; }
     public float VisionLength { get => visionLength; }

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Brontosaurus
   m_EditorClassIdentifier: 
   health: 24
+  damage: 3
   patrolSpeed: 1
   chaseSpeed: 2
   visionLength: 10

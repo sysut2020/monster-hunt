@@ -192,7 +192,7 @@ public class EnemyBehaviour : MonoBehaviour {
 	/// </summary>
 	public void HitTarget() {
 		if (this.Enemy.IsAttacking) {
-			this.TargetHealthController.ApplyDamage(2f);
+			this.TargetHealthController.ApplyDamage(this.Enemy.EnemyType.Damage);
 			this.Enemy.IsAttacking = false;
 		}
 	}
