@@ -42452,6 +42452,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 678585245, guid: bbac554e90ee4ebd1a1b11acd44a20b3, type: 3}
+      propertyPath: huntingGameSceneNames.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7343262343107847926, guid: bbac554e90ee4ebd1a1b11acd44a20b3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -87187,25 +87191,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1829249095362631784, guid: 49f5c14cc2abedbf2bf292be1d928628,
-        type: 3}
-      propertyPath: eventToFire
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3448578366892212321, guid: 49f5c14cc2abedbf2bf292be1d928628,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8627096512600203008, guid: 49f5c14cc2abedbf2bf292be1d928628,
         type: 3}
       propertyPath: m_Name
       value: PauseMenu
-      objectReference: {fileID: 0}
-    - target: {fileID: 8627096512600203008, guid: 49f5c14cc2abedbf2bf292be1d928628,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9103925755890212226, guid: 49f5c14cc2abedbf2bf292be1d928628,
         type: 3}
