@@ -1936,6 +1936,7 @@ GameObject:
   - component: {fileID: 2113628426}
   - component: {fileID: 2113628429}
   - component: {fileID: 2113628430}
+  - component: {fileID: 2113628431}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2060,3 +2061,18 @@ MonoBehaviour:
   letterTile: {fileID: 2947810737201172508, guid: 8de5a6f3b4ba79b48ada71030db7b88d,
     type: 3}
   fillWithTestLetters: 1
+--- !u!114 &2113628431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2113628425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b351f53f757f3d52196db5c6adfaafb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelMusic: {fileID: 8300000, guid: 2ca5acddf3a747f478116ffba5917238, type: 3}
+  playOnAwake: 1
+  loop: 1

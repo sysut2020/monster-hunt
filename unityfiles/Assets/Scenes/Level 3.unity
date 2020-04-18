@@ -63257,6 +63257,7 @@ GameObject:
   - component: {fileID: 778199881}
   - component: {fileID: 778199883}
   - component: {fileID: 778199882}
+  - component: {fileID: 778199884}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -63430,6 +63431,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   livesValue: 2
+--- !u!114 &778199884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 778199874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b351f53f757f3d52196db5c6adfaafb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelMusic: {fileID: 8300000, guid: 70bfbf4f3c266e24da14cce88f663299, type: 3}
+  playOnAwake: 1
+  loop: 1
 --- !u!1 &779588033
 GameObject:
   m_ObjectHideFlags: 0
