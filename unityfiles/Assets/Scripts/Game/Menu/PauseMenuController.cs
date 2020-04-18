@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 /// <summary>
 /// Handler for Pause menu. Turns on and of the main pause menu and the quit confirmation when needed.
-/// Can tells the LevelManager when to switch to Pause/Play state.
+/// Can tells the HuntingLevelController when to switch to Pause/Play state.
 /// </summary>
 public class PauseMenuController : MonoBehaviour {
 

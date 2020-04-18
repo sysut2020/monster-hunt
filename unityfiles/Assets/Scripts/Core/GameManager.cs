@@ -49,8 +49,8 @@ public class GameManager : Singleton<GameManager> {
     /// </summary>
     private void SubscribeToEvents() {
         // todo subscribe to OnPlayerDead, OnTimeOut, OnAllEnemiesDead
-        LevelManager.OnLevelStateChangeEvent += CallbackLevelStateChangeEvent;
-        LetterGameManager.OnLetterGameEndedEvent += CallbackLetterGameEnded;
+        HuntingLevelController.OnLevelStateChangeEvent += CallbackLevelStateChangeEvent;
+        LetterLevelController.OnLetterGameEndedEvent += CallbackLetterGameEnded;
     }
 
     /// <summary>
@@ -59,8 +59,8 @@ public class GameManager : Singleton<GameManager> {
     private void UnsubscribeFromEvents() {
         // todo unsubscribe from OnPlayerDead, OnTimeOut, OnAllEnemiesDead
         // maybe that this also should be done on disable
-        LevelManager.OnLevelStateChangeEvent -= CallbackLevelStateChangeEvent;
-        LetterGameManager.OnLetterGameEndedEvent -= CallbackLetterGameEnded;
+        HuntingLevelController.OnLevelStateChangeEvent -= CallbackLevelStateChangeEvent;
+        LetterLevelController.OnLetterGameEndedEvent -= CallbackLetterGameEnded;
     }
 
     /// <summary>
@@ -69,13 +69,21 @@ public class GameManager : Singleton<GameManager> {
     /// <param name="o">the object calling (this should always be the level manager)</param>
     /// <param name="args">the event args containing the new state</param>
     private void CallbackLevelStateChangeEvent(object o, LevelStateChangeEventArgs args) {
-
+        switch (args.NewState) {
+            case LEVEL_STATE.GAME_OVER:
+            case LEVEL_STATE.GAME_WON:
+                this.SetGameState(GAME_STATE.PAUSE);
+                break;
+            default:
+                this.SetGameState(GAME_STATE.PLAY);
+                break;
+        }
     }
 
     /// <summary>
     /// This function is fired when OnLetterGameEndedEvent is invoked
     /// This function will trigger on:
-    ///     LetterGameManager OnDestroy()
+    ///     LetterLevelController OnDestroy()
     ///         the letter game is done and the total score from the letter
     ///         game level is transmitted with the event 
     /// </summary>
@@ -127,6 +135,7 @@ public class GameManager : Singleton<GameManager> {
     }
 
     private void Awake() {
+        Instance.SetGameState(GAME_STATE.PLAY);
         this.gameDataManager = new GameDataManager();
         SubscribeToEvents();
     }

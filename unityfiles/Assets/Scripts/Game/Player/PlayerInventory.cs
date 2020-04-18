@@ -23,14 +23,13 @@ public class PlayerInventory {
     private int money;
     private List<String> collectedLetters;
 
-
     public PlayerInventory() {
         SubscribeToEvents();
         this.money = 0;
         this.collectedLetters = new List<string>();
     }
     // -- properties -- //
-    
+
     public int Money {
         get => money;
         internal set => this.money = value;
@@ -40,7 +39,6 @@ public class PlayerInventory {
         get => formatPlayerInventoryLetter(collectedLetters);
     }
 
-  
     // -- public -- //
 
     // -- events -- //
@@ -54,7 +52,7 @@ public class PlayerInventory {
         CoinCollectable.OnCoinCollected += CallbackCoinCollected;
         LetterCollectable.OnLetterCollected += CallbackLetterCollected;
         PowerupCollectable.OnPowerupCollected += CallbackEffectPickup;
-        LevelManager.CleanUpEvent += UnsubscribeFromEvents;
+        HuntingLevelController.CleanUpEvent += UnsubscribeFromEvents;
     }
 
     /// <summary>
@@ -65,9 +63,8 @@ public class PlayerInventory {
         CoinCollectable.OnCoinCollected -= CallbackCoinCollected;
         LetterCollectable.OnLetterCollected -= CallbackLetterCollected;
         PowerupCollectable.OnPowerupCollected -= CallbackEffectPickup;
-        LevelManager.CleanUpEvent -= UnsubscribeFromEvents;
+        HuntingLevelController.CleanUpEvent -= UnsubscribeFromEvents;
     }
-   
 
     /// <summary>
     /// Coin collected event subscriber function, adds coin amount to invetory
@@ -103,20 +100,16 @@ public class PlayerInventory {
     /// <param name="lettersToFormat">The letters we want to format</param>
     /// <returns>Dictionary of letters</returns>
     private Dictionary<string, int> formatPlayerInventoryLetter(List<string> lettersToFormat) {
-        Dictionary<string, int> formatedDictionary  = new Dictionary<string, int>();
-        foreach (string letter in lettersToFormat){
-            if (formatedDictionary.Keys.Contains(letter)){
+        Dictionary<string, int> formatedDictionary = new Dictionary<string, int>();
+        foreach (string letter in lettersToFormat) {
+            if (formatedDictionary.Keys.Contains(letter)) {
                 formatedDictionary[letter] += 1;
-            }
-            else{
+            } else {
                 formatedDictionary.Add(letter, 1);
             }
         }
         return formatedDictionary;
     }
-    
-
-    
 
     /// <summary>
     /// adds the provided letter

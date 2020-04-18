@@ -21,7 +21,7 @@ public class LetterGameGuiScoreHandler : MonoBehaviour {
     void Awake() {
         if (this.currentScoreText == null) { throw new MissingComponentException("Add current score text component"); }
         if (this.wordScoreText == null) { throw new MissingComponentException("Add word score text component"); }
-        LetterGameManager.OnWordScoreUpdateEvent += UpdateWordsScore;
+        LetterLevelController.OnWordScoreUpdateEvent += UpdateWordsScore;
     }
 
     private void Start() {
@@ -30,7 +30,7 @@ public class LetterGameGuiScoreHandler : MonoBehaviour {
     }
 
     private void OnDestroy() {
-        LetterGameManager.OnWordScoreUpdateEvent -= UpdateWordsScore;
+        LetterLevelController.OnWordScoreUpdateEvent -= UpdateWordsScore;
     }
 
     private void UpdateWordsScore(object _, WordScoreUpdateArgs args) {

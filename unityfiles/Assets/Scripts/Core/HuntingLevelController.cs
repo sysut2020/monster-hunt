@@ -19,7 +19,7 @@ class PlayThroughData {
 /// <summary>
 /// A manager for a level in the game 
 /// </summary>
-public class LevelManager : Singleton<LevelManager> {
+public class HuntingLevelController : Singleton<HuntingLevelController> {
 
     [SerializeField]
     private LevelDetails levelDetails;
@@ -134,15 +134,10 @@ public class LevelManager : Singleton<LevelManager> {
         switch (NewState) {
             // The game is over show game over screen
             case LEVEL_STATE.GAME_OVER:
-                break;
             case LEVEL_STATE.GAME_WON:
                 break;
-            case LEVEL_STATE.START:
+            case LEVEL_STATE.PLAY:
                 InitLevel();
-                ChangeLevelState(LEVEL_STATE.PLAY);
-                break;
-                // Exit the game and go to main menu
-            case LEVEL_STATE.EXIT:
                 break;
             default:
                 Debug.Log("🌮🌮🌮🌮  UNKNOWN LEVEL STATE  🌮🌮🌮🌮");
@@ -193,13 +188,12 @@ public class LevelManager : Singleton<LevelManager> {
         this.playThroughData = new PlayThroughData();
         LEVEL_TIMER_ID = this.levelTimer.RollingUID;
         this.startLevelTime();
-
-        this.LevelStateChange(LEVEL_STATE.START);
+        this.LevelStateChange(LEVEL_STATE.PLAY);
     }
 
     private void Update() {
         if (this.levelTimer.Done(LEVEL_TIMER_ID)) {
-            this.LevelStateChange(LEVEL_STATE.EXIT);
+            this.LevelStateChange(LEVEL_STATE.GAME_OVER);
         }
     }
 

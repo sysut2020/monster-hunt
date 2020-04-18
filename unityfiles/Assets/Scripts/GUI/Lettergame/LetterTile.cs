@@ -52,7 +52,7 @@ public class LetterTile : Dragable {
     /// </summary>
     /// <returns>true if the drag operation can start false if not</returns>   
     override protected bool CanStartDrag() {
-        holdingLetter = LetterGameManager.Instance.TryGetLetter(IconLetter);
+        holdingLetter = LetterLevelController.Instance.TryGetLetter(IconLetter);
         return holdingLetter != null;
     }
 
@@ -73,10 +73,10 @@ public class LetterTile : Dragable {
     // -- unity -- //
 
     void Awake() {
-        LetterGameManager.LetterCountChangedEvent += CallbackLetterCountChangedEvent;
+        LetterLevelController.LetterCountChangedEvent += CallbackLetterCountChangedEvent;
     }
 
     private void OnDestroy() {
-        LetterGameManager.LetterCountChangedEvent -= CallbackLetterCountChangedEvent;
+        LetterLevelController.LetterCountChangedEvent -= CallbackLetterCountChangedEvent;
     }
 }
