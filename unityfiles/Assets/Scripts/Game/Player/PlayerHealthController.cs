@@ -57,7 +57,6 @@ public class PlayerHealthController : HealthController, IObstacleDamagable {
 	/// </summary>
 	/// <param name="damage">damage amount</param>
 	public void ApplyObstacleDamage(float damage) {
-		Debug.Log($"Damage by {damage}");
 		this.ReduceHealth(damage);
 	}
 
@@ -73,6 +72,10 @@ public class PlayerHealthController : HealthController, IObstacleDamagable {
 		this.CheckIfDead();
 		if (this.IsDead) {
 			ReduceLivesAndResetHealth();
+		} else {
+			foreach (var notifyable in Notifyables) {
+				notifyable?.Damaged();
+			}
 		}
 	}
 

@@ -6,6 +6,7 @@ using UnityEngine;
 /// </summary>
 public class GameStateChangeEventArgs : EventArgs {
     public GAME_STATE NewState { get; set; }
+    public int NextSceneIndex { get; set; }
 }
 
 /// <summary>
@@ -31,7 +32,6 @@ public class GameManager : Singleton<GameManager> {
     /// This event tells the listeners the game state has changed
     /// </summary>
     public static event EventHandler<GameStateChangeEventArgs> GameStateChangeEvent;
-
     /// <summary>
     /// Subscribes to the relevant events for this class
     /// </summary>
@@ -121,5 +121,4 @@ public class GameManager : Singleton<GameManager> {
         UnsubscribeFromEvents();
         this.gameDataManager.SaveData();
     }
-
 }

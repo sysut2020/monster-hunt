@@ -12,7 +12,7 @@ public class EnemyEventArgs : EventArgs {
 /// Describes an enemy
 /// </summary>
 [RequireComponent(typeof(EnemyHealthController))]
-public class Enemy : MonoBehaviour, IKillable {
+public class Enemy : MonoBehaviour, IKillable, IDamageNotifyable {
 
     [Tooltip("A sciptable object representing the enemy type")]
     [SerializeField]
@@ -66,4 +66,10 @@ public class Enemy : MonoBehaviour, IKillable {
         EnemySpawnEvent?.Invoke(this, args);
     }
 
+    /// <summary>
+    /// Notify this component that it has taken damge.
+    /// </summary>
+    public void Damaged() {
+        // Trigger damage anumation
+    }
 }

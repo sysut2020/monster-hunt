@@ -34,6 +34,7 @@ public class EnemyBehaviour : MonoBehaviour {
 	private readonly int MAX_IDLE_TIME = 4;
 	private readonly int MIN_IDLE_TIME = 2;
 	private readonly float TIME_BETWEEN_ATTACKS = 1f;
+	private readonly float ATTACK_DURATION = .3f;
 	private BehaviourState CurrentState { get; set; }
 
 	public float PatrolSpeed { get; set; }
@@ -42,12 +43,15 @@ public class EnemyBehaviour : MonoBehaviour {
 	private float PatrolTime { get; set; }
 	private float IdleTime { get; set; }
 	private float AttackTimer { get; set; }
+	private float AttackDuration { get; set; }
 
 	private Enemy Enemy { get; set; }
 	private Transform EnemyTransform { get; set; }
 	private Animator Animator { get; set; }
 
 	private Transform target { get; set; }
+
+	private PlayerHealthController TargetHealthController { get; set; }
 
 	private bool isFacingRight = true;
 
@@ -81,7 +85,8 @@ public class EnemyBehaviour : MonoBehaviour {
 		this.Animator = this.GetComponent<Animator>();
 	}
 	private void Start() {
-		this.target = FindObjectOfType<Player>().transform;
+		this.TargetHealthController = FindObjectOfType<PlayerHealthController>();
+		this.target = TargetHealthController.transform;
 		this.InitializeEnemyBehaviour();
 	}
 
@@ -143,8 +148,9 @@ public class EnemyBehaviour : MonoBehaviour {
 		if (IsPlayerInAttackReach() && AttackTimer < Time.time) {
 			this.SetState(BehaviourState.ATTACK);
 			AttackTimer = TIME_BETWEEN_ATTACKS + Time.time;
+			AttackDuration = ATTACK_DURATION + Time.time;
 			this.Enemy.IsAttacking = true;
-		} else if (AttackTimer < Time.time && this.Enemy.IsAttacking) {
+		} else if (AttackDuration < Time.time && this.Enemy.IsAttacking) {
 			this.Enemy.IsAttacking = false;
 		}
 	}
@@ -178,6 +184,17 @@ public class EnemyBehaviour : MonoBehaviour {
 		}
 
 		return isVisible;
+	}
+
+	/// <summary>
+	/// Applies damage to the target when a reported hit occurs, and the attacking
+	/// flag is raised. Resets the attacking flag when applied damage.
+	/// </summary>
+	public void HitTarget() {
+		if (this.Enemy.IsAttacking) {
+			this.TargetHealthController.ApplyDamage(this.Enemy.EnemyType.Damage);
+			this.Enemy.IsAttacking = false;
+		}
 	}
 
 	private void SetIdleIfLostSightOfTarget() {

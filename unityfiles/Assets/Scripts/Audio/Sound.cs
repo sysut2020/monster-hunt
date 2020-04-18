@@ -52,4 +52,11 @@ public class Sound {
         get => mute;
         set => mute = value;
     }
+
+    [SerializeField] 
+    private bool playOnAwake;
+    public bool PlayOnAwake {
+        get => playOnAwake;
+        set => playOnAwake = value;
+    }
 }

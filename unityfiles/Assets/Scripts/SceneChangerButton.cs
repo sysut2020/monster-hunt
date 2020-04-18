@@ -14,7 +14,7 @@ public class SceneChangerButton : MonoBehaviour {
     [SerializeField]
     [StringInList(typeof(PropertyDrawersHelper), "AllSceneNames")]
     private string sceneName;
-
+    
     private Button sceneChangeButton;
 
     private void Awake() {
@@ -29,6 +29,6 @@ public class SceneChangerButton : MonoBehaviour {
     }
 
     void OnChangeSceneClicked() {
-        SceneManager.Instance.ChangeScene(this.sceneName);
+        SceneManager.Instance.ChangeScene(sceneName);
     }
 }
