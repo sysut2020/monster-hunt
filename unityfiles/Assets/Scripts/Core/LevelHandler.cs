@@ -36,7 +36,11 @@ public class LevelHandler : MonoBehaviour {
     /// <value></value>
     private static int LastHuntingScene { get; set; } = -1;
 
+    private static bool isCreated;
+
     private void Awake() {
+        if (isCreated) { return; }
+        isCreated = true;
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
