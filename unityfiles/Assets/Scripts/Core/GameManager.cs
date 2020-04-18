@@ -9,38 +9,28 @@ public class GameStateChangeEventArgs : EventArgs {
 }
 
 /// <summary>
-/// The manager for the whole game main task is to start and stop scenes and levels
+/// The manager for the whole game main task is to start and stop scenes and huntingGameSceneNames
 /// </summary>
 public class GameManager : Singleton<GameManager> {
 
-    private GAME_STATE currentState;
-    private int nextSceneIndex = 0;
+    // Time value for pause: 0 = time stops
+    private static readonly int PAUSE = 0;
 
-    /// <summary>
-    /// Index of all levels in the game
-    /// </summary>
-    private readonly SCENE_INDEX[] levels = {
-        SCENE_INDEX.LEVEL1, SCENE_INDEX.LEVEL2 // todo add more levels here
-    };
+    // Time value for play/normal time: 1 = time acts as normal
+    private static readonly int PLAY = 1;
+
+    private GAME_STATE CurrentState { get; set; }
 
     private GameDataManager gameDataManager;
 
-    // -- properties -- //
     public GameDataManager GameDataManager {
         get => gameDataManager;
     }
-
-    // -- public -- //
-
-    // -- events -- //    
 
     /// <summary>
     /// This event tells the listeners the game state has changed
     /// </summary>
     public static event EventHandler<GameStateChangeEventArgs> GameStateChangeEvent;
-
-    public static event EventHandler OnMainMenuMusic;
-    public static event EventHandler OnLevel1Music;
 
     /// <summary>
     /// Subscribes to the relevant events for this class
@@ -63,17 +53,11 @@ public class GameManager : Singleton<GameManager> {
 
     /// <summary>
     /// This function is fired when the OnLevelStateChangeEvent is invoked
-    /// This function will trigger on the following level states:
-    /// 
-    /// STATE.EXIT: 
-    ///     the level is done and the game state should be changed to MAIN_MENU
     /// </summary>
     /// <param name="o">the object calling (this should always be the level manager)</param>
     /// <param name="args">the event args containing the new state</param>
     private void CallbackLevelStateChangeEvent(object o, LevelStateChangeEventArgs args) {
-        if (args.NewState == LEVEL_STATE.EXIT) {
-            this.GameStateChange(GAME_STATE.MAIN_MENU);
-        }
+
     }
 
     /// <summary>
@@ -97,47 +81,21 @@ public class GameManager : Singleton<GameManager> {
     /// </summary>
     /// <param name="NewState">The new game state</param>
     public void GameStateChange(GAME_STATE NewState) {
-        this.currentState = NewState;
+        this.CurrentState = NewState;
         GameStateChangeEventArgs args = new GameStateChangeEventArgs();
         args.NewState = NewState;
-        
+
         switch (NewState) {
-            case GAME_STATE.MAIN_MENU:
-                nextSceneIndex = 0; //resets game
-                SceneManager.Instance.ChangeScene(SCENE_INDEX.MAIN_MENU);
+            case GAME_STATE.PLAY:
+                this.StartTime();
                 break;
-
-            case GAME_STATE.START_GAME:
-                // reset counter just in case
-                nextSceneIndex = 1;
-                SceneManager.Instance.ChangeScene(SCENE_INDEX.LEVEL1);
-                break;
-            
-            // todo add a countinue state where one can play from the level last played
-            
-            case GAME_STATE.LETTER_LEVEL:
-                SceneManager.Instance.ChangeScene(SCENE_INDEX.LETTER_GAME);
-                break;
-
-            case GAME_STATE.SCOREBOARD:
-                SceneManager.Instance.ChangeScene(SCENE_INDEX.SCOREBOARD);
+            case GAME_STATE.PAUSE:
+                this.PauseTime();
                 break;
 
             case GAME_STATE.EXIT:
                 Application.Quit();
                 break;
-            
-            case GAME_STATE.NEXT_LEVEL:
-                if (nextSceneIndex >= levels.Length) { // no more levels
-                    this.GameStateChange(GAME_STATE.SCOREBOARD);
-                    break;
-                }
-                var nextScene = levels[nextSceneIndex];
-                nextSceneIndex++;
-                SceneManager.Instance.ChangeScene(nextScene);
-                
-                break;
-
             default:
                 Debug.LogError("🌮🌮🌮🌮  UNKNOWN GAME STATE  🌮🌮🌮🌮");
                 break;
@@ -146,25 +104,22 @@ public class GameManager : Singleton<GameManager> {
         GameStateChangeEvent?.Invoke(this, args);
     }
 
+    private void PauseTime() {
+        Time.timeScale = PAUSE;
+    }
 
-    // -- unity -- //
+    private void StartTime() {
+        Time.timeScale = PLAY;
+    }
 
-    private void Awake() { 
+    private void Awake() {
         this.gameDataManager = new GameDataManager();
         SubscribeToEvents();
     }
-    
 
     private void OnDestroy() {
         UnsubscribeFromEvents();
         this.gameDataManager.SaveData();
     }
 
-    private void PlayMainMenuMusic() {
-        OnMainMenuMusic?.Invoke(this, EventArgs.Empty);
-    }
-
-    private void PlayLevel1Music() {
-        OnLevel1Music?.Invoke(this, EventArgs.Empty);
-    }
 }
