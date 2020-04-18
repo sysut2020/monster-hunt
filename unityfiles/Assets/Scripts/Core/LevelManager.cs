@@ -34,9 +34,6 @@ public class LevelManager : Singleton<LevelManager> {
     private PlayThroughData playThroughData;
     private GameDataManager dataManager;
 
-    private static readonly int PAUSE = 0;
-    private static readonly int PLAY = 1;
-
     // -- properties -- //
 
     // -- public -- //
@@ -119,17 +116,14 @@ public class LevelManager : Singleton<LevelManager> {
         LevelManager.Instance.LevelStateChange(state);
     }
 
-
     // -- private -- //
 
-    private void pauseTime(){
-        Time.timeScale = PAUSE;
-        LevelManager.timescaleChangedEvent?.Invoke(this, EventArgs.Empty);
+    private void PauseTime() {
+        timescaleChangedEvent?.Invoke(this, EventArgs.Empty);
     }
 
-    private void startTime(){
-        Time.timeScale = PLAY;
-        LevelManager.timescaleChangedEvent?.Invoke(this, EventArgs.Empty);
+    private void StartTime() {
+        timescaleChangedEvent?.Invoke(this, EventArgs.Empty);
     }
 
     /// <summary>
@@ -143,16 +137,16 @@ public class LevelManager : Singleton<LevelManager> {
         switch (NewState) {
             // The game is over show game over screen
             case LEVEL_STATE.GAME_OVER:
-                this.pauseTime();
+                this.PauseTime();
                 this.levelTimer.Pause(this.LEVEL_TIMER_ID);
                 break;
             case LEVEL_STATE.GAME_WON:
-                this.pauseTime();
+                this.PauseTime();
                 this.levelTimer.Pause(this.LEVEL_TIMER_ID);
                 break;
 
             case LEVEL_STATE.PAUSE:
-                this.pauseTime();
+                this.PauseTime();
                 this.levelTimer.Pause(this.LEVEL_TIMER_ID);
                 break;
 
@@ -164,7 +158,7 @@ public class LevelManager : Singleton<LevelManager> {
 
                 // Start the main mode spawn the player and start the level
             case LEVEL_STATE.PLAY:
-                startTime();
+                StartTime();
                 break;
                 // Exit the game and go to main menu
             case LEVEL_STATE.EXIT:
@@ -177,8 +171,6 @@ public class LevelManager : Singleton<LevelManager> {
 
         OnLevelStateChangeEvent?.Invoke(this, args);
     }
-
-    
 
     // TODO: maybe remove?
     /// <summary>
