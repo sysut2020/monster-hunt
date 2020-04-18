@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 /// <summary>
@@ -23,8 +23,6 @@ public class LevelHandler : MonoBehaviour {
     [SerializeField]
     [StringInList(typeof(PropertyDrawersHelper), "AllSceneNames")]
     private string letterGameSceneName;
-
-    private GAME_STATE currentState;
 
     /// <summary>
     /// Index of the current scene. If it is a hunting game it is >=0 else its -1
