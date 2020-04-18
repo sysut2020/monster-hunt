@@ -6,10 +6,18 @@ using UnityEngine.UI;
 /// Changes to next level
 /// </summary>
 [RequireComponent(typeof(Button))]
-public class ButtonChangeToNextLevel : ChangeEventButton {
-    private readonly GAME_STATE eventToFire = GAME_STATE.NEXT_LEVEL;
+public class ButtonChangeToNextLevel : MonoBehaviour {
 
-    public static event EventHandler<ButtonClickEventArgs> buttonEventHandler;
-    protected override Enum EventToFire => eventToFire;
-    protected override EventHandler<ButtonClickEventArgs> ButtonEventHandler => buttonEventHandler;
+	private Button button;
+	private LevelHandler levelHandler;
+
+	private void Awake() {
+		this.button = GetComponent<Button>();
+		levelHandler = FindObjectOfType<LevelHandler>();
+		button.onClick.AddListener(() => this.levelHandler?.NextLevel());
+	}
+
+	private void OnDestroy() {
+		button.onClick.RemoveAllListeners();
+	}
 }
