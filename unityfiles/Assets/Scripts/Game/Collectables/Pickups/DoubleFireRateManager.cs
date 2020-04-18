@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public class OnPickupDoubleFireRateArgs : EventArgs {
+    public bool Active { get; set; }
+}
 
 /// <summary>
 /// Manages the double fire rate powerups
@@ -18,14 +21,13 @@ public class DoubleFireRateManager : MonoBehaviour {
     [SerializeField]
     private int secEffectDuration = 10;
 
-
-
     private int rollingID = 0;
     private GunController usedGunController = null;
     private int activeMultipliers = 0;
 
     private Dictionary<int, IEnumerator> activeCoroutines = new Dictionary<int, IEnumerator>();
 
+    public static event EventHandler<OnPickupDoubleFireRateArgs> OnDoubleFireRateStateChange;
     // -- properties -- //
 
     public int RollingID { 
@@ -52,22 +54,24 @@ public class DoubleFireRateManager : MonoBehaviour {
     }
 
     private void CallbackWeaponChangedEvent(object _, WeaponChangedEventArgs args) {
-        this.Cleanup ();
+        this.Cleanup();
         this.usedGunController = args.NewGunController;
         this.initialFireRate = args.NewGunController.FireRate;
-        this.UpdateEffectOnController ();
+        this.UpdateEffectOnController();
     }
 
-    private void CallbackOnPowerupCollected(object _, PowerUpCollectedArgs args) {
-        if (PICKUP_TYPE.DOUBLE_FIRE_RATE == args.Effect){
+    private void CallbackOnPowerupCollected(object _, PowerUpCollectedArgs powerup) {
+        if (PICKUP_TYPE.DOUBLE_FIRE_RATE == powerup.Effect) {
             StartCoroutine(Effect(this.secEffectDuration, this.rollingID));
+            var args = new OnPickupDoubleFireRateArgs();
+            args.Active = true;
+            OnDoubleFireRateStateChange?.Invoke(this, args);
         }
     }
 
     // -- private -- //
 
-    
-    private IEnumerator Effect(int waitTime, int rid){
+    private IEnumerator Effect(int waitTime, int rid) {
         this.activeMultipliers += 1;
         this.UpdateEffectOnController();
         yield return new WaitForSeconds(waitTime);
@@ -76,33 +80,32 @@ public class DoubleFireRateManager : MonoBehaviour {
         StopActiveCorutine(rid);
     }
 
-    private void StopActiveCorutine(int rid){
-        if (activeCoroutines.ContainsKey(rid)){
+    private void StopActiveCorutine(int rid) {
+        if (activeCoroutines.ContainsKey(rid)) {
             StopCoroutine(activeCoroutines[rid]);
             activeCoroutines.Remove(rid);
         }
     }
 
-
-    
-    private void Cleanup () {
-        if (usedGunController != null){
+    private void Cleanup() {
+        if (usedGunController != null) {
             usedGunController.FireRate = initialFireRate;
         }
     }
 
     private void UpdateEffectOnController() {
-        if (this.activeMultipliers < 0){
+        if (this.activeMultipliers < 0) {
             throw new Exception("Bopdidop somthing is wrong");
-        }else if (activeMultipliers > 0) {
-            this.usedGunController.FireRate = initialFireRate * this.unitMultiplier* this.unitMultiplier;
-        } else{
+        } else if (activeMultipliers > 0) {
+            this.usedGunController.FireRate = initialFireRate * this.unitMultiplier * this.unitMultiplier;
+        } else {
             this.usedGunController.FireRate = initialFireRate;
+            var args = new OnPickupDoubleFireRateArgs();
+            args.Active = false;
+            OnDoubleFireRateStateChange?.Invoke(this, args);
         }
 
-
     }
-
 
     private void Awake() {
         this.SubscribeToEvents();

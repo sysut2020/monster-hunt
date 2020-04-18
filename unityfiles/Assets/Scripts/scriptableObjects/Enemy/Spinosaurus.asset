@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Spinosaurus
   m_EditorClassIdentifier: 
   health: 12
+  damage: 3
   patrolSpeed: 4
   chaseSpeed: 9
   visionLength: 15
