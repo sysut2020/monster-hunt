@@ -6,7 +6,13 @@ using UnityEngine;
 /// </summary>
 public class GameStateChangeEventArgs : EventArgs {
     public GAME_STATE NewState { get; set; }
-    public int NextSceneIndex { get; set; }
+}
+
+/// <summary>
+/// The event data for the game state changed events 
+/// </summary>
+public class GamePausedEventArgs : EventArgs {
+    public bool IsPaued { get; set; }
 }
 
 /// <summary>
@@ -32,6 +38,12 @@ public class GameManager : Singleton<GameManager> {
     /// This event tells the listeners the game state has changed
     /// </summary>
     public static event EventHandler<GameStateChangeEventArgs> GameStateChangeEvent;
+
+    /// <summary>
+    /// Event that tells the listeners if the game has been paused or not
+    /// </summary>
+    public static event EventHandler<GamePausedEventArgs> GamePausedEvent;
+
     /// <summary>
     /// Subscribes to the relevant events for this class
     /// </summary>
@@ -77,10 +89,11 @@ public class GameManager : Singleton<GameManager> {
     // -- private -- //
 
     /// <summary>
-    /// Changes the game state 
+    /// Changes the game state to the priovided state, and broadcast the change
+    /// as an event.
     /// </summary>
     /// <param name="NewState">The new game state</param>
-    public void GameStateChange(GAME_STATE NewState) {
+    public void SetGameState(GAME_STATE NewState) {
         this.CurrentState = NewState;
         GameStateChangeEventArgs args = new GameStateChangeEventArgs();
         args.NewState = NewState;
@@ -88,11 +101,12 @@ public class GameManager : Singleton<GameManager> {
         switch (NewState) {
             case GAME_STATE.PLAY:
                 this.StartTime();
+                GamePausedEvent?.Invoke(this, new GamePausedEventArgs { IsPaued = false });
                 break;
             case GAME_STATE.PAUSE:
+                GamePausedEvent?.Invoke(this, new GamePausedEventArgs { IsPaued = true });
                 this.PauseTime();
                 break;
-
             case GAME_STATE.EXIT:
                 Application.Quit();
                 break;
@@ -121,4 +135,5 @@ public class GameManager : Singleton<GameManager> {
         UnsubscribeFromEvents();
         this.gameDataManager.SaveData();
     }
+
 }

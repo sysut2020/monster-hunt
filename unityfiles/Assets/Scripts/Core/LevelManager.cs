@@ -45,8 +45,6 @@ public class LevelManager : Singleton<LevelManager> {
     /// </summary>
     public static event EventHandler<LevelStateChangeEventArgs> OnLevelStateChangeEvent;
 
-    public static event EventHandler timescaleChangedEvent;
-
     /// <summary>
     /// This event tells the listeners they are about to be deleted and should relese 
     /// all subscribed events
@@ -61,6 +59,7 @@ public class LevelManager : Singleton<LevelManager> {
         LetterCollectable.OnLetterCollected += CallbackLetterCollected;
         PlayerHealthController.OnPlayerLivesUpdate += CallbackPlayerLivesUpdate;
         Enemy.EnemyKilledEvent += CallbackEnemyKilledEvent;
+        GameManager.GamePausedEvent += CallbackOnGamePaused;
     }
 
     /// <summary>
@@ -70,6 +69,7 @@ public class LevelManager : Singleton<LevelManager> {
         LetterCollectable.OnLetterCollected -= CallbackLetterCollected;
         PlayerHealthController.OnPlayerLivesUpdate -= CallbackPlayerLivesUpdate;
         Enemy.EnemyKilledEvent -= CallbackEnemyKilledEvent;
+        GameManager.GamePausedEvent -= CallbackOnGamePaused;
     }
 
     private void CallbackLetterCollected(object _, LetterCollectedArgs args) {
@@ -103,21 +103,24 @@ public class LevelManager : Singleton<LevelManager> {
     }
 
     /// <summary>
+    /// Called when the game is paused/unpaused.
+    /// </summary>
+    /// <param name="_">the object that sent the event > unused</param>
+    /// <param name="args">event arguments</param>
+    private void CallbackOnGamePaused(object _, GamePausedEventArgs args) {
+        if (args.IsPaued) {
+            this.levelTimer.Pause(this.LEVEL_TIMER_ID);
+        } else {
+            this.levelTimer.Contue(this.LEVEL_TIMER_ID);
+        }
+    }
+
+    /// <summary>
     /// Changes the level state to the provided state
     /// </summary>
     /// <param name="state">state to change too</param>
     public void ChangeLevelState(LEVEL_STATE state) {
-        LevelManager.Instance.LevelStateChange(state);
-    }
-
-    // -- private -- //
-
-    private void PauseTime() {
-        timescaleChangedEvent?.Invoke(this, EventArgs.Empty);
-    }
-
-    private void StartTime() {
-        timescaleChangedEvent?.Invoke(this, EventArgs.Empty);
+        Instance.LevelStateChange(state);
     }
 
     /// <summary>
@@ -131,33 +134,16 @@ public class LevelManager : Singleton<LevelManager> {
         switch (NewState) {
             // The game is over show game over screen
             case LEVEL_STATE.GAME_OVER:
-                this.PauseTime();
-                this.levelTimer.Pause(this.LEVEL_TIMER_ID);
                 break;
             case LEVEL_STATE.GAME_WON:
-                this.PauseTime();
-                this.levelTimer.Pause(this.LEVEL_TIMER_ID);
                 break;
-
-            case LEVEL_STATE.PAUSE:
-                this.PauseTime();
-                this.levelTimer.Pause(this.LEVEL_TIMER_ID);
-                break;
-
             case LEVEL_STATE.START:
-                this.levelTimer.Contue(this.LEVEL_TIMER_ID);
                 InitLevel();
                 ChangeLevelState(LEVEL_STATE.PLAY);
-                break;
-
-                // Start the main mode spawn the player and start the level
-            case LEVEL_STATE.PLAY:
-                StartTime();
                 break;
                 // Exit the game and go to main menu
             case LEVEL_STATE.EXIT:
                 break;
-
             default:
                 Debug.Log("🌮🌮🌮🌮  UNKNOWN LEVEL STATE  🌮🌮🌮🌮");
                 break;

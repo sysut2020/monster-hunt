@@ -11,7 +11,7 @@ public class WeaponChangedEventArgs : EventArgs {
     public GunController NewGunController { get; set; }
     public Gun NewGun { get; set; }
     public PLAYER_ANIMATION AnimId { get; set; }
-    
+
     public int GunIndex { get; set; }
 }
 
@@ -25,6 +25,9 @@ public class PlayerWeaponController : MonoBehaviour {
     [Tooltip("the hand that holds the gun.")]
     private GameObject gunHand;
 
+    /// <summary>
+    /// Toggled when the game is paused/unpaused
+    /// </summary>
     private bool isPaused = false;
 
     private BulletBuffer bulletBuffer = new BulletBuffer();
@@ -56,16 +59,36 @@ public class PlayerWeaponController : MonoBehaviour {
 
     public static event EventHandler<WeaponChangedEventArgs> WeaponChangedEvent;
 
-    private void timescaleChangedEventCallback(object _, EventArgs __){
-        if(Time.timeScale.Equals(1f)){
-            this.isPaused = false;
-        } else {
-            this.isPaused = true;
-        }
+    /// <summary>
+    /// Called when the game is paused/unpaused.
+    /// </summary>
+    /// <param name="_">the object that sent the event > unused</param>
+    /// <param name="args">event arguments</param>
+    private void CallbackOnGamePaused(object _, GamePausedEventArgs args) {
+        this.isPaused = args.IsPaued;
     }
 
+    /// <summary>
+    /// Checks for inputs from mouse/keyboard for
+    /// shooting, and weapond changing
+    /// </summary>
+    private void CheckControlsInput() {
+        if (Input.GetKeyDown(KeyCode.E)) {
+            this.ChangeWeapon(1);
+        }
 
-    // -- private -- //
+        if (Input.GetKeyDown(KeyCode.Q)) {
+            this.ChangeWeapon(-1);
+        }
+
+        if (Input.GetMouseButtonDown(0)) {
+            this.MaybeFire();
+        }
+
+        if (Input.GetMouseButton(1)) {
+            this.MaybeFire();
+        }
+    }
 
     /// <summary>
     /// Changes the current weapon the given number of positions
@@ -92,7 +115,6 @@ public class PlayerWeaponController : MonoBehaviour {
         args.NewGun = AvailableWeapons[newIndex];
         args.AnimId = this.activeGunController.WeaponData.HoldingAnimation;
         args.GunIndex = newIndex;
-        
 
         WeaponChangedEvent?.Invoke(this, args);
     }
@@ -118,41 +140,22 @@ public class PlayerWeaponController : MonoBehaviour {
         this.availableWeapons = tmp;
     }
 
-    void Start(){
+    void Start() {
         //Changes the weapon to the first weapon in inventory
         ChangeWeapon(1);
-        LevelManager.timescaleChangedEvent += timescaleChangedEventCallback;
+        GameManager.GamePausedEvent += CallbackOnGamePaused;
     }
 
-    
-    void OnDestroy(){
-        LevelManager.timescaleChangedEvent -= timescaleChangedEventCallback;
+    void OnDestroy() {
+        GameManager.GamePausedEvent -= CallbackOnGamePaused;
     }
-    
 
     /// <summary>
-    /// Update is called every frame, if the MonoBehaviour is enabled.
+    /// Checks for input buttons
     /// </summary>
-    void Update() {
-        if (!this.isPaused){
-            if (Input.GetKeyDown(KeyCode.E)) {
-                ChangeWeapon(1);
-            }
-
-            if (Input.GetKeyDown(KeyCode.Q)) {
-                ChangeWeapon(-1);
-            }
-
-            if (Input.GetMouseButtonDown(0)) {
-                this.MaybeFire();
-            }
-
-            if (Input.GetMouseButton(1)) {
-                this.MaybeFire();
-            }
-        }
-        
-
+    private void Update() {
+        if (this.isPaused) { return; }
+        CheckControlsInput();
     }
 
 }
