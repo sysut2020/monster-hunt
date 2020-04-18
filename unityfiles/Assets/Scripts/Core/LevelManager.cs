@@ -61,7 +61,6 @@ public class LevelManager : Singleton<LevelManager> {
         LetterCollectable.OnLetterCollected += CallbackLetterCollected;
         PlayerHealthController.OnPlayerLivesUpdate += CallbackPlayerLivesUpdate;
         Enemy.EnemyKilledEvent += CallbackEnemyKilledEvent;
-        PauseMenuController.PauseMenuChangeEvent += CallbackChangeLevelState;
     }
 
     /// <summary>
@@ -71,7 +70,6 @@ public class LevelManager : Singleton<LevelManager> {
         LetterCollectable.OnLetterCollected -= CallbackLetterCollected;
         PlayerHealthController.OnPlayerLivesUpdate -= CallbackPlayerLivesUpdate;
         Enemy.EnemyKilledEvent -= CallbackEnemyKilledEvent;
-        PauseMenuController.PauseMenuChangeEvent -= CallbackChangeLevelState;
     }
 
     private void CallbackLetterCollected(object _, LetterCollectedArgs args) {
@@ -79,10 +77,6 @@ public class LevelManager : Singleton<LevelManager> {
         if (this.playThroughData.LetterCollected == this.levelDetails.NumberOfLetters) {
             this.ChangeLevelState(LEVEL_STATE.GAME_WON);
         }
-    }
-
-    private void CallbackChangeLevelState(object _, PauseMenuChangeEventArgs args) {
-        ChangeLevelState(args.NewLevelState);
     }
 
     /// <summary>
