@@ -1369,41 +1369,6 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1403742472678572637, guid: c0037af04ebe241508ded6287f68ad6c,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6671876973908272388, guid: c0037af04ebe241508ded6287f68ad6c,
-        type: 3}
-      propertyPath: m_textInfo.characterCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6671876973908272388, guid: c0037af04ebe241508ded6287f68ad6c,
-        type: 3}
-      propertyPath: m_textInfo.spaceCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6671876973908272388, guid: c0037af04ebe241508ded6287f68ad6c,
-        type: 3}
-      propertyPath: m_textInfo.wordCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6671876973908272388, guid: c0037af04ebe241508ded6287f68ad6c,
-        type: 3}
-      propertyPath: m_textInfo.lineCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6671876973908272388, guid: c0037af04ebe241508ded6287f68ad6c,
-        type: 3}
-      propertyPath: m_textInfo.pageCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7271288109333861747, guid: c0037af04ebe241508ded6287f68ad6c,
-        type: 3}
-      propertyPath: m_Name
-      value: GameWon
-      objectReference: {fileID: 0}
     - target: {fileID: 1403742472032195996, guid: c0037af04ebe241508ded6287f68ad6c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1508,6 +1473,41 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1403742472678572637, guid: c0037af04ebe241508ded6287f68ad6c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6671876973908272388, guid: c0037af04ebe241508ded6287f68ad6c,
+        type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6671876973908272388, guid: c0037af04ebe241508ded6287f68ad6c,
+        type: 3}
+      propertyPath: m_textInfo.spaceCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6671876973908272388, guid: c0037af04ebe241508ded6287f68ad6c,
+        type: 3}
+      propertyPath: m_textInfo.wordCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6671876973908272388, guid: c0037af04ebe241508ded6287f68ad6c,
+        type: 3}
+      propertyPath: m_textInfo.lineCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6671876973908272388, guid: c0037af04ebe241508ded6287f68ad6c,
+        type: 3}
+      propertyPath: m_textInfo.pageCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7271288109333861747, guid: c0037af04ebe241508ded6287f68ad6c,
+        type: 3}
+      propertyPath: m_Name
+      value: GameWon
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c0037af04ebe241508ded6287f68ad6c, type: 3}
