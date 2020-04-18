@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 4924395602239250316}
   - component: {fileID: 7343262343107847927}
   - component: {fileID: 4908017252100409779}
-  - component: {fileID: 2782975723722910897}
   - component: {fileID: 678585245}
   m_Layer: 0
   m_Name: PresistentGO
@@ -71,26 +70,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc556ce73a7cbb740825befbaee8dcc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2782975723722910897
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7343262343107847928}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3fa897e3edc3f3646bf91ff89573e1a9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mainMenuMusic:
-    name: 
-    audioClipToPlay: {fileID: 8300000, guid: 8e77f5a3279a51145b5b06a218d59950, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 1
-    mute: 0
-    playOnAwake: 1
 --- !u!114 &678585245
 MonoBehaviour:
   m_ObjectHideFlags: 0
