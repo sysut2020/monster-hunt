@@ -24,12 +24,13 @@ public class AudioManager : Singleton<AudioManager> {
     public void PlaySound(Sound sound) {
         foreach (var source in soundFX) {
             if (!source.isPlaying) {
+                source.playOnAwake = sound.PlayOnAwake;
                 source.loop = sound.Loop;
                 source.name = sound.Name;
                 source.volume = sound.Volume;
                 source.pitch = sound.Pitch;
                 source.mute = sound.Mute;
-                
+
                 source.PlayOneShot(sound.AudioClip);
                 break;
             }
@@ -43,7 +44,8 @@ public class AudioManager : Singleton<AudioManager> {
         gameMusic.pitch = sound.Pitch;
         gameMusic.mute = sound.Mute;
         gameMusic.clip = sound.AudioClip;
-        
+        gameMusic.playOnAwake = sound.PlayOnAwake;
+
         gameMusic.Play(1500);
 
     }

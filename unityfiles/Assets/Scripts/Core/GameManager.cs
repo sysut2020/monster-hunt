@@ -6,6 +6,7 @@ using UnityEngine;
 /// </summary>
 public class GameStateChangeEventArgs : EventArgs {
     public GAME_STATE NewState { get; set; }
+    public int NextSceneIndex { get; set; }
 }
 
 /// <summary>
@@ -20,7 +21,11 @@ public class GameManager : Singleton<GameManager> {
     /// Index of all levels in the game
     /// </summary>
     private readonly SCENE_INDEX[] levels = {
-        SCENE_INDEX.LEVEL1, SCENE_INDEX.LEVEL2 // todo add more levels here
+        SCENE_INDEX.LEVEL1, 
+        SCENE_INDEX.LEVEL2,
+        SCENE_INDEX.LEVEL3,
+        SCENE_INDEX.LEVEL4,
+        SCENE_INDEX.LEVEL5
     };
 
     private GameDataManager gameDataManager;
@@ -38,10 +43,7 @@ public class GameManager : Singleton<GameManager> {
     /// This event tells the listeners the game state has changed
     /// </summary>
     public static event EventHandler<GameStateChangeEventArgs> GameStateChangeEvent;
-
-    public static event EventHandler OnMainMenuMusic;
-    public static event EventHandler OnLevel1Music;
-
+    
     /// <summary>
     /// Subscribes to the relevant events for this class
     /// </summary>
@@ -100,7 +102,7 @@ public class GameManager : Singleton<GameManager> {
         this.currentState = NewState;
         GameStateChangeEventArgs args = new GameStateChangeEventArgs();
         args.NewState = NewState;
-        
+
         switch (NewState) {
             case GAME_STATE.MAIN_MENU:
                 nextSceneIndex = 0; //resets game
@@ -134,6 +136,7 @@ public class GameManager : Singleton<GameManager> {
                 }
                 var nextScene = levels[nextSceneIndex];
                 nextSceneIndex++;
+                args.NextSceneIndex = nextSceneIndex;
                 SceneManager.Instance.ChangeScene(nextScene);
                 
                 break;
@@ -142,7 +145,7 @@ public class GameManager : Singleton<GameManager> {
                 Debug.LogError("🌮🌮🌮🌮  UNKNOWN GAME STATE  🌮🌮🌮🌮");
                 break;
         }
-
+        
         GameStateChangeEvent?.Invoke(this, args);
     }
 
@@ -158,13 +161,5 @@ public class GameManager : Singleton<GameManager> {
     private void OnDestroy() {
         UnsubscribeFromEvents();
         this.gameDataManager.SaveData();
-    }
-
-    private void PlayMainMenuMusic() {
-        OnMainMenuMusic?.Invoke(this, EventArgs.Empty);
-    }
-
-    private void PlayLevel1Music() {
-        OnLevel1Music?.Invoke(this, EventArgs.Empty);
     }
 }

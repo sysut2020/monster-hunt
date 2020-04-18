@@ -9,7 +9,7 @@ using UnityEngine.UI;
 /// Button clicked event is added on creation, changes scene when button is clicked.
 /// </summary>
 [RequireComponent(typeof(Button))]
-public class SceneChangerButton : MonoBehaviour {
+public class ChangeToLevelSceneButton : MonoBehaviour {
 
     [SerializeField]
     [StringInList(typeof(PropertyDrawersHelper), "AllSceneNames")]
@@ -29,6 +29,6 @@ public class SceneChangerButton : MonoBehaviour {
     }
 
     void OnChangeSceneClicked() {
-        SceneManager.Instance.ChangeScene(sceneName);
+        GameManager.Instance.GameStateChange(GAME_STATE.LETTER_LEVEL);
     }
 }
