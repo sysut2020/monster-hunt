@@ -57,3 +57,10 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     mute: 0
+  poopFireSound:
+    name: 
+    audioClipToPlay: {fileID: 8300000, guid: 72690fdb509ce6b25bbc3d436126336b, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    mute: 0

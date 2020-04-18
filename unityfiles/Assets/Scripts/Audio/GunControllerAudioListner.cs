@@ -11,10 +11,14 @@ public class GunControllerAudioListner : AudioListner {
     [SerializeField] 
     private Sound laserFireSound;
 
+    [SerializeField]
+    private Sound poopFireSound;
+
     private Sound fireSoundToPlay;
 
     private int sniperIndex = 0;
     private int laserIndex = 1;
+    private int poopIndex = 2;
     
     
     private void Awake() {
@@ -37,6 +41,10 @@ public class GunControllerAudioListner : AudioListner {
         }
         if (args.GunIndex == laserIndex) {
             fireSoundToPlay = laserFireSound;
+        }
+
+        if (args.GunIndex == poopIndex) {
+            fireSoundToPlay = poopFireSound;
         }
     }
 }
