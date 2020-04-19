@@ -8,8 +8,11 @@ using UnityEngine;
 [Serializable]
 public class CollectibleSpawnerItem {
 
-	private string itemName;
-	public string ItemName { get => itemName; private set => itemName = value; }
+	public CollectibleSpawnerItem(int spawnChance, Collectable item) {
+		this.itemName = item.Name;
+		this.spawnChance = spawnChance;
+		this.item = item;
+	}
 
 	/// <summary>
 	/// Higher value higher chance of been spawned
@@ -18,16 +21,16 @@ public class CollectibleSpawnerItem {
 	[Range(0, 100)]
 	[Tooltip("Higher values means more likely to get spawned")]
 	private int spawnChance;
-	public int SpawnChance { get => spawnChance; private set => spawnChance = value; }
 
 	[SerializeField]
 	private Collectable item;
+	
+	private string itemName;
+
+	public string ItemName { get => itemName; private set => itemName = value; }
+	public int SpawnChance { get => spawnChance; private set => spawnChance = value; }
 	public Collectable Item { get => item; private set => item = value; }
 
-	public CollectibleSpawnerItem(int spawnChance, Collectable item) {
-		this.itemName = item.Name;
-		this.spawnChance = spawnChance;
-		this.item = item;
-	}
+	
 
 }
