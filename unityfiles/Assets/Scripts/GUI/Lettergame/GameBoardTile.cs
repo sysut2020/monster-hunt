@@ -44,7 +44,7 @@ public class GameBoardTile : Dragable {
     public void SetTile(LetterGameLetter letter) {
         letter.OnValidLetterInWordCallback(SetTileValidColor);
         holdingLetter = letter;
-        LetterGameManager.Instance.UpdateLetterPos(XPos, YPos, letter);
+        LetterLevelController.Instance.UpdateLetterPos(XPos, YPos, letter);
         this.updateDisplayedLetter();
     }
 
@@ -129,13 +129,13 @@ public class GameBoardTile : Dragable {
                 }
             } else {
                 // hit some GO without game tile
-                LetterGameManager.Instance.UpdateLetterPos(-1, -1, holdingLetter);
+                LetterLevelController.Instance.UpdateLetterPos(-1, -1, holdingLetter);
                 ResetTile();
 
             }
         } else {
             // hit nothing
-            LetterGameManager.Instance.UpdateLetterPos(-1, -1, holdingLetter);
+            LetterLevelController.Instance.UpdateLetterPos(-1, -1, holdingLetter);
             ResetTile();
         }
 

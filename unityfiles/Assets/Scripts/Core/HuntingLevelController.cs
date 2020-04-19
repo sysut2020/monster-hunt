@@ -19,7 +19,7 @@ class PlayThroughData {
 /// <summary>
 /// A manager for a level in the game 
 /// </summary>
-public class LevelManager : Singleton<LevelManager> {
+public class HuntingLevelController : Singleton<HuntingLevelController> {
 
     [SerializeField]
     private LevelDetails levelDetails;
@@ -34,9 +34,6 @@ public class LevelManager : Singleton<LevelManager> {
     private PlayThroughData playThroughData;
     private GameDataManager dataManager;
 
-    private static readonly int PAUSE = 0;
-    private static readonly int PLAY = 1;
-
     // -- properties -- //
 
     // -- public -- //
@@ -47,8 +44,6 @@ public class LevelManager : Singleton<LevelManager> {
     /// This event tells the listeners the level state has changed
     /// </summary>
     public static event EventHandler<LevelStateChangeEventArgs> OnLevelStateChangeEvent;
-
-    public static event EventHandler timescaleChangedEvent;
 
     /// <summary>
     /// This event tells the listeners they are about to be deleted and should relese 
@@ -64,7 +59,7 @@ public class LevelManager : Singleton<LevelManager> {
         LetterCollectable.OnLetterCollected += CallbackLetterCollected;
         PlayerHealthController.OnPlayerLivesUpdate += CallbackPlayerLivesUpdate;
         Enemy.EnemyKilledEvent += CallbackEnemyKilledEvent;
-        PauseMenuController.PauseMenuChangeEvent += CallbackChangeLevelState;
+        GameManager.GamePausedEvent += CallbackOnGamePaused;
     }
 
     /// <summary>
@@ -74,7 +69,7 @@ public class LevelManager : Singleton<LevelManager> {
         LetterCollectable.OnLetterCollected -= CallbackLetterCollected;
         PlayerHealthController.OnPlayerLivesUpdate -= CallbackPlayerLivesUpdate;
         Enemy.EnemyKilledEvent -= CallbackEnemyKilledEvent;
-        PauseMenuController.PauseMenuChangeEvent -= CallbackChangeLevelState;
+        GameManager.GamePausedEvent -= CallbackOnGamePaused;
     }
 
     private void CallbackLetterCollected(object _, LetterCollectedArgs args) {
@@ -82,10 +77,6 @@ public class LevelManager : Singleton<LevelManager> {
         if (this.playThroughData.LetterCollected == this.levelDetails.NumberOfLetters) {
             this.ChangeLevelState(LEVEL_STATE.GAME_WON);
         }
-    }
-
-    private void CallbackChangeLevelState(object _, PauseMenuChangeEventArgs args) {
-        ChangeLevelState(args.NewLevelState);
     }
 
     /// <summary>
@@ -112,24 +103,24 @@ public class LevelManager : Singleton<LevelManager> {
     }
 
     /// <summary>
+    /// Called when the game is paused/unpaused.
+    /// </summary>
+    /// <param name="_">the object that sent the event > unused</param>
+    /// <param name="args">event arguments</param>
+    private void CallbackOnGamePaused(object _, GamePausedEventArgs args) {
+        if (args.IsPaued) {
+            this.levelTimer.Pause(this.LEVEL_TIMER_ID);
+        } else {
+            this.levelTimer.Contue(this.LEVEL_TIMER_ID);
+        }
+    }
+
+    /// <summary>
     /// Changes the level state to the provided state
     /// </summary>
     /// <param name="state">state to change too</param>
     public void ChangeLevelState(LEVEL_STATE state) {
-        LevelManager.Instance.LevelStateChange(state);
-    }
-
-
-    // -- private -- //
-
-    private void pauseTime(){
-        Time.timeScale = PAUSE;
-        LevelManager.timescaleChangedEvent?.Invoke(this, EventArgs.Empty);
-    }
-
-    private void startTime(){
-        Time.timeScale = PLAY;
-        LevelManager.timescaleChangedEvent?.Invoke(this, EventArgs.Empty);
+        Instance.LevelStateChange(state);
     }
 
     /// <summary>
@@ -143,33 +134,11 @@ public class LevelManager : Singleton<LevelManager> {
         switch (NewState) {
             // The game is over show game over screen
             case LEVEL_STATE.GAME_OVER:
-                this.pauseTime();
-                this.levelTimer.Pause(this.LEVEL_TIMER_ID);
-                break;
             case LEVEL_STATE.GAME_WON:
-                this.pauseTime();
-                this.levelTimer.Pause(this.LEVEL_TIMER_ID);
                 break;
-
-            case LEVEL_STATE.PAUSE:
-                this.pauseTime();
-                this.levelTimer.Pause(this.LEVEL_TIMER_ID);
-                break;
-
-            case LEVEL_STATE.START:
-                this.levelTimer.Contue(this.LEVEL_TIMER_ID);
-                InitLevel();
-                ChangeLevelState(LEVEL_STATE.PLAY);
-                break;
-
-                // Start the main mode spawn the player and start the level
             case LEVEL_STATE.PLAY:
-                startTime();
+                InitLevel();
                 break;
-                // Exit the game and go to main menu
-            case LEVEL_STATE.EXIT:
-                break;
-
             default:
                 Debug.Log("🌮🌮🌮🌮  UNKNOWN LEVEL STATE  🌮🌮🌮🌮");
                 break;
@@ -177,8 +146,6 @@ public class LevelManager : Singleton<LevelManager> {
 
         OnLevelStateChangeEvent?.Invoke(this, args);
     }
-
-    
 
     // TODO: maybe remove?
     /// <summary>
@@ -221,13 +188,12 @@ public class LevelManager : Singleton<LevelManager> {
         this.playThroughData = new PlayThroughData();
         LEVEL_TIMER_ID = this.levelTimer.RollingUID;
         this.startLevelTime();
-
-        this.LevelStateChange(LEVEL_STATE.START);
+        this.LevelStateChange(LEVEL_STATE.PLAY);
     }
 
     private void Update() {
         if (this.levelTimer.Done(LEVEL_TIMER_ID)) {
-            this.LevelStateChange(LEVEL_STATE.EXIT);
+            this.LevelStateChange(LEVEL_STATE.GAME_OVER);
         }
     }
 

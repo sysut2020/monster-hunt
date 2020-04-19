@@ -23,7 +23,7 @@ public sealed class SceneManager {
     public static SceneManager Instance {
         get {
             {
-                lock (padlock) {
+                lock(padlock) {
                     if (instance == null) {
                         instance = new SceneManager();
                     }
@@ -34,7 +34,25 @@ public sealed class SceneManager {
         }
     }
 
-    private SceneManager() {
+    private SceneManager() { }
+
+    /// <summary>
+    /// Returns the build index of the scene, by name.
+    /// </summary>
+    /// <param name="sceneName">name of the scene</param>
+    /// <returns>build index number</returns>
+    public int GetSceneIndexByName(string sceneName) {
+        return UnityEngine.SceneManagement.SceneManager.GetSceneByName(sceneName).buildIndex;
+    }
+
+    /// <summary>
+    /// Returns the scene name from the build index.
+    /// </summary>
+    /// <param name="index">the scene index</param>
+    /// <returns>name of the scene or emp</returns>
+    public string GetSceneNameByIndex(int index) {
+
+        return UnityEngine.SceneManagement.SceneManager.GetSceneByBuildIndex(index).name;
     }
 
     /// <summary>
@@ -59,15 +77,6 @@ public sealed class SceneManager {
         if (index < 0) {
             throw new ArgumentException("Scene index must be >= 0");
         }
-        UnityEngine.SceneManagement.SceneManager.LoadScene(index);
-    }
-
-    public void ChangeScene(SCENE_INDEX scene) {
-        if (scene == null) {
-            throw new ArgumentException("Scene can not be null");
-        }
-
-        var index = (int) scene;
         UnityEngine.SceneManagement.SceneManager.LoadScene(index);
     }
 

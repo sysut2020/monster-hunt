@@ -40,7 +40,7 @@ public class GameWon : MonoBehaviour {
 
         timeEnabled = Time.unscaledTime;
 
-        timeLeft = LevelManager.Instance.GetLevelTimeLeft() / 1000; // divide by 1000 to get sec
+        timeLeft = HuntingLevelController.Instance.GetLevelTimeLeft() / 1000; // divide by 1000 to get sec
         timeLeftText.text = FormatAsClockTime(timeLeft);
 
         scoreText.text = "0";

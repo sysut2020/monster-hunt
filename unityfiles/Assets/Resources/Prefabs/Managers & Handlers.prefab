@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4924395602239250316}
   - component: {fileID: 7343262343107847927}
   - component: {fileID: 4908017252100409779}
-  - component: {fileID: 2782975723722910897}
+  - component: {fileID: 678585245}
   m_Layer: 0
   m_Name: PresistentGO
   m_TagString: Untagged
@@ -70,7 +70,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc556ce73a7cbb740825befbaee8dcc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2782975723722910897
+--- !u!114 &678585245
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -79,70 +79,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 7343262343107847928}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3fa897e3edc3f3646bf91ff89573e1a9, type: 3}
+  m_Script: {fileID: 11500000, guid: 2b52e35cb5cd67b9f8a7905788965c0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainMenuMusic:
-    name: 
-    audioClipToPlay: {fileID: 8300000, guid: 8e77f5a3279a51145b5b06a218d59950, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 1
-    mute: 0
-    playOnAwake: 1
-  letterGameMusic:
-    name: 
-    audioClipToPlay: {fileID: 8300000, guid: 2ca5acddf3a747f478116ffba5917238, type: 3}
-    volume: 0.474
-    pitch: 1
-    loop: 1
-    mute: 0
-    playOnAwake: 0
-  scoreBoardMusic:
-    name: 
-    audioClipToPlay: {fileID: 8300000, guid: 0e08efbb3d89d94439ef3a15c3abe25d, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 0
-    mute: 0
-    playOnAwake: 0
-  level1Music:
-    name: 
-    audioClipToPlay: {fileID: 8300000, guid: 9fc6a3fb2e87ae24cbbfbb0424e7acb0, type: 3}
-    volume: 0.393
-    pitch: 1
-    loop: 1
-    mute: 0
-    playOnAwake: 0
-  level2Music:
-    name: 
-    audioClipToPlay: {fileID: 8300000, guid: 5941240e644e8b04dac7983837b58eda, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 0
-    mute: 0
-    playOnAwake: 0
-  level3Music:
-    name: 
-    audioClipToPlay: {fileID: 8300000, guid: 70bfbf4f3c266e24da14cce88f663299, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 0
-    mute: 0
-    playOnAwake: 0
-  level4Music:
-    name: 
-    audioClipToPlay: {fileID: 8300000, guid: 77e4cfa3bc582a94eb6bc7237e7d56a2, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 0
-    mute: 0
-    playOnAwake: 0
-  level5Music:
-    name: 
-    audioClipToPlay: {fileID: 8300000, guid: 3847b9c2c1545894d86884eb984aa4a3, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 0
-    mute: 0
-    playOnAwake: 0
+  huntingGameSceneNames:
+  - Level 1
+  - Level 2
+  - Level 3
+  - Level 4
+  - Level 5
+  scoreboardSceneName: ScoreBoard
+  letterGameSceneName: LetterGameScene

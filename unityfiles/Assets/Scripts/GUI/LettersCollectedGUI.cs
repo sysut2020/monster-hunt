@@ -29,7 +29,7 @@ public class LettersCollectedGUI : MonoBehaviour {
         if (letterCounter == null) {
             throw new MissingComponentException("Missing text component");
         }
-        this.lettersToCollect = LevelManager.Instance.LevelDetails.NumberOfLetters;
+        this.lettersToCollect = HuntingLevelController.Instance.LevelDetails.NumberOfLetters;
         LetterCollectable.OnLetterCollected += OnNewLetter;
         SetLetterText();
     }

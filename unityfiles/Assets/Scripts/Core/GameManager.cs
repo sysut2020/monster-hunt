@@ -6,51 +6,51 @@ using UnityEngine;
 /// </summary>
 public class GameStateChangeEventArgs : EventArgs {
     public GAME_STATE NewState { get; set; }
-    public int NextSceneIndex { get; set; }
 }
 
 /// <summary>
-/// The manager for the whole game main task is to start and stop scenes and levels
+/// The event data for the game state changed events 
+/// </summary>
+public class GamePausedEventArgs : EventArgs {
+    public bool IsPaued { get; set; }
+}
+
+/// <summary>
+/// The manager for the whole game main task is to start and stop scenes and huntingGameSceneNames
 /// </summary>
 public class GameManager : Singleton<GameManager> {
 
-    private GAME_STATE currentState;
-    private int nextSceneIndex = 0;
+    // Time value for pause: 0 = time stops
+    private static readonly int PAUSE = 0;
 
-    /// <summary>
-    /// Index of all levels in the game
-    /// </summary>
-    private readonly SCENE_INDEX[] levels = {
-        SCENE_INDEX.LEVEL1, 
-        SCENE_INDEX.LEVEL2,
-        SCENE_INDEX.LEVEL3,
-        SCENE_INDEX.LEVEL4,
-        SCENE_INDEX.LEVEL5
-    };
+    // Time value for play/normal time: 1 = time acts as normal
+    private static readonly int PLAY = 1;
+
+    private GAME_STATE CurrentState { get; set; }
 
     private GameDataManager gameDataManager;
 
-    // -- properties -- //
     public GameDataManager GameDataManager {
         get => gameDataManager;
     }
-
-    // -- public -- //
-
-    // -- events -- //    
 
     /// <summary>
     /// This event tells the listeners the game state has changed
     /// </summary>
     public static event EventHandler<GameStateChangeEventArgs> GameStateChangeEvent;
-    
+
+    /// <summary>
+    /// Event that tells the listeners if the game has been paused or not
+    /// </summary>
+    public static event EventHandler<GamePausedEventArgs> GamePausedEvent;
+
     /// <summary>
     /// Subscribes to the relevant events for this class
     /// </summary>
     private void SubscribeToEvents() {
         // todo subscribe to OnPlayerDead, OnTimeOut, OnAllEnemiesDead
-        LevelManager.OnLevelStateChangeEvent += CallbackLevelStateChangeEvent;
-        LetterGameManager.OnLetterGameEndedEvent += CallbackLetterGameEnded;
+        HuntingLevelController.OnLevelStateChangeEvent += CallbackLevelStateChangeEvent;
+        LetterLevelController.OnLetterGameEndedEvent += CallbackLetterGameEnded;
     }
 
     /// <summary>
@@ -59,29 +59,31 @@ public class GameManager : Singleton<GameManager> {
     private void UnsubscribeFromEvents() {
         // todo unsubscribe from OnPlayerDead, OnTimeOut, OnAllEnemiesDead
         // maybe that this also should be done on disable
-        LevelManager.OnLevelStateChangeEvent -= CallbackLevelStateChangeEvent;
-        LetterGameManager.OnLetterGameEndedEvent -= CallbackLetterGameEnded;
+        HuntingLevelController.OnLevelStateChangeEvent -= CallbackLevelStateChangeEvent;
+        LetterLevelController.OnLetterGameEndedEvent -= CallbackLetterGameEnded;
     }
 
     /// <summary>
     /// This function is fired when the OnLevelStateChangeEvent is invoked
-    /// This function will trigger on the following level states:
-    /// 
-    /// STATE.EXIT: 
-    ///     the level is done and the game state should be changed to MAIN_MENU
     /// </summary>
     /// <param name="o">the object calling (this should always be the level manager)</param>
     /// <param name="args">the event args containing the new state</param>
     private void CallbackLevelStateChangeEvent(object o, LevelStateChangeEventArgs args) {
-        if (args.NewState == LEVEL_STATE.EXIT) {
-            this.GameStateChange(GAME_STATE.MAIN_MENU);
+        switch (args.NewState) {
+            case LEVEL_STATE.GAME_OVER:
+            case LEVEL_STATE.GAME_WON:
+                this.SetGameState(GAME_STATE.PAUSE);
+                break;
+            default:
+                this.SetGameState(GAME_STATE.PLAY);
+                break;
         }
     }
 
     /// <summary>
     /// This function is fired when OnLetterGameEndedEvent is invoked
     /// This function will trigger on:
-    ///     LetterGameManager OnDestroy()
+    ///     LetterLevelController OnDestroy()
     ///         the letter game is done and the total score from the letter
     ///         game level is transmitted with the event 
     /// </summary>
@@ -95,71 +97,52 @@ public class GameManager : Singleton<GameManager> {
     // -- private -- //
 
     /// <summary>
-    /// Changes the game state 
+    /// Changes the game state to the priovided state, and broadcast the change
+    /// as an event.
     /// </summary>
     /// <param name="NewState">The new game state</param>
-    public void GameStateChange(GAME_STATE NewState) {
-        this.currentState = NewState;
+    public void SetGameState(GAME_STATE NewState) {
+        this.CurrentState = NewState;
         GameStateChangeEventArgs args = new GameStateChangeEventArgs();
         args.NewState = NewState;
 
         switch (NewState) {
-            case GAME_STATE.MAIN_MENU:
-                nextSceneIndex = 0; //resets game
-                SceneManager.Instance.ChangeScene(SCENE_INDEX.MAIN_MENU);
+            case GAME_STATE.PLAY:
+                this.StartTime();
+                GamePausedEvent?.Invoke(this, new GamePausedEventArgs { IsPaued = false });
                 break;
-
-            case GAME_STATE.START_GAME:
-                // reset counter just in case
-                nextSceneIndex = 1;
-                SceneManager.Instance.ChangeScene(SCENE_INDEX.LEVEL1);
+            case GAME_STATE.PAUSE:
+                GamePausedEvent?.Invoke(this, new GamePausedEventArgs { IsPaued = true });
+                this.PauseTime();
                 break;
-            
-            // todo add a countinue state where one can play from the level last played
-            
-            case GAME_STATE.LETTER_LEVEL:
-                SceneManager.Instance.ChangeScene(SCENE_INDEX.LETTER_GAME);
-                break;
-
-            case GAME_STATE.SCOREBOARD:
-                SceneManager.Instance.ChangeScene(SCENE_INDEX.SCOREBOARD);
-                break;
-
             case GAME_STATE.EXIT:
                 Application.Quit();
                 break;
-            
-            case GAME_STATE.NEXT_LEVEL:
-                if (nextSceneIndex >= levels.Length) { // no more levels
-                    this.GameStateChange(GAME_STATE.SCOREBOARD);
-                    break;
-                }
-                var nextScene = levels[nextSceneIndex];
-                nextSceneIndex++;
-                args.NextSceneIndex = nextSceneIndex;
-                SceneManager.Instance.ChangeScene(nextScene);
-                
-                break;
-
             default:
                 Debug.LogError("🌮🌮🌮🌮  UNKNOWN GAME STATE  🌮🌮🌮🌮");
                 break;
         }
-        
+
         GameStateChangeEvent?.Invoke(this, args);
     }
 
+    private void PauseTime() {
+        Time.timeScale = PAUSE;
+    }
 
-    // -- unity -- //
+    private void StartTime() {
+        Time.timeScale = PLAY;
+    }
 
-    private void Awake() { 
+    private void Awake() {
+        Instance.SetGameState(GAME_STATE.PLAY);
         this.gameDataManager = new GameDataManager();
         SubscribeToEvents();
     }
-    
 
     private void OnDestroy() {
         UnsubscribeFromEvents();
         this.gameDataManager.SaveData();
     }
+
 }

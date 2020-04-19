@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace GUI.Lettergame {
-    
+
     /// <summary>
     /// Responsible for filling up the playing board with tiles
     /// </summary>
@@ -16,11 +16,11 @@ namespace GUI.Lettergame {
 
         [SerializeField]
         private GameObject boardTile;
-        
+
         private void Start() {
-            var letterGameManager = LetterGameManager.Instance;
-            boardSizeX = letterGameManager.BSizeX;
-            boardSizeY = letterGameManager.BSizeY;
+            var letterGameController = LetterLevelController.Instance;
+            boardSizeX = letterGameController.BSizeX;
+            boardSizeY = letterGameController.BSizeY;
 
             var gridLayout = gameObject.GetComponent<GridLayoutGroup>();
             var playBoardCanvas = gameObject.GetComponent<RectTransform>();

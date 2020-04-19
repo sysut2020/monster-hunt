@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 
-
 /// <summary>
 /// Keeps track of the current level score.
 /// Adds score score when needed.
@@ -35,7 +34,7 @@ public class ScoreHandler : MonoBehaviour {
         CoinCollectable.OnCoinCollected += CallbackCoinCollected;
         LetterCollectable.OnLetterCollected += CallbackLetterCollected;
         PowerupCollectable.OnPowerupCollected += CallbackEffectPickup;
-        LevelManager.OnLevelStateChangeEvent += CallbackLevelStateChange;
+        HuntingLevelController.OnLevelStateChangeEvent += CallbackLevelStateChange;
     }
 
     private void CallbackLevelStateChange(object _, LevelStateChangeEventArgs e) {
@@ -48,7 +47,7 @@ public class ScoreHandler : MonoBehaviour {
         CoinCollectable.OnCoinCollected -= CallbackCoinCollected;
         LetterCollectable.OnLetterCollected -= CallbackLetterCollected;
         PowerupCollectable.OnPowerupCollected -= CallbackEffectPickup;
-        LevelManager.OnLevelStateChangeEvent -= CallbackLevelStateChange;
+        HuntingLevelController.OnLevelStateChangeEvent -= CallbackLevelStateChange;
     }
     /// <summary>
     /// Updates score text with game score + new levelscore

@@ -3,17 +3,11 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// The event data for the pause menu changed events 
-/// </summary>
-public class PauseMenuChangeEventArgs : EventArgs {
-    public LEVEL_STATE NewLevelState { get; set; }
-}
-
-/// <summary>
 /// Handler for Pause menu. Turns on and of the main pause menu and the quit confirmation when needed.
-/// Can tells the LevelManager when to switch to Pause/Play state.
+/// Can tells the HuntingLevelController when to switch to Pause/Play state.
 /// </summary>
-public class PauseMenuController : Singleton<PauseMenuController> {
+public class PauseMenuController : MonoBehaviour {
+
     [SerializeField]
     private GameObject pauseMenuCanvas;
 
@@ -23,26 +17,14 @@ public class PauseMenuController : Singleton<PauseMenuController> {
     [SerializeField]
     private GameObject confirmDialog;
 
-    private Boolean isPaused = false;
-
     [SerializeField]
-    private Button continueButton;
+    private GameObject howToPlay;
+
+    private Boolean isPaused = false;
 
     private void Awake() {
         CheckForMissingComponents();
-
-        SubscribeToEvents();
         DeactivateMenu();
-    }
-
-    private void CallbackChangePauseMenuState(object _, ButtonClickEventArgs args) {
-        if (args.ButtonEvent.GetType() == typeof(PAUSE_MENU_STATE)) {
-            ChangePauseMenuState((PAUSE_MENU_STATE) args.ButtonEvent);
-        }
-    }
-
-    private void Start() {
-        continueButton.onClick.AddListener(ResumeGame);
     }
 
     // Update is called once per frame
@@ -50,6 +32,8 @@ public class PauseMenuController : Singleton<PauseMenuController> {
         if (Input.GetButtonDown("Cancel")) {
             if (confirmDialog.activeSelf) {
                 DeactivateConfirmDialog();
+            } else if (howToPlay.activeSelf) {
+                DeactivateHowToPlay();
             } else {
                 TogglePause();
             }
@@ -60,50 +44,34 @@ public class PauseMenuController : Singleton<PauseMenuController> {
     /// Toggles the pause state.
     /// Shows pause menu if paused
     /// </summary>
-    private void TogglePause() {
+    public void TogglePause() {
         if (!isPaused) {
             PauseGame();
             isPaused = true;
         } else {
             ResumeGame();
+            DeactivateConfirmDialog();
+            DeactivateHowToPlay();
             isPaused = false;
         }
     }
 
-    private void OnDestroy() {
-        continueButton.onClick.RemoveAllListeners();
-        UnsubscribeFromEvents();
-    }
-
-    private void SubscribeToEvents() {
-        PauseMenuButton.buttonEventHandler += CallbackChangePauseMenuState;
-    }
-
-    private void UnsubscribeFromEvents() {
-        PauseMenuButton.buttonEventHandler -= CallbackChangePauseMenuState;
+    private void DeactivateHowToPlay() {
+        howToPlay.SetActive(false);
+        pauseMenuUIElement.SetActive(true);
     }
 
     private void DeactivateConfirmDialog() {
         confirmDialog.SetActive(false);
-        pauseMenuUIElement.SetActive(true);
-    }
-
-    private void ActivateConfirmDialog() {
-        confirmDialog.SetActive(true);
-        pauseMenuUIElement.SetActive(false);
     }
 
     private void ResumeGame() {
-        PauseMenuChangeEventArgs args = new PauseMenuChangeEventArgs();
-        args.NewLevelState = LEVEL_STATE.PLAY;
-        PauseMenuChangeEvent?.Invoke(this, args);
+        GameManager.Instance.SetGameState(GAME_STATE.PLAY);
         DeactivateMenu();
     }
 
     private void PauseGame() {
-        PauseMenuChangeEventArgs args = new PauseMenuChangeEventArgs();
-        args.NewLevelState = LEVEL_STATE.PAUSE;
-        PauseMenuChangeEvent?.Invoke(this, args);
+        GameManager.Instance.SetGameState(GAME_STATE.PAUSE);
         ActivateMenu();
     }
 
@@ -131,37 +99,10 @@ public class PauseMenuController : Singleton<PauseMenuController> {
         if (confirmDialog == null) {
             throw new MissingComponentException("Missing confirm dialog");
         }
-    }
 
-    /// <summary>
-    /// Changes the state of the pause menu in the case where the player wants to quit the game
-    /// </summary>
-    /// <param name="pauseState"></param>
-    public void ChangePauseMenuState(PAUSE_MENU_STATE pauseState) {
-        switch (pauseState) {
-            case PAUSE_MENU_STATE.CONFIRMATION:
-                ActivateConfirmDialog();
-                break;
-
-            case PAUSE_MENU_STATE.BASE:
-                DeactivateConfirmDialog();
-                break;
-
-            case PAUSE_MENU_STATE.QUIT:
-                // Sending quit signal to listeners
-                PauseMenuChangeEventArgs args = new PauseMenuChangeEventArgs();
-                args.NewLevelState = LEVEL_STATE.EXIT;
-                PauseMenuChangeEvent?.Invoke(this, args);
-                break;
-
-            default:
-                Debug.LogWarning("State unknown for Pause Menu");
-                break;
+        if (howToPlay == null) {
+            throw new MissingComponentException("Missing how to play screen");
         }
     }
 
-    /// <summary>
-    /// This event tells the listeners the level state should change
-    /// </summary>
-    public static event EventHandler<PauseMenuChangeEventArgs> PauseMenuChangeEvent;
 }

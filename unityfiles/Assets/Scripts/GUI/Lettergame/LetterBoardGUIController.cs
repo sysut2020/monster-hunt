@@ -11,7 +11,6 @@ namespace GUI.Lettergame {
         [Tooltip("The letter tile prefab")]
         private GameObject letterTile;
 
-
         void Start() {
             var columns = 13; // 13 columns for all the letters 26 / 2
             var rows = 2; // 2 rows for all the letters 26 / 13
@@ -29,7 +28,7 @@ namespace GUI.Lettergame {
         /// Makes and places the letter tiles
         /// </summary>
         private void MakeLetterTile() {
-            var letters = LetterGameManager.Instance.Letters;
+            var letters = LetterLevelController.Instance.Letters;
 
             foreach (var letter in letters) {
                 GameObject n = Instantiate(this.letterTile, transform, true);

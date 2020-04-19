@@ -1,18 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &5380893247155453953
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5173049961494365792}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 091625f2176094635828763c0547bd46, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  eventToFire: 0
 --- !u!1001 &4692070271985455360
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23,7 +10,7 @@ PrefabInstance:
     - target: {fileID: 493083159100217184, guid: 89234fe89a28447ca9a0111234011fe8,
         type: 3}
       propertyPath: m_Name
-      value: CONTINUE
+      value: PauseMenuButtonStyle
       objectReference: {fileID: 0}
     - target: {fileID: 493083159100217185, guid: 89234fe89a28447ca9a0111234011fe8,
         type: 3}
@@ -133,22 +120,22 @@ PrefabInstance:
     - target: {fileID: 493083159626298135, guid: 89234fe89a28447ca9a0111234011fe8,
         type: 3}
       propertyPath: m_textInfo.characterCount
-      value: 0
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 493083159626298135, guid: 89234fe89a28447ca9a0111234011fe8,
         type: 3}
       propertyPath: m_textInfo.wordCount
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 493083159626298135, guid: 89234fe89a28447ca9a0111234011fe8,
         type: 3}
       propertyPath: m_textInfo.lineCount
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 493083159626298135, guid: 89234fe89a28447ca9a0111234011fe8,
         type: 3}
       propertyPath: m_textInfo.pageCount
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 493083159626298135, guid: 89234fe89a28447ca9a0111234011fe8,
         type: 3}
@@ -172,9 +159,3 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 89234fe89a28447ca9a0111234011fe8, type: 3}
---- !u!1 &5173049961494365792 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 493083159100217184, guid: 89234fe89a28447ca9a0111234011fe8,
-    type: 3}
-  m_PrefabInstance: {fileID: 4692070271985455360}
-  m_PrefabAsset: {fileID: 0}
