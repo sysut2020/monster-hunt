@@ -103,15 +103,23 @@ public class AimControl {
     /// <param name="mousePoint">the point to aim at</param>
     /// <returns>angle that points towars mousepoint</returns>
     public Vector3 GetAngle(Vector3 mousePoint) {
-        Vector2 newCheckV = RotationPoint.transform.position - FirePoint.transform.position;
+        Vector3 v_RP_MP = mousePoint - RotationPoint.transform.position;
+        Vector3 norm_GP_prj_RPMP = Vector3.Project(v_RP_MP, FirePoint.transform.right);
+        Vector3 CheckV2 = RotationPoint.position + norm_GP_prj_RPMP - new Vector3(mousePoint.x, mousePoint.y);
+
+        Vector2 newCheckV = RotationPoint.transform.position-FirePoint.transform.position;
 
         if (Mathf.Floor(CheckV.magnitude * 10) != Mathf.Floor(newCheckV.magnitude * 10)) {
             this.CheckV = newCheckV;
             CreateHelperObjects();
         }
 
+        if (CheckV2.magnitude > 0.35 ){
+            CreateHelperObjects();
+        }
+
         // rotates the helper gun point towards the mouse
-        Vector3 v_RP_MP = mousePoint - RotationPoint.transform.position;
+        v_RP_MP = mousePoint - RotationPoint.transform.position;
         float z_angle = this.RadianToDegree(Math.Atan2(v_RP_MP.y, v_RP_MP.x));
         bool isFlipped = (z_angle < 90 && z_angle > -90) ? false : true;
         Vector3 angle = (isFlipped) ? new Vector3(180, 0, -z_angle) : new Vector3(0, 0, z_angle);
@@ -187,11 +195,15 @@ public class AimControl {
 
         if (debug) {
 
-            Debug.DrawLine(Vector3.zero, helperRotPoint.transform.position + v_RP_GP, Color.green);
+            
+            Debug.Log(CheckV2.magnitude);
+     
+            Debug.DrawLine(Vector3.zero,CheckV2, Color.green);
+
             Debug.DrawLine(RotationPoint.position, Camera.main.ScreenToWorldPoint(Input.mousePosition), Color.magenta);
 
-            Debug.DrawRay(Vector3.zero, RotationPoint.transform.right * 100, Color.gray);
-            Debug.DrawRay(FirePoint.transform.position, FirePoint.transform.right * 100, Color.cyan);
+            Debug.DrawRay(Vector3.zero, RotationPoint.position + norm_GP_prj_RPMP, Color.gray);
+            Debug.DrawRay(FirePoint.transform.position, FirePoint.transform.right *100, Color.cyan);
             Debug.DrawRay(Vector3.zero, helperAimPoint.transform.right * 100, Color.white);
         }
 
