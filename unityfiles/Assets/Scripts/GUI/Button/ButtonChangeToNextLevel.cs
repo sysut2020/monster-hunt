@@ -5,19 +5,19 @@ using UnityEngine.UI;
 /// <summary>
 /// Changes to next level
 /// </summary>
-[RequireComponent (typeof (Button))]
+[RequireComponent(typeof(Button))]
 public class ButtonChangeToNextLevel : MonoBehaviour {
 
-    private Button button;
-    private LevelHandler levelHandler;
+	private Button button;
+	private LevelHandler levelHandler;
 
-    private void Awake () {
-        this.button = GetComponent<Button> ();
-        levelHandler = FindObjectOfType<LevelHandler> ();
-        button.onClick.AddListener (() => this.levelHandler?.NextLevel ());
-    }
+	private void Awake() {
+		this.button = GetComponent<Button>();
+		levelHandler = FindObjectOfType<LevelHandler>();
+		button.onClick.AddListener(() => this.levelHandler?.NextLevel());
+	}
 
-    private void OnDestroy () {
-        button.onClick.RemoveAllListeners ();
-    }
+	private void OnDestroy() {
+		button.onClick.RemoveAllListeners();
+	}
 }

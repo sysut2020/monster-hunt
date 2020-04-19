@@ -6,16 +6,16 @@ using System.Collections.Generic;
 /// </summary>
 [System.Serializable]
 public class SaveData {
-    private List<ScoreboardEntry> highScores;
-    private int money;
+	private List<ScoreboardEntry> highScores;
+	private int money;
 
-    public List<ScoreboardEntry> HighScores {
-        get => highScores;
-        set => highScores = value;
-    }
+	public List<ScoreboardEntry> HighScores {
+		get => highScores;
+		set => highScores = value;
+	}
 
-    public int Money {
-        get => money;
-        set => money = value;
-    }
+	public int Money {
+		get => money;
+		set => money = value;
+	}
 }

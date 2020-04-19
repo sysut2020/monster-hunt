@@ -4,9 +4,9 @@
 /// </summary>
 public interface IDamageNotifyable {
 
-    /// <summary>
-    /// Notifier call when the health controller has taken damage
-    /// </summary>
-    void Damaged ();
+	/// <summary>
+	/// Notifier call when the health controller has taken damage
+	/// </summary>
+	void Damaged();
 
 }

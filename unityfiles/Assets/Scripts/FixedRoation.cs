@@ -8,15 +8,15 @@ using UnityEngine;
 /// </summary>
 public class FixedRoation : MonoBehaviour {
 
-    Quaternion initialRotation;
+	Quaternion initialRotation;
 
-    void Awake () {
-        this.initialRotation = this.transform.rotation;
-    }
+	void Awake() {
+		this.initialRotation = this.transform.rotation;
+	}
 
-    void LateUpdate () {
-        if (!this.transform.rotation.Equals (initialRotation)) {
-            this.transform.rotation = initialRotation;
-        }
-    }
+	void LateUpdate() {
+		if (!this.transform.rotation.Equals(initialRotation)) {
+			this.transform.rotation = initialRotation;
+		}
+	}
 }

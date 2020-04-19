@@ -5,28 +5,28 @@ using UnityEngine;
 /// Arguments for coin collected event
 /// </summary>
 public class CoinCollectedArgs : EventArgs {
-    public int Amount { get; set; }
+	public int Amount { get; set; }
 }
 
 public class CoinCollectable : Collectable {
-    public static event EventHandler<CoinCollectedArgs> OnCoinCollected;
+	public static event EventHandler<CoinCollectedArgs> OnCoinCollected;
 
-    private MoveToGuiElement moveToGuiElement;
+	private MoveToGuiElement moveToGuiElement;
 
-    [SerializeField]
-    private int coinValue = 1;
+	[SerializeField]
+	private int coinValue = 1;
 
-    private void Awake () {
-        if (TryGetComponent (out moveToGuiElement)) {
-            moveToGuiElement.FindTarget<CoinsCollectedGUI> ();
-        }
+	private void Awake() {
+		if (TryGetComponent(out moveToGuiElement)) {
+			moveToGuiElement.FindTarget<CoinsCollectedGUI>();
+		}
 
-        this.ScoreValue = coinValue;
-    }
+		this.ScoreValue = coinValue;
+	}
 
-    private void OnDestroy () {
-        var args = new CoinCollectedArgs ();
-        args.Amount = this.coinValue;
-        OnCoinCollected?.Invoke (this, args);
-    }
+	private void OnDestroy() {
+		var args = new CoinCollectedArgs();
+		args.Amount = this.coinValue;
+		OnCoinCollected?.Invoke(this, args);
+	}
 }
