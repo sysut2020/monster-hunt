@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: PoopGun
   m_EditorClassIdentifier: 
   holdingAnimation: 3
-  bulletVelocity: 10
-  bulletDamage: 5
-  bulletTtl: 20
-  fireRate: 100
-  bulletSpread: 10
+  bulletVelocity: 30
+  bulletDamage: 2.5
+  bulletTtl: 3
+  fireRate: 1.6
+  bulletSpread: 0
