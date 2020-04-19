@@ -12,17 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ba0de5e307d1c08ba25f312b14a8b56, type: 3}
   m_Name: Raptor
   m_EditorClassIdentifier: 
-  health: 8
+  health: 15
   damage: 2
-  patrolSpeed: 4
-  chaseSpeed: 10
+  patrolSpeed: 4.5
+  chaseSpeed: 11
   visionLength: 16
   collectibleItems:
   - spawnChance: 18
     item: {fileID: 1216276751, guid: 1c0ee2a1e85c5e9ddb424342246bc1a8, type: 3}
   - spawnChance: 60
     item: {fileID: 2709097042343801514, guid: 138075cffcb7d450db60abcd09815133, type: 3}
-  - spawnChance: 60
+  - spawnChance: 20
     item: {fileID: 4921254484959306652, guid: f11a201bae2c80afeb34cc02ab762993, type: 3}
-  - spawnChance: 60
+  - spawnChance: 35
     item: {fileID: 2898903431010373680, guid: bd1c5c4f25b7f787098079eb97fc9f23, type: 3}
