@@ -111,7 +111,7 @@ public class HuntingLevelController : Singleton<HuntingLevelController> {
         if (args.IsPaued) {
             this.levelTimer.Pause(this.LEVEL_TIMER_ID);
         } else {
-            this.levelTimer.Contue(this.LEVEL_TIMER_ID);
+            this.levelTimer.Continue(this.LEVEL_TIMER_ID);
         }
     }
 

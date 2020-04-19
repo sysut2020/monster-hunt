@@ -116,7 +116,7 @@ public class WUTimers {
     /// </summary>
     /// <param name="timerID">the id of the timer to continue</param>
     /// <returns>true if the timer is found false if not</returns>
-    public bool Contue (string timerID) {
+    public bool Continue (string timerID) {
         bool ret = false;
         if (timers.Keys.Contains (timerID)) {
             this.timers[timerID].Continue();
