@@ -63,6 +63,7 @@ public class PauseMenuController : MonoBehaviour {
 
     private void DeactivateConfirmDialog() {
         confirmDialog.SetActive(false);
+        pauseMenuUIElement.SetActive(true);
     }
 
     private void ResumeGame() {
