@@ -3,7 +3,7 @@ using UnityEngine;
 
 /// <summary>
 /// CollectibleSpawnerItem is a Serializable class that holds data about a spawnable item.
-/// This includes a name, spawn chance and an item(GameObject) which is the item to be spawned/instatiated.
+/// This includes a name, spawn chance and an item(GameObject) which is the item to be spawned/instantiated.
 /// </summary>
 [Serializable]
 public class CollectibleSpawnerItem {

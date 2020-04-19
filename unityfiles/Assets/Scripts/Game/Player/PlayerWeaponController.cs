@@ -26,7 +26,7 @@ public class PlayerWeaponController : MonoBehaviour {
     private GameObject gunHand;
 
     /// <summary>
-    /// Toggled when the game is paused/unpaused
+    /// Toggled when the game is paused/un paused
     /// </summary>
     private bool isPaused = false;
 
@@ -60,12 +60,12 @@ public class PlayerWeaponController : MonoBehaviour {
     public static event EventHandler<WeaponChangedEventArgs> WeaponChangedEvent;
 
     /// <summary>
-    /// Called when the game is paused/unpaused.
+    /// Called when the game is paused/un paused.
     /// </summary>
     /// <param name="_">the object that sent the event > unused</param>
     /// <param name="args">event arguments</param>
     private void CallbackOnGamePaused(object _, GamePausedEventArgs args) {
-        this.isPaused = args.IsPaued;
+        this.isPaused = args.IsPaused;
     }
 
     /// <summary>

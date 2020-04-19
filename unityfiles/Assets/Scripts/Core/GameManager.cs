@@ -12,7 +12,7 @@ public class GameStateChangeEventArgs : EventArgs {
 /// The event data for the game state changed events 
 /// </summary>
 public class GamePausedEventArgs : EventArgs {
-    public bool IsPaued { get; set; }
+    public bool IsPaused { get; set; }
 }
 
 /// <summary>
@@ -97,7 +97,7 @@ public class GameManager : Singleton<GameManager> {
     
 
     /// <summary>
-    /// Changes the game state to the priovided state, and broadcast the change
+    /// Changes the game state to the provided state, and broadcast the change
     /// as an event.
     /// </summary>
     /// <param name="NewState">The new game state</param>
@@ -109,10 +109,10 @@ public class GameManager : Singleton<GameManager> {
         switch (NewState) {
             case GAME_STATE.PLAY:
                 this.StartTime();
-                GamePausedEvent?.Invoke(this, new GamePausedEventArgs { IsPaued = false });
+                GamePausedEvent?.Invoke(this, new GamePausedEventArgs { IsPaused = false });
                 break;
             case GAME_STATE.PAUSE:
-                GamePausedEvent?.Invoke(this, new GamePausedEventArgs { IsPaued = true });
+                GamePausedEvent?.Invoke(this, new GamePausedEventArgs { IsPaused = true });
                 this.PauseTime();
                 break;
             case GAME_STATE.EXIT:

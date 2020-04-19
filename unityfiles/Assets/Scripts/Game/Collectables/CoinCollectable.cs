@@ -2,7 +2,7 @@
 using UnityEngine;
 
 /// <summary>
-/// Arguments for coin colected event
+/// Arguments for coin collected event
 /// </summary>
 public class CoinCollectedArgs : EventArgs {
     public int Amount { get; set; }
@@ -18,7 +18,7 @@ public class CoinCollectable : Collectable {
 
     private void Awake() {
         if (TryGetComponent(out moveToGuiElement)) {
-            moveToGuiElement.FindTarget<CoinsCollecedGUI>();
+            moveToGuiElement.FindTarget<CoinsCollectedGUI>();
         }
 
         this.ScoreValue = coinValue;

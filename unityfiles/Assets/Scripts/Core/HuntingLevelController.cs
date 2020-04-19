@@ -103,12 +103,12 @@ public class HuntingLevelController : Singleton<HuntingLevelController> {
     }
 
     /// <summary>
-    /// Called when the game is paused/unpaused.
+    /// Called when the game is paused/un paused.
     /// </summary>
     /// <param name="_">the object that sent the event > unused</param>
     /// <param name="args">event arguments</param>
     private void CallbackOnGamePaused(object _, GamePausedEventArgs args) {
-        if (args.IsPaued) {
+        if (args.IsPaused) {
             this.levelTimer.Pause(this.LEVEL_TIMER_ID);
         } else {
             this.levelTimer.Continue(this.LEVEL_TIMER_ID);

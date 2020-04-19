@@ -4,7 +4,7 @@ using UnityEngine;
 /// This class is responsible for updating the GUI with how many coins that 
 /// the player has collected
 /// </summary>
-public class CoinsCollecedGUI : MonoBehaviour {
+public class CoinsCollectedGUI : MonoBehaviour {
 
     /// <summary>
     /// Text for visualizing numbers of letters collected and have left.
