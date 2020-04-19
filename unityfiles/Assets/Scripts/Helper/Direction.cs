@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum Direction {
-	CENTER,
-	LEFT,
-	UP,
-	RIGHT,
-	DOWN,
+    CENTER,
+    LEFT,
+    UP,
+    RIGHT,
+    DOWN,
 }

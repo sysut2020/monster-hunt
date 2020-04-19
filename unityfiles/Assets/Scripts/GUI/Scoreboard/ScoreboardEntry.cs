@@ -6,25 +6,25 @@ using System;
 /// </summary>
 [Serializable]
 public class ScoreboardEntry : IComparable<ScoreboardEntry> {
-	public ScoreboardEntry() { }
+    public ScoreboardEntry() {}
 
-	public ScoreboardEntry(string playerName, int score) {
-		PlayerName = playerName;
-		Score = score;
-	}
+    public ScoreboardEntry(string playerName, int score) {
+        PlayerName = playerName;
+        Score = score;
+    }
 
-	public string PlayerName { get; set; }
+    public string PlayerName { get; set; }
 
-	public int Score { get; set; }
+    public int Score { get; set; }
 
-	public int CompareTo(ScoreboardEntry other) {
-		if (other.Score < Score) {
-			return 1;
-		}
-		if (other.Score > Score) {
-			return -1;
-		}
+    public int CompareTo(ScoreboardEntry other) {
+        if (other.Score < Score) {
+            return 1;
+        }
+        if (other.Score > Score) {
+            return -1;
+        }
 
-		return 0;
-	}
+        return 0;
+    }
 }

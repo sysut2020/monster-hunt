@@ -7,14 +7,14 @@ using UnityEngine;
 /// </summary>
 public class DontDestroyOnLoadGO : MonoBehaviour {
 
-	public static DontDestroyOnLoadGO Instance;
+    public static DontDestroyOnLoadGO Instance;
 
-	void Awake() {
-		if (Instance != this && Instance != null) {
-			Destroy(this.gameObject);
-		} else {
-			Instance = this;
-			DontDestroyOnLoad(this.gameObject);
-		}
-	}
+    void Awake() {
+        if (Instance != this && Instance != null) {
+            Destroy(this.gameObject);
+        } else {
+            Instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+    }
 }

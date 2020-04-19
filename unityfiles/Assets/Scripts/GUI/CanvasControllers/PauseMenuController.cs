@@ -8,102 +8,102 @@ using UnityEngine.UI;
 /// </summary>
 public class PauseMenuController : MonoBehaviour {
 
-	[SerializeField]
-	private GameObject pauseMenuCanvas;
+    [SerializeField]
+    private GameObject pauseMenuCanvas;
 
-	[SerializeField]
-	private GameObject pauseMenuUIElement;
+    [SerializeField]
+    private GameObject pauseMenuUIElement;
 
-	[SerializeField]
-	private GameObject confirmDialog;
+    [SerializeField]
+    private GameObject confirmDialog;
 
-	[SerializeField]
-	private GameObject howToPlay;
+    [SerializeField]
+    private GameObject howToPlay;
 
-	private Boolean isPaused = false;
+    private Boolean isPaused = false;
 
-	private void Awake() {
-		CheckForMissingComponents();
-		DeactivateMenu();
-	}
+    private void Awake() {
+        CheckForMissingComponents();
+        DeactivateMenu();
+    }
 
-	// Update is called once per frame
-	void Update() {
-		if (Input.GetButtonDown("Cancel")) {
-			if (confirmDialog.activeSelf) {
-				DeactivateConfirmDialog();
-			} else if (howToPlay.activeSelf) {
-				DeactivateHowToPlay();
-			} else {
-				TogglePause();
-			}
-		}
-	}
+    // Update is called once per frame
+    void Update() {
+        if (Input.GetButtonDown("Cancel")) {
+            if (confirmDialog.activeSelf) {
+                DeactivateConfirmDialog();
+            } else if (howToPlay.activeSelf) {
+                DeactivateHowToPlay();
+            } else {
+                TogglePause();
+            }
+        }
+    }
 
-	/// <summary>
-	/// Toggles the pause state.
-	/// Shows pause menu if paused
-	/// </summary>
-	public void TogglePause() {
-		if (!isPaused) {
-			PauseGame();
-			isPaused = true;
-		} else {
-			ResumeGame();
-			DeactivateConfirmDialog();
-			DeactivateHowToPlay();
-			isPaused = false;
-		}
-	}
+    /// <summary>
+    /// Toggles the pause state.
+    /// Shows pause menu if paused
+    /// </summary>
+    public void TogglePause() {
+        if (!isPaused) {
+            PauseGame();
+            isPaused = true;
+        } else {
+            ResumeGame();
+            DeactivateConfirmDialog();
+            DeactivateHowToPlay();
+            isPaused = false;
+        }
+    }
 
-	private void DeactivateHowToPlay() {
-		howToPlay.SetActive(false);
-		pauseMenuUIElement.SetActive(true);
-	}
+    private void DeactivateHowToPlay() {
+        howToPlay.SetActive(false);
+        pauseMenuUIElement.SetActive(true);
+    }
 
-	private void DeactivateConfirmDialog() {
-		confirmDialog.SetActive(false);
-		pauseMenuUIElement.SetActive(true);
-	}
+    private void DeactivateConfirmDialog() {
+        confirmDialog.SetActive(false);
+        pauseMenuUIElement.SetActive(true);
+    }
 
-	private void ResumeGame() {
-		GameManager.Instance.SetGameState(GAME_STATE.PLAY);
-		DeactivateMenu();
-	}
+    private void ResumeGame() {
+        GameManager.Instance.SetGameState(GAME_STATE.PLAY);
+        DeactivateMenu();
+    }
 
-	private void PauseGame() {
-		GameManager.Instance.SetGameState(GAME_STATE.PAUSE);
-		ActivateMenu();
-	}
+    private void PauseGame() {
+        GameManager.Instance.SetGameState(GAME_STATE.PAUSE);
+        ActivateMenu();
+    }
 
-	private void ActivateMenu() {
-		pauseMenuCanvas.SetActive(true);
-	}
+    private void ActivateMenu() {
+        pauseMenuCanvas.SetActive(true);
+    }
 
-	private void DeactivateMenu() {
-		pauseMenuCanvas.SetActive(false);
-	}
+    private void DeactivateMenu() {
+        pauseMenuCanvas.SetActive(false);
+    }
 
-	/// <summary>
-	/// Checks that all necessary components are given to the script
-	/// </summary>
-	/// <exception cref="MissingComponentException"></exception>
-	private void CheckForMissingComponents() {
-		if (pauseMenuCanvas == null) {
-			throw new MissingComponentException("Missing pause menu canvas");
-		}
+    /// <summary>
+    /// Checks that all necessary components are given to the script
+    /// </summary>
+    /// <exception cref="MissingComponentException"></exception>
+    private void CheckForMissingComponents() {
+        if (pauseMenuCanvas == null) {
+            throw new MissingComponentException("Missing pause menu canvas");
+        }
 
-		if (pauseMenuUIElement == null) {
-			throw new MissingComponentException("Missing pause menu ui element");
-		}
+        if (pauseMenuUIElement == null) {
+            throw new MissingComponentException("Missing pause menu ui element");
+        }
 
-		if (confirmDialog == null) {
-			throw new MissingComponentException("Missing confirm dialog");
-		}
+        if (confirmDialog == null) {
+            throw new MissingComponentException("Missing confirm dialog");
+        }
 
-		if (howToPlay == null) {
-			throw new MissingComponentException("Missing how to play screen");
-		}
-	}
+        if (howToPlay == null) {
+            throw new MissingComponentException("Missing how to play screen");
+        }
+    }
 
 }

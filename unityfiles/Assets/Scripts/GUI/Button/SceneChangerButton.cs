@@ -11,24 +11,24 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Button))]
 public class SceneChangerButton : MonoBehaviour {
 
-	[SerializeField]
-	[StringInList(typeof(PropertyDrawersHelper), "AllSceneNames")]
-	private string sceneName;
+    [SerializeField]
+    [StringInList(typeof(PropertyDrawersHelper), "AllSceneNames")]
+    private string sceneName;
 
-	private Button sceneChangeButton;
+    private Button sceneChangeButton;
 
-	private void Awake() {
-		sceneChangeButton = GetComponent<Button>();
-	}
-	private void Start() {
-		sceneChangeButton.onClick.AddListener(OnChangeSceneClicked);
-	}
+    private void Awake() {
+        sceneChangeButton = GetComponent<Button>();
+    }
+    private void Start() {
+        sceneChangeButton.onClick.AddListener(OnChangeSceneClicked);
+    }
 
-	private void OnDestroy() {
-		sceneChangeButton.onClick.RemoveAllListeners();
-	}
+    private void OnDestroy() {
+        sceneChangeButton.onClick.RemoveAllListeners();
+    }
 
-	void OnChangeSceneClicked() {
-		SceneManager.Instance.ChangeScene(sceneName);
-	}
+    void OnChangeSceneClicked() {
+        SceneManager.Instance.ChangeScene(sceneName);
+    }
 }

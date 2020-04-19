@@ -11,41 +11,41 @@ using UnityEngine.UI;
 /// </summary>
 public class AddScoreEntryController : MonoBehaviour {
 
-	[SerializeField]
-	private TMP_InputField entryNameField;
+    [SerializeField]
+    private TMP_InputField entryNameField;
 
-	[SerializeField]
-	private Button addEntryButton;
+    [SerializeField]
+    private Button addEntryButton;
 
-	private GameDataManager dataManager;
+    private GameDataManager dataManager;
 
-	void Awake() {
-		if (entryNameField == null) {
-			throw new MissingComponentException("Missing TextMeshPro name component");
-		}
-		if (addEntryButton == null) {
-			throw new MissingComponentException("Missing add entry button component");
-		}
-		entryNameField.onValueChanged.AddListener(OnInputfieldChanged);
-	}
+    void Awake() {
+        if (entryNameField == null) {
+            throw new MissingComponentException("Missing TextMeshPro name component");
+        }
+        if (addEntryButton == null) {
+            throw new MissingComponentException("Missing add entry button component");
+        }
+        entryNameField.onValueChanged.AddListener(OnInputfieldChanged);
+    }
 
-	void Start() {
-		addEntryButton.interactable = false;
-		dataManager = GameManager.Instance.GameDataManager;
-	}
+    void Start() {
+        addEntryButton.interactable = false;
+        dataManager = GameManager.Instance.GameDataManager;
+    }
 
-	private void OnDestroy() {
-		entryNameField.onValueChanged.RemoveListener(OnInputfieldChanged);
-	}
+    private void OnDestroy() {
+        entryNameField.onValueChanged.RemoveListener(OnInputfieldChanged);
+    }
 
-	private void OnInputfieldChanged(string newValue) {
-		addEntryButton.interactable = newValue.Length > 0;
-	}
+    private void OnInputfieldChanged(string newValue) {
+        addEntryButton.interactable = newValue.Length > 0;
+    }
 
-	/// <summary>
-	/// A button can attach this method to its click handler to save a new entry to the scoreboard
-	/// </summary>
-	public void AddEntry() {
-		dataManager.AddNewHighScoreEntry(entryNameField.text);
-	}
+    /// <summary>
+    /// A button can attach this method to its click handler to save a new entry to the scoreboard
+    /// </summary>
+    public void AddEntry() {
+        dataManager.AddNewHighScoreEntry(entryNameField.text);
+    }
 }
