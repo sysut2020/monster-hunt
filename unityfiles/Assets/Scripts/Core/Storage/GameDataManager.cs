@@ -31,7 +31,7 @@ public class GameDataManager {
         this.LoadData();
     }
 
-    // -- properties -- // 
+     
     public Dictionary<string, int> PlayerLetters {
         get => playerLetters;
     }
@@ -48,9 +48,9 @@ public class GameDataManager {
         get => highScores;
     }
 
-    // -- events -- // 
+     
 
-    // -- public -- //
+    
 
     /// <summary>
     /// Adds the provided letter count to the saved letter count
@@ -143,7 +143,7 @@ public class GameDataManager {
         });
     }
 
-    // -- private -- // 
+     
 
     private void LoadData() {
         SaveData saveObj = DataSaver.Load();

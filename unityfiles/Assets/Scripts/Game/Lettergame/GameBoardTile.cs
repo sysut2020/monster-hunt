@@ -30,10 +30,10 @@ public class GameBoardTile : Dragable {
     public int XPos { get => xPos; set => xPos = value; }
     public int YPos { get => yPos; set => yPos = value; }
 
-    // -- properties -- //
-    // -- events -- // 
+    
+     
 
-    // -- public -- //
+    
 
     /// <summary>
     /// Set the letter to be displayed in the tile, and 
@@ -48,7 +48,7 @@ public class GameBoardTile : Dragable {
         this.updateDisplayedLetter();
     }
 
-    // -- private -- // 
+     
 
     /// <summary>
     /// resets the displayed char on the tile
@@ -141,7 +141,7 @@ public class GameBoardTile : Dragable {
 
         updateDisplayedLetter();
     }
-    // -- unity -- //
+    
 
     private void Awake() {
         TileText = this.GetComponentInChildren<TMP_Text>();

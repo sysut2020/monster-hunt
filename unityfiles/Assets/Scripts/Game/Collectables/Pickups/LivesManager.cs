@@ -18,7 +18,7 @@ public class LivesManager : MonoBehaviour{
     private int livesValue = 2;
     public static event EventHandler<OnPickupLivesUpdateArgs> OnPickupLivesUpdate;
 
-    // -- events -- //
+    
     private void SubscribeToEvents() {
         PowerupCollectable.OnPowerupCollected += CallbackOnPowerupCollected;
     }

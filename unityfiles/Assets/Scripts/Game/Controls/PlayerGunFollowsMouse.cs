@@ -22,7 +22,7 @@ public class PlayerGunFollowsMouse : MonoBehaviour {
     bool mouseOnRightSide = true;
 
 
-    // -- private -- //
+    
 
     private void RotateGun() {
         Vector3 currentMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);

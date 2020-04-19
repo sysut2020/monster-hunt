@@ -37,7 +37,7 @@ public class AimControl {
         this.SubscribeToEvents();
     }
 
-    // -- events -- //    
+        
 
     /// <summary>
     /// Subscribes to the relevant events for this class

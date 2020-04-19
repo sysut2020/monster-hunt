@@ -22,9 +22,9 @@ public class EnemyHealthController : HealthController {
         healthBarGuiController.SetStartHealth(startHealth);
     }
 
-    // -- properties -- //
+    
 
-    // -- public -- //
+    
 
     /// <summary>
     /// Reduces the entity's Health by a given value

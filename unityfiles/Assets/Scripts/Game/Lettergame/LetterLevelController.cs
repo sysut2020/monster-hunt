@@ -98,7 +98,7 @@ public class LetterLevelController : Singleton<LetterLevelController> {
     private Dictionary<String, List<LetterGameLetter>> playerLetters;
     private LetterGameLetter[, ] tileMap;
 
-    // -- properties -- //
+    
     public Dictionary<string, int> CurrentAvailableLetterCount {
         get {
             Dictionary<string, int> ret = new Dictionary<string, int>();
@@ -115,12 +115,12 @@ public class LetterLevelController : Singleton<LetterLevelController> {
         }
     }
 
-    // -- events -- // 
+     
     public static event EventHandler<LetterCountChangedEventArgs> LetterCountChangedEvent;
     public static event EventHandler<LetterGameEndedArgs> OnLetterGameEndedEvent;
     public static event EventHandler<WordScoreUpdateArgs> OnWordScoreUpdateEvent;
 
-    // -- public -- //
+    
 
     /// <summary>
     /// Tries to get a specific letter from the game manager
@@ -327,7 +327,7 @@ public class LetterLevelController : Singleton<LetterLevelController> {
         return string.Concat(letters.ToArray());
     }
 
-    // -- private -- //
+    
     private LetterGameLetter[] TryGetConnectedLetters(int xPos, int yPos, int dimension) {
         return WUArrays.GetConnected(this.tileMap, xPos, yPos, dimension);
     }
@@ -370,7 +370,6 @@ public class LetterLevelController : Singleton<LetterLevelController> {
         }
     }
 
-    // -- tile map stuff -- //
 
     /// <summary>
     /// Tries to remove the provided letter from the board

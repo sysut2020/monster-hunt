@@ -19,7 +19,7 @@ public class WUTimers {
 
     private int rollingUID = 0;
 
-    // -- properties -- //
+    
 
     public string RollingUID{
         get{
@@ -28,7 +28,7 @@ public class WUTimers {
         }
     }
 
-    // -- public -- //
+    
 
 
     /// <summary>
@@ -154,8 +154,6 @@ public class WUTimers {
 
     }
 
-    // -- overloads -- //
-
     /// <summary>
     /// Checks if a timer is complete returns true if it is false if not
     /// if the timer is complete and restart is true the timer is restarted
@@ -176,7 +174,7 @@ public class WUTimers {
     /// <returns>true if timer is done false if not</returns>
     public bool Done (string timerID) => this.isTimerDone (timerID, false);
 
-    // -- private -- // 
+     
 
     /// <summary>
     /// Checks if a timer is complete returns true if it is false if not

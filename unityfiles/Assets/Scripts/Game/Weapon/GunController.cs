@@ -38,7 +38,7 @@ public class GunController {
 
     public static event EventHandler BulletFireEvent;
     
-    // -- properties -- //
+    
     private float fireRate = 0;
     public float FireRate {
         get { return fireRate; }
@@ -50,7 +50,7 @@ public class GunController {
 
     public WeaponData WeaponData { get => weaponData; internal set => weaponData = value; }
 
-    // -- public -- //
+    
 
     /// <summary>
     /// Checks if it is time to fire if it is, it wil fire if not not 
@@ -64,7 +64,7 @@ public class GunController {
 
     
 
-    // -- private -- //
+    
 
 
 

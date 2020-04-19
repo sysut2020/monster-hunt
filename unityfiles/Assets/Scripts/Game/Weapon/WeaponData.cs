@@ -9,9 +9,7 @@ public class WeaponData : ScriptableObject {
     [Tooltip ("the Angle of the different arm elements")]
     [SerializeField]
     private PLAYER_ANIMATION holdingAnimation; 
-    
-    // -- bullet stuff sprite -- //
-    
+        
 
     [Header("Bullet properties")]
     [Tooltip("velocity of bullet in units/(1/50) sec.")]

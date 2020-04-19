@@ -94,7 +94,7 @@ public class GameManager : Singleton<GameManager> {
         }
     }
 
-    // -- private -- //
+    
 
     /// <summary>
     /// Changes the game state to the priovided state, and broadcast the change

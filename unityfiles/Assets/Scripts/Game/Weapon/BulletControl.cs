@@ -17,7 +17,7 @@ public class BulletControl : MonoBehaviour {
 
 
 
-    // -- properties -- //
+    
 
     internal BulletData BulletData {
         get{
@@ -100,7 +100,7 @@ public class BulletControl : MonoBehaviour {
 
     
 
-    // -- unity -- //
+    
     void Update() {
         Vector2 localVelocity = new Vector2(this.BulletData.Velocity, 0) * Time.deltaTime;
         this.gameObject.transform.Translate(localVelocity.x, localVelocity.y, 0);

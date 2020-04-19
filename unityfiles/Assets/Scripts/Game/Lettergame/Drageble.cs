@@ -17,9 +17,8 @@ public abstract class Dragable : MonoBehaviour, IBeginDragHandler, IDragHandler,
     private Text iconText;
     private RectTransform DraggingPlane;
 
-    // -- properties -- //
+    
     protected string IconLetter { get => iconLetter; set => iconLetter = value; }
-    // -- protected -- // 
 
     /// <summary>
     /// Tels whether or not the Ui element should start the drag operation 
@@ -33,7 +32,7 @@ public abstract class Dragable : MonoBehaviour, IBeginDragHandler, IDragHandler,
     /// <param name="eventData">event args</param>
     protected abstract void OnDragCompletion(PointerEventData eventData);
 
-    // -- public -- //
+    
     public void OnBeginDrag(PointerEventData eventData) {
         if (this.CanStartDrag()) {
             DraggingIcon.SetActive(true);
@@ -66,7 +65,7 @@ public abstract class Dragable : MonoBehaviour, IBeginDragHandler, IDragHandler,
         }
 
     }
-    // -- private -- // 
+     
 
     private void SetDraggedPosition(PointerEventData data) {
         if (dragOnSurfaces && data.pointerEnter != null && data.pointerEnter.transform as RectTransform != null) {
@@ -80,7 +79,7 @@ public abstract class Dragable : MonoBehaviour, IBeginDragHandler, IDragHandler,
         }
     }
 
-    // -- unity -- //
+    
     // Start is called before the first frame update
     void Start() {
         GameObject newIcon = Instantiate(DraggingIcon);

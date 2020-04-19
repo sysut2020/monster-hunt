@@ -8,8 +8,6 @@ using UnityEngine;
 static class WUArrays {
     // string array functions
 
-    // --- Singel letter string arrays --- //
-
     /// <summary>
     /// Returns true if all elements in
     /// the sorted array A is in the sorted array B
@@ -104,8 +102,6 @@ static class WUArrays {
 
         return returnValues;
     }
-
-    // --- 2D arrays --- //
 
     /// <summary>
     /// Returns the row at the provided y index 

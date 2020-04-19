@@ -51,7 +51,7 @@ public class SudoRandomLetterGenerator {
     }
 
 
-    // -- singelton -- //
+    
     private static SudoRandomLetterGenerator instance;
     public static SudoRandomLetterGenerator Instance {
         get {
@@ -63,7 +63,7 @@ public class SudoRandomLetterGenerator {
         }
     }
 
-    // -- Config -- //
+    
     private readonly int reduceWordSizeMin = 3;
     private readonly int reduceWordSizeMax = 6;
     private readonly int startWordSearchAt = 2;
@@ -72,7 +72,7 @@ public class SudoRandomLetterGenerator {
     private LetterFrequency letterFrequency;
 
 
-    // -- Algorithm -- //
+    
 
     private readonly List<String> letterSet = new List<String> ();
     private List<String> activeLetterSet = new List<String> ();

@@ -34,11 +34,11 @@ public class HuntingLevelController : Singleton<HuntingLevelController> {
     private PlayThroughData playThroughData;
     private GameDataManager dataManager;
 
-    // -- properties -- //
+    
 
-    // -- public -- //
+    
 
-    // -- events -- //
+    
 
     /// <summary>
     /// This event tells the listeners the level state has changed
@@ -180,7 +180,7 @@ public class HuntingLevelController : Singleton<HuntingLevelController> {
         return this.levelTimer.TimeLeft(this.LEVEL_TIMER_ID);
     }
 
-    // -- unity -- //
+    
 
     private void Start() {
         dataManager = GameManager.Instance.GameDataManager;

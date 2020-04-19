@@ -20,7 +20,7 @@ public class LetterTile : Dragable {
 
     private LetterGameLetter holdingLetter;
 
-    // -- properties -- //
+    
     public string LetterTileLetter {
         get => letterTileLetter;
         set {
@@ -30,7 +30,7 @@ public class LetterTile : Dragable {
         }
     }
 
-    // -- events -- // 
+     
 
     /// <summary>
     /// Callback for the letter count change event
@@ -45,7 +45,7 @@ public class LetterTile : Dragable {
         }
     }
 
-    // -- private -- // 
+     
 
     /// <summary>
     /// Tells whether or not the Ui element should start the drag operation 
@@ -70,7 +70,7 @@ public class LetterTile : Dragable {
             holdingLetter = null;
         }
     }
-    // -- unity -- //
+    
 
     void Awake() {
         LetterLevelController.LetterCountChangedEvent += CallbackLetterCountChangedEvent;
