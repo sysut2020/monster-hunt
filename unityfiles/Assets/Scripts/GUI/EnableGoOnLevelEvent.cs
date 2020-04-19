@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,29 +18,29 @@ public class EnableGoOnLevelEvent : MonoBehaviour {
     [SerializeField]
     private GameObject toDisable;
 
-    private void SubscribeToEvents() {
+    private void SubscribeToEvents () {
         HuntingLevelController.OnLevelStateChangeEvent += CallbackLevelStateChange;
     }
 
-    private void UnsubscribeFromEvents() {
+    private void UnsubscribeFromEvents () {
         HuntingLevelController.OnLevelStateChangeEvent -= CallbackLevelStateChange;
     }
 
-    private void CallbackLevelStateChange(object _, LevelStateChangeEventArgs args) {
+    private void CallbackLevelStateChange (object _, LevelStateChangeEventArgs args) {
         if (args.NewState == enableEvent) {
-            this.toDisable.SetActive(true);
+            this.toDisable.SetActive (true);
         } else if (args.NewState == disableEvent) {
-            this.toDisable.SetActive(false);
+            this.toDisable.SetActive (false);
         }
     }
-    void Awake() {
+    void Awake () {
         if (toDisable == null) {
-            throw new MissingComponentException("enabler missing somthing to enable");
+            throw new MissingComponentException ("enabler missing somthing to enable");
         }
-        SubscribeToEvents();
+        SubscribeToEvents ();
     }
 
-    void OnDestroy() {
-        UnsubscribeFromEvents();
+    void OnDestroy () {
+        UnsubscribeFromEvents ();
     }
 }

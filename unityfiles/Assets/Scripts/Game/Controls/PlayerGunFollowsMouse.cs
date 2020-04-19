@@ -2,7 +2,6 @@ using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
 using Quaternion = UnityEngine.Quaternion;
 
-
 public class PlayerGunFollowsMouse : MonoBehaviour {
     [SerializeField]
     private Transform rotatePoint;
@@ -21,12 +20,9 @@ public class PlayerGunFollowsMouse : MonoBehaviour {
 
     bool mouseOnRightSide = true;
 
-
-    
-
-    private void RotateGun() {
-        Vector3 currentMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        rotatePoint.transform.rotation = Quaternion.Euler(aimControl.GetAngle(currentMousePosition));
+    private void RotateGun () {
+        Vector3 currentMousePosition = Camera.main.ScreenToWorldPoint (Input.mousePosition);
+        rotatePoint.transform.rotation = Quaternion.Euler (aimControl.GetAngle (currentMousePosition));
     }
 
     /// <summary>
@@ -34,8 +30,8 @@ public class PlayerGunFollowsMouse : MonoBehaviour {
     /// returns true if it has, else false.
     /// </summary>
     /// <returns>true if crossed, else false</returns>
-    private bool IsMouseOnOtherSideOfCrossing() {
-        float mousePositionX = Camera.main.ScreenToWorldPoint(Input.mousePosition).x;
+    private bool IsMouseOnOtherSideOfCrossing () {
+        float mousePositionX = Camera.main.ScreenToWorldPoint (Input.mousePosition).x;
         float crossingPointX = this.crossingPoint.position.x;
         bool crossed = this.mouseOnRightSide;
         if ((mousePositionX > crossingPointX) && !mouseOnRightSide) {
@@ -47,20 +43,20 @@ public class PlayerGunFollowsMouse : MonoBehaviour {
         return crossed != this.mouseOnRightSide;
     }
 
-    private void FlipCharacter() {
-        this.crossingPoint.Rotate(0, 180, 0);
+    private void FlipCharacter () {
+        this.crossingPoint.Rotate (0, 180, 0);
     }
 
-    private void Start() {
-        mousePosition = new MousePosition();
-        this.aimControl = new AimControl(aimPoint.transform, rotatePoint.transform);
+    private void Start () {
+        mousePosition = new MousePosition ();
+        this.aimControl = new AimControl (aimPoint.transform, rotatePoint.transform);
     }
 
-    private void FixedUpdate() {
-        RotateGun();
-        if (this.IsMouseOnOtherSideOfCrossing()) {
-            FlipCharacter();
+    private void FixedUpdate () {
+        RotateGun ();
+        if (this.IsMouseOnOtherSideOfCrossing ()) {
+            FlipCharacter ();
         }
-        
+
     }
 }

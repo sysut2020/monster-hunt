@@ -17,32 +17,32 @@ namespace GUI.Lettergame {
         [SerializeField]
         private GameObject boardTile;
 
-        private void Start() {
+        private void Start () {
             var letterGameController = LetterLevelController.Instance;
             boardSizeX = letterGameController.BSizeX;
             boardSizeY = letterGameController.BSizeY;
 
-            var gridLayout = gameObject.GetComponent<GridLayoutGroup>();
-            var playBoardCanvas = gameObject.GetComponent<RectTransform>();
+            var gridLayout = gameObject.GetComponent<GridLayoutGroup> ();
+            var playBoardCanvas = gameObject.GetComponent<RectTransform> ();
 
-            calculator = new CellSizeCalculator(playBoardCanvas, boardSizeY, boardSizeX);
-            gridLayout.cellSize = calculator.GetOptimalCellSize();
+            calculator = new CellSizeCalculator (playBoardCanvas, boardSizeY, boardSizeX);
+            gridLayout.cellSize = calculator.GetOptimalCellSize ();
 
-            FillPlayingBoard();
+            FillPlayingBoard ();
         }
 
-        private void FillPlayingBoard() {
-            var rows = calculator.GetOptimalAmountOfRows();
+        private void FillPlayingBoard () {
+            var rows = calculator.GetOptimalAmountOfRows ();
             var columns = boardSizeX;
 
             for (int i = 0; i < columns * rows; i++) {
-                GameObject n = Instantiate(this.boardTile, transform, true);
-                GameBoardTile tile = n.GetComponent<GameBoardTile>();
-                var rectTransform = n.GetComponent<RectTransform>();
+                GameObject n = Instantiate (this.boardTile, transform, true);
+                GameBoardTile tile = n.GetComponent<GameBoardTile> ();
+                var rectTransform = n.GetComponent<RectTransform> ();
 
-                tile.XPos = i % Mathf.RoundToInt(columns);
-                tile.YPos = (int) Mathf.Floor(i / columns);
-                rectTransform.localScale = new Vector3(1, 1, 1);
+                tile.XPos = i % Mathf.RoundToInt (columns);
+                tile.YPos = (int) Mathf.Floor (i / columns);
+                rectTransform.localScale = new Vector3 (1, 1, 1);
             }
         }
     }

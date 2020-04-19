@@ -19,33 +19,33 @@ public class AddScoreEntryController : MonoBehaviour {
 
     private GameDataManager dataManager;
 
-    void Awake() {
+    void Awake () {
         if (entryNameField == null) {
-            throw new MissingComponentException("Missing TextMeshPro name component");
+            throw new MissingComponentException ("Missing TextMeshPro name component");
         }
         if (addEntryButton == null) {
-            throw new MissingComponentException("Missing add entry button component");
+            throw new MissingComponentException ("Missing add entry button component");
         }
-        entryNameField.onValueChanged.AddListener(OnInputfieldChanged);
+        entryNameField.onValueChanged.AddListener (OnInputfieldChanged);
     }
 
-    void Start() {
+    void Start () {
         addEntryButton.interactable = false;
         dataManager = GameManager.Instance.GameDataManager;
     }
 
-    private void OnDestroy() {
-        entryNameField.onValueChanged.RemoveListener(OnInputfieldChanged);
+    private void OnDestroy () {
+        entryNameField.onValueChanged.RemoveListener (OnInputfieldChanged);
     }
 
-    private void OnInputfieldChanged(string newValue) {
+    private void OnInputfieldChanged (string newValue) {
         addEntryButton.interactable = newValue.Length > 0;
     }
 
     /// <summary>
     /// A button can attach this method to its click handler to save a new entry to the scoreboard
     /// </summary>
-    public void AddEntry() {
-        dataManager.AddNewHighScoreEntry(entryNameField.text);
+    public void AddEntry () {
+        dataManager.AddNewHighScoreEntry (entryNameField.text);
     }
 }

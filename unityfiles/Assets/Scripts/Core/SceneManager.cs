@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEngine;
 using Object = System.Object;
 
@@ -13,7 +13,7 @@ public sealed class SceneManager {
     private static SceneManager instance = null;
 
     // Lock for thread safety
-    private static readonly object padlock = new Object();
+    private static readonly object padlock = new Object ();
 
     /// <summary>
     /// Check if instance of SceneManager exist, if it does, return it.
@@ -23,9 +23,9 @@ public sealed class SceneManager {
     public static SceneManager Instance {
         get {
             {
-                lock(padlock) {
+                lock (padlock) {
                     if (instance == null) {
-                        instance = new SceneManager();
+                        instance = new SceneManager ();
                     }
 
                     return instance;
@@ -34,15 +34,15 @@ public sealed class SceneManager {
         }
     }
 
-    private SceneManager() { }
+    private SceneManager () { }
 
     /// <summary>
     /// Returns the build index of the scene, by name.
     /// </summary>
     /// <param name="sceneName">name of the scene</param>
     /// <returns>build index number</returns>
-    public int GetSceneIndexByName(string sceneName) {
-        return UnityEngine.SceneManagement.SceneManager.GetSceneByName(sceneName).buildIndex;
+    public int GetSceneIndexByName (string sceneName) {
+        return UnityEngine.SceneManagement.SceneManager.GetSceneByName (sceneName).buildIndex;
     }
 
     /// <summary>
@@ -50,9 +50,9 @@ public sealed class SceneManager {
     /// </summary>
     /// <param name="index">the scene index</param>
     /// <returns>name of the scene or emp</returns>
-    public string GetSceneNameByIndex(int index) {
+    public string GetSceneNameByIndex (int index) {
 
-        return UnityEngine.SceneManagement.SceneManager.GetSceneByBuildIndex(index).name;
+        return UnityEngine.SceneManagement.SceneManager.GetSceneByBuildIndex (index).name;
     }
 
     /// <summary>
@@ -60,12 +60,12 @@ public sealed class SceneManager {
     /// Throws ArgumentNullException if the name is NULL
     /// </summary>
     /// <param name="sceneName">the name of the scene</param>
-    public void ChangeScene(string sceneName) {
+    public void ChangeScene (string sceneName) {
         if (sceneName == null) {
-            throw new ArgumentNullException("Scene name can not be null");
+            throw new ArgumentNullException ("Scene name can not be null");
         }
 
-        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
+        UnityEngine.SceneManagement.SceneManager.LoadScene (sceneName);
     }
 
     /// <summary>
@@ -73,19 +73,19 @@ public sealed class SceneManager {
     /// Throws ArgumentException index is smaller then 0
     /// </summary>
     /// <param name="index">the index of the scene</param>
-    public void ChangeScene(int index) {
+    public void ChangeScene (int index) {
         if (index < 0) {
-            throw new ArgumentException("Scene index must be >= 0");
+            throw new ArgumentException ("Scene index must be >= 0");
         }
-        UnityEngine.SceneManagement.SceneManager.LoadScene(index);
+        UnityEngine.SceneManagement.SceneManager.LoadScene (index);
     }
 
     /// <summary>
     /// Reloads the currently active scene
     /// </summary>
-    public void RestartCurrentScene() {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(
-            UnityEngine.SceneManagement.SceneManager.GetActiveScene().name
+    public void RestartCurrentScene () {
+        UnityEngine.SceneManagement.SceneManager.LoadScene (
+            UnityEngine.SceneManagement.SceneManager.GetActiveScene ().name
         );
     }
 }

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 /// <summary>
 /// OBstacles are entities in the world which hinders the player, like spikes
@@ -19,26 +19,26 @@ public class Obstacle : MonoBehaviour {
     /// Adds obstacle damage to the other component if it is of correct type.
     /// </summary>
     /// <param name="other">object colided with</param>
-    private void OnTriggerEnter2D(Collider2D other) {
-        Debug.Log(other);
-        this.TryDamage(other.gameObject);
+    private void OnTriggerEnter2D (Collider2D other) {
+        Debug.Log (other);
+        this.TryDamage (other.gameObject);
     }
 
     /// <summary>
     /// Adds obstacle damage to the other component if it is of correct type.
     /// </summary>
     /// <param name="other">object colided with</param>
-    private void OnCollisionEnter2D(Collision2D other) {
-        this.TryDamage(other.gameObject);
+    private void OnCollisionEnter2D (Collision2D other) {
+        this.TryDamage (other.gameObject);
     }
 
     /// <summary>
     /// Tries to find target type, and apply damage to it.
     /// </summary>
     /// <param name="target"></param>
-    private void TryDamage(GameObject target) {
-        if (target.TryGetComponent(out IObstacleDamagable damageble)) {
-            damageble.ApplyObstacleDamage(this.Damage);
+    private void TryDamage (GameObject target) {
+        if (target.TryGetComponent (out IObstacleDamagable damageble)) {
+            damageble.ApplyObstacleDamage (this.Damage);
         }
     }
 

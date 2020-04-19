@@ -6,10 +6,9 @@ using System;
 /// </summary>
 [Serializable]
 public class ScoreboardEntry : IComparable<ScoreboardEntry> {
-    public ScoreboardEntry() {
-    }
+    public ScoreboardEntry () { }
 
-    public ScoreboardEntry(string playerName, int score) {
+    public ScoreboardEntry (string playerName, int score) {
         PlayerName = playerName;
         Score = score;
     }
@@ -18,7 +17,7 @@ public class ScoreboardEntry : IComparable<ScoreboardEntry> {
 
     public int Score { get; set; }
 
-    public int CompareTo(ScoreboardEntry other) {
+    public int CompareTo (ScoreboardEntry other) {
         if (other.Score < Score) {
             return 1;
         }

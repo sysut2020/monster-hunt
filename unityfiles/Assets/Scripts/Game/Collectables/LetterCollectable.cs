@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -17,21 +17,20 @@ public class LetterCollectable : Collectable {
 
     private MoveToGuiElement moveToGuiElement;
 
-    
     public string LetterString {
         get => letterComponent.text;
     }
 
-    private void OnDestroy() {
-        LetterCollectedArgs letterEventArgs = new LetterCollectedArgs();
+    private void OnDestroy () {
+        LetterCollectedArgs letterEventArgs = new LetterCollectedArgs ();
         letterEventArgs.Letter = this.LetterString;
-        LetterCollectable.OnLetterCollected?.Invoke(this, letterEventArgs);
+        LetterCollectable.OnLetterCollected?.Invoke (this, letterEventArgs);
     }
 
-    private void Awake() {
-        this.letterComponent.SetText(SudoRandomLetterGenerator.Instance.GenerateLetter());
-        if (TryGetComponent(out moveToGuiElement)) {
-            moveToGuiElement.FindTarget<LettersCollectedGUI>();
+    private void Awake () {
+        this.letterComponent.SetText (SudoRandomLetterGenerator.Instance.GenerateLetter ());
+        if (TryGetComponent (out moveToGuiElement)) {
+            moveToGuiElement.FindTarget<LettersCollectedGUI> ();
         }
     }
 }

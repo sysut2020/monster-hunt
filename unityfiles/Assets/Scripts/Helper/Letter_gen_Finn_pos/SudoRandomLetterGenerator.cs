@@ -1,10 +1,9 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
-
 
 /// <summary>
 /// Generates letters sudo randomly. This means that every new letter should
@@ -13,11 +12,10 @@ using UnityEngine;
 /// </summary>
 public class SudoRandomLetterGenerator {
 
-    
     /// <summary>
     /// Constructor reading the needed files from disk
     /// </summary>
-    private SudoRandomLetterGenerator(){
+    private SudoRandomLetterGenerator () {
         // reads the letter freq 
         using (StreamReader r = new StreamReader ("Assets/Scripts/Helper/Letter_gen_Finn_pos/letter_sett_lists/letter_frequensy_weight_100.json")) {
             string jsonText = r.ReadToEnd ();
@@ -32,29 +30,23 @@ public class SudoRandomLetterGenerator {
         }
     }
 
-
-    
     private static SudoRandomLetterGenerator instance;
     public static SudoRandomLetterGenerator Instance {
         get {
             if (instance == null) {
-                instance = new SudoRandomLetterGenerator();
+                instance = new SudoRandomLetterGenerator ();
             }
 
             return instance;
         }
     }
 
-    
     private readonly int reduceWordSizeMin = 3;
     private readonly int reduceWordSizeMax = 6;
     private readonly int startWordSearchAt = 2;
 
     private SetValuePairs allSettValuePairs;
     private LetterFrequency letterFrequency;
-
-
-    
 
     private readonly List<String> letterSet = new List<String> ();
     private List<String> activeLetterSet = new List<String> ();

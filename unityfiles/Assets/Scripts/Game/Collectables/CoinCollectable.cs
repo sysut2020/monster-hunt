@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEngine;
 
 /// <summary>
@@ -16,17 +16,17 @@ public class CoinCollectable : Collectable {
     [SerializeField]
     private int coinValue = 1;
 
-    private void Awake() {
-        if (TryGetComponent(out moveToGuiElement)) {
-            moveToGuiElement.FindTarget<CoinsCollectedGUI>();
+    private void Awake () {
+        if (TryGetComponent (out moveToGuiElement)) {
+            moveToGuiElement.FindTarget<CoinsCollectedGUI> ();
         }
 
         this.ScoreValue = coinValue;
     }
 
-    private void OnDestroy() {
-        var args = new CoinCollectedArgs();
+    private void OnDestroy () {
+        var args = new CoinCollectedArgs ();
         args.Amount = this.coinValue;
-        OnCoinCollected?.Invoke(this, args);
+        OnCoinCollected?.Invoke (this, args);
     }
 }

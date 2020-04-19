@@ -1,13 +1,10 @@
-﻿using System.Timers;
 using System;
-
-using UnityEngine;
-
-
-using System.Diagnostics;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Timers;
+using UnityEngine;
 
 /// <summary>
 /// A object who keeps track of multiple timers.
@@ -19,20 +16,16 @@ public class WUTimers {
 
     private int rollingUID = 0;
 
-    
     /// <summary>
     /// Returns a unique for this timer
     /// </summary>
     /// <value></value>
-    public string RollingUID{
-        get{
+    public string RollingUID {
+        get {
             rollingUID += 1;
             return $"TIMER_{this.rollingUID}";
         }
     }
-
-    
-
 
     /// <summary>
     /// Removes the timer with the given timer id
@@ -53,7 +46,7 @@ public class WUTimers {
         bool suc = false;
         if (timers.Keys.Contains (timerID)) {
             WUTimer toUpdate = timers[timerID];
-            toUpdate.Update(newTimeInMillisec);
+            toUpdate.Update (newTimeInMillisec);
             suc = true;
         }
         return suc;
@@ -108,7 +101,7 @@ public class WUTimers {
     public bool Pause (string timerID) {
         bool ret = false;
         if (timers.Keys.Contains (timerID)) {
-            this.timers[timerID].Pause();
+            this.timers[timerID].Pause ();
             ret = true;
         }
         return ret;
@@ -122,7 +115,7 @@ public class WUTimers {
     public bool Continue (string timerID) {
         bool ret = false;
         if (timers.Keys.Contains (timerID)) {
-            this.timers[timerID].Continue();
+            this.timers[timerID].Continue ();
             ret = true;
         }
         return ret;
@@ -146,14 +139,13 @@ public class WUTimers {
         return ret;
     }
 
-
-    public void SetActionTimer(string timerID, Action action, int waitTimeInMillisec){
-        System.Timers.Timer aTimer = new System.Timers.Timer();
-        aTimer.Elapsed += (sender, args) => action();
+    public void SetActionTimer (string timerID, Action action, int waitTimeInMillisec) {
+        System.Timers.Timer aTimer = new System.Timers.Timer ();
+        aTimer.Elapsed += (sender, args) => action ();
         aTimer.Interval = waitTimeInMillisec;
-        aTimer.Start();
+        aTimer.Start ();
 
-        this.actionTimers.Add(timerID,aTimer);
+        this.actionTimers.Add (timerID, aTimer);
 
     }
 
@@ -176,8 +168,6 @@ public class WUTimers {
     /// <param name="timerID">the id of the timer to check</param>
     /// <returns>true if timer is done false if not</returns>
     public bool Done (string timerID) => this.isTimerDone (timerID, false);
-
-     
 
     /// <summary>
     /// Checks if a timer is complete returns true if it is false if not

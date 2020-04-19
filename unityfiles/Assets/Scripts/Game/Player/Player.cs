@@ -19,7 +19,7 @@ public class Player : MonoBehaviour, IKillable, IDamageNotifyable {
 
     private Animator animator;
 
-    public delegate void EventHandler();
+    public delegate void EventHandler ();
 
     public static event EventHandler OnPlayerDead;
 
@@ -27,22 +27,18 @@ public class Player : MonoBehaviour, IKillable, IDamageNotifyable {
 
     private Vector3 spawnPosition;
 
-    
-
     private static Player instance;
 
     public static Player Instance {
         get {
             if (instance == null) {
-                GameObject player = new GameObject("Player");
-                player.AddComponent<Player>();
+                GameObject player = new GameObject ("Player");
+                player.AddComponent<Player> ();
             }
 
             return instance;
         }
     }
-
-    
 
     public PlayerHealthController PlayerHealthController {
         get => playerHealthController;
@@ -54,56 +50,49 @@ public class Player : MonoBehaviour, IKillable, IDamageNotifyable {
         internal set => this.playerWeaponController = value;
     }
 
-    
-
     /// <summary>
     /// Respawns the player and notify that the player died
     /// </summary>
-    public void IsDead() {
-        Respawn();
-        PlayerEventArgs args = new PlayerEventArgs();
-        PlayerKilledEvent?.Invoke(this, args);
+    public void IsDead () {
+        Respawn ();
+        PlayerEventArgs args = new PlayerEventArgs ();
+        PlayerKilledEvent?.Invoke (this, args);
     }
-    
 
     public static event EventHandler<PlayerEventArgs> PlayerKilledEvent;
-    private void SubscribeToEvents() {
+    private void SubscribeToEvents () {
         PlayerWeaponController.WeaponChangedEvent += CallbackWeaponChangedEvent;
     }
 
-    private void UnsubscribeFromEvents() {
+    private void UnsubscribeFromEvents () {
         PlayerWeaponController.WeaponChangedEvent -= CallbackWeaponChangedEvent;
     }
 
-    private void CallbackWeaponChangedEvent(object _, WeaponChangedEventArgs args) {
-        animator.SetInteger("ACTIVE_WEAPON", (int) args.AnimId);
+    private void CallbackWeaponChangedEvent (object _, WeaponChangedEventArgs args) {
+        animator.SetInteger ("ACTIVE_WEAPON", (int) args.AnimId);
     }
-
-     
 
     /// <summary>
     /// Moves the player to the spawn position
     /// </summary>
-    private void Respawn() {
+    private void Respawn () {
         this.transform.position = this.spawnPosition;
     }
 
-    
+    private void Awake () {
 
-    private void Awake() {
-
-        if (!this.TryGetComponent<Animator>(out this.animator)) {
-            Debug.LogError("PLAYER ANIMATOR NOT FOUND");
+        if (!this.TryGetComponent<Animator> (out this.animator)) {
+            Debug.LogError ("PLAYER ANIMATOR NOT FOUND");
         }
-        SubscribeToEvents();
+        SubscribeToEvents ();
         this.spawnPosition = this.transform.position;
     }
 
-    void OnDestroy() {
-        this.UnsubscribeFromEvents();
+    void OnDestroy () {
+        this.UnsubscribeFromEvents ();
     }
 
-    public void Damaged() {
-        animator.SetTrigger(AnimationTriggers.DAMAGE);
+    public void Damaged () {
+        animator.SetTrigger (AnimationTriggers.DAMAGE);
     }
 }

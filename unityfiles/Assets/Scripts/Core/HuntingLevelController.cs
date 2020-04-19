@@ -27,18 +27,12 @@ public class HuntingLevelController : Singleton<HuntingLevelController> {
     public LevelDetails LevelDetails { get { return this.levelDetails; } private set { this.levelDetails = value; } }
 
     private PlayerInventory playerInventory;
-    private WUTimers levelTimer = new WUTimers();
+    private WUTimers levelTimer = new WUTimers ();
     private string LEVEL_TIMER_ID;
     private LEVEL_STATE currentState; // may need default here in that case find out the starting state
 
     private PlayThroughData playThroughData;
     private GameDataManager dataManager;
-
-    
-
-    
-
-    
 
     /// <summary>
     /// This event tells the listeners the level state has changed
@@ -55,7 +49,7 @@ public class HuntingLevelController : Singleton<HuntingLevelController> {
     /// <summary>
     /// Subscribes to the relevant events for this class
     /// </summary>
-    private void SubscribeToEvents() {
+    private void SubscribeToEvents () {
         LetterCollectable.OnLetterCollected += CallbackLetterCollected;
         PlayerHealthController.OnPlayerLivesUpdate += CallbackPlayerLivesUpdate;
         Enemy.EnemyKilledEvent += CallbackEnemyKilledEvent;
@@ -65,17 +59,17 @@ public class HuntingLevelController : Singleton<HuntingLevelController> {
     /// <summary>
     /// Subscribes to the relevant events for this class
     /// </summary>
-    private void UnsubscribeFromEvents() {
+    private void UnsubscribeFromEvents () {
         LetterCollectable.OnLetterCollected -= CallbackLetterCollected;
         PlayerHealthController.OnPlayerLivesUpdate -= CallbackPlayerLivesUpdate;
         Enemy.EnemyKilledEvent -= CallbackEnemyKilledEvent;
         GameManager.GamePausedEvent -= CallbackOnGamePaused;
     }
 
-    private void CallbackLetterCollected(object _, LetterCollectedArgs args) {
+    private void CallbackLetterCollected (object _, LetterCollectedArgs args) {
         playThroughData.LetterCollected++;
         if (this.playThroughData.LetterCollected == this.levelDetails.NumberOfLetters) {
-            this.ChangeLevelState(LEVEL_STATE.GAME_WON);
+            this.ChangeLevelState (LEVEL_STATE.GAME_WON);
         }
     }
 
@@ -85,8 +79,8 @@ public class HuntingLevelController : Singleton<HuntingLevelController> {
     /// </summary>
     /// <param name="_">the object calling</param>
     /// <param name="args">the event args</param>
-    private void CallbackPlayerLivesUpdate(object _, PlayerLivesUpdateArgs args) {
-        if (args.CurrentLives == 0) LevelStateChange(LEVEL_STATE.GAME_OVER);
+    private void CallbackPlayerLivesUpdate (object _, PlayerLivesUpdateArgs args) {
+        if (args.CurrentLives == 0) LevelStateChange (LEVEL_STATE.GAME_OVER);
     }
 
     /// <summary>
@@ -95,10 +89,10 @@ public class HuntingLevelController : Singleton<HuntingLevelController> {
     /// </summary>
     /// <param name="_">the object calling</param>
     /// <param name="args">the event args</param>
-    private void CallbackEnemyKilledEvent(object _, EnemyEventArgs args) {
+    private void CallbackEnemyKilledEvent (object _, EnemyEventArgs args) {
         playThroughData.EnemysKilled++;
         if (this.levelDetails.NumberOfEnemies <= playThroughData.EnemysKilled) {
-            this.LevelStateChange(LEVEL_STATE.GAME_WON);
+            this.LevelStateChange (LEVEL_STATE.GAME_WON);
         }
     }
 
@@ -107,11 +101,11 @@ public class HuntingLevelController : Singleton<HuntingLevelController> {
     /// </summary>
     /// <param name="_">the object that sent the event > unused</param>
     /// <param name="args">event arguments</param>
-    private void CallbackOnGamePaused(object _, GamePausedEventArgs args) {
+    private void CallbackOnGamePaused (object _, GamePausedEventArgs args) {
         if (args.IsPaused) {
-            this.levelTimer.Pause(this.LEVEL_TIMER_ID);
+            this.levelTimer.Pause (this.LEVEL_TIMER_ID);
         } else {
-            this.levelTimer.Continue(this.LEVEL_TIMER_ID);
+            this.levelTimer.Continue (this.LEVEL_TIMER_ID);
         }
     }
 
@@ -119,17 +113,17 @@ public class HuntingLevelController : Singleton<HuntingLevelController> {
     /// Changes the level state to the provided state
     /// </summary>
     /// <param name="state">state to change too</param>
-    public void ChangeLevelState(LEVEL_STATE state) {
-        Instance.LevelStateChange(state);
+    public void ChangeLevelState (LEVEL_STATE state) {
+        Instance.LevelStateChange (state);
     }
 
     /// <summary>
     /// Changes the level state 
     /// </summary>
     /// <param name="NewState">The new level state</param>
-    private void LevelStateChange(LEVEL_STATE NewState) {
+    private void LevelStateChange (LEVEL_STATE NewState) {
         this.currentState = NewState;
-        LevelStateChangeEventArgs args = new LevelStateChangeEventArgs();
+        LevelStateChangeEventArgs args = new LevelStateChangeEventArgs ();
         args.NewState = NewState;
         switch (NewState) {
             // The game is over show game over screen
@@ -137,38 +131,38 @@ public class HuntingLevelController : Singleton<HuntingLevelController> {
             case LEVEL_STATE.GAME_WON:
                 break;
             case LEVEL_STATE.PLAY:
-                InitLevel();
+                InitLevel ();
                 break;
             default:
-                Debug.Log("🌮🌮🌮🌮  UNKNOWN LEVEL STATE  🌮🌮🌮🌮");
+                Debug.Log ("🌮🌮🌮🌮  UNKNOWN LEVEL STATE  🌮🌮🌮🌮");
                 break;
         }
 
-        OnLevelStateChangeEvent?.Invoke(this, args);
+        OnLevelStateChangeEvent?.Invoke (this, args);
     }
 
     // TODO: maybe remove?
     /// <summary>
     /// spawns all the enemys and inits the player
     /// </summary>
-    private void InitLevel() {
+    private void InitLevel () {
         EntitySpawner.Instance.MaxSpawns = this.levelDetails.NumberOfEnemies;
-        EntitySpawner.Instance?.Init(this.levelDetails.NumberOfEnemiesAtStart); // Init with X mobs on the map
+        EntitySpawner.Instance?.Init (this.levelDetails.NumberOfEnemiesAtStart); // Init with X mobs on the map
     }
 
     /// <summary>
     /// Triggers an event telling the listeners they are about to be deleted and
     /// and should unsubscribe from all events osv
     /// </summary>
-    private void CleanUpScene() {
-        CleanUpEvent?.Invoke(this, EventArgs.Empty);
+    private void CleanUpScene () {
+        CleanUpEvent?.Invoke (this, EventArgs.Empty);
     }
 
     /// <summary>
     /// Starts the level timer
     /// </summary>
-    private void startLevelTime() {
-        this.levelTimer.Set(LEVEL_TIMER_ID, this.levelDetails.Time);
+    private void startLevelTime () {
+        this.levelTimer.Set (LEVEL_TIMER_ID, this.levelDetails.Time);
     }
 
     /// <summary>
@@ -176,36 +170,34 @@ public class HuntingLevelController : Singleton<HuntingLevelController> {
     /// if timer is done -1 is returned
     /// </summary>
     /// <returns>time left in milliseconds -1 if done</returns>
-    public int GetLevelTimeLeft() {
-        return this.levelTimer.TimeLeft(this.LEVEL_TIMER_ID);
+    public int GetLevelTimeLeft () {
+        return this.levelTimer.TimeLeft (this.LEVEL_TIMER_ID);
     }
 
-    
-
-    private void Start() {
+    private void Start () {
         dataManager = GameManager.Instance.GameDataManager;
-        playerInventory = new PlayerInventory();
-        this.playThroughData = new PlayThroughData();
+        playerInventory = new PlayerInventory ();
+        this.playThroughData = new PlayThroughData ();
         LEVEL_TIMER_ID = this.levelTimer.RollingUID;
-        this.startLevelTime();
-        this.LevelStateChange(LEVEL_STATE.PLAY);
+        this.startLevelTime ();
+        this.LevelStateChange (LEVEL_STATE.PLAY);
     }
 
-    private void Update() {
-        if (this.levelTimer.Done(LEVEL_TIMER_ID)) {
-            this.LevelStateChange(LEVEL_STATE.GAME_OVER);
+    private void Update () {
+        if (this.levelTimer.Done (LEVEL_TIMER_ID)) {
+            this.LevelStateChange (LEVEL_STATE.GAME_OVER);
         }
     }
 
-    private void OnEnable() {
-        SubscribeToEvents();
+    private void OnEnable () {
+        SubscribeToEvents ();
     }
 
-    private void OnDestroy() {
-        CleanUpScene();
-        UnsubscribeFromEvents();
+    private void OnDestroy () {
+        CleanUpScene ();
+        UnsubscribeFromEvents ();
 
-        dataManager.AddLetters(playerInventory.CollectedLetters);
-        dataManager.AddMoney(playerInventory.Money);
+        dataManager.AddLetters (playerInventory.CollectedLetters);
+        dataManager.AddMoney (playerInventory.Money);
     }
 }

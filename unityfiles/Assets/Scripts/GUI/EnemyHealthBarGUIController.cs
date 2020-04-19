@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
@@ -13,36 +13,35 @@ public class EnemyHealthBarGUIController : MonoBehaviour {
     [SerializeField]
     private Image healthBar;
 
-
-    public void SetStartHealth(float value) {
+    public void SetStartHealth (float value) {
         startHealth = value;
     }
 
     // Start is called before the first frame update
-    void Start() {
-        HideHealthBar();
+    void Start () {
+        HideHealthBar ();
     }
 
-    private void HideHealthBar() {
-        healthBarBackground.SetActive(false);
+    private void HideHealthBar () {
+        healthBarBackground.SetActive (false);
     }
 
-    private void DisplayHealthBar() {
-        healthBarBackground.SetActive(true);
+    private void DisplayHealthBar () {
+        healthBarBackground.SetActive (true);
     }
 
     /// <summary>
     /// Updates the healthbar to display the remaining health as a fraction of the start health
     /// </summary>
     /// <param name="health">how much the health the enemy currently has</param>
-    public void UpdateHealthBar(float health) {
+    public void UpdateHealthBar (float health) {
         if (health <= 0) {
             return; // if health is below 0 there is no point in updating health bar
-        } 
+        }
 
         if (!healthBarBackground.activeSelf) {
             // if the health bar is not shown, show it.
-            DisplayHealthBar();
+            DisplayHealthBar ();
         }
 
         healthBar.fillAmount = health / startHealth;

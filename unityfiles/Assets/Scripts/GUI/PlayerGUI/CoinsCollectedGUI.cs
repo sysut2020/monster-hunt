@@ -1,4 +1,4 @@
-﻿using TMPro;
+using TMPro;
 using UnityEngine;
 /// <summary>
 /// This class is responsible for updating the GUI with how many coins that 
@@ -14,24 +14,24 @@ public class CoinsCollectedGUI : MonoBehaviour {
 
     private int collectedCoins = 0;
 
-    private void Awake() {
-        if (coinCounter == null){
-            throw new MissingComponentException("Missing text component");
+    private void Awake () {
+        if (coinCounter == null) {
+            throw new MissingComponentException ("Missing text component");
         }
         CoinCollectable.OnCoinCollected += OnNewCoin;
-        SetCoinamountText();
+        SetCoinamountText ();
     }
 
-    private void SetCoinamountText() {
-        this.coinCounter.SetText($"{collectedCoins}");
+    private void SetCoinamountText () {
+        this.coinCounter.SetText ($"{collectedCoins}");
     }
 
-    private void OnNewCoin(object sender, CoinCollectedArgs coin) {
+    private void OnNewCoin (object sender, CoinCollectedArgs coin) {
         this.collectedCoins++;
-        this.SetCoinamountText();
+        this.SetCoinamountText ();
     }
 
-    private void OnDestroy() {
+    private void OnDestroy () {
         CoinCollectable.OnCoinCollected -= OnNewCoin;
     }
 

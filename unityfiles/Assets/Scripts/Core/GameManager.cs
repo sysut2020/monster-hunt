@@ -47,7 +47,7 @@ public class GameManager : Singleton<GameManager> {
     /// <summary>
     /// Subscribes to the relevant events for this class
     /// </summary>
-    private void SubscribeToEvents() {
+    private void SubscribeToEvents () {
         // todo subscribe to OnPlayerDead, OnTimeOut, OnAllEnemiesDead
         HuntingLevelController.OnLevelStateChangeEvent += CallbackLevelStateChangeEvent;
         LetterLevelController.OnLetterGameEndedEvent += CallbackLetterGameEnded;
@@ -56,7 +56,7 @@ public class GameManager : Singleton<GameManager> {
     /// <summary>
     /// Subscribes to the relevant events for this class
     /// </summary>
-    private void UnsubscribeFromEvents() {
+    private void UnsubscribeFromEvents () {
         // todo unsubscribe from OnPlayerDead, OnTimeOut, OnAllEnemiesDead
         // maybe that this also should be done on disable
         HuntingLevelController.OnLevelStateChangeEvent -= CallbackLevelStateChangeEvent;
@@ -68,14 +68,14 @@ public class GameManager : Singleton<GameManager> {
     /// </summary>
     /// <param name="o">the object calling (this should always be the level manager)</param>
     /// <param name="args">the event args containing the new state</param>
-    private void CallbackLevelStateChangeEvent(object o, LevelStateChangeEventArgs args) {
+    private void CallbackLevelStateChangeEvent (object o, LevelStateChangeEventArgs args) {
         switch (args.NewState) {
             case LEVEL_STATE.GAME_OVER:
             case LEVEL_STATE.GAME_WON:
-                this.SetGameState(GAME_STATE.PAUSE);
+                this.SetGameState (GAME_STATE.PAUSE);
                 break;
             default:
-                this.SetGameState(GAME_STATE.PLAY);
+                this.SetGameState (GAME_STATE.PLAY);
                 break;
         }
     }
@@ -88,61 +88,59 @@ public class GameManager : Singleton<GameManager> {
     ///         game level is transmitted with the event 
     /// </summary>
     /// <param name="args">the event args containing the total score from letter level</param>
-    private void CallbackLetterGameEnded(object _, LetterGameEndedArgs args) {
+    private void CallbackLetterGameEnded (object _, LetterGameEndedArgs args) {
         if (args.Score > 0) {
-            gameDataManager.AddGameScore(args.Score);
+            gameDataManager.AddGameScore (args.Score);
         }
     }
-
-    
 
     /// <summary>
     /// Changes the game state to the provided state, and broadcast the change
     /// as an event.
     /// </summary>
     /// <param name="NewState">The new game state</param>
-    public void SetGameState(GAME_STATE NewState) {
+    public void SetGameState (GAME_STATE NewState) {
         this.CurrentState = NewState;
-        GameStateChangeEventArgs args = new GameStateChangeEventArgs();
+        GameStateChangeEventArgs args = new GameStateChangeEventArgs ();
         args.NewState = NewState;
 
         switch (NewState) {
             case GAME_STATE.PLAY:
-                this.StartTime();
-                GamePausedEvent?.Invoke(this, new GamePausedEventArgs { IsPaused = false });
+                this.StartTime ();
+                GamePausedEvent?.Invoke (this, new GamePausedEventArgs { IsPaused = false });
                 break;
             case GAME_STATE.PAUSE:
-                GamePausedEvent?.Invoke(this, new GamePausedEventArgs { IsPaused = true });
-                this.PauseTime();
+                GamePausedEvent?.Invoke (this, new GamePausedEventArgs { IsPaused = true });
+                this.PauseTime ();
                 break;
             case GAME_STATE.EXIT:
-                Application.Quit();
+                Application.Quit ();
                 break;
             default:
-                Debug.LogError("🌮🌮🌮🌮  UNKNOWN GAME STATE  🌮🌮🌮🌮");
+                Debug.LogError ("🌮🌮🌮🌮  UNKNOWN GAME STATE  🌮🌮🌮🌮");
                 break;
         }
 
-        GameStateChangeEvent?.Invoke(this, args);
+        GameStateChangeEvent?.Invoke (this, args);
     }
 
-    private void PauseTime() {
+    private void PauseTime () {
         Time.timeScale = PAUSE;
     }
 
-    private void StartTime() {
+    private void StartTime () {
         Time.timeScale = PLAY;
     }
 
-    private void Awake() {
-        Instance.SetGameState(GAME_STATE.PLAY);
-        this.gameDataManager = new GameDataManager();
-        SubscribeToEvents();
+    private void Awake () {
+        Instance.SetGameState (GAME_STATE.PLAY);
+        this.gameDataManager = new GameDataManager ();
+        SubscribeToEvents ();
     }
 
-    private void OnDestroy() {
-        UnsubscribeFromEvents();
-        this.gameDataManager.SaveData();
+    private void OnDestroy () {
+        UnsubscribeFromEvents ();
+        this.gameDataManager.SaveData ();
     }
 
 }

@@ -91,19 +91,18 @@ public class LetterLevelController : Singleton<LetterLevelController> {
     /// <summary>
     /// True if should generate test letters, if testing/debugging the scene
     /// </summary>
-    [Header("Testing")]
+    [Header ("Testing")]
     [SerializeField]
     private bool fillWithTestLetters = false;
 
     private Dictionary<String, List<LetterGameLetter>> playerLetters;
     private LetterGameLetter[, ] tileMap;
 
-    
     public Dictionary<string, int> CurrentAvailableLetterCount {
         get {
-            Dictionary<string, int> ret = new Dictionary<string, int>();
+            Dictionary<string, int> ret = new Dictionary<string, int> ();
             foreach (string key in playerLetters.Keys) {
-                ret.Add(key, 0);
+                ret.Add (key, 0);
                 foreach (LetterGameLetter l in playerLetters[key]) {
                     if (!l.IsOnBoard) {
                         ret[key]++;
@@ -115,12 +114,9 @@ public class LetterLevelController : Singleton<LetterLevelController> {
         }
     }
 
-     
     public static event EventHandler<LetterCountChangedEventArgs> LetterCountChangedEvent;
     public static event EventHandler<LetterGameEndedArgs> OnLetterGameEndedEvent;
     public static event EventHandler<WordScoreUpdateArgs> OnWordScoreUpdateEvent;
-
-    
 
     /// <summary>
     /// Tries to get a specific letter from the game manager
@@ -129,7 +125,7 @@ public class LetterLevelController : Singleton<LetterLevelController> {
     /// </summary>
     /// <param name="letter">the letter to check if is available</param>
     /// <returns>the letters object is it is available else null</returns>
-    public LetterGameLetter TryGetLetter(string letter) {
+    public LetterGameLetter TryGetLetter (string letter) {
         LetterGameLetter ret = null;
         foreach (LetterGameLetter l in playerLetters[letter]) {
             if (!l.IsOnBoard) {
@@ -138,7 +134,7 @@ public class LetterLevelController : Singleton<LetterLevelController> {
             }
         }
 
-        this.RefreshLetterCountDisplay();
+        this.RefreshLetterCountDisplay ();
         return ret;
     }
 
@@ -148,29 +144,29 @@ public class LetterLevelController : Singleton<LetterLevelController> {
     /// <param name="newX">the new x pos for the letter</param>
     /// <param name="newY">the new x pos for the letter</param>
     /// <param name="letter">the letter object to update the cords of</param>
-    public void UpdateLetterPos(int newX, int newY, LetterGameLetter letter) {
-        if (IsBoardTileValid(newX, newY)) {
+    public void UpdateLetterPos (int newX, int newY, LetterGameLetter letter) {
+        if (IsBoardTileValid (newX, newY)) {
             // Add the tile to the board
-            this.BoardSetTile(newX, newY, letter);
+            this.BoardSetTile (newX, newY, letter);
         } else {
             // Remove the letter from the board
-            BoardTryRemoveLetter(letter);
+            BoardTryRemoveLetter (letter);
         }
 
         wordsPoints = 0;
-        this.ResetAllTilesOnBoard();
-        this.FindWordsInDimension(X_DIMENSION);
-        this.FindWordsInDimension(Y_DIMENSION);
-        this.RefreshLetterCountDisplay();
-        OnWordScoreUpdateEvent.Invoke(this, new WordScoreUpdateArgs { Score = this.wordsPoints });
+        this.ResetAllTilesOnBoard ();
+        this.FindWordsInDimension (X_DIMENSION);
+        this.FindWordsInDimension (Y_DIMENSION);
+        this.RefreshLetterCountDisplay ();
+        OnWordScoreUpdateEvent.Invoke (this, new WordScoreUpdateArgs { Score = this.wordsPoints });
     }
 
     /// <summary>
     /// Resets all the tiles on the board
     /// </summary>
-    private void ResetAllTilesOnBoard() {
+    private void ResetAllTilesOnBoard () {
         foreach (var item in tileMap) {
-            item?.SetValidLetter(false, Direction.CENTER);
+            item?.SetValidLetter (false, Direction.CENTER);
         }
     }
 
@@ -179,7 +175,7 @@ public class LetterLevelController : Singleton<LetterLevelController> {
     /// finds valid words in the provided dimension.
     /// </summary>
     /// <param name="dimension">dimension to search in</param>
-    private void FindWordsInDimension(int dimension) {
+    private void FindWordsInDimension (int dimension) {
         int minDimension1;
         int maxDimension1;
         int minDimension2;
@@ -191,15 +187,15 @@ public class LetterLevelController : Singleton<LetterLevelController> {
             we want to search in
         */
         if (dimension == Y_DIMENSION) {
-            minDimension1 = tileMap.GetLowerBound(X_DIMENSION);
-            maxDimension1 = tileMap.GetUpperBound(X_DIMENSION);
-            minDimension2 = tileMap.GetLowerBound(Y_DIMENSION);
-            maxDimension2 = tileMap.GetUpperBound(Y_DIMENSION);
+            minDimension1 = tileMap.GetLowerBound (X_DIMENSION);
+            maxDimension1 = tileMap.GetUpperBound (X_DIMENSION);
+            minDimension2 = tileMap.GetLowerBound (Y_DIMENSION);
+            maxDimension2 = tileMap.GetUpperBound (Y_DIMENSION);
         } else {
-            minDimension1 = tileMap.GetLowerBound(Y_DIMENSION);
-            maxDimension1 = tileMap.GetUpperBound(Y_DIMENSION);
-            minDimension2 = tileMap.GetLowerBound(X_DIMENSION);
-            maxDimension2 = tileMap.GetUpperBound(X_DIMENSION);
+            minDimension1 = tileMap.GetLowerBound (Y_DIMENSION);
+            maxDimension1 = tileMap.GetUpperBound (Y_DIMENSION);
+            minDimension2 = tileMap.GetLowerBound (X_DIMENSION);
+            maxDimension2 = tileMap.GetUpperBound (X_DIMENSION);
         }
 
         for (int dimension1Counter = minDimension1; dimension1Counter <= maxDimension1; dimension1Counter++) {
@@ -210,9 +206,9 @@ public class LetterLevelController : Singleton<LetterLevelController> {
                 // Since we flip X and Y based on dimension we search in, we have to
                 // flip provided field to the tryfindword
                 if (isXdimension) {
-                    dimension2Counter = TryFindWordAtPosition(dimension2Counter, dimension1Counter, dimension);
+                    dimension2Counter = TryFindWordAtPosition (dimension2Counter, dimension1Counter, dimension);
                 } else {
-                    dimension2Counter = TryFindWordAtPosition(dimension1Counter, dimension2Counter, dimension);
+                    dimension2Counter = TryFindWordAtPosition (dimension1Counter, dimension2Counter, dimension);
                 }
 
                 dimension2Counter++;
@@ -234,13 +230,13 @@ public class LetterLevelController : Singleton<LetterLevelController> {
     /// <param name="y">Y position to search from</param>
     /// <param name="dimension">the dimension to search in X or Y (0 or 1)</param>
     /// <returns>returns last letter position X ofr x dimension, Y for y dimension</returns>
-    private int TryFindWordAtPosition(int x, int y, int dimension) {
+    private int TryFindWordAtPosition (int x, int y, int dimension) {
         int lastposition = 0;
-        if (IsBoardTileValid(x, y)) {
-            var connectedLetters = TryGetConnectedLetters(x, y, dimension);
-            if (CreateWordOfLetters(connectedLetters, dimension)) {
-                wordsPoints += GetWordScore(connectedLetters);
-                var pos = GetLastLetterPosition(connectedLetters);
+        if (IsBoardTileValid (x, y)) {
+            var connectedLetters = TryGetConnectedLetters (x, y, dimension);
+            if (CreateWordOfLetters (connectedLetters, dimension)) {
+                wordsPoints += GetWordScore (connectedLetters);
+                var pos = GetLastLetterPosition (connectedLetters);
                 lastposition = (dimension == X_DIMENSION) ? pos.x : pos.y;
             }
         }
@@ -257,8 +253,8 @@ public class LetterLevelController : Singleton<LetterLevelController> {
     /// </summary>
     /// <param name="word">the word to get points fron</param>
     /// <returns>total points for the word</returns>
-    private int GetWordScore(LetterGameLetter[] word) {
-        var sum = word.Sum(e => e.ScoreValue);
+    private int GetWordScore (LetterGameLetter[] word) {
+        var sum = word.Sum (e => e.ScoreValue);
         return sum;
     }
 
@@ -267,11 +263,11 @@ public class LetterLevelController : Singleton<LetterLevelController> {
     /// </summary>
     /// <param name="connectedLetters">array of connected letters</param>
     /// <returns>position of last connected letters</returns>
-    private Point GetLastLetterPosition(LetterGameLetter[] connectedLetters) {
-        Point lastPosition = new Point();
+    private Point GetLastLetterPosition (LetterGameLetter[] connectedLetters) {
+        Point lastPosition = new Point ();
         if (connectedLetters != null) {
             int lastIndex = connectedLetters.Length - 1;
-            var lastLetter = connectedLetters[Mathf.Clamp(lastIndex, 0, lastIndex)];
+            var lastLetter = connectedLetters[Mathf.Clamp (lastIndex, 0, lastIndex)];
             lastPosition.x = lastLetter.XPos;
             lastPosition.y = lastLetter.YPos;
         }
@@ -287,12 +283,12 @@ public class LetterLevelController : Singleton<LetterLevelController> {
     /// <param name="connectedLetters">letters to create word of</param>
     /// <param name="direction"></param>
     /// <returns>true if created word, else false</returns>
-    private bool CreateWordOfLetters(LetterGameLetter[] connectedLetters, int direction) {
+    private bool CreateWordOfLetters (LetterGameLetter[] connectedLetters, int direction) {
         bool createdWord = false;
-        if (IsConnectedLetterValid(connectedLetters)) {
+        if (IsConnectedLetterValid (connectedLetters)) {
             foreach (var letter in connectedLetters) {
                 var validDirection = direction == X_DIMENSION ? Direction.RIGHT : Direction.DOWN;
-                letter.SetValidLetter(true, validDirection);
+                letter.SetValidLetter (true, validDirection);
             }
 
             createdWord = true;
@@ -306,11 +302,11 @@ public class LetterLevelController : Singleton<LetterLevelController> {
     /// through the adjacent letters 
     /// </summary>
     /// <param name="connectedLetters"></param>
-    private bool IsConnectedLetterValid(LetterGameLetter[] connectedLetters) {
+    private bool IsConnectedLetterValid (LetterGameLetter[] connectedLetters) {
         bool isValidConnection = false;
         if (connectedLetters != null) {
-            string word = GetWordStringOfLetters(connectedLetters);
-            isValidConnection = wordChecker.isWordValid(word);
+            string word = GetWordStringOfLetters (connectedLetters);
+            isValidConnection = wordChecker.isWordValid (word);
         }
 
         return isValidConnection;
@@ -321,41 +317,40 @@ public class LetterLevelController : Singleton<LetterLevelController> {
     /// </summary>
     /// <param name="connectedLetters">array of letters to convert to single string</param>
     /// <returns>string of the individual letters</returns>
-    private string GetWordStringOfLetters(LetterGameLetter[] connectedLetters) {
+    private string GetWordStringOfLetters (LetterGameLetter[] connectedLetters) {
         if (connectedLetters == null) return "";
-        var letters = connectedLetters.Select(tile => tile.Letter).ToArray();
-        return string.Concat(letters.ToArray());
+        var letters = connectedLetters.Select (tile => tile.Letter).ToArray ();
+        return string.Concat (letters.ToArray ());
     }
 
-    
-    private LetterGameLetter[] TryGetConnectedLetters(int xPos, int yPos, int dimension) {
-        return WUArrays.GetConnected(this.tileMap, xPos, yPos, dimension);
+    private LetterGameLetter[] TryGetConnectedLetters (int xPos, int yPos, int dimension) {
+        return WUArrays.GetConnected (this.tileMap, xPos, yPos, dimension);
     }
 
     /// <summary>
     /// Invokes a event telling all the letter displays to update their number of letters
     /// </summary>
-    private void RefreshLetterCountDisplay() {
+    private void RefreshLetterCountDisplay () {
         LetterCountChangedEventArgs args = new LetterCountChangedEventArgs {
             AvailLetters = this.CurrentAvailableLetterCount
         };
-        LetterCountChangedEvent?.Invoke(this, args);
+        LetterCountChangedEvent?.Invoke (this, args);
     }
 
     /// <summary>
     /// Fills in the players letters
     /// </summary>
     /// <param name="playerDataDict"></param>
-    private void FillPlayerLetters(Dictionary<string, int> playerDataDict) {
+    private void FillPlayerLetters (Dictionary<string, int> playerDataDict) {
         if (playerDataDict == null) {
-            throw new NullReferenceException("Letter dictionary is null");
+            throw new NullReferenceException ("Letter dictionary is null");
         }
         foreach (string key in playerDataDict.Keys) {
-            if (playerLetters.Keys.Contains(key)) {
+            if (playerLetters.Keys.Contains (key)) {
                 for (int i = 0; i < playerDataDict[key]; i++) {
                     int letterValue = letters[key];
-                    LetterGameLetter newLetter = new LetterGameLetter(-1, -1, key, letterValue);
-                    playerLetters[key].Add(newLetter);
+                    LetterGameLetter newLetter = new LetterGameLetter (-1, -1, key, letterValue);
+                    playerLetters[key].Add (newLetter);
                 }
             }
         }
@@ -364,28 +359,27 @@ public class LetterLevelController : Singleton<LetterLevelController> {
     /// <summary>
     /// Make a holder for every letter
     /// </summary>
-    private void MakePlayerLetter() {
+    private void MakePlayerLetter () {
         foreach (var letter in letters) {
-            this.playerLetters.Add(letter.Key, new List<LetterGameLetter>());
+            this.playerLetters.Add (letter.Key, new List<LetterGameLetter> ());
         }
     }
-
 
     /// <summary>
     /// Tries to remove the provided letter from the board
     /// </summary>
     /// <param name="letter">the letter object to remove from the board</param>
     /// <returns>true if successful false if not</returns>
-    private bool BoardTryRemoveLetter(LetterGameLetter letter) {
+    private bool BoardTryRemoveLetter (LetterGameLetter letter) {
         bool suc = false;
-        var foundLetter = WUArrays.MultiDimFind(tileMap, letter);
+        var foundLetter = WUArrays.MultiDimFind (tileMap, letter);
         if (foundLetter != null) {
             tileMap[letter.XPos, letter.YPos] = null;
             letter.IsOnBoard = false;
             letter.XPos = -1;
             letter.YPos = -1;
 
-            this.RefreshLetterCountDisplay();
+            this.RefreshLetterCountDisplay ();
             suc = true;
         }
 
@@ -398,11 +392,11 @@ public class LetterLevelController : Singleton<LetterLevelController> {
     /// <param name="x">the x pos to place the letter</param>
     /// <param name="y">the y pos to place the letter</param>
     /// <param name="tile">the letter object to place</param>
-    private void BoardSetTile(int x, int y, LetterGameLetter tile) {
-        LetterGameLetter oldTile = this.BoardTryGetTile(x, y);
+    private void BoardSetTile (int x, int y, LetterGameLetter tile) {
+        LetterGameLetter oldTile = this.BoardTryGetTile (x, y);
         if (oldTile != null) {
             // if there is a tile at the position remove it
-            this.BoardTryRemoveLetter(oldTile);
+            this.BoardTryRemoveLetter (oldTile);
         }
 
         // remove the tiles old position from the log 
@@ -423,10 +417,10 @@ public class LetterLevelController : Singleton<LetterLevelController> {
     /// <param name="x">the x pos of the tile to get</param>
     /// <param name="y">the y pos of the tile to get</param>
     /// <returns></returns>
-    private LetterGameLetter BoardTryGetTile(int x, int y) {
+    private LetterGameLetter BoardTryGetTile (int x, int y) {
         LetterGameLetter ret = null;
 
-        if (IsBoardTileValid(x, y)) {
+        if (IsBoardTileValid (x, y)) {
             if (tileMap[x, y] != null) {
                 ret = tileMap[x, y];
             }
@@ -442,51 +436,51 @@ public class LetterLevelController : Singleton<LetterLevelController> {
     /// <param name="x">the x pos of the place to check</param>
     /// <param name="y">the y pos of the place to check</param>
     /// <returns>true if the tile is valid false if not</returns>
-    private bool IsBoardTileValid(int x, int y) {
-        bool valid = !(x > tileMap.GetUpperBound(0) ||
-            x < tileMap.GetLowerBound(0) ||
-            y > tileMap.GetUpperBound(1) ||
-            y < tileMap.GetLowerBound(1));
+    private bool IsBoardTileValid (int x, int y) {
+        bool valid = !(x > tileMap.GetUpperBound (0) ||
+            x < tileMap.GetLowerBound (0) ||
+            y > tileMap.GetUpperBound (1) ||
+            y < tileMap.GetLowerBound (1));
 
         return valid;
     }
 
-    void Start() {
+    void Start () {
         this.tileMap = new LetterGameLetter[this.bSizeX, this.bSizeY];
-        this.playerLetters = new Dictionary<String, List<LetterGameLetter>>();
-        MakePlayerLetter();
+        this.playerLetters = new Dictionary<String, List<LetterGameLetter>> ();
+        MakePlayerLetter ();
 
         if (this.fillWithTestLetters) {
-            DebugFillWithLetters();
+            DebugFillWithLetters ();
         } else {
-            FillPlayerLetters(GameManager.Instance?.GameDataManager.PlayerLetters);
+            FillPlayerLetters (GameManager.Instance?.GameDataManager.PlayerLetters);
         }
 
-        var fc = new FileReader("Assets/Resources/wordlist.txt");
-        this.wordChecker = new WordChecker(fc.ReadAllLines().AsArray(), false);
+        var fc = new FileReader ("Assets/Resources/wordlist.txt");
+        this.wordChecker = new WordChecker (fc.ReadAllLines ().AsArray (), false);
 
-        RefreshLetterCountDisplay();
+        RefreshLetterCountDisplay ();
     }
     /// <summary>
     /// Fires a letter game ended event
     /// Contains the score collected from the letter game
     /// </summary>
-    private void LetterGameEnded() {
+    private void LetterGameEnded () {
         LetterGameEndedArgs args = new LetterGameEndedArgs {
             Score = wordsPoints
         };
-        OnLetterGameEndedEvent?.Invoke(this, args);
+        OnLetterGameEndedEvent?.Invoke (this, args);
     }
 
-    private void OnDestroy() {
-        LetterGameEnded();
+    private void OnDestroy () {
+        LetterGameEnded ();
     }
 
     /// <summary>
     /// Fills the available letters board with letters when testing the letter
     /// game and you need letters to test words :D 
     /// </summary>
-    private void DebugFillWithLetters() {
+    private void DebugFillWithLetters () {
         Dictionary<string, int> playerDataDict = new Dictionary<string, int> { { "A", 25 },
             { "B", 25 },
             { "C", 25 },
@@ -514,6 +508,6 @@ public class LetterLevelController : Singleton<LetterLevelController> {
             { "Y", 25 },
             { "Z", 25 }
         };
-        this.FillPlayerLetters(playerDataDict);
+        this.FillPlayerLetters (playerDataDict);
     }
 }

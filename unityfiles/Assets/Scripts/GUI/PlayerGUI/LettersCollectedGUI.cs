@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -25,36 +25,36 @@ public class LettersCollectedGUI : MonoBehaviour {
     /// </summary>
     private int lettersToCollect = 0;
 
-    private void Awake() {
+    private void Awake () {
         if (letterCounter == null) {
-            throw new MissingComponentException("Missing text component");
+            throw new MissingComponentException ("Missing text component");
         }
         this.lettersToCollect = HuntingLevelController.Instance.LevelDetails.NumberOfLetters;
         LetterCollectable.OnLetterCollected += OnNewLetter;
-        SetLetterText();
+        SetLetterText ();
     }
 
-    private void SetLetterText() {
-        this.letterCounter.SetText($"{currentLetterCount} / {lettersToCollect}");
+    private void SetLetterText () {
+        this.letterCounter.SetText ($"{currentLetterCount} / {lettersToCollect}");
     }
 
-    private void OnNewLetter(object sender, LetterCollectedArgs letter) {
+    private void OnNewLetter (object sender, LetterCollectedArgs letter) {
         this.currentLetterCount++;
-        this.SetLetterText();
+        this.SetLetterText ();
     }
 
     /// <summary>
     /// Sets how many letters to collect. Must be a size larger or equal to 0
     /// </summary>
     /// <param name="size">number of letters to collect >= 0</param>
-    public void SetLettersToCollectCount(int count) {
+    public void SetLettersToCollectCount (int count) {
         if (count < 0) {
-            throw new ArgumentOutOfRangeException("Count cant be negative");
+            throw new ArgumentOutOfRangeException ("Count cant be negative");
         }
         this.lettersToCollect = count;
     }
 
-    private void OnDestroy() {
+    private void OnDestroy () {
         LetterCollectable.OnLetterCollected -= OnNewLetter;
     }
 }

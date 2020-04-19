@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 /// <summary>
@@ -13,15 +13,15 @@ public class LevelHandler : MonoBehaviour {
     /// All the levels the player is to play through
     /// </summary>
     [SerializeField]
-    [StringInList(typeof(PropertyDrawersHelper), "AllSceneNames")]
+    [StringInList (typeof (PropertyDrawersHelper), "AllSceneNames")]
     private string[] huntingGameSceneNames;
 
     [SerializeField]
-    [StringInList(typeof(PropertyDrawersHelper), "AllSceneNames")]
+    [StringInList (typeof (PropertyDrawersHelper), "AllSceneNames")]
     private string scoreboardSceneName;
 
     [SerializeField]
-    [StringInList(typeof(PropertyDrawersHelper), "AllSceneNames")]
+    [StringInList (typeof (PropertyDrawersHelper), "AllSceneNames")]
     private string letterGameSceneName;
 
     /// <summary>
@@ -38,13 +38,13 @@ public class LevelHandler : MonoBehaviour {
 
     private static bool isCreated;
 
-    private void Awake() {
+    private void Awake () {
         if (isCreated) { return; }
         isCreated = true;
         UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-    private void OnDestroy() {
+    private void OnDestroy () {
         UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
@@ -53,7 +53,7 @@ public class LevelHandler : MonoBehaviour {
     /// hunting game level. If we are in the letter game and there are no more levels
     /// the game is finnished, and scoreboard scene is loaded.
     /// </summary>
-    public void NextLevel() {
+    public void NextLevel () {
         string nextLevelName;
         if (CurrentScene >= 0) {
             LastHuntingScene = CurrentScene;
@@ -66,7 +66,7 @@ public class LevelHandler : MonoBehaviour {
                 nextLevelName = this.scoreboardSceneName;
             }
         }
-        this.PlayLevel(nextLevelName);
+        this.PlayLevel (nextLevelName);
     }
 
     /// <summary>
@@ -74,7 +74,7 @@ public class LevelHandler : MonoBehaviour {
     /// </summary>
     /// <param name="name">name of the scene to find</param>
     /// <returns>array index of the scene in the list or -1 if not found</returns>
-    private int GetHuntingSceneIndexByName(string name) {
+    private int GetHuntingSceneIndexByName (string name) {
         for (int i = 0; i < this.huntingGameSceneNames.Length; i++) {
             var sceneName = this.huntingGameSceneNames[i];
             if (sceneName == name) {
@@ -88,12 +88,12 @@ public class LevelHandler : MonoBehaviour {
     /// Load a scene by its name, and set current scene to that level.
     /// </summary>
     /// <param name="name">name of the scene</param>
-    public void PlayLevel(string name) {
-        SceneManager.Instance.ChangeScene(name);
+    public void PlayLevel (string name) {
+        SceneManager.Instance.ChangeScene (name);
     }
 
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
-        CurrentScene = GetHuntingSceneIndexByName(scene.name);
+    private void OnSceneLoaded (Scene scene, LoadSceneMode mode) {
+        CurrentScene = GetHuntingSceneIndexByName (scene.name);
     }
 
 }

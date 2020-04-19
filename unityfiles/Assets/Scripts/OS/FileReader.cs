@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -13,19 +13,19 @@ namespace Monsterhunt.Fileoperation {
     public class FileReader {
 
         public interface IStringContent {
-            string GetString();
+            string GetString ();
         }
 
         public interface ILineContent {
-            List<string> AsList();
-            string[] AsArray();
+            List<string> AsList ();
+            string[] AsArray ();
         }
 
         private class StringContent : IStringContent {
 
-            public StringContent() { }
+            public StringContent () { }
 
-            public StringContent(string content) {
+            public StringContent (string content) {
                 this.Content = content;
             }
 
@@ -36,7 +36,7 @@ namespace Monsterhunt.Fileoperation {
             /// empty string if there was no content or IO error
             /// </summary>
             /// <returns></returns>
-            public string GetString() {
+            public string GetString () {
                 return this.Content;
             }
 
@@ -44,9 +44,9 @@ namespace Monsterhunt.Fileoperation {
 
         private class LineContent : ILineContent {
 
-            public LineContent() { }
+            public LineContent () { }
 
-            public LineContent(string[] content) {
+            public LineContent (string[] content) {
                 this.Content = content;
             }
 
@@ -57,8 +57,8 @@ namespace Monsterhunt.Fileoperation {
             /// empty list if there is no file content or IO error.
             /// </summary>
             /// <returns></returns>
-            public List<string> AsList() {
-                return this.Content.ToList();
+            public List<string> AsList () {
+                return this.Content.ToList ();
             }
 
             /// <summary>
@@ -66,7 +66,7 @@ namespace Monsterhunt.Fileoperation {
             /// there is no file content or IOerror.
             /// </summary>
             /// <returns>file content as array</returns>
-            public string[] AsArray() {
+            public string[] AsArray () {
                 return this.Content;
             }
 
@@ -78,7 +78,7 @@ namespace Monsterhunt.Fileoperation {
             get { return filePath; }
             set {
                 if (value == null) {
-                    throw new NullReferenceException("Path to file is null");
+                    throw new NullReferenceException ("Path to file is null");
                 } else {
                     filePath = value;
                 }
@@ -89,7 +89,7 @@ namespace Monsterhunt.Fileoperation {
         /// Creates the file reader object and assign the path to read from.
         /// </summary>
         /// <param name="filePath"></param>
-        public FileReader(string filePath) {
+        public FileReader (string filePath) {
             this.FilePath = filePath;
         }
 
@@ -98,13 +98,13 @@ namespace Monsterhunt.Fileoperation {
         /// to get content as array or list of string.
         /// </summary>
         /// <returns>ILineContent object</returns>
-        public ILineContent ReadAllLines() {
+        public ILineContent ReadAllLines () {
             LineContent lc;
             try {
-                lc = new LineContent(File.ReadAllLines(this.filePath));
+                lc = new LineContent (File.ReadAllLines (this.filePath));
             } catch (SystemException e) {
-                Debug.LogError(e.Message);
-                lc = new LineContent();
+                Debug.LogError (e.Message);
+                lc = new LineContent ();
             }
             return lc;
         }
@@ -114,13 +114,13 @@ namespace Monsterhunt.Fileoperation {
         /// returns a IStringContent object
         /// </summary>
         /// <returns>IStringContent object</returns>
-        public IStringContent ReadAllText() {
+        public IStringContent ReadAllText () {
             StringContent sc;
             try {
-                sc = new StringContent(File.ReadAllText(this.filePath));
+                sc = new StringContent (File.ReadAllText (this.filePath));
             } catch (SystemException e) {
-                Debug.LogError(e.Message);
-                sc = new StringContent();
+                Debug.LogError (e.Message);
+                sc = new StringContent ();
             }
             return sc;
         }

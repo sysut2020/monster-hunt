@@ -1,5 +1,5 @@
-﻿using UnityEngine;
 using System;
+using UnityEngine;
 
 /// <summary>
 /// Arguments for powerup collected event
@@ -15,18 +15,17 @@ public class PowerupCollectable : Collectable {
     public static event EventHandler<PowerUpCollectedArgs> OnPowerupCollected;
 
     private MoveToGuiElement moveToGuiElement;
-    
 
-    private void Awake() {
-        if (TryGetComponent(out moveToGuiElement)) {
-            moveToGuiElement.FindTarget<LettersCollectedGUI>();
+    private void Awake () {
+        if (TryGetComponent (out moveToGuiElement)) {
+            moveToGuiElement.FindTarget<LettersCollectedGUI> ();
         }
     }
 
-    private void OnDestroy() {
-        PowerUpCollectedArgs powerupArgs = new PowerUpCollectedArgs();
+    private void OnDestroy () {
+        PowerUpCollectedArgs powerupArgs = new PowerUpCollectedArgs ();
         powerupArgs.Effect = effectPickup;
-        PowerupCollectable.OnPowerupCollected?.Invoke(this, powerupArgs);
+        PowerupCollectable.OnPowerupCollected?.Invoke (this, powerupArgs);
     }
 
 }

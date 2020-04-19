@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,5 +10,5 @@ public interface IKillable {
     /// <summary>
     /// Notify the component that it is dead.
     /// </summary>
-    void IsDead();
+    void IsDead ();
 }

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -11,34 +11,34 @@ public class LivesGUI : MonoBehaviour {
     [SerializeField]
     private Transform lifeObject;
 
-    readonly List<Transform> lifesObjects = new List<Transform>();
+    readonly List<Transform> lifesObjects = new List<Transform> ();
 
     private bool initialized = false;
-    private void Awake() {
+    private void Awake () {
         PlayerHealthController.OnPlayerLivesUpdate += CallbackOnLivesUpdate;
     }
 
     // Start is called before the first frame update
-    void Start() {
+    void Start () {
         if (this.lifeObject == null) {
-            throw new MissingReferenceException("Please provide a reference to a life object to display.");
+            throw new MissingReferenceException ("Please provide a reference to a life object to display.");
         }
     }
 
-    private void OnDestroy() {
+    private void OnDestroy () {
         PlayerHealthController.OnPlayerLivesUpdate -= CallbackOnLivesUpdate;
     }
 
-    private void CallbackOnLivesUpdate(object _, PlayerLivesUpdateArgs args) {
+    private void CallbackOnLivesUpdate (object _, PlayerLivesUpdateArgs args) {
         if (!initialized) {
-            GenerateLifeObject(args.CurrentLives);
+            GenerateLifeObject (args.CurrentLives);
             initialized = true;
         } else {
-            var heartsLeft = this.lifesObjects.FindAll(life => life.gameObject.activeSelf).Count;
+            var heartsLeft = this.lifesObjects.FindAll (life => life.gameObject.activeSelf).Count;
             if (heartsLeft < args.CurrentLives) {
-                this.AddLife(args.CurrentLives - heartsLeft);
+                this.AddLife (args.CurrentLives - heartsLeft);
             } else if (heartsLeft > args.CurrentLives) {
-                this.RemoveLife(heartsLeft - args.CurrentLives);
+                this.RemoveLife (heartsLeft - args.CurrentLives);
             }
         }
     }
@@ -47,11 +47,11 @@ public class LivesGUI : MonoBehaviour {
     /// Generates provided amount of lives objects and adds them as its
     /// siblings. All references are stored in an ArrayList
     /// </summary>
-    public void GenerateLifeObject(int lives) {
+    public void GenerateLifeObject (int lives) {
         for (int i = 0; i < lives; i++) {
-            var life = Instantiate(lifeObject);
-            life.SetParent(this.transform, false);
-            this.lifesObjects.Add(life);
+            var life = Instantiate (lifeObject);
+            life.SetParent (this.transform, false);
+            this.lifesObjects.Add (life);
         }
     }
 
@@ -59,7 +59,7 @@ public class LivesGUI : MonoBehaviour {
     /// Enables lives if there are any diabled, else create remaining
     /// </summary>
     /// <param name="amount">number of lives to add</param>
-    private void AddLife(int amount) {
+    private void AddLife (int amount) {
         int totalLives = this.lifesObjects.Count;
 
         int addedCounter = 0;
@@ -67,13 +67,13 @@ public class LivesGUI : MonoBehaviour {
         for (int i = 0; i < totalLives; i++) {
             var go = this.lifesObjects[i].gameObject;
             if (!go.activeSelf && addedCounter < amount) {
-                go.SetActive(true);
+                go.SetActive (true);
                 addedCounter++;
             }
         }
 
         if (addedCounter < amount) {
-            this.GenerateLifeObject(amount - addedCounter);
+            this.GenerateLifeObject (amount - addedCounter);
         }
     }
 
@@ -81,7 +81,7 @@ public class LivesGUI : MonoBehaviour {
     /// Remove number of lives from the GUI
     /// </summary>
     /// <param name="amount">amount of lives to remove</param>
-    private void RemoveLife(int amount) {
+    private void RemoveLife (int amount) {
         int totalLives = this.lifesObjects.Count;
 
         int removedCounter = 0;
@@ -89,7 +89,7 @@ public class LivesGUI : MonoBehaviour {
         for (int i = 0; i < totalLives; i++) {
             var go = this.lifesObjects[i].gameObject;
             if (go.activeSelf && removedCounter < amount) {
-                go.SetActive(false);
+                go.SetActive (false);
                 removedCounter++;
             }
 

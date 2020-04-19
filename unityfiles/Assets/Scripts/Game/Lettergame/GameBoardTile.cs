@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -30,39 +30,32 @@ public class GameBoardTile : Dragable {
     public int XPos { get => xPos; set => xPos = value; }
     public int YPos { get => yPos; set => yPos = value; }
 
-    
-     
-
-    
-
     /// <summary>
     /// Set the letter to be displayed in the tile, and 
     /// register callback for when/if the tiles becomes 
     /// valid in a word.
     /// </summary>
     /// <param name="letter">the letter to display</param>
-    public void SetTile(LetterGameLetter letter) {
-        letter.OnValidLetterInWordCallback(SetTileValidColor);
+    public void SetTile (LetterGameLetter letter) {
+        letter.OnValidLetterInWordCallback (SetTileValidColor);
         holdingLetter = letter;
-        LetterLevelController.Instance.UpdateLetterPos(XPos, YPos, letter);
-        this.updateDisplayedLetter();
+        LetterLevelController.Instance.UpdateLetterPos (XPos, YPos, letter);
+        this.updateDisplayedLetter ();
     }
-
-     
 
     /// <summary>
     /// resets the displayed char on the tile
     /// </summary>
-    public void ResetTile() {
-        SetTileValidColor(false, Direction.CENTER);
+    public void ResetTile () {
+        SetTileValidColor (false, Direction.CENTER);
         holdingLetter = null;
-        this.updateDisplayedLetter();
+        this.updateDisplayedLetter ();
     }
     /// <summary>
     /// Sets the color on the tile if it is valid, else 
     /// remove color
     /// </summary>
-    private void SetTileValidColor(bool isValid, Direction direction) {
+    private void SetTileValidColor (bool isValid, Direction direction) {
         if (isValid) {
             this.tileImage.color = Color.green;
             switch (direction) {
@@ -86,7 +79,7 @@ public class GameBoardTile : Dragable {
     /// <summary>
     /// updates the char displayed 
     /// </summary>
-    private void updateDisplayedLetter() {
+    private void updateDisplayedLetter () {
         if (holdingLetter == null) {
             TileText.text = "";
         } else {
@@ -99,7 +92,7 @@ public class GameBoardTile : Dragable {
     /// Tells whether or not the Ui element should start the drag operation 
     /// </summary>
     /// <returns>true if the drag operation can start false if not</returns>   
-    override protected bool CanStartDrag() {
+    override protected bool CanStartDrag () {
         if (holdingLetter != null) {
             this.IconLetter = this.holdingLetter.Letter;
             TileText.text = "";
@@ -112,38 +105,37 @@ public class GameBoardTile : Dragable {
     /// <summary>
     /// What the Ui element should do when the drag operation is complete
     /// </summary>
-    override protected void OnDragCompletion(PointerEventData eventData) {
+    override protected void OnDragCompletion (PointerEventData eventData) {
         GameObject hit = eventData.pointerCurrentRaycast.gameObject;
         if (hit != null) {
             // hit something
-            if (hit.TryGetComponent<GameBoardTile>(out GameBoardTile tile)) {
+            if (hit.TryGetComponent<GameBoardTile> (out GameBoardTile tile)) {
                 // hit something with game tile
                 if (tile != this) {
                     // not self
                     if (holdingLetter != null) {
                         // if holding a letter
-                        tile.SetTile(holdingLetter);
-                        ResetTile();
+                        tile.SetTile (holdingLetter);
+                        ResetTile ();
                     }
 
                 }
             } else {
                 // hit some GO without game tile
-                LetterLevelController.Instance.UpdateLetterPos(-1, -1, holdingLetter);
-                ResetTile();
+                LetterLevelController.Instance.UpdateLetterPos (-1, -1, holdingLetter);
+                ResetTile ();
 
             }
         } else {
             // hit nothing
-            LetterLevelController.Instance.UpdateLetterPos(-1, -1, holdingLetter);
-            ResetTile();
+            LetterLevelController.Instance.UpdateLetterPos (-1, -1, holdingLetter);
+            ResetTile ();
         }
 
-        updateDisplayedLetter();
+        updateDisplayedLetter ();
     }
-    
 
-    private void Awake() {
-        TileText = this.GetComponentInChildren<TMP_Text>();
+    private void Awake () {
+        TileText = this.GetComponentInChildren<TMP_Text> ();
     }
 }

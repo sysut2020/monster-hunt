@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class MoveToGuiElement : MonoBehaviour {
 
@@ -6,11 +6,11 @@ public class MoveToGuiElement : MonoBehaviour {
     /// The speed it will use to fly to the location
     /// </summary>
     [SerializeField]
-    [Range(0, 2)]
+    [Range (0, 2)]
     private float speed;
 
     [SerializeField]
-    [Tooltip("The maximum distance between the target and this GO at which it should destroy itself")]
+    [Tooltip ("The maximum distance between the target and this GO at which it should destroy itself")]
     private float selfDestroyDistance;
 
     /// <summary>
@@ -30,14 +30,14 @@ public class MoveToGuiElement : MonoBehaviour {
     /// it finds.
     /// </summary>
     /// <typeparam name="T">The class type to search for</typeparam>
-    public void FindTarget<T>() {
-        System.Type av = typeof(T);
-        MonoBehaviour guiTarget = (MonoBehaviour) UnityEngine.Object.FindObjectOfType(av);
+    public void FindTarget<T> () {
+        System.Type av = typeof (T);
+        MonoBehaviour guiTarget = (MonoBehaviour) UnityEngine.Object.FindObjectOfType (av);
         if (guiTarget != null) {
-            guiTarget.TryGetComponent(out worldGuiTarget);
-            guiWorldPositionHelper = new GameObject("GUI TARGET WORLD POSITION");
+            guiTarget.TryGetComponent (out worldGuiTarget);
+            guiWorldPositionHelper = new GameObject ("GUI TARGET WORLD POSITION");
         } else {
-            Debug.LogWarning("GUI TARGET DO NOT EXIST IN THE SCENE.");
+            Debug.LogWarning ("GUI TARGET DO NOT EXIST IN THE SCENE.");
         }
     }
 
@@ -45,11 +45,11 @@ public class MoveToGuiElement : MonoBehaviour {
     /// Calculates the position of the collectible to the GUI target, when camera
     /// moves.
     /// </summary>
-    private void CalculatePosition() {
+    private void CalculatePosition () {
         Vector3 resultPosition;
         Vector2 vectorRectTransformPosition = worldGuiTarget.transform.position;
-        RectTransformUtility.ScreenPointToWorldPointInRectangle(
-            worldGuiTarget, vectorRectTransformPosition, FindObjectOfType<Camera>(), out resultPosition
+        RectTransformUtility.ScreenPointToWorldPointInRectangle (
+            worldGuiTarget, vectorRectTransformPosition, FindObjectOfType<Camera> (), out resultPosition
         );
         guiWorldPositionHelper.transform.position = resultPosition;
     }
@@ -57,21 +57,21 @@ public class MoveToGuiElement : MonoBehaviour {
     /// <summary>
     /// Moves this gameobject towards the GUI target.
     /// </summary>
-    private void MoveToTarget() {
+    private void MoveToTarget () {
         if (guiWorldPositionHelper != null) {
-            CalculatePosition();
-            Vector3 newPosition = Vector3.MoveTowards(this.transform.position, guiWorldPositionHelper.transform.position, speed);
-            if (Vector2.Distance(this.transform.position, guiWorldPositionHelper.transform.position) < selfDestroyDistance) {
-                Destroy(guiWorldPositionHelper);
-                Destroy(this.gameObject);
+            CalculatePosition ();
+            Vector3 newPosition = Vector3.MoveTowards (this.transform.position, guiWorldPositionHelper.transform.position, speed);
+            if (Vector2.Distance (this.transform.position, guiWorldPositionHelper.transform.position) < selfDestroyDistance) {
+                Destroy (guiWorldPositionHelper);
+                Destroy (this.gameObject);
             } else {
                 this.transform.position = newPosition;
             }
         }
     }
 
-    private void FixedUpdate() {
-        this.MoveToTarget();
+    private void FixedUpdate () {
+        this.MoveToTarget ();
     }
 
 }

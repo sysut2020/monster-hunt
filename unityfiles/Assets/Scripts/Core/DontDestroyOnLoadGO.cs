@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,12 +9,12 @@ public class DontDestroyOnLoadGO : MonoBehaviour {
 
     public static DontDestroyOnLoadGO Instance;
 
-    void Awake() {
+    void Awake () {
         if (Instance != this && Instance != null) {
-            Destroy(this.gameObject);
+            Destroy (this.gameObject);
         } else {
             Instance = this;
-            DontDestroyOnLoad(this.gameObject);
+            DontDestroyOnLoad (this.gameObject);
         }
     }
 }

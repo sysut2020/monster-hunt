@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 /// <summary>
 /// Responsible for starting the level music on the level it is attached on
@@ -14,13 +14,13 @@ public class LevelMusicStarter : MonoBehaviour {
     [SerializeField]
     private bool loop = true;
 
-    private void Start() {
-        Sound levelSound = new Sound();
+    private void Start () {
+        Sound levelSound = new Sound ();
         levelSound.AudioClip = this.levelMusic;
         levelSound.Loop = this.loop;
         levelSound.PlayOnAwake = this.playOnAwake;
         levelSound.Name = this.levelMusic.name;
-        AudioManager.Instance.PlayMusic(levelSound);
+        AudioManager.Instance.PlayMusic (levelSound);
     }
 
 }

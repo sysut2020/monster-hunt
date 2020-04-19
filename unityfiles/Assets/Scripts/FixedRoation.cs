@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,12 +10,12 @@ public class FixedRoation : MonoBehaviour {
 
     Quaternion initialRotation;
 
-    void Awake() {
+    void Awake () {
         this.initialRotation = this.transform.rotation;
     }
 
-    void LateUpdate() {
-        if (!this.transform.rotation.Equals(initialRotation)) {
+    void LateUpdate () {
+        if (!this.transform.rotation.Equals (initialRotation)) {
             this.transform.rotation = initialRotation;
         }
     }

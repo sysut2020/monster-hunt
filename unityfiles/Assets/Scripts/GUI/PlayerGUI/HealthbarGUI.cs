@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -43,32 +43,32 @@ public class HealthbarGUI : MonoBehaviour {
     /// and origins to the left, so when decreasing health, it decreses towards
     /// the left.
     /// </summary>
-    private void SetupHealthpool() {
+    private void SetupHealthpool () {
         healthpool.type = Image.Type.Filled;
         healthpool.fillMethod = Image.FillMethod.Horizontal;
         healthpool.fillOrigin = 0; // LEFT - 1 is RIGHT
     }
 
-    private void Awake() {
-        if (this.healthpool == null){
-            throw new MissingComponentException("Please provide an image for the healthpool");
+    private void Awake () {
+        if (this.healthpool == null) {
+            throw new MissingComponentException ("Please provide an image for the healthpool");
         }
-        this.SetupHealthpool();
+        this.SetupHealthpool ();
         PlayerHealthController.OnPlayerHealthUpdate += OnHealthUpdate;
 
     }
 
-    private void UpdateHealthPool() {
+    private void UpdateHealthPool () {
         this.healthpool.fillAmount = this.CurrentHealth / this.MaxHealth;
     }
 
-    private void OnHealthUpdate(object _, PlayerHealthUpdateArgs args) {
+    private void OnHealthUpdate (object _, PlayerHealthUpdateArgs args) {
         this.MaxHealth = args.MaxHealth;
         this.CurrentHealth = args.CurrentHealth;
-        this.UpdateHealthPool();
+        this.UpdateHealthPool ();
     }
 
-    private void OnDestroy() {
+    private void OnDestroy () {
         PlayerHealthController.OnPlayerHealthUpdate -= OnHealthUpdate;
     }
 }

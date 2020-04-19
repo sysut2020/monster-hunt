@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,27 +8,27 @@ using UnityEngine.UI;
 /// in the editor, for easy selection of the scene to change to.
 /// Button clicked event is added on creation, changes scene when button is clicked.
 /// </summary>
-[RequireComponent(typeof(Button))]
+[RequireComponent (typeof (Button))]
 public class SceneChangerButton : MonoBehaviour {
 
     [SerializeField]
-    [StringInList(typeof(PropertyDrawersHelper), "AllSceneNames")]
+    [StringInList (typeof (PropertyDrawersHelper), "AllSceneNames")]
     private string sceneName;
-    
+
     private Button sceneChangeButton;
 
-    private void Awake() {
-        sceneChangeButton = GetComponent<Button>();
+    private void Awake () {
+        sceneChangeButton = GetComponent<Button> ();
     }
-    private void Start() {
-        sceneChangeButton.onClick.AddListener(OnChangeSceneClicked);
-    }
-
-    private void OnDestroy() {
-        sceneChangeButton.onClick.RemoveAllListeners();
+    private void Start () {
+        sceneChangeButton.onClick.AddListener (OnChangeSceneClicked);
     }
 
-    void OnChangeSceneClicked() {
-        SceneManager.Instance.ChangeScene(sceneName);
+    private void OnDestroy () {
+        sceneChangeButton.onClick.RemoveAllListeners ();
+    }
+
+    void OnChangeSceneClicked () {
+        SceneManager.Instance.ChangeScene (sceneName);
     }
 }

@@ -10,11 +10,11 @@ public static class CameraUtil {
     /// <param name="camera"></param>
     /// <param name="target"></param>
     /// <returns></returns>
-    public static bool IsTargetVisible(Camera camera, GameObject target) {
-        var planes = GeometryUtility.CalculateFrustumPlanes(camera);
+    public static bool IsTargetVisible (Camera camera, GameObject target) {
+        var planes = GeometryUtility.CalculateFrustumPlanes (camera);
         var point = target.transform.position;
         foreach (var plane in planes) {
-            if (plane.GetDistanceToPoint(point) < 0) {
+            if (plane.GetDistanceToPoint (point) < 0) {
                 return false;
             }
         }

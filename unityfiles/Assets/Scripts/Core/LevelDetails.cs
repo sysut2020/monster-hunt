@@ -3,22 +3,22 @@ using UnityEngine;
 /// <summary>
 /// Keeps data about a level
 /// </summary>
-[CreateAssetMenu(fileName = "Level Details", menuName = "Level details")]
+[CreateAssetMenu (fileName = "Level Details", menuName = "Level details")]
 public class LevelDetails : ScriptableObject {
 
-    [Tooltip("number of seconds the level should last")]
+    [Tooltip ("number of seconds the level should last")]
     [SerializeField]
     private int time;
 
-    [Tooltip("number of enemies to killed before level complete")]
+    [Tooltip ("number of enemies to killed before level complete")]
     [SerializeField]
     private int numberOfEnemies;
 
-    [Tooltip("number of enemies spawned at start")]
+    [Tooltip ("number of enemies spawned at start")]
     [SerializeField]
     private int numberOfEnemiesAtStart = 5;
 
-    [Tooltip("number of letters to be spawned during game play")]
+    [Tooltip ("number of letters to be spawned during game play")]
     [SerializeField]
     private int numberOfLetters;
 

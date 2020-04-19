@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 /// <summary>
 /// Simple time object that can check if a given amount of time 
@@ -26,7 +26,7 @@ class WUTimer {
     /// </summary>
     /// <returns>returns true if the timer is complete, else false</returns>
     public bool done () {
-        if (completeTime.CompareTo(DateTime.Now) < 0 && !isPaused) {
+        if (completeTime.CompareTo (DateTime.Now) < 0 && !isPaused) {
             return true;
         }
         return false;
@@ -35,9 +35,9 @@ class WUTimer {
     /// <summary>
     /// pauses the timer
     /// </summary>
-    public void Pause(){
-        if (isPaused){return;}
-        pauseTimeLeft = this.TimeLeft();
+    public void Pause () {
+        if (isPaused) { return; }
+        pauseTimeLeft = this.TimeLeft ();
         this.isPaused = true;
 
     }
@@ -45,25 +45,25 @@ class WUTimer {
     /// <summary>
     /// continues the timer if paused else nothing
     /// </summary>
-    public void Continue(){
-        if(isPaused){
-            this.Update(this.pauseTimeLeft);
+    public void Continue () {
+        if (isPaused) {
+            this.Update (this.pauseTimeLeft);
             this.isPaused = false;
         }
-        
+
     }
 
     /// <summary>
     /// returns the time left in milliseconds
     /// </summary>
     /// <returns>the time left in milliseconds</returns>
-    public int TimeLeft() {
-        if(isPaused){
+    public int TimeLeft () {
+        if (isPaused) {
             return pauseTimeLeft;
-        }else{
-            return (int) this.completeTime.Subtract(DateTime.Now).TotalMilliseconds;
+        } else {
+            return (int) this.completeTime.Subtract (DateTime.Now).TotalMilliseconds;
         }
-        
+
     }
 
     /// <summary>
@@ -72,7 +72,7 @@ class WUTimer {
     /// <param name="millisec"></param>
     public void Update (int millisec) {
         waitTime = millisec;
-        completeTime = DateTime.Now.AddMilliseconds(millisec);
+        completeTime = DateTime.Now.AddMilliseconds (millisec);
     }
 
     /// <summary>
@@ -80,6 +80,6 @@ class WUTimer {
     /// </summary>
     public void Restart () {
         this.isPaused = false;
-        completeTime = DateTime.Now.AddMilliseconds(waitTime);
+        completeTime = DateTime.Now.AddMilliseconds (waitTime);
     }
 }

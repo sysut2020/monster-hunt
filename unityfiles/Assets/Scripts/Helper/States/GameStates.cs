@@ -1,4 +1,4 @@
-﻿/// <summary>
+/// <summary>
 /// The constants for the different game states
 /// </summary>
 public enum GAME_STATE {
