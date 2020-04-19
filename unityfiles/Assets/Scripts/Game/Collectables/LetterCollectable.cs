@@ -17,7 +17,6 @@ public class LetterCollectable : Collectable {
 
     private MoveToGuiElement moveToGuiElement;
 
-    private readonly string name = "Letter";
     
     public string LetterString {
         get => letterComponent.text;
@@ -35,6 +34,4 @@ public class LetterCollectable : Collectable {
             moveToGuiElement.FindTarget<LettersCollectedGUI>();
         }
     }
-
-    public override string Name { get => name; }
 }

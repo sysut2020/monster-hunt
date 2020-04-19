@@ -93,9 +93,7 @@ public class DoubleFireRateManager : MonoBehaviour {
     }
 
     private void UpdateEffectOnController() {
-        if (this.activeMultipliers < 0) {
-            throw new Exception("Bopdidop somthing is wrong");
-        } else if (activeMultipliers > 0) {
+        if (activeMultipliers > 0) {
             this.usedGunController.FireRate = initialFireRate * this.unitMultiplier * this.unitMultiplier;
         } else {
             this.usedGunController.FireRate = initialFireRate;

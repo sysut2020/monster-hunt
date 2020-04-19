@@ -9,7 +9,6 @@ using UnityEngine;
 public class CollectibleSpawnerItem {
 
 	public CollectibleSpawnerItem(int spawnChance, Collectable item) {
-		this.itemName = item.Name;
 		this.spawnChance = spawnChance;
 		this.item = item;
 	}
@@ -24,10 +23,8 @@ public class CollectibleSpawnerItem {
 
 	[SerializeField]
 	private Collectable item;
-	
-	private string itemName;
 
-	public string ItemName { get => itemName; private set => itemName = value; }
+
 	public int SpawnChance { get => spawnChance; private set => spawnChance = value; }
 	public Collectable Item { get => item; private set => item = value; }
 

@@ -20,7 +20,10 @@ public class WUTimers {
     private int rollingUID = 0;
 
     
-
+    /// <summary>
+    /// Returns a unique for this timer
+    /// </summary>
+    /// <value></value>
     public string RollingUID{
         get{
             rollingUID += 1;

@@ -5,15 +5,6 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 
-/*
-
-
-    current benchmark times 500avg= 258 010.4
-                                    301 961.3
-                                    155 282.7
-                                    235 651
-
-*/
 
 /// <summary>
 /// Generates letters sudo randomly. This means that every new letter should
@@ -39,15 +30,6 @@ public class SudoRandomLetterGenerator {
             string jsonText = r.ReadToEnd ();
             this.allSettValuePairs = JsonUtility.FromJson<SetValuePairs> (jsonText);
         }
-
-        // bench marking 
-        // DateTime t1 = System.DateTime.UtcNow;
-        // for (int i = 0; i < 500; i++)
-        // {
-        //     this.GenerateLetter();
-        // }
-        // float rt = System.DateTime.UtcNow.Subtract(t1).Ticks;
-        // print("avg run time per gen in tics=" + rt/500);
     }
 
 
@@ -108,7 +90,6 @@ public class SudoRandomLetterGenerator {
         if (this.activeLetterSet.Count >= this.startWordSearchAt) {
 
             // try normal generation
-
             nextUsedSets = this.FindNextLetterSetts (activeAr);
 
             // no normal found try find from reduced
@@ -117,9 +98,6 @@ public class SudoRandomLetterGenerator {
             }
 
             if (nextUsedSets.Count > 0) {
-                // TODO:
-                //      Find an algorithm for selecting words based on difficulty
-                //
                 activeAr = this.activeLetterSet.ToArray (); // if it has been reduced in reduce
                 var rand = new System.Random ();
                 int val = rand.Next (0, nextUsedSets.Count);

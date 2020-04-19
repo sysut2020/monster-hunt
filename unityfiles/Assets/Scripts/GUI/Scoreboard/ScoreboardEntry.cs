@@ -18,11 +18,6 @@ public class ScoreboardEntry : IComparable<ScoreboardEntry> {
 
     public int Score { get; set; }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="other">The entry to compare</param>
-    /// <returns></returns>
     public int CompareTo(ScoreboardEntry other) {
         if (other.Score < Score) {
             return 1;

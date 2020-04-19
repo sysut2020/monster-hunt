@@ -15,9 +15,6 @@ public class PowerupCollectable : Collectable {
     public static event EventHandler<PowerUpCollectedArgs> OnPowerupCollected;
 
     private MoveToGuiElement moveToGuiElement;
-
-    private readonly string name = "Power_up";
-
     
 
     private void Awake() {
@@ -32,7 +29,4 @@ public class PowerupCollectable : Collectable {
         PowerupCollectable.OnPowerupCollected?.Invoke(this, powerupArgs);
     }
 
-    public override string Name {
-        get => name;
-    }
 }
