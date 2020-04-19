@@ -41,7 +41,7 @@ public static class DataSaver {
 
             // Using statement makes the file stream automatically close, when instructions are done
             using(var fileStream = File.Open(Application.persistentDataPath + savePath, FileMode.Open)) {
-                save = (SaveData)binaryFormatter.Deserialize(fileStream);
+                save = (SaveData) binaryFormatter.Deserialize(fileStream);
             }
 
         } else {
