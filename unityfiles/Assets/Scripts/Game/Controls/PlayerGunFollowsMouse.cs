@@ -2,7 +2,6 @@ using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
 using Quaternion = UnityEngine.Quaternion;
 
-
 public class PlayerGunFollowsMouse : MonoBehaviour {
     [SerializeField]
     private Transform rotatePoint;
@@ -20,9 +19,6 @@ public class PlayerGunFollowsMouse : MonoBehaviour {
     private AimControl aimControl;
 
     bool mouseOnRightSide = true;
-
-
-    // -- private -- //
 
     private void RotateGun() {
         Vector3 currentMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -61,6 +57,6 @@ public class PlayerGunFollowsMouse : MonoBehaviour {
         if (this.IsMouseOnOtherSideOfCrossing()) {
             FlipCharacter();
         }
-        
+
     }
 }

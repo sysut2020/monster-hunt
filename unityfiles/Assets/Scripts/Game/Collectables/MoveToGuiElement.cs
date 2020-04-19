@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class MoveToGuiElement : MonoBehaviour {
 
@@ -32,7 +32,7 @@ public class MoveToGuiElement : MonoBehaviour {
     /// <typeparam name="T">The class type to search for</typeparam>
     public void FindTarget<T>() {
         System.Type av = typeof(T);
-        MonoBehaviour guiTarget = (MonoBehaviour) UnityEngine.Object.FindObjectOfType(av);
+        MonoBehaviour guiTarget = (MonoBehaviour)UnityEngine.Object.FindObjectOfType(av);
         if (guiTarget != null) {
             guiTarget.TryGetComponent(out worldGuiTarget);
             guiWorldPositionHelper = new GameObject("GUI TARGET WORLD POSITION");

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 /// <summary>
 /// OBstacles are entities in the world which hinders the player, like spikes

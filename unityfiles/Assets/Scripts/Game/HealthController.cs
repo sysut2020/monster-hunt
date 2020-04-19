@@ -14,7 +14,7 @@ public abstract class HealthController : MonoBehaviour, IDamageable {
 
     protected IKillable killable;
 
-    protected IDamageNotifyable[] Notifyables { get; private set; } = { };
+    protected IDamageNotifyable[] Notifyables { get; private set; } = {};
 
     public float StartHealth {
         get { return this.startHealth; }

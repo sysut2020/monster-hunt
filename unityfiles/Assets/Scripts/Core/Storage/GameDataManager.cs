@@ -31,7 +31,6 @@ public class GameDataManager {
         this.LoadData();
     }
 
-    // -- properties -- // 
     public Dictionary<string, int> PlayerLetters {
         get => playerLetters;
     }
@@ -47,10 +46,6 @@ public class GameDataManager {
     public List<ScoreboardEntry> HighScores {
         get => highScores;
     }
-
-    // -- events -- // 
-
-    // -- public -- //
 
     /// <summary>
     /// Adds the provided letter count to the saved letter count
@@ -119,7 +114,7 @@ public class GameDataManager {
 
         this.highScores.Add(new ScoreboardEntry() {
             PlayerName = name,
-            Score = this.gameScore
+                Score = this.gameScore
         });
 
         this.gameScore = 0; // reset gameScore when score is added to highScores list
@@ -139,11 +134,9 @@ public class GameDataManager {
     public void SaveData() {
         DataSaver.Save(new SaveData {
             Money = this.money,
-            HighScores = this.highScores,
+                HighScores = this.highScores,
         });
     }
-
-    // -- private -- // 
 
     private void LoadData() {
         SaveData saveObj = DataSaver.Load();

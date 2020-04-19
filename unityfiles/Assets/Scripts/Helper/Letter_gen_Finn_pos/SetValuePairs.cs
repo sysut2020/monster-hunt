@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -38,7 +38,7 @@ public class SetValuePairs {
     public List<SetValuePair> L_28;
     public List<SetValuePair> L_29;
 
-    public List<SetValuePair> GetListFromIndex (int index) {
+    public List<SetValuePair> GetListFromIndex(int index) {
         switch (index) {
             case 1:
                 return L_1;

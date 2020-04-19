@@ -1,51 +1,46 @@
 using System;
-using System.Collections.ObjectModel;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using UnityEngine;
 
-
-public class BulletBuffer{
+public class BulletBuffer {
 
     private List<GameObject> buffer = new List<GameObject>();
-
-
 
     /// <summary>
     /// returns the first disabled bullet in buffer
     /// if no bullets is found null is returned
     /// </summary>
     /// <returns>the first idle bullet null if none are found</returns>
-    public GameObject GetBullet(){
+    public GameObject GetBullet() {
         GameObject candidate = null;
         // loops backward for higher reuse
-        if (buffer.Count > 0){
-            for (int i = buffer.Count -1; i >= 0 ; i--){
-                if (!buffer[i].activeInHierarchy){
+        if (buffer.Count > 0) {
+            for (int i = buffer.Count - 1; i >= 0; i--) {
+                if (!buffer[i].activeInHierarchy) {
                     candidate = buffer[i];
                     break;
                 }
-            }  
+            }
         }
 
-
-        if (candidate == null){
+        if (candidate == null) {
             candidate = this.GenerateBullet();
         }
         return candidate;
     }
 
-    private GameObject GenerateBullet(){
+    private GameObject GenerateBullet() {
         GameObject newBullet = new GameObject();
         newBullet.name = "bullet";
-        
-        SpriteRenderer spriteRender = newBullet.AddComponent<SpriteRenderer>() as SpriteRenderer;
-        BoxCollider2D boxCol = newBullet.AddComponent<BoxCollider2D>() as BoxCollider2D;
-        Rigidbody2D rigidB2d = newBullet.AddComponent<Rigidbody2D>() as Rigidbody2D;
+
+        SpriteRenderer spriteRender = newBullet.AddComponent<SpriteRenderer>()as SpriteRenderer;
+        BoxCollider2D boxCol = newBullet.AddComponent<BoxCollider2D>()as BoxCollider2D;
+        Rigidbody2D rigidB2d = newBullet.AddComponent<Rigidbody2D>()as Rigidbody2D;
         newBullet.SetActive(false);
         buffer.Add(newBullet);
 
         return newBullet;
     }
 }
-

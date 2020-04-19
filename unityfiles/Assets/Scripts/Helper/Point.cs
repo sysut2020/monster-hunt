@@ -1,4 +1,4 @@
-﻿/// <summary>
+/// <summary>
 /// Represents a point in a two dimensional plane
 /// </summary>
 public struct Point {

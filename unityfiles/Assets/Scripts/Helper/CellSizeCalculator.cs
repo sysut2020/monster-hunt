@@ -11,7 +11,7 @@ namespace Helper {
         private readonly RectTransform container;
         private readonly float rows;
         private readonly float columns;
-        private readonly GridLayoutGroup gridLayout; 
+        private readonly GridLayoutGroup gridLayout;
         private readonly RectOffset gridLayoutPadding;
 
         public CellSizeCalculator(RectTransform container, float rows, float columns) {
@@ -21,7 +21,7 @@ namespace Helper {
 
             gridLayout = container.GetComponent<GridLayoutGroup>();
             if (gridLayout == null) {
-                throw  new InvalidDataException("The container does not contain a GridLayoutGroup component");
+                throw new InvalidDataException("The container does not contain a GridLayoutGroup component");
             }
             gridLayoutPadding = gridLayout.padding;
         }
@@ -34,7 +34,7 @@ namespace Helper {
             var rect = container.rect;
             float height = rect.height;
             float width = rect.width;
-            
+
             int horizontalPadding = gridLayoutPadding.horizontal;
             int verticalPadding = gridLayoutPadding.vertical;
 
@@ -61,8 +61,7 @@ namespace Helper {
             var cellSize = gridLayout.cellSize;
             var cellOrgWidth = cellSize.x;
             var cellOrgHeight = cellSize.y;
-        
-        
+
             var cellOrgHeightToWidthRatio = cellOrgHeight / cellOrgWidth;
             var cellHeight = cellWidth * cellOrgHeightToWidthRatio;
             return new Vector2(cellWidth, cellHeight);

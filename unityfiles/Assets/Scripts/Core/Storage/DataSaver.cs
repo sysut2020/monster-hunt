@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -12,24 +12,22 @@ using UnityEngine;
 /// </summary>
 
 public static class DataSaver {
-    
 
     private const string savePath = "/GameSaveFile";
-    
-    
+
     /// <summary>
     /// Used to save a save data objet to file
     /// </summary>
     /// <param name="save">The object to save to file</param>
     public static void Save(SaveData saveData) {
         var binaryFormatter = new BinaryFormatter();
-        
+
         // Using statement makes the file stream automatically close, when instructions are done
-        using (var fileStream = File.Create(Application.persistentDataPath + savePath)) {
+        using(var fileStream = File.Create(Application.persistentDataPath + savePath)) {
             binaryFormatter.Serialize(fileStream, saveData);
         }
     }
-    
+
     /// <summary>
     /// Used to load a save data objet from file
     /// If unsuccessfully null is returned
@@ -37,18 +35,16 @@ public static class DataSaver {
     /// <returns>The stored save data object</returns>
     public static SaveData Load() {
         SaveData save = null;
-        
-        if (File.Exists(Application.persistentDataPath + savePath)){
+
+        if (File.Exists(Application.persistentDataPath + savePath)) {
             var binaryFormatter = new BinaryFormatter();
-            
+
             // Using statement makes the file stream automatically close, when instructions are done
-            using (var fileStream = File.Open(Application.persistentDataPath + savePath, FileMode.Open)){
+            using(var fileStream = File.Open(Application.persistentDataPath + savePath, FileMode.Open)) {
                 save = (SaveData) binaryFormatter.Deserialize(fileStream);
             }
-            
-            
-        }
-        else {
+
+        } else {
             Debug.LogWarning("Save file does not exist");
         }
 

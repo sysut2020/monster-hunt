@@ -28,20 +28,15 @@ public class DoubleFireRateManager : MonoBehaviour {
     private Dictionary<int, IEnumerator> activeCoroutines = new Dictionary<int, IEnumerator>();
 
     public static event EventHandler<OnPickupDoubleFireRateArgs> OnDoubleFireRateStateChange;
-    // -- properties -- //
 
-    public int RollingID { 
-        get{
+    public int RollingID {
+        get {
             rollingID += 1;
-            return rollingID;    
+            return rollingID;
         }
     }
 
-    // -- cleanup vars -- //
     private float initialFireRate;
-
-
-    // -- events -- //
 
     private void SubscribeToEvents() {
         PlayerWeaponController.WeaponChangedEvent += CallbackWeaponChangedEvent;
@@ -69,8 +64,6 @@ public class DoubleFireRateManager : MonoBehaviour {
         }
     }
 
-    // -- private -- //
-
     private IEnumerator Effect(int waitTime, int rid) {
         this.activeMultipliers += 1;
         this.UpdateEffectOnController();
@@ -94,9 +87,7 @@ public class DoubleFireRateManager : MonoBehaviour {
     }
 
     private void UpdateEffectOnController() {
-        if (this.activeMultipliers < 0) {
-            throw new Exception("Bopdidop somthing is wrong");
-        } else if (activeMultipliers > 0) {
+        if (activeMultipliers > 0) {
             this.usedGunController.FireRate = initialFireRate * this.unitMultiplier * this.unitMultiplier;
         } else {
             this.usedGunController.FireRate = initialFireRate;

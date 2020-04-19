@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -23,7 +23,7 @@ namespace Monsterhunt.Fileoperation {
 
         private class StringContent : IStringContent {
 
-            public StringContent() { }
+            public StringContent() {}
 
             public StringContent(string content) {
                 this.Content = content;
@@ -44,7 +44,7 @@ namespace Monsterhunt.Fileoperation {
 
         private class LineContent : ILineContent {
 
-            public LineContent() { }
+            public LineContent() {}
 
             public LineContent(string[] content) {
                 this.Content = content;

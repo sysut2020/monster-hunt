@@ -34,12 +34,6 @@ public class HuntingLevelController : Singleton<HuntingLevelController> {
     private PlayThroughData playThroughData;
     private GameDataManager dataManager;
 
-    // -- properties -- //
-
-    // -- public -- //
-
-    // -- events -- //
-
     /// <summary>
     /// This event tells the listeners the level state has changed
     /// </summary>
@@ -86,7 +80,7 @@ public class HuntingLevelController : Singleton<HuntingLevelController> {
     /// <param name="_">the object calling</param>
     /// <param name="args">the event args</param>
     private void CallbackPlayerLivesUpdate(object _, PlayerLivesUpdateArgs args) {
-        if (args.CurrentLives == 0) LevelStateChange(LEVEL_STATE.GAME_OVER);
+        if (args.CurrentLives == 0)LevelStateChange(LEVEL_STATE.GAME_OVER);
     }
 
     /// <summary>
@@ -103,15 +97,15 @@ public class HuntingLevelController : Singleton<HuntingLevelController> {
     }
 
     /// <summary>
-    /// Called when the game is paused/unpaused.
+    /// Called when the game is paused/un paused.
     /// </summary>
     /// <param name="_">the object that sent the event > unused</param>
     /// <param name="args">event arguments</param>
     private void CallbackOnGamePaused(object _, GamePausedEventArgs args) {
-        if (args.IsPaued) {
+        if (args.IsPaused) {
             this.levelTimer.Pause(this.LEVEL_TIMER_ID);
         } else {
-            this.levelTimer.Contue(this.LEVEL_TIMER_ID);
+            this.levelTimer.Continue(this.LEVEL_TIMER_ID);
         }
     }
 
@@ -179,8 +173,6 @@ public class HuntingLevelController : Singleton<HuntingLevelController> {
     public int GetLevelTimeLeft() {
         return this.levelTimer.TimeLeft(this.LEVEL_TIMER_ID);
     }
-
-    // -- unity -- //
 
     private void Start() {
         dataManager = GameManager.Instance.GameDataManager;

@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyAudioListner : AudioListner {
-    [SerializeField] 
+    [SerializeField]
     private Sound attackPlayerSound;
 
     private void Awake() {

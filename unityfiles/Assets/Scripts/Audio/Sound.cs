@@ -1,10 +1,10 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
 public class Sound {
-    
+
     // Name of the sound
     [SerializeField]
     private string name;
@@ -12,14 +12,14 @@ public class Sound {
         get => name;
         set => name = value;
     }
-    
+
     [SerializeField]
     private AudioClip audioClipToPlay;
     public AudioClip AudioClip {
         get => audioClipToPlay;
         set => audioClipToPlay = value;
     }
-    
+
     // The volume of the sound
     [Range(0f, 1f)]
     [SerializeField]
@@ -46,14 +46,14 @@ public class Sound {
         set => loop = value;
     }
 
-    [SerializeField] 
+    [SerializeField]
     private bool mute;
     public bool Mute {
         get => mute;
         set => mute = value;
     }
 
-    [SerializeField] 
+    [SerializeField]
     private bool playOnAwake;
     public bool PlayOnAwake {
         get => playOnAwake;

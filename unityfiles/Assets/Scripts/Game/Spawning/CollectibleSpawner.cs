@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -58,7 +58,6 @@ public class CollectibleSpawner : MonoBehaviour {
     private void TryCreateCollectable(CollectibleSpawnerItem item, Vector3 position) {
         try {
             var collectible = Instantiate(item.Item.gameObject);
-            collectible.name = item.ItemName;
             collectible.transform.position = position;
         } catch (System.NullReferenceException) {
             Debug.LogWarning("Null reference when instatiating collectable");

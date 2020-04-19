@@ -1,10 +1,10 @@
 using System;
-using System.Collections.ObjectModel;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using UnityEngine;
 
-class BulletData{
+class BulletData {
 
     public readonly Guid Guid = Guid.NewGuid();
 
@@ -15,7 +15,7 @@ class BulletData{
     private Sprite sprite;
     private Transform spriteTransform;
 
-    public BulletData(float velocity, int timeToLive, float damage, Sprite sprite, Transform spriteTransform){
+    public BulletData(float velocity, int timeToLive, float damage, Sprite sprite, Transform spriteTransform) {
         this.Velocity = velocity;
         this.TimeToLive = timeToLive;
         this.Damage = damage;
@@ -28,6 +28,5 @@ class BulletData{
     public float Damage { get => damage; set => damage = value; }
     public Sprite Sprite { get => sprite; internal set => sprite = value; }
     public Transform SpriteTransform { get => spriteTransform; internal set => spriteTransform = value; }
-
 
 }

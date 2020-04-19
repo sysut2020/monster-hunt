@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,8 +21,6 @@ public class Enemy : MonoBehaviour, IKillable, IDamageNotifyable {
     private bool isAttacking = false;
     private EnemyHealthController enemyHealthController;
 
-    // -- properties -- //
-
     public bool IsAttacking {
         get => this.isAttacking;
         set => this.isAttacking = value;
@@ -32,8 +30,6 @@ public class Enemy : MonoBehaviour, IKillable, IDamageNotifyable {
         get => this.enemyType;
         set => this.enemyType = value;
     }
-
-    // -- public -- //
 
     /// <summary>
     /// Fire enemy killed event and destroy self.
@@ -46,13 +42,10 @@ public class Enemy : MonoBehaviour, IKillable, IDamageNotifyable {
         EnemyKilledEvent?.Invoke(this, args);
         Destroy(this.gameObject);
     }
-    // -- events -- //
+
     public static event EventHandler<EnemyEventArgs> EnemySpawnEvent;
     public static event EventHandler<EnemyEventArgs> EnemyKilledEvent;
 
-    // -- private -- //
-
-    // -- unity -- // 
     private void Awake() {
         this.enemyHealthController = this.gameObject.GetComponent<EnemyHealthController>();
         this.enemyHealthController.StartHealth = this.EnemyType.Health;

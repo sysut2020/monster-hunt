@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEngine;
 using Object = System.Object;
 
@@ -34,7 +34,7 @@ public sealed class SceneManager {
         }
     }
 
-    private SceneManager() { }
+    private SceneManager() {}
 
     /// <summary>
     /// Returns the build index of the scene, by name.

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -78,7 +78,7 @@ public class EntitySpawner : Singleton<EntitySpawner> {
     }
 
     private void CallbackOnEnemyKilled(object _, EnemyEventArgs args) {
-        if (this.Spawned == MaxSpawns) return; // Dont proceed of we met max spawns
+        if (this.Spawned == MaxSpawns)return; // Dont proceed of we met max spawns
         this.RestToSpawn++;
     }
 
@@ -88,7 +88,7 @@ public class EntitySpawner : Singleton<EntitySpawner> {
     /// </summary>
     /// <param name="sizeOfSpawn"></param>
     private void TrySpawn(int sizeOfSpawn) {
-        if (Spawned > MaxSpawns) return; // Skip if maximum spawns is reached
+        if (Spawned > MaxSpawns)return; // Skip if maximum spawns is reached
 
         var possibleSpawnPoints = SelectNonVisibleSpawnpoints();
         possibleSpawnPoints.Shuffle();

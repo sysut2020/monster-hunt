@@ -26,7 +26,7 @@ public class PlayerWeaponController : MonoBehaviour {
     private GameObject gunHand;
 
     /// <summary>
-    /// Toggled when the game is paused/unpaused
+    /// Toggled when the game is paused/un paused
     /// </summary>
     private bool isPaused = false;
 
@@ -38,7 +38,6 @@ public class PlayerWeaponController : MonoBehaviour {
 
     private SpriteRenderer weaponSpriteRend;
 
-    // -- properties -- //
     public Gun[] AvailableWeapons {
         get => availableWeapons;
         set => availableWeapons = value;
@@ -49,23 +48,19 @@ public class PlayerWeaponController : MonoBehaviour {
         internal set => this.activeGunController = value;
     }
 
-    // -- public -- //
-
     public void MaybeFire() {
         this.activeGunController?.MaybeFire();
     }
 
-    // -- events -- //
-
     public static event EventHandler<WeaponChangedEventArgs> WeaponChangedEvent;
 
     /// <summary>
-    /// Called when the game is paused/unpaused.
+    /// Called when the game is paused/un paused.
     /// </summary>
     /// <param name="_">the object that sent the event > unused</param>
     /// <param name="args">event arguments</param>
     private void CallbackOnGamePaused(object _, GamePausedEventArgs args) {
-        this.isPaused = args.IsPaued;
+        this.isPaused = args.IsPaused;
     }
 
     /// <summary>
@@ -118,8 +113,6 @@ public class PlayerWeaponController : MonoBehaviour {
 
         WeaponChangedEvent?.Invoke(this, args);
     }
-
-    // -- unity -- //
 
     /// <summary>
     /// Awake is called when the script instance is being loaded.

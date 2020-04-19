@@ -28,7 +28,6 @@ public class PlayerInventory {
         this.money = 0;
         this.collectedLetters = new List<string>();
     }
-    // -- properties -- //
 
     public int Money {
         get => money;
@@ -39,9 +38,6 @@ public class PlayerInventory {
         get => formatPlayerInventoryLetter(collectedLetters);
     }
 
-    // -- public -- //
-
-    // -- events -- //
     public event EventHandler<InventoryUpdatedEventArgs> InventoryUpdatedEvent;
 
     /// <summary>
@@ -91,8 +87,6 @@ public class PlayerInventory {
     private void CallbackEffectPickup(object sender, PowerUpCollectedArgs args) {
         //throw new NotImplementedException();
     }
-
-    // -- private -- // 
 
     /// <summary>
     /// Formats the letters in player inventory to the used format

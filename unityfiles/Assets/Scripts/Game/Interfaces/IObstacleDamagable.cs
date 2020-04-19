@@ -1,4 +1,4 @@
-﻿/// <summary>
+/// <summary>
 /// Objects that can revice damage from obstacles in the world
 /// </summary>
 public interface IObstacleDamagable {

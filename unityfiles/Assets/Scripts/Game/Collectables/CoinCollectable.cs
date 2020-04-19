@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 using UnityEngine;
 
 /// <summary>
-/// Arguments for coin colected event
+/// Arguments for coin collected event
 /// </summary>
 public class CoinCollectedArgs : EventArgs {
     public int Amount { get; set; }
@@ -16,18 +16,12 @@ public class CoinCollectable : Collectable {
     [SerializeField]
     private int coinValue = 1;
 
-    private readonly string name = "Coin";
-
-    public override string Name {
-        get => name;
-    }
-
     private void Awake() {
         if (TryGetComponent(out moveToGuiElement)) {
-            moveToGuiElement.FindTarget<CoinsCollecedGUI>();
+            moveToGuiElement.FindTarget<CoinsCollectedGUI>();
         }
 
-        this.ScoreValue = coinValue; // idk mabye not
+        this.ScoreValue = coinValue;
     }
 
     private void OnDestroy() {

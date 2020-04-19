@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
@@ -38,12 +38,12 @@ public class PlayerMovement : MonoBehaviour {
 
     void Update() {
         horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
-        
+
         if (Input.GetButtonDown("Horizontal")) {
             animator.SetBool(Walking, true);
-        } 
-        
-        if(Input.GetButtonUp("Horizontal")) {
+        }
+
+        if (Input.GetButtonUp("Horizontal")) {
             animator.SetBool(Walking, false);
         }
     }

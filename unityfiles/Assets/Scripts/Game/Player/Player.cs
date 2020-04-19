@@ -27,8 +27,6 @@ public class Player : MonoBehaviour, IKillable, IDamageNotifyable {
 
     private Vector3 spawnPosition;
 
-    // -- singelton -- //
-
     private static Player instance;
 
     public static Player Instance {
@@ -42,8 +40,6 @@ public class Player : MonoBehaviour, IKillable, IDamageNotifyable {
         }
     }
 
-    // -- properties -- //
-
     public PlayerHealthController PlayerHealthController {
         get => playerHealthController;
         internal set => this.playerHealthController = value;
@@ -54,8 +50,6 @@ public class Player : MonoBehaviour, IKillable, IDamageNotifyable {
         internal set => this.playerWeaponController = value;
     }
 
-    // -- public -- //
-
     /// <summary>
     /// Respawns the player and notify that the player died
     /// </summary>
@@ -64,7 +58,6 @@ public class Player : MonoBehaviour, IKillable, IDamageNotifyable {
         PlayerEventArgs args = new PlayerEventArgs();
         PlayerKilledEvent?.Invoke(this, args);
     }
-    // -- events -- //
 
     public static event EventHandler<PlayerEventArgs> PlayerKilledEvent;
     private void SubscribeToEvents() {
@@ -76,10 +69,8 @@ public class Player : MonoBehaviour, IKillable, IDamageNotifyable {
     }
 
     private void CallbackWeaponChangedEvent(object _, WeaponChangedEventArgs args) {
-        animator.SetInteger("ACTIVE_WEAPON", (int) args.AnimId);
+        animator.SetInteger("ACTIVE_WEAPON", (int)args.AnimId);
     }
-
-    // -- private -- // 
 
     /// <summary>
     /// Moves the player to the spawn position
@@ -87,8 +78,6 @@ public class Player : MonoBehaviour, IKillable, IDamageNotifyable {
     private void Respawn() {
         this.transform.position = this.spawnPosition;
     }
-
-    // -- unity -- //
 
     private void Awake() {
 

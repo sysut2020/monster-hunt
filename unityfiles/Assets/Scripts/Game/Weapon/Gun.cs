@@ -1,12 +1,11 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 
 /// <summary>
 /// A dataholder holding a guns data
 /// </summary>
-public class Gun : MonoBehaviour{
+public class Gun : MonoBehaviour {
 
     [SerializeField]
     [Tooltip("The guns weapon data.")]
@@ -20,19 +19,17 @@ public class Gun : MonoBehaviour{
     [Tooltip("The bullet GO.")]
     private GameObject bullet = null;
 
-
-
-    public WeaponData WeaponData { 
-        get{
-            if (weaponData == null){
+    public WeaponData WeaponData {
+        get {
+            if (weaponData == null) {
                 throw new MissingComponentException("Gun weapon data missing");
             }
             return weaponData;
         }
     }
     public Transform FirePoint {
-        get{
-            if (firePoint == null){
+        get {
+            if (firePoint == null) {
                 throw new MissingComponentException("Gun fire point missing");
             }
             return firePoint;
@@ -40,8 +37,8 @@ public class Gun : MonoBehaviour{
     }
 
     public GameObject Bullet {
-        get{
-            if (bullet == null){
+        get {
+            if (bullet == null) {
                 throw new MissingComponentException("Gun bullet missing");
             }
             return bullet;

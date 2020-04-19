@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Xml.Linq;
 using UnityEngine;
 
@@ -36,8 +36,6 @@ public class AimControl {
         this.CreateHelperObjects();
         this.SubscribeToEvents();
     }
-
-    // -- events -- //    
 
     /// <summary>
     /// Subscribes to the relevant events for this class
@@ -107,14 +105,14 @@ public class AimControl {
         Vector3 norm_GP_prj_RPMP = Vector3.Project(v_RP_MP, FirePoint.transform.right);
         Vector3 CheckV2 = RotationPoint.position + norm_GP_prj_RPMP - new Vector3(mousePoint.x, mousePoint.y);
 
-        Vector2 newCheckV = RotationPoint.transform.position-FirePoint.transform.position;
+        Vector2 newCheckV = RotationPoint.transform.position - FirePoint.transform.position;
 
         if (Mathf.Floor(CheckV.magnitude * 10) != Mathf.Floor(newCheckV.magnitude * 10)) {
             this.CheckV = newCheckV;
             CreateHelperObjects();
         }
 
-        if (CheckV2.magnitude > 0.35 ){
+        if (CheckV2.magnitude > 0.35) {
             CreateHelperObjects();
         }
 
@@ -195,15 +193,14 @@ public class AimControl {
 
         if (debug) {
 
-            
             Debug.Log(CheckV2.magnitude);
-     
-            Debug.DrawLine(Vector3.zero,CheckV2, Color.green);
+
+            Debug.DrawLine(Vector3.zero, CheckV2, Color.green);
 
             Debug.DrawLine(RotationPoint.position, Camera.main.ScreenToWorldPoint(Input.mousePosition), Color.magenta);
 
             Debug.DrawRay(Vector3.zero, RotationPoint.position + norm_GP_prj_RPMP, Color.gray);
-            Debug.DrawRay(FirePoint.transform.position, FirePoint.transform.right *100, Color.cyan);
+            Debug.DrawRay(FirePoint.transform.position, FirePoint.transform.right * 100, Color.cyan);
             Debug.DrawRay(Vector3.zero, helperAimPoint.transform.right * 100, Color.white);
         }
 
@@ -234,7 +231,7 @@ public class AimControl {
     /// <param name="angle">the angle to convert</param>
     /// <returns>the angle in degrees</returns>
     private float RadianToDegree(double angle) {
-        return (float) (angle * (180.0 / Math.PI));
+        return (float)(angle * (180.0 / Math.PI));
     }
 
 }

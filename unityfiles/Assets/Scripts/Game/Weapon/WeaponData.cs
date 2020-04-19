@@ -1,17 +1,14 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu (fileName = "Data", menuName = "ScriptableObjects/WeaponData", order = 2)]
+[CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/WeaponData", order = 2)]
 public class WeaponData : ScriptableObject {
-    
+
     [Header("Weapon posission")]
-    [Tooltip ("the Angle of the different arm elements")]
+    [Tooltip("the Angle of the different arm elements")]
     [SerializeField]
-    private PLAYER_ANIMATION holdingAnimation; 
-    
-    // -- bullet stuff sprite -- //
-    
+    private PLAYER_ANIMATION holdingAnimation;
 
     [Header("Bullet properties")]
     [Tooltip("velocity of bullet in units/(1/50) sec.")]
@@ -25,7 +22,6 @@ public class WeaponData : ScriptableObject {
     [Tooltip("How long the bullet will live if it doesn´t hit anything.")]
     [SerializeField]
     private int bulletTtl = 0;
-
 
     [Tooltip("Fire rate in shots/sec.")]
     [SerializeField]

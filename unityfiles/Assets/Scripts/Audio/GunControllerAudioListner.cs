@@ -1,14 +1,14 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GunControllerAudioListner : AudioListner {
-    
+
     [SerializeField]
     private Sound sniperFireSound;
 
-    [SerializeField] 
+    [SerializeField]
     private Sound laserFireSound;
 
     [SerializeField]
@@ -19,8 +19,7 @@ public class GunControllerAudioListner : AudioListner {
     private int sniperIndex = 0;
     private int laserIndex = 1;
     private int poopIndex = 2;
-    
-    
+
     private void Awake() {
         SubscribeToEvents();
         fireSoundToPlay = sniperFireSound;

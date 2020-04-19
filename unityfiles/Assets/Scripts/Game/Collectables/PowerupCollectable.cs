@@ -1,5 +1,5 @@
-﻿using UnityEngine;
 using System;
+using UnityEngine;
 
 /// <summary>
 /// Arguments for powerup collected event
@@ -16,10 +16,6 @@ public class PowerupCollectable : Collectable {
 
     private MoveToGuiElement moveToGuiElement;
 
-    private readonly string name = "Power_up";
-
-    
-
     private void Awake() {
         if (TryGetComponent(out moveToGuiElement)) {
             moveToGuiElement.FindTarget<LettersCollectedGUI>();
@@ -32,7 +28,4 @@ public class PowerupCollectable : Collectable {
         PowerupCollectable.OnPowerupCollected?.Invoke(this, powerupArgs);
     }
 
-    public override string Name {
-        get => name;
-    }
 }
