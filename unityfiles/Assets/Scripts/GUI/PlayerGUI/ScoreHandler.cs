@@ -55,6 +55,7 @@ public class ScoreHandler : MonoBehaviour {
     /// <param name="score">The new score to be added to the total</param>
     private void UpdateScore(int score) {
         scoreGui.UpdateScoreText(dataManager.GameScore + score);
+        SaveScore();
     }
 
     /// <summary>

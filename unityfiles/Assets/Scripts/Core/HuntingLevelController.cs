@@ -153,7 +153,7 @@ public class HuntingLevelController : Singleton<HuntingLevelController> {
     /// </summary>
     private void InitLevel() {
         EntitySpawner.Instance.MaxSpawns = this.levelDetails.NumberOfEnemies;
-        EntitySpawner.Instance?.Init(5); // Init with 5 mobs on the map
+        EntitySpawner.Instance?.Init(this.levelDetails.NumberOfEnemiesAtStart); // Init with X mobs on the map
     }
 
     /// <summary>
