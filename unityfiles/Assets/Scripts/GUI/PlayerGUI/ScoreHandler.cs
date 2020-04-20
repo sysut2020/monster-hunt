@@ -30,8 +30,8 @@ public class ScoreHandler : MonoBehaviour {
     /// <summary>
     /// Saves data to be retrieved when switching scenes
     /// </summary>
-    private void SaveScore() {
-        dataManager.AddGameScore(levelScore);
+    private void SaveScore(int score) {
+        dataManager.AddGameScore(score);
     }
 
     private void SubscribeToEvents() {
@@ -43,7 +43,7 @@ public class ScoreHandler : MonoBehaviour {
 
     private void CallbackLevelStateChange(object _, LevelStateChangeEventArgs e) {
         if (e.NewState == LEVEL_STATE.GAME_WON) {
-            SaveScore();
+            SaveScore(0);
         }
     }
 
@@ -59,8 +59,9 @@ public class ScoreHandler : MonoBehaviour {
     /// </summary>
     /// <param name="score">The new score to be added to the total</param>
     private void UpdateScore(int score) {
-        scoreGui.UpdateScoreText(dataManager.GameScore + score);
-        SaveScore();
+        this.levelScore += score;
+        this.scoreGui.UpdateScoreText(this.levelScore);
+        this.SaveScore(score);
     }
 
     /// <summary>
@@ -69,8 +70,7 @@ public class ScoreHandler : MonoBehaviour {
     /// <param name="col">Sender object</param>
     /// <param name="args">event args</param>
     private void CallbackEffectPickup(object col, PowerUpCollectedArgs e) {
-        this.levelScore++;
-        UpdateScore(this.levelScore);
+        UpdateScore(1);
     }
 
     /// <summary>
@@ -79,8 +79,7 @@ public class ScoreHandler : MonoBehaviour {
     /// <param name="col">Sender object</param>
     /// <param name="args">event args</param>
     private void CallbackLetterCollected(object col, LetterCollectedArgs _) {
-        this.levelScore += ((Collectible) col).ScoreValue;
-        UpdateScore(this.levelScore);
+        UpdateScore(((Collectible) col).ScoreValue);
     }
 
     /// <summary>
@@ -89,7 +88,6 @@ public class ScoreHandler : MonoBehaviour {
     /// <param name="col">Sender object</param>
     /// <param name="_">event args</param>
     private void CallbackCoinCollected(object col, CoinCollectedArgs _) {
-        this.levelScore += ((Collectible) col).ScoreValue;
-        UpdateScore(this.levelScore);
+        UpdateScore(((Collectible) col).ScoreValue);
     }
 }
