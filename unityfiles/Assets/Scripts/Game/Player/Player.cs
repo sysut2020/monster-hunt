@@ -1,8 +1,5 @@
-using System;
 using UnityEngine;
 
-public class PlayerEventArgs : EventArgs {
-}
 
 /// <summary>
 /// A player is the controllable character that a person play as.
@@ -22,11 +19,8 @@ public class Player : MonoBehaviour, IKillable, IDamageNotifyable {
     /// </summary>
     public void IsDead() {
         Respawn();
-        PlayerEventArgs args = new PlayerEventArgs();
-        PlayerKilledEvent?.Invoke(this, args);
     }
 
-    public static event EventHandler<PlayerEventArgs> PlayerKilledEvent;
     private void SubscribeToEvents() {
         PlayerWeaponController.WeaponChangedEvent += CallbackWeaponChangedEvent;
     }
