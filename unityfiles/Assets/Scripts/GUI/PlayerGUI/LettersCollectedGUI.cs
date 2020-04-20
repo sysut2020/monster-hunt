@@ -30,7 +30,7 @@ public class LettersCollectedGUI : MonoBehaviour {
             throw new MissingComponentException("Missing text component");
         }
         this.lettersToCollect = HuntingLevelController.Instance.LevelDetails.NumberOfLetters;
-        LetterCollectable.OnLetterCollected += OnNewLetter;
+        LetterCollectable.OnLetterCollected += CallbackOnNewLetter;
         SetLetterText();
     }
 
@@ -38,7 +38,7 @@ public class LettersCollectedGUI : MonoBehaviour {
         this.letterCounter.SetText($"{currentLetterCount} / {lettersToCollect}");
     }
 
-    private void OnNewLetter(object sender, LetterCollectedArgs letter) {
+    private void CallbackOnNewLetter(object sender, LetterCollectedArgs letter) {
         this.currentLetterCount++;
         this.SetLetterText();
     }
@@ -55,6 +55,6 @@ public class LettersCollectedGUI : MonoBehaviour {
     }
 
     private void OnDestroy() {
-        LetterCollectable.OnLetterCollected -= OnNewLetter;
+        LetterCollectable.OnLetterCollected -= CallbackOnNewLetter;
     }
 }
