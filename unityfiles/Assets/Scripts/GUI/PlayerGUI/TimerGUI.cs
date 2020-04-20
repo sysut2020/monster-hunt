@@ -2,6 +2,10 @@ using System;
 using TMPro;
 using UnityEngine;
 
+/// <summary>
+/// Responsible for displaying time on a text element.
+/// It displays time in format Minutes:Seconds.
+/// </summary>
 public class TimerGUI : MonoBehaviour {
 
     /// <summary>
@@ -33,6 +37,10 @@ public class TimerGUI : MonoBehaviour {
         SetTimerText();
     }
 
+    /// <summary>
+    /// Sets the time to display. Time in milliseconds.
+    /// </summary>
+    /// <param name="time">time to display, in milliseconds</param>
     public void SetTime(int time) {
         this.LevelTime = time / 1000;
     }

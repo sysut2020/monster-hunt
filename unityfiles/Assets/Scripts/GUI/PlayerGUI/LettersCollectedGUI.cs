@@ -9,7 +9,7 @@ using UnityEngine;
 public class LettersCollectedGUI : MonoBehaviour {
 
     /// <summary>
-    /// Text for visualizing numbers of letters collected and have left.
+    /// Text element for displaying numbers of letters collected and have left.
     /// </summary>
     [SerializeField]
     TMP_Text letterCounter;
@@ -21,7 +21,7 @@ public class LettersCollectedGUI : MonoBehaviour {
     private static RectTransform myRectTransform;
 
     /// <summary>
-    /// How many letters to collect 
+    /// How many letters to collect
     /// </summary>
     private int lettersToCollect = 0;
 
@@ -30,7 +30,7 @@ public class LettersCollectedGUI : MonoBehaviour {
             throw new MissingComponentException("Missing text component");
         }
         this.lettersToCollect = HuntingLevelController.Instance.LevelDetails.NumberOfLetters;
-        LetterCollectible.OnLetterCollected += OnNewLetter;
+        LetterCollectible.OnLetterCollected += CallbackOnNewLetter;
         SetLetterText();
     }
 
@@ -38,7 +38,7 @@ public class LettersCollectedGUI : MonoBehaviour {
         this.letterCounter.SetText($"{currentLetterCount} / {lettersToCollect}");
     }
 
-    private void OnNewLetter(object sender, LetterCollectedArgs letter) {
+    private void CallbackOnNewLetter(object sender, LetterCollectedArgs letter) {
         this.currentLetterCount++;
         this.SetLetterText();
     }
@@ -55,6 +55,6 @@ public class LettersCollectedGUI : MonoBehaviour {
     }
 
     private void OnDestroy() {
-        LetterCollectible.OnLetterCollected -= OnNewLetter;
+        LetterCollectible.OnLetterCollected -= CallbackOnNewLetter;
     }
 }
