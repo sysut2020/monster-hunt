@@ -9,7 +9,7 @@ using UnityEngine;
 public class LettersCollectedGUI : MonoBehaviour {
 
     /// <summary>
-    /// Text for visualizing numbers of letters collected and have left.
+    /// Text element for displaying numbers of letters collected and have left.
     /// </summary>
     [SerializeField]
     TMP_Text letterCounter;
@@ -21,7 +21,7 @@ public class LettersCollectedGUI : MonoBehaviour {
     private static RectTransform myRectTransform;
 
     /// <summary>
-    /// How many letters to collect 
+    /// How many letters to collect
     /// </summary>
     private int lettersToCollect = 0;
 

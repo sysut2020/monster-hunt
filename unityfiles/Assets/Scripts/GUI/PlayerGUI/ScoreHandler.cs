@@ -6,7 +6,12 @@ using UnityEngine;
 /// Saves score for transfer when destroyed.
 /// </summary>
 public class ScoreHandler : MonoBehaviour {
+
+    /// <summary>
+    /// Current level score
+    /// </summary>
     private int levelScore = 0;
+
     private GameDataManager dataManager;
 
     [SerializeField]
@@ -48,6 +53,7 @@ public class ScoreHandler : MonoBehaviour {
         PowerupCollectable.OnPowerupCollected -= CallbackEffectPickup;
         HuntingLevelController.OnLevelStateChangeEvent -= CallbackLevelStateChange;
     }
+
     /// <summary>
     /// Updates score text with game score + new levelscore
     /// </summary>
@@ -63,7 +69,7 @@ public class ScoreHandler : MonoBehaviour {
     /// <param name="col">Sender object</param>
     /// <param name="args">event args</param>
     private void CallbackEffectPickup(object col, PowerUpCollectedArgs e) {
-        this.levelScore++; // when a power up is picked up we add one point to the total score
+        this.levelScore++;
         UpdateScore(this.levelScore);
     }
 
@@ -73,8 +79,7 @@ public class ScoreHandler : MonoBehaviour {
     /// <param name="col">Sender object</param>
     /// <param name="args">event args</param>
     private void CallbackLetterCollected(object col, LetterCollectedArgs _) {
-        // when a letter is collected we add one point to the total score counter
-        this.levelScore += ((Collectable)col).ScoreValue;
+        this.levelScore += ((Collectable) col).ScoreValue;
         UpdateScore(this.levelScore);
     }
 
@@ -84,7 +89,7 @@ public class ScoreHandler : MonoBehaviour {
     /// <param name="col">Sender object</param>
     /// <param name="_">event args</param>
     private void CallbackCoinCollected(object col, CoinCollectedArgs _) {
-        this.levelScore += ((Collectable)col).ScoreValue;
+        this.levelScore += ((Collectable) col).ScoreValue;
         UpdateScore(this.levelScore);
     }
 }
