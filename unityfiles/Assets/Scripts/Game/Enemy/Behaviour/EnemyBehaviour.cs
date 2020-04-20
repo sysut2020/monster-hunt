@@ -8,7 +8,6 @@ public class EnemyBehavourChangeArgs : EventArgs {
 
 /// <summary>
 /// Enemy AI logic. Controls enemies idle, patrol, chase and attack states.
-/// 
 /// </summary>
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(BoxCollider2D))]
