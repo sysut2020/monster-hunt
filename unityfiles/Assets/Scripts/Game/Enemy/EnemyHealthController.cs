@@ -1,7 +1,7 @@
 using UnityEngine;
 
 /// <summary>
-/// controlling an enemy's health. can give or take away health
+/// Controlling an enemy's health. can give or take away health
 /// and keeping track of wetter or not the entity is dead
 /// </summary>
 [RequireComponent(typeof(IDamageable))]
@@ -16,7 +16,7 @@ public class EnemyHealthController : HealthController {
     /// </summary>
     void Start() {
         if (healthBarGuiController == null) {
-            throw new MissingComponentException("Missing EnemyHealthBarGUIController"); // todo this will always be thrown from the player
+            throw new MissingComponentException("Missing EnemyHealthBarGUIController");
         }
         Health = startHealth;
         healthBarGuiController.SetStartHealth(startHealth);
