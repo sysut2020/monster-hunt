@@ -15,6 +15,10 @@ public class LetterGameEndedArgs : EventArgs {
 public class WordScoreUpdateArgs : EventArgs {
     public int Score { get; set; }
 }
+
+/// <summary>
+/// Used to control the letter level
+/// </summary>
 public class LetterLevelController : Singleton<LetterLevelController> {
 
     private int wordsPoints = 0;
