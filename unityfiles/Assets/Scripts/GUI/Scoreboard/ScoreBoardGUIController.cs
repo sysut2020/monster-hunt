@@ -13,6 +13,7 @@ public class ScoreBoardGUIController : MonoBehaviour {
 
     [SerializeField]
     private ScoreBoardEntryGUI GUIScoreBoardEntry;
+
     private List<ScoreboardEntry> scoreboardEntries;
 
     [Header("Testing")]
@@ -22,12 +23,13 @@ public class ScoreBoardGUIController : MonoBehaviour {
     private void Start() {
         LoadHighScores();
         SortScoreBoardInDescendingOrder();
-        if (fillWithTestData)FillWithTestData();
+        if (fillWithTestData) FillWithTestData();
         var scoreboardEntryTransformList = new List<ScoreBoardEntryGUI>();
         foreach (ScoreboardEntry entry in scoreboardEntries) {
             CreateScoreboardEntryTransform(entry, entryContainer, scoreboardEntryTransformList);
         }
     }
+
     private void SortScoreBoardInDescendingOrder() {
         scoreboardEntries?.Sort();
         scoreboardEntries?.Reverse();

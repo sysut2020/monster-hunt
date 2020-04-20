@@ -47,14 +47,14 @@ public class HuntingLevelController : Singleton<HuntingLevelController> {
     public static event EventHandler CleanUpEvent;
 
     private void SubscribeToEvents() {
-        LetterCollectable.OnLetterCollected += CallbackLetterCollected;
+        LetterCollectible.OnLetterCollected += CallbackLetterCollected;
         PlayerHealthController.OnPlayerLivesUpdate += CallbackPlayerLivesUpdate;
         Enemy.EnemyKilledEvent += CallbackEnemyKilledEvent;
         GameManager.GamePausedEvent += CallbackOnGamePaused;
     }
 
     private void UnsubscribeFromEvents() {
-        LetterCollectable.OnLetterCollected -= CallbackLetterCollected;
+        LetterCollectible.OnLetterCollected -= CallbackLetterCollected;
         PlayerHealthController.OnPlayerLivesUpdate -= CallbackPlayerLivesUpdate;
         Enemy.EnemyKilledEvent -= CallbackEnemyKilledEvent;
         GameManager.GamePausedEvent -= CallbackOnGamePaused;

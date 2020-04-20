@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+
+/// <summary>
+/// Array utility class for doing array opperation
+/// </summary>
 static class WUArrays {
     // string array functions
 

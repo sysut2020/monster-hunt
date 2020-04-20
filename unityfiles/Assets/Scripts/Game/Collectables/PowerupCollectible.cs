@@ -8,7 +8,10 @@ public class PowerUpCollectedArgs : EventArgs {
     public PICKUP_TYPE Effect { get; set; }
 }
 
-public class PowerupCollectable : Collectable {
+/// <summary>
+/// Used to handle the power up collectible
+/// </summary>
+public class PowerupCollectible : Collectible {
 
     [SerializeField]
     private PICKUP_TYPE effectPickup;
@@ -25,7 +28,7 @@ public class PowerupCollectable : Collectable {
     private void OnDestroy() {
         PowerUpCollectedArgs powerupArgs = new PowerUpCollectedArgs();
         powerupArgs.Effect = effectPickup;
-        PowerupCollectable.OnPowerupCollected?.Invoke(this, powerupArgs);
+        PowerupCollectible.OnPowerupCollected?.Invoke(this, powerupArgs);
     }
 
 }

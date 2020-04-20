@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// listens for enemy sounds to be played  
+/// </summary>
 public class EnemyAudioListner : AudioListner {
     [SerializeField]
     private Sound attackPlayerSound;

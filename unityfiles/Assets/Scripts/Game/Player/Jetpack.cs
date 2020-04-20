@@ -14,7 +14,7 @@ public class Jetpack : MonoBehaviour {
     [SerializeField]
     private int maxYVelocity = 5;
 
-    // The rigidbody that is added force to.
+    // The rigid body that is added force to
     [SerializeField]
     private Rigidbody2D massToAffect;
 
@@ -43,7 +43,7 @@ public class Jetpack : MonoBehaviour {
     }
 
     /// <summary>
-    /// Adds force to rigidbody as long as the selected key is pressed,
+    /// Adds force to rigid body as long as the selected key is pressed,
     /// until the maximum velocity is reached.
     /// </summary>
     private void AddForce() {

@@ -2,51 +2,20 @@ using System;
 using UnityEngine;
 
 public class PlayerEventArgs : EventArgs {
-    public GameObject PlayerGO { get; set; }
-    public EnemyType PlayerMoney { get; set; }
-    public EnemyType PlayerLetters { get; set; }
 }
 
 /// <summary>
 /// A player is the controllable character that a person play as.
 /// </summary>
 public class Player : MonoBehaviour, IKillable, IDamageNotifyable {
-
-    [SerializeField]
-    private PlayerHealthController playerHealthController;
-
+    
     private Animator animator;
-
-    public delegate void EventHandler();
-
-    public static event EventHandler OnPlayerDead;
 
     private PlayerWeaponController playerWeaponController;
 
     private Vector3 spawnPosition;
 
     private static Player instance;
-
-    public static Player Instance {
-        get {
-            if (instance == null) {
-                GameObject player = new GameObject("Player");
-                player.AddComponent<Player>();
-            }
-
-            return instance;
-        }
-    }
-
-    public PlayerHealthController PlayerHealthController {
-        get => playerHealthController;
-        internal set => this.playerHealthController = value;
-    }
-
-    public PlayerWeaponController PlayerWeaponController {
-        get => playerWeaponController;
-        internal set => this.playerWeaponController = value;
-    }
 
     /// <summary>
     /// Respawns the player and notify that the player died
@@ -86,7 +55,7 @@ public class Player : MonoBehaviour, IKillable, IDamageNotifyable {
         this.spawnPosition = this.transform.position;
     }
 
-    void OnDestroy() {
+    private void OnDestroy() {
         this.UnsubscribeFromEvents();
     }
 
