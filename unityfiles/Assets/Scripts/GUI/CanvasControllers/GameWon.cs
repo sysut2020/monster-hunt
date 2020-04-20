@@ -31,6 +31,8 @@ public class GameWon : MonoBehaviour {
 
     private int levelScore;
 
+    private bool initalSet = false;
+
     /// <summary>
     /// Amount of time the countdown should take
     /// </summary>
@@ -41,6 +43,8 @@ public class GameWon : MonoBehaviour {
     /// Time when the game won canvas was enabled
     /// </summary>
     private float timeEnabled;
+
+    private int gameScoreNumber;
 
     private void Awake() {
         if (continueButton.IsInteractable()) {
@@ -57,19 +61,25 @@ public class GameWon : MonoBehaviour {
         timeLeft = HuntingLevelController.Instance.GetLevelTimeLeft() / 1000; // divide by 1000 to get sec
         timeLeftText.text = FormatAsClockTime(timeLeft);
 
-        this.levelScore = dataManager.GameScore;
-        gameScore.text = this.levelScore.ToString();
-        dataManager.AddGameScore(timeLeft); // add time left in seconds as points to game score
+        // add time left in seconds as points to game score
     }
 
     private void Update() {
+
         var t = (Time.unscaledTime - timeEnabled) / duration; // used to smooth the count down/up
         var pointsCounter = Mathf.RoundToInt(Mathf.SmoothStep(0, timeLeft, t));
         extraScore.text = pointsCounter.ToString();
         var timeInSeconds = Mathf.RoundToInt(Mathf.SmoothStep(timeLeft, 0, t));
         timeLeftText.text = FormatAsClockTime(timeInSeconds);
-        totalScore.text = (this.levelScore + pointsCounter).ToString();
+        totalScore.text = (this.gameScoreNumber + pointsCounter).ToString();
 
+        if (!initalSet) {
+            GameManager.Instance.GameDataManager.AddGameScore(timeLeft);
+            this.levelScore = GameManager.Instance.GameDataManager.GameScore;
+            gameScoreNumber = this.levelScore - timeLeft;
+            gameScore.text = (gameScoreNumber).ToString();
+            initalSet = true;
+        }
         if (timeInSeconds <= 0 && !continueButton.interactable) {
             continueButton.interactable = true;
         }
