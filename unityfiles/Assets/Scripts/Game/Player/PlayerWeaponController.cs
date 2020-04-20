@@ -55,7 +55,7 @@ public class PlayerWeaponController : MonoBehaviour {
     /// Tries to fire.
     /// </summary>
     public void TryFire() {
-        this.activeGunController?.MaybeFire();
+        this.activeGunController?.TryFire();
     }
 
     public static event EventHandler<WeaponChangedEventArgs> WeaponChangedEvent;

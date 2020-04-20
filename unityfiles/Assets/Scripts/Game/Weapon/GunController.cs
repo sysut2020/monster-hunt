@@ -57,7 +57,7 @@ public class GunController {
     /// <summary>
     /// Checks if it is time to fire if it is, it wil fire if not not 
     /// </summary>
-    public void MaybeFire() {
+    public void TryFire() {
         // is it time to release a bullet
         if (fireRateTimer.Done(this.timerUID, true)) {
             this.Fire();
