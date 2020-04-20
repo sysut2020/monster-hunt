@@ -9,7 +9,10 @@ public class LetterCollectedArgs : EventArgs {
     public string Letter { get; set; }
 }
 
-public class LetterCollectable : Collectable {
+/// <summary>
+/// Used to handle the letter collectibles
+/// </summary>
+public class LetterCollectible : Collectible {
     public static event EventHandler<LetterCollectedArgs> OnLetterCollected;
 
     [SerializeField]
@@ -24,7 +27,7 @@ public class LetterCollectable : Collectable {
     private void OnDestroy() {
         LetterCollectedArgs letterEventArgs = new LetterCollectedArgs();
         letterEventArgs.Letter = this.LetterString;
-        LetterCollectable.OnLetterCollected?.Invoke(this, letterEventArgs);
+        LetterCollectible.OnLetterCollected?.Invoke(this, letterEventArgs);
     }
 
     private void Awake() {

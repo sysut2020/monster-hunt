@@ -50,7 +50,7 @@ public class HuntingLevelController : Singleton<HuntingLevelController> {
     /// Subscribes to the relevant events for this class
     /// </summary>
     private void SubscribeToEvents() {
-        LetterCollectable.OnLetterCollected += CallbackLetterCollected;
+        LetterCollectible.OnLetterCollected += CallbackLetterCollected;
         PlayerHealthController.OnPlayerLivesUpdate += CallbackPlayerLivesUpdate;
         Enemy.EnemyKilledEvent += CallbackEnemyKilledEvent;
         GameManager.GamePausedEvent += CallbackOnGamePaused;
@@ -60,7 +60,7 @@ public class HuntingLevelController : Singleton<HuntingLevelController> {
     /// Subscribes to the relevant events for this class
     /// </summary>
     private void UnsubscribeFromEvents() {
-        LetterCollectable.OnLetterCollected -= CallbackLetterCollected;
+        LetterCollectible.OnLetterCollected -= CallbackLetterCollected;
         PlayerHealthController.OnPlayerLivesUpdate -= CallbackPlayerLivesUpdate;
         Enemy.EnemyKilledEvent -= CallbackEnemyKilledEvent;
         GameManager.GamePausedEvent -= CallbackOnGamePaused;

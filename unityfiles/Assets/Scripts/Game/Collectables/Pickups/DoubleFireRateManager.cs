@@ -40,12 +40,12 @@ public class DoubleFireRateManager : MonoBehaviour {
 
     private void SubscribeToEvents() {
         PlayerWeaponController.WeaponChangedEvent += CallbackWeaponChangedEvent;
-        PowerupCollectable.OnPowerupCollected += CallbackOnPowerupCollected;
+        PowerupCollectible.OnPowerupCollected += CallbackOnPowerupCollected;
     }
 
     private void UnsubscribeFromEvents() {
         PlayerWeaponController.WeaponChangedEvent -= CallbackWeaponChangedEvent;
-        PowerupCollectable.OnPowerupCollected -= CallbackOnPowerupCollected;
+        PowerupCollectible.OnPowerupCollected -= CallbackOnPowerupCollected;
     }
 
     private void CallbackWeaponChangedEvent(object _, WeaponChangedEventArgs args) {

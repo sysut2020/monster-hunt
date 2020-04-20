@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class Collectable : MonoBehaviour {
+public abstract class Collectible : MonoBehaviour {
     [SerializeField]
     private protected int scoreValue;
 

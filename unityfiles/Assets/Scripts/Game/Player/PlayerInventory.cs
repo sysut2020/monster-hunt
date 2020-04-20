@@ -41,9 +41,9 @@ public class PlayerInventory {
     /// </summary>
     private void SubscribeToEvents() {
         //PlayerWeaponController.WeaponChangedEvent += CallbackWeaponChangedEvent;
-        CoinCollectable.OnCoinCollected += CallbackCoinCollected;
-        LetterCollectable.OnLetterCollected += CallbackLetterCollected;
-        PowerupCollectable.OnPowerupCollected += CallbackEffectPickup;
+        CoinCollectible.OnCoinCollected += CallbackCoinCollected;
+        LetterCollectible.OnLetterCollected += CallbackLetterCollected;
+        PowerupCollectible.OnPowerupCollected += CallbackEffectPickup;
         HuntingLevelController.CleanUpEvent += UnsubscribeFromEvents;
     }
 
@@ -52,9 +52,9 @@ public class PlayerInventory {
     /// </summary>
     private void UnsubscribeFromEvents(object _, EventArgs __) {
         //PlayerWeaponController.WeaponChangedEvent -= CallbackWeaponChangedEvent;
-        CoinCollectable.OnCoinCollected -= CallbackCoinCollected;
-        LetterCollectable.OnLetterCollected -= CallbackLetterCollected;
-        PowerupCollectable.OnPowerupCollected -= CallbackEffectPickup;
+        CoinCollectible.OnCoinCollected -= CallbackCoinCollected;
+        LetterCollectible.OnLetterCollected -= CallbackLetterCollected;
+        PowerupCollectible.OnPowerupCollected -= CallbackEffectPickup;
         HuntingLevelController.CleanUpEvent -= UnsubscribeFromEvents;
     }
 
