@@ -22,7 +22,7 @@ public class WeaponData : ScriptableObject {
     private float bulletDamage = 0;
 
     /// <summary>
-    /// Time in seconds 
+    /// <value>Time in seconds</value> 
     /// </summary>
     [Tooltip("How long the bullet will live in seconds if it doesnt hit anything.")]
     [SerializeField]
