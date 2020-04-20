@@ -1,6 +1,9 @@
 using System;
 using UnityEngine;
 
+/// <summary>
+/// Arguments to be passed with an event. Add new fields if needed to send more details with events 
+/// </summary>
 public class PlayerHealthUpdateArgs : EventArgs {
     public float CurrentHealth { get; set; }
     public float MaxHealth { get; set; }
