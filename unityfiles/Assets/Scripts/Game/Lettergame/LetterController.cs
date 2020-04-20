@@ -1,6 +1,9 @@
 using TMPro;
 using UnityEngine;
 
+/// <summary>
+/// Used to control a letter
+/// </summary>
 public class LetterController : MonoBehaviour {
 
     [SerializeField]

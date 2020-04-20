@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 /// Should hold a uniq letter
 /// Keeps track of how many units of that particular letter the player has left to be placed on the board 
 /// </summary>
-public class LetterTile : Dragable {
+public class LetterTile : DragableLetter {
     [SerializeField]
     private TMP_Text LetterCount;
 
@@ -60,7 +60,7 @@ public class LetterTile : Dragable {
             return;
         }
 
-        if (hit.TryGetComponent<GameBoardTile>(out GameBoardTile tile)) {
+        if (hit.TryGetComponent<LetterGameBoardTile>(out LetterGameBoardTile tile)) {
             tile.SetTile(holdingLetter);
             holdingLetter = null;
         }

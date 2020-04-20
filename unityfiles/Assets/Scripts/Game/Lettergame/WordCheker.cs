@@ -1,5 +1,8 @@
 using System;
 
+/// <summary>
+/// Used to check if a word in the letter level is valid or not
+/// </summary>
 public class WordChecker {
 
     private String[] wordlist;
