@@ -12,6 +12,9 @@ namespace Monsterhunt.Fileoperation {
         }
 
         private class LineContent : ILineContent {
+            /// <summary>
+            /// Empty constructor to initialize object without any content
+            /// </summary>
             public LineContent() {
             }
 
