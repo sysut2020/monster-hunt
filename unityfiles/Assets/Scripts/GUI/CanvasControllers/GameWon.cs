@@ -48,7 +48,7 @@ public class GameWon : MonoBehaviour {
         }
     }
 
-    private void OnEnable() {
+    private void Start() {
         GameDataManager dataManager = GameManager.Instance.GameDataManager;
 
         extraScore.text = "0";

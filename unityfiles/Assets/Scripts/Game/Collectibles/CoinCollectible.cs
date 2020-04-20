@@ -25,9 +25,7 @@ public class CoinCollectible : Collectible {
         }
 
         this.ScoreValue = coinValue;
-    }
 
-    private void OnDestroy() {
         var args = new CoinCollectedArgs();
         args.Amount = this.coinValue;
         OnCoinCollected?.Invoke(this, args);

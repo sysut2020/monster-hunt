@@ -23,12 +23,9 @@ public class PowerupCollectible : Collectible {
         if (TryGetComponent(out moveToGuiElement)) {
             moveToGuiElement.FindTarget<LettersCollectedGUI>();
         }
-    }
 
-    private void OnDestroy() {
         PowerUpCollectedArgs powerupArgs = new PowerUpCollectedArgs();
         powerupArgs.Effect = effectPickup;
         PowerupCollectible.OnPowerupCollected?.Invoke(this, powerupArgs);
     }
-
 }

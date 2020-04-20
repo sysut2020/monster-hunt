@@ -31,7 +31,8 @@ public class ScoreHandler : MonoBehaviour {
     /// Saves data to be retrieved when switching scenes
     /// </summary>
     private void SaveScore() {
-        dataManager.AddGameScore(levelScore);
+        scoreGui.UpdateScoreText(dataManager.GameScore + this.levelScore);
+        dataManager.AddGameScore(this.levelScore);
     }
 
     private void SubscribeToEvents() {
@@ -60,7 +61,7 @@ public class ScoreHandler : MonoBehaviour {
     /// <param name="score">The new score to be added to the total</param>
     private void UpdateScore(int score) {
         scoreGui.UpdateScoreText(dataManager.GameScore + score);
-        SaveScore();
+        this.levelScore += score;
     }
 
     /// <summary>
@@ -69,8 +70,7 @@ public class ScoreHandler : MonoBehaviour {
     /// <param name="col">Sender object</param>
     /// <param name="args">event args</param>
     private void CallbackEffectPickup(object col, PowerUpCollectedArgs e) {
-        this.levelScore++;
-        UpdateScore(this.levelScore);
+        UpdateScore(1);
     }
 
     /// <summary>
@@ -79,8 +79,7 @@ public class ScoreHandler : MonoBehaviour {
     /// <param name="col">Sender object</param>
     /// <param name="args">event args</param>
     private void CallbackLetterCollected(object col, LetterCollectedArgs _) {
-        this.levelScore += ((Collectible) col).ScoreValue;
-        UpdateScore(this.levelScore);
+        UpdateScore(((Collectible) col).ScoreValue);
     }
 
     /// <summary>
@@ -89,7 +88,6 @@ public class ScoreHandler : MonoBehaviour {
     /// <param name="col">Sender object</param>
     /// <param name="_">event args</param>
     private void CallbackCoinCollected(object col, CoinCollectedArgs _) {
-        this.levelScore += ((Collectible) col).ScoreValue;
-        UpdateScore(this.levelScore);
+        UpdateScore(((Collectible) col).ScoreValue);
     }
 }

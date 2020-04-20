@@ -24,16 +24,15 @@ public class LetterCollectible : Collectible {
         get => letterComponent.text;
     }
 
-    private void OnDestroy() {
-        LetterCollectedArgs letterEventArgs = new LetterCollectedArgs();
-        letterEventArgs.Letter = this.LetterString;
-        LetterCollectible.OnLetterCollected?.Invoke(this, letterEventArgs);
-    }
-
     private void Awake() {
         this.letterComponent.SetText(SudoRandomLetterGenerator.Instance.GenerateLetter());
         if (TryGetComponent(out moveToGuiElement)) {
             moveToGuiElement.FindTarget<LettersCollectedGUI>();
         }
+
+        LetterCollectedArgs letterEventArgs = new LetterCollectedArgs();
+        letterEventArgs.Letter = this.LetterString;
+        LetterCollectible.OnLetterCollected?.Invoke(this, letterEventArgs);
     }
+
 }
