@@ -15,7 +15,7 @@ public class DestroyedCallbackNotifyer : MonoBehaviour {
     /// </summary>
     /// <param name="callback"></param>
     public void SetCallback(Action callback) {
-        if (callback == null)Debug.LogError("A callback was not provided");
+        if (callback == null) Debug.LogError("A callback was not provided");
         this.callback = callback;
 
     }
