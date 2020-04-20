@@ -11,7 +11,12 @@ using System.Collections.Generic;
 public static class PropertyDrawersHelper {
 #if UNITY_EDITOR
 
-    // [StringInList(typeof(PropertyDrawersHelper), "AllSceneNames")] private string SceneName;
+    /// <summary>
+    /// Creates a list of all scene names
+    /// Usage
+    /// <code>[StringInList(typeof(PropertyDrawersHelper), "AllSceneNames")] private string SceneName;</code>
+    /// </summary>
+    /// <returns>array of scene names</returns>
     public static string[] AllSceneNames() {
         var temp = new List<string>();
         foreach (UnityEditor.EditorBuildSettingsScene S in UnityEditor.EditorBuildSettings.scenes) {

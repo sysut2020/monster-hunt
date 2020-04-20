@@ -7,7 +7,7 @@ public class EnemyEventArgs : EventArgs {
 }
 
 /// <summary>
-/// Describes an enemy
+/// Used to describe an enemy, if it is alive, taking damage or dead
 /// </summary>
 [RequireComponent(typeof(EnemyHealthController))]
 public class Enemy : MonoBehaviour, IKillable, IDamageNotifyable {
@@ -49,7 +49,7 @@ public class Enemy : MonoBehaviour, IKillable, IDamageNotifyable {
         this.enemyHealthController.StartHealth = this.EnemyType.Health;
     }
 
-    void Start() {
+    private void Start() {
         this.tag = "Enemy";
         EnemyEventArgs args = new EnemyEventArgs();
         args.Position = this.gameObject.transform.position;
@@ -58,7 +58,7 @@ public class Enemy : MonoBehaviour, IKillable, IDamageNotifyable {
     }
 
     /// <summary>
-    /// Notify this component that it has taken damge.
+    /// Notify this component that it has taken damage.
     /// </summary>
     public void Damaged() {
         // Trigger damage anumation
