@@ -89,7 +89,7 @@ public class GameDataManager {
     /// <summary>
     /// Adds a score to the game score.
     /// </summary>
-    /// <param name="score">Score to be added to the totals</param>
+    /// <param name="score">Score to be added to the total score</param>
     public void AddGameScore(int score) {
         this.gameScore += score;
     }
@@ -104,9 +104,9 @@ public class GameDataManager {
 
     /// <summary>
     /// Adds a new high score entry with current game score, and the provided 
-    /// name. The game score is reset when entry is added.
+    /// name. The game score is reset upon a new entry.
     /// </summary>
-    /// <param name="name">name of the score enrty (player name)</param>
+    /// <param name="name">Player name of the highscore entry</param>
     public void AddNewHighScoreEntry(string name) {
 
         this.highScores.Add(new ScoreboardEntry() {
@@ -121,7 +121,7 @@ public class GameDataManager {
     /// Sets the game high scores
     /// </summary>
     /// <param name="score">the new highscore list</param>
-    public void SetHighScores(List<ScoreboardEntry> score) {
+    private void SetHighScores(List<ScoreboardEntry> score) {
         this.highScores = score;
     }
 
@@ -135,6 +135,10 @@ public class GameDataManager {
         });
     }
 
+    /// <summary>
+    /// Loads data if it exists a SaveData object.
+    /// Only then can a this game data manager object be assigned a new Highscore list
+    /// </summary>
     private void LoadData() {
         SaveData saveObj = DataSaver.Load();
         if (saveObj != null) {
