@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: ebd3c2db108fc9a62b134d25244e8ca0
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: Assets/Scenes/BulletMobTestScene.unity
+    guid: c2e374bac8a791b519d5923fe3795a23
+  - enabled: 1
+    path: Assets/Scenes/LetterGameScene.unity
+    guid: a75fb24069ba40a449d2bf0e7882c458
+  - enabled: 1
+    path: Assets/Scenes/ScoreBoard.unity
+    guid: 32d1f3c78b520bb30b75d2bbfab76ec7
+  - enabled: 1
+    path: Assets/Scenes/Level 1.unity
+    guid: 544cee58889c542488c942eecb6dc0a9
+  - enabled: 1
+    path: Assets/Scenes/Level 2.unity
+    guid: cafd59e0af0155b4f81de22ebdc5f238
+  - enabled: 1
+    path: Assets/Scenes/Level 3.unity
+    guid: 4b8c38c6cc5353444860536c3ceea03e
+  - enabled: 1
+    path: Assets/Scenes/Level 4.unity
+    guid: 08c0c9afecf46b1439d7f3c6a79346c9
+  - enabled: 1
+    path: Assets/Scenes/Level 5.unity
+    guid: 80d873b15e7854e4f8c0617a5b08baad
+  m_configObjects: {}
