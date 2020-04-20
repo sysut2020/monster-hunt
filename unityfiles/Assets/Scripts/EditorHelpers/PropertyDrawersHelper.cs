@@ -1,6 +1,5 @@
 using System.Collections.Generic;
-using UnityEditor;
-using UnityEngine;
+
 /// <summary>
 /// Helper class for PropertyDrawer that can define functions
 /// which can be used to generate outputs for the property drawers.
