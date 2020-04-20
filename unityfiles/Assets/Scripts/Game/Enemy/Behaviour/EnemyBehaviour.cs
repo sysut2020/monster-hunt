@@ -2,6 +2,9 @@ using System;
 using UnityEditor;
 using UnityEngine;
 
+/// <summary>
+/// Arguments for EnemyBehaviour change.
+/// </summary>
 public class EnemyBehavourChangeArgs : EventArgs {
     public EnemyBehaviour.BehaviourState NewBehaviourState { get; set; }
 }
@@ -73,6 +76,9 @@ public class EnemyBehaviour : MonoBehaviour {
     [SerializeField]
     private Transform obstacleDetection;
 
+    /// <summary>
+    /// Event for notifying the state of an enemy
+    /// </summary>
     public static event EventHandler<EnemyBehavourChangeArgs> EnemyBehaviourStateChangeEvent;
 
     private void Awake() {
