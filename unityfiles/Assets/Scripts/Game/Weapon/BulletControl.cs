@@ -1,10 +1,10 @@
 using System.Collections;
 using UnityEngine;
 
-/*
-TODO: maybe blop this in an interface like the HC/enemy relation
-*/
-
+/// <summary>
+/// Controls a single bullet. Creates a bullet sprite with box collider and rigid body 2d.
+/// Disables the bullet when the bullet hits something or when time to live has been exceeded
+/// </summary>
 public class BulletControl : MonoBehaviour {
 
     private BulletData bulletData;

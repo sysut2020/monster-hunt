@@ -1,9 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Is an list of bullets that can be reused.
+/// When a bullet has done it's job, either hit something or time to live has expired, the bullet is disabled.
+/// The buffer makes it so that the bullet can be reused to avoid overhead of creating new game objects
+/// </summary>
 public class BulletBuffer {
 
-    private List<GameObject> buffer = new List<GameObject>();
+    private readonly List<GameObject> buffer = new List<GameObject>();
 
     /// <summary>
     /// returns the first disabled bullet in buffer
