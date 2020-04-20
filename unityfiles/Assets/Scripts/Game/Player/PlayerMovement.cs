@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// Controls the player movement. Holds information of speed and controls for movement
+/// </summary>
 public class PlayerMovement : MonoBehaviour {
     [SerializeField]
     private float runSpeed = 40;
