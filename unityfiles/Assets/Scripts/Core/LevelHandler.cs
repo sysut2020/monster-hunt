@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 /// <summary>
 /// Handles the changing of levels in the game.
 /// It can start a specific scene/level or go to the next level.
-/// It toggles between lettergame, the different levels, and finally the scoreboard
+/// It toggles between letter game, the different levels, and finally the scoreboard
 /// scene when there are no more levels left.
 /// </summary>
 public class LevelHandler : MonoBehaviour {
