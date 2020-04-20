@@ -8,7 +8,8 @@ public class TileChangedEventArgs : EventArgs {
 }
 
 /// <summary>
-/// Used to handle the letter game board tile
+/// Used to handle all the aspects of the letter game board tile.
+/// Setting all the tiles of tile board, updating the tiles when a letter gets dragged onto it
 /// </summary>
 public class LetterGameBoardTile : DragableLetter {
 
