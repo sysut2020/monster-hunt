@@ -1,10 +1,11 @@
 using System;
 using UnityEngine;
 
+/// <summary>
+/// Holds data of a bullet.
+/// </summary>
 class BulletData {
-
-    public readonly Guid Guid = Guid.NewGuid();
-
+    
     private float velocity;
     private int timeToLive;
     private float damage;
