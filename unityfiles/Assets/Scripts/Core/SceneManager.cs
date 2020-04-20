@@ -4,14 +4,18 @@ using Object = System.Object;
 /// <summary>
 /// The scene manager is responsible for loading scenes.
 /// The scene manager is a singleton, and there can only exist a single
-/// instane of it.
+/// instance of it.
 /// It can load a scene by name and its build index.
 /// </summary>
 public sealed class SceneManager {
-    // Scenemanager instance
+    /// <summary>
+    /// Scene manager instance
+    /// </summary>
     private static SceneManager instance = null;
 
-    // Lock for thread safety
+    /// <summary>
+    /// Lock for thread safety
+    /// </summary>
     private static readonly object padlock = new Object();
 
     /// <summary>
@@ -33,7 +37,11 @@ public sealed class SceneManager {
         }
     }
 
-    private SceneManager() {}
+    /// <summary>
+    /// Has to exist in order to prevent a singleton to be created.
+    /// This is to hide the construtor and has to be implemented
+    /// </summary>
+    private SceneManager() { }
 
     /// <summary>
     /// Returns the build index of the scene, by name.
@@ -50,7 +58,6 @@ public sealed class SceneManager {
     /// <param name="index">the scene index</param>
     /// <returns>name of the scene or emp</returns>
     public string GetSceneNameByIndex(int index) {
-
         return UnityEngine.SceneManagement.SceneManager.GetSceneByBuildIndex(index).name;
     }
 
@@ -69,12 +76,12 @@ public sealed class SceneManager {
 
     /// <summary>
     /// Loads a new scene by its build index
-    /// Throws ArgumentException index is smaller then 0
+    /// Throws ArgumentException if index is less than 0
     /// </summary>
     /// <param name="index">the index of the scene</param>
     public void ChangeScene(int index) {
         if (index < 0) {
-            throw new ArgumentException("Scene index must be >= 0");
+            throw new ArgumentException("Scene index must be greater or equal to 0");
         }
         UnityEngine.SceneManagement.SceneManager.LoadScene(index);
     }

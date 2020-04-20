@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// Used to make affected by a bullet
+/// </summary>
 public class MakeHitableByBullet : MonoBehaviour {
 
     [SerializeField]
@@ -9,7 +12,7 @@ public class MakeHitableByBullet : MonoBehaviour {
 
     void Awake() {
         if (AffectedHealthController == null) {
-            throw new MissingComponentException("enabler missing somthing to enable");
+            throw new MissingComponentException("Missing affected health controller");
         }
     }
 }

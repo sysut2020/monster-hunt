@@ -19,7 +19,7 @@ public class CoinsCollectedGUI : MonoBehaviour {
         if (coinCounter == null) {
             throw new MissingComponentException("Missing text component");
         }
-        CoinCollectable.OnCoinCollected += OnNewCoin;
+        CoinCollectible.OnCoinCollected += OnNewCoin;
         SetCoinamountText();
     }
 
@@ -33,7 +33,7 @@ public class CoinsCollectedGUI : MonoBehaviour {
     }
 
     private void OnDestroy() {
-        CoinCollectable.OnCoinCollected -= OnNewCoin;
+        CoinCollectible.OnCoinCollected -= OnNewCoin;
     }
 
 }
