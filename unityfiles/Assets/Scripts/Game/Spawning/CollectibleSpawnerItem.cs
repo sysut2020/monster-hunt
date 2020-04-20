@@ -24,7 +24,16 @@ public class CollectibleSpawnerItem {
     [SerializeField]
     private Collectible item;
 
+    /// <summary>
+    /// Chance for being spawned
+    /// </summary>
+    /// <value>Value between 0 and 100</value>
     public int SpawnChance { get => spawnChance; private set => spawnChance = value; }
+
+    /// <summary>
+    /// Collectible spawner item
+    /// </summary>
+    /// <value>spawner item</value>
     public Collectible Item { get => item; private set => item = value; }
 
 }

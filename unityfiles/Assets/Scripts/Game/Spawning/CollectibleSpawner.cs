@@ -22,18 +22,12 @@ public class CollectibleSpawner : MonoBehaviour {
         UnsubscribeFromEvents();
     }
 
-    /// <summary>
-    /// Subscribes to the relevant events for this class
-    /// </summary>
     private void SubscribeToEvents() {
-        Enemy.EnemyKilledEvent += TrySpawnCollectable;
+        Enemy.EnemyKilledEvent += CallbackTrySpawnCollectable;
     }
 
-    /// <summary>
-    /// Subscribes to the relevant events for this class
-    /// </summary>
     private void UnsubscribeFromEvents() {
-        Enemy.EnemyKilledEvent -= TrySpawnCollectable;
+        Enemy.EnemyKilledEvent -= CallbackTrySpawnCollectable;
     }
 
     /// <summary>
@@ -41,7 +35,7 @@ public class CollectibleSpawner : MonoBehaviour {
     /// items from args. It will spawn from minimumSpawnItems to maximumSpawnItems
     /// set in the inspector.
     /// </summary>
-    public void TrySpawnCollectable(object _, EnemyEventArgs args) {
+    public void CallbackTrySpawnCollectable(object _, EnemyEventArgs args) {
         int numberOfItemsToSpawn = Random.Range(minimumSpawnItems, maximumSpawnItems);
         var collectiblesTable = args.EnemyType.CollectibleItems;
         int totalSpawnWeight = CalculateTotalSpawnWeight(collectiblesTable);

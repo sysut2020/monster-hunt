@@ -11,7 +11,9 @@ using UnityEngine;
 /// </summary>
 public class EntitySpawner : Singleton<EntitySpawner> {
 
-    // Time before trying to spawn a new entity
+    /// <summary>
+    /// Time before trying to spawn a new entity
+    /// </summary>
     private readonly int TRY_SPAWN_TIME = 10000; // Milliseconds
 
     [Tooltip("Time between spawns")]
@@ -60,7 +62,7 @@ public class EntitySpawner : Singleton<EntitySpawner> {
     /// <summary>
     /// Initialize the spwaner by trying to spawn provided amount of entities.
     /// </summary>
-    /// <param name="amountToSpawn"></param>
+    /// <param name="amountToSpawn">number of entities to spawn</param>
     public void Init(int amountToSpawn) {
         this.TrySpawn(amountToSpawn);
     }
@@ -76,7 +78,7 @@ public class EntitySpawner : Singleton<EntitySpawner> {
     }
 
     private void CallbackOnEnemyKilled(object _, EnemyEventArgs args) {
-        if (this.Spawned == MaxSpawns)return; // Dont proceed of we met max spawns
+        if (this.Spawned == MaxSpawns) return; // Dont proceed of we met max spawns
         this.RestToSpawn++;
     }
 
@@ -84,9 +86,9 @@ public class EntitySpawner : Singleton<EntitySpawner> {
     /// Tries to spawn X entities on random spawn points outside camera vision.
     /// If it cant spawn all entities, the rest is cached.
     /// </summary>
-    /// <param name="sizeOfSpawn"></param>
+    /// <param name="sizeOfSpawn">number of entities to spawn</param>
     private void TrySpawn(int sizeOfSpawn) {
-        if (Spawned > MaxSpawns)return; // Skip if maximum spawns is reached
+        if (Spawned > MaxSpawns) return; // Skip if maximum spawns is reached
 
         var possibleSpawnPoints = SelectNonVisibleSpawnpoints();
         possibleSpawnPoints.Shuffle();
@@ -117,7 +119,7 @@ public class EntitySpawner : Singleton<EntitySpawner> {
     /// <summary>
     /// Finds all spawnpoints not visible to the main camera
     /// </summary>
-    /// <returns></returns>
+    /// <returns>returns all spawn points not visible to the main camera</returns>
     private List<SpawnPoint> SelectNonVisibleSpawnpoints() {
         return spawnPoints.FindAll(point => !CameraUtil.IsTargetVisible(MainCamera, point.gameObject));
     }
