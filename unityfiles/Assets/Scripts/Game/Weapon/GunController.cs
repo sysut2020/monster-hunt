@@ -3,7 +3,9 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 /// <summary>
-/// Controller for a gun object. 
+/// Controller for a gun object. Links a gun to the right bullet data and fire point,
+/// and makes it possible to fire a bullet.
+/// The firing of bullets is controlled by the fire rate of that specific gun.
 /// </summary>
 public class GunController {
     private Gun gun;
@@ -65,9 +67,9 @@ public class GunController {
     }
 
     /// <summary>
-    /// recives a game objet orients it and fires it
+    /// Receives a game object orients it and fires it
     /// </summary>
-    /// <param name="bullet">the GO to fire</param>
+    /// <param name="bullet">the bullet game object to fire</param>
     private void FireProjectile(GameObject bullet) {
         bullet.transform.rotation = Quaternion.Euler(
             this.firePoint.transform.rotation.eulerAngles.x,
