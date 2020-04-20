@@ -1,6 +1,4 @@
 using System;
-using Monsterhunt.Fileoperation;
-using UnityEngine;
 
 public class WordChecker {
 

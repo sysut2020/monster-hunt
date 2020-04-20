@@ -1,10 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Timers;
-using UnityEngine;
 
 /// <summary>
 /// A object who keeps track of multiple timers.

@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.UI;
 
 /// <summary>
 /// Handler for Pause menu. Turns on and of the main pause menu and the quit confirmation when needed.

@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 /// 
 /// JSON SERIALIZATION STUFF NO TOUCHY
