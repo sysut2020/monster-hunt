@@ -2,6 +2,9 @@ using System;
 using UnityEditor;
 using UnityEngine;
 
+/// <summary>
+/// Arguments for EnemyBehaviour change.
+/// </summary>
 public class EnemyBehavourChangeArgs : EventArgs {
     public EnemyBehaviour.BehaviourState NewBehaviourState { get; set; }
 }
@@ -20,11 +23,15 @@ public class EnemyBehaviour : MonoBehaviour {
         ATTACK
     }
 
+    /// <summary>
+    /// Debug field to display the vision length of the enemy, and if it sees
+    /// the target
+    /// </summary>
     [SerializeField]
     private bool visualizeVision = true;
 
     private readonly string WALK_TRIGGER_NAME = "walk";
-    private readonly string CHASE_TRIGGER_NAME = "chase";
+
     private readonly string ATTACK_TRIGGER_NAME = "attack";
 
     private readonly int MAX_PATROLTIME = 5;
@@ -36,13 +43,13 @@ public class EnemyBehaviour : MonoBehaviour {
     private readonly float ATTACK_DURATION = .3f;
     private BehaviourState CurrentState { get; set; }
 
-    public float PatrolSpeed { get; set; }
-    public float ChaseSpeed { get; set; }
-    private float VisionLength { get; set; }
-    private float PatrolTime { get; set; }
-    private float IdleTime { get; set; }
-    private float AttackTimer { get; set; }
-    private float AttackDuration { get; set; }
+    public float PatrolSpeed { get; set; } = 2;
+    public float ChaseSpeed { get; set; } = 2;
+    private float VisionLength { get; set; } = 10;
+    private float PatrolTime { get; set; } = 3;
+    private float IdleTime { get; set; } = 3;
+    private float AttackTimer { get; set; } = 0;
+    private float AttackDuration { get; set; } = .3f;
 
     private Enemy Enemy { get; set; }
     private Transform EnemyTransform { get; set; }
@@ -73,6 +80,9 @@ public class EnemyBehaviour : MonoBehaviour {
     [SerializeField]
     private Transform obstacleDetection;
 
+    /// <summary>
+    /// Event for notifying the state of an enemy
+    /// </summary>
     public static event EventHandler<EnemyBehavourChangeArgs> EnemyBehaviourStateChangeEvent;
 
     private void Awake() {
@@ -83,6 +93,7 @@ public class EnemyBehaviour : MonoBehaviour {
         }
         this.Animator = this.GetComponent<Animator>();
     }
+
     private void Start() {
         this.TargetHealthController = FindObjectOfType<PlayerHealthController>();
         this.target = TargetHealthController.transform;

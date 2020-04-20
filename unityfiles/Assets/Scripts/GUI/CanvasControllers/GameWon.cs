@@ -2,8 +2,13 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Handler for the game won canvas.
+/// The canvas will count down the time remaining and add it to the total score.
+/// Will display the count down and score updating in real time to the user.
+/// Enables the continue button when the count down is done
+/// </summary>
 public class GameWon : MonoBehaviour {
-
     /// <summary>
     /// Time left when game ended
     /// </summary>
@@ -55,7 +60,6 @@ public class GameWon : MonoBehaviour {
         this.levelScore = dataManager.GameScore;
         gameScore.text = this.levelScore.ToString();
         dataManager.AddGameScore(timeLeft); // add time left in seconds as points to game score
-
     }
 
     private void Update() {
@@ -82,7 +86,7 @@ public class GameWon : MonoBehaviour {
         var asClockTime = $"{min}:{sec}"; // string interpolation
         // https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/tokens/interpolated
         if (sec < 10) {
-            asClockTime = $"{min}:0{sec}"; // just added a 0 if sec is less than 10
+            asClockTime = $"{min}:0{sec}"; // just added a leading 0 if sec is less than 10
         }
 
         return asClockTime;

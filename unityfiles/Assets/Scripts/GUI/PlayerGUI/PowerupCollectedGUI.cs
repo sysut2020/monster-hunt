@@ -7,7 +7,9 @@ using UnityEngine.UI;
 /// has picked up and reset when effect is over.
 /// </summary>
 public class PowerupCollectedGUI : MonoBehaviour {
+
     private TMP_Text powerupName;
+
     private Image powerupImage;
 
     [SerializeField]
@@ -19,7 +21,7 @@ public class PowerupCollectedGUI : MonoBehaviour {
     private Sprite doubleFirerate;
 
     // Start is called before the first frame update
-    void Start() {
+    private void Start() {
         this.powerupName = GetComponentInChildren<TMP_Text>();
         this.powerupImage = GetComponentInChildren<Image>();
 
@@ -69,7 +71,6 @@ public class PowerupCollectedGUI : MonoBehaviour {
         this.SetPowerupImage(this.powerup);
     }
 
-    // triggers when mono behaviour object is destroyed
     private void OnDestroy() {
         this.UnsubscribeFromEvents();
     }
