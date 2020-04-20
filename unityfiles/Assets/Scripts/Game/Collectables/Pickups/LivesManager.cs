@@ -16,11 +16,11 @@ public class LivesManager : MonoBehaviour {
     public static event EventHandler<OnPickupLivesUpdateArgs> OnPickupLivesUpdate;
 
     private void SubscribeToEvents() {
-        PowerupCollectable.OnPowerupCollected += CallbackOnPowerupCollected;
+        PowerupCollectible.OnPowerupCollected += CallbackOnPowerupCollected;
     }
 
     private void UnsubscribeFromEvents() {
-        PowerupCollectable.OnPowerupCollected -= CallbackOnPowerupCollected;
+        PowerupCollectible.OnPowerupCollected -= CallbackOnPowerupCollected;
     }
 
     private void CallbackOnPowerupCollected(object _, PowerUpCollectedArgs args) {

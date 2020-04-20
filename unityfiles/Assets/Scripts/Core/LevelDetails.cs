@@ -1,7 +1,7 @@
 using UnityEngine;
 
 /// <summary>
-/// Keeps data about a level
+/// Containing data about the levels
 /// </summary>
 [CreateAssetMenu(fileName = "Level Details", menuName = "Level details")]
 public class LevelDetails : ScriptableObject {
@@ -23,10 +23,22 @@ public class LevelDetails : ScriptableObject {
     private int numberOfLetters;
 
     /// <summary>
-    /// Returns the level time in milliseconds
+    /// Returns the level time
     /// </summary>
+    /// <value>milliseconds</value>
     public int Time { get => time * 1000; }
+
+    /// <summary>
+    /// Returns the number of enemies for level
+    /// </summary>
     public int NumberOfEnemies { get => numberOfEnemies; }
+    /// <summary>
+    /// Returns the number of enemies at start of level
+    /// </summary>
     public int NumberOfEnemiesAtStart { get => numberOfEnemiesAtStart; }
+
+    /// <summary>
+    /// Returns number of letters
+    /// </summary>
     public int NumberOfLetters { get => numberOfLetters; }
 }

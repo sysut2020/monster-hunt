@@ -30,9 +30,9 @@ public class ScoreHandler : MonoBehaviour {
     }
 
     private void SubscribeToEvents() {
-        CoinCollectable.OnCoinCollected += CallbackCoinCollected;
-        LetterCollectable.OnLetterCollected += CallbackLetterCollected;
-        PowerupCollectable.OnPowerupCollected += CallbackEffectPickup;
+        CoinCollectible.OnCoinCollected += CallbackCoinCollected;
+        LetterCollectible.OnLetterCollected += CallbackLetterCollected;
+        PowerupCollectible.OnPowerupCollected += CallbackEffectPickup;
         HuntingLevelController.OnLevelStateChangeEvent += CallbackLevelStateChange;
     }
 
@@ -43,9 +43,9 @@ public class ScoreHandler : MonoBehaviour {
     }
 
     private void UnsubscribeFromEvents() {
-        CoinCollectable.OnCoinCollected -= CallbackCoinCollected;
-        LetterCollectable.OnLetterCollected -= CallbackLetterCollected;
-        PowerupCollectable.OnPowerupCollected -= CallbackEffectPickup;
+        CoinCollectible.OnCoinCollected -= CallbackCoinCollected;
+        LetterCollectible.OnLetterCollected -= CallbackLetterCollected;
+        PowerupCollectible.OnPowerupCollected -= CallbackEffectPickup;
         HuntingLevelController.OnLevelStateChangeEvent -= CallbackLevelStateChange;
     }
     /// <summary>
@@ -74,7 +74,7 @@ public class ScoreHandler : MonoBehaviour {
     /// <param name="args">event args</param>
     private void CallbackLetterCollected(object col, LetterCollectedArgs _) {
         // when a letter is collected we add one point to the total score counter
-        this.levelScore += ((Collectable)col).ScoreValue;
+        this.levelScore += ((Collectible)col).ScoreValue;
         UpdateScore(this.levelScore);
     }
 
@@ -84,7 +84,7 @@ public class ScoreHandler : MonoBehaviour {
     /// <param name="col">Sender object</param>
     /// <param name="_">event args</param>
     private void CallbackCoinCollected(object col, CoinCollectedArgs _) {
-        this.levelScore += ((Collectable)col).ScoreValue;
+        this.levelScore += ((Collectible)col).ScoreValue;
         UpdateScore(this.levelScore);
     }
 }

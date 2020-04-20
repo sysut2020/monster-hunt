@@ -28,8 +28,8 @@ public class PlayerInventory {
     /// Subscribe to all the events
     /// </summary>
     private void SubscribeToEvents() {
-        CoinCollectable.OnCoinCollected += CallbackCoinCollected;
-        LetterCollectable.OnLetterCollected += CallbackLetterCollected;
+        LetterCollectible.OnLetterCollected += CallbackLetterCollected;
+        CoinCollectible.OnCoinCollected += CallbackCoinCollected;
         HuntingLevelController.CleanUpEvent += UnsubscribeFromEvents;
     }
 
@@ -37,8 +37,8 @@ public class PlayerInventory {
     /// Unsubscribe from all the events
     /// </summary>
     private void UnsubscribeFromEvents(object _, EventArgs __) {
-        CoinCollectable.OnCoinCollected -= CallbackCoinCollected;
-        LetterCollectable.OnLetterCollected -= CallbackLetterCollected;
+        LetterCollectible.OnLetterCollected -= CallbackLetterCollected;
+        CoinCollectible.OnCoinCollected -= CallbackCoinCollected;
         HuntingLevelController.CleanUpEvent -= UnsubscribeFromEvents;
     }
 

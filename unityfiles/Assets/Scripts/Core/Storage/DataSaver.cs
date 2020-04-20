@@ -3,17 +3,16 @@ using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
 /// <summary>
-/// Handler which saves data on a ".save" file,
-/// The handler can save and load data.
+/// Handler that can save and load data
+/// A locally saved file with ".save" extension
 /// All of our data we want stored, needs to be saved in a "Save" object.
 /// </summary>
-
 public static class DataSaver {
 
     private const string savePath = "/GameSaveFile";
 
     /// <summary>
-    /// Used to save a save data objet to file
+    /// Used to save a Save data object to file
     /// </summary>
     /// <param name="save">The object to save to file</param>
     public static void Save(SaveData saveData) {
@@ -26,10 +25,10 @@ public static class DataSaver {
     }
 
     /// <summary>
-    /// Used to load a save data objet from file
-    /// If unsuccessfully null is returned
+    /// Used to load a save data object from file
     /// </summary>
-    /// <returns>The stored save data object</returns>
+    /// <returns>If success, the stored data object is returned. 
+    /// Otherwise, null is returned</returns>
     public static SaveData Load() {
         SaveData save = null;
 
@@ -40,7 +39,6 @@ public static class DataSaver {
             using(var fileStream = File.Open(Application.persistentDataPath + savePath, FileMode.Open)) {
                 save = (SaveData) binaryFormatter.Deserialize(fileStream);
             }
-
         } else {
             Debug.LogWarning("Save file does not exist");
         }
