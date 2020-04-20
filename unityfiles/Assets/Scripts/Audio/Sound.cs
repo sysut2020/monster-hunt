@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// Used to store audio clips to be played and attributes around that audio clip
+/// </summary>
 [System.Serializable]
 public class Sound {
 

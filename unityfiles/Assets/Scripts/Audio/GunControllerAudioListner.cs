@@ -1,6 +1,9 @@
 using System;
 using UnityEngine;
 
+/// <summary>
+/// Listens for different gun sounds to be played
+/// </summary>
 public class GunControllerAudioListner : AudioListner {
 
     [SerializeField]
