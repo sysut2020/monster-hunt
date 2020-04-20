@@ -4,7 +4,8 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 /// <summary>
-/// Used to handle the dragging of a letter
+/// Used to handle all the aspects of dragging a letter in the letter level scene.
+/// Controls where the drag has started, ended and the dragging itself
 /// </summary>
 public abstract class DragableLetter : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
 

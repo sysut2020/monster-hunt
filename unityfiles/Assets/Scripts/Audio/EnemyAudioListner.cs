@@ -1,7 +1,7 @@
 using UnityEngine;
 
 /// <summary>
-/// listens for enemy sounds to be played  
+/// listens for enemy state events, then to play the sound corresponding to that event
 /// </summary>
 public class EnemyAudioListner : AudioListner {
     [SerializeField]
