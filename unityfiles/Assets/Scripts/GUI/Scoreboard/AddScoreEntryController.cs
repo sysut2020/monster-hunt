@@ -17,7 +17,7 @@ public class AddScoreEntryController : MonoBehaviour {
 
     private GameDataManager dataManager;
 
-    void Awake() {
+    private void Awake() {
         if (entryNameField == null) {
             throw new MissingComponentException("Missing TextMeshPro name component");
         }
@@ -27,7 +27,7 @@ public class AddScoreEntryController : MonoBehaviour {
         entryNameField.onValueChanged.AddListener(OnInputfieldChanged);
     }
 
-    void Start() {
+    private void Start() {
         addEntryButton.interactable = false;
         dataManager = GameManager.Instance.GameDataManager;
     }
@@ -41,7 +41,8 @@ public class AddScoreEntryController : MonoBehaviour {
     }
 
     /// <summary>
-    /// A button can attach this method to its click handler to save a new entry to the scoreboard
+    /// Adds a new entry to the scoreboard, with the text from input field
+    /// registered to the object.
     /// </summary>
     public void AddEntry() {
         dataManager.AddNewHighScoreEntry(entryNameField.text);
