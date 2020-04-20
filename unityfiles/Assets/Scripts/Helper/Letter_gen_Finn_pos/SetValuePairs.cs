@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 
-/// 
-/// JSON SERIALIZATION STUFF NO TOUCHY
-/// 
+/// <summary>
+/// Data class holding the SettValuePairs for the different word lengths
+/// </summary>
 [System.Serializable]
 public class SetValuePairs {
     public List<SetValuePair> L_1;
