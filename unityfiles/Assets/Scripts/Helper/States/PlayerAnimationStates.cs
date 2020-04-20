@@ -1,3 +1,7 @@
+
+/// <summary>
+/// Enum holding the different animation id's
+/// </summary>
 public enum PLAYER_ANIMATION {
 
     HOLD_SNIPER = 1,
