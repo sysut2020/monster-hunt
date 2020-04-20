@@ -43,7 +43,7 @@ public class ScoreHandler : MonoBehaviour {
 
     private void CallbackLevelStateChange(object _, LevelStateChangeEventArgs e) {
         if (e.NewState == LEVEL_STATE.GAME_WON) {
-            SaveScore(0);
+            UnsubscribeFromEvents();
         }
     }
 
