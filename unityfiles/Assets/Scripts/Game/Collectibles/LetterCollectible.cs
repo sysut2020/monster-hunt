@@ -46,7 +46,7 @@ public class LetterCollectible : Collectible {
     private void CallbackOnLevelStateChange(object _, LevelStateChangeEventArgs args) {
         if (args.NewState == LEVEL_STATE.GAME_WON || args.NewState == LEVEL_STATE.GAME_OVER) {
             this.voidLetter = true;
-            this.Destroy(this.gameObject);
+            Destroy(this.gameObject);
         }
     }
 }
