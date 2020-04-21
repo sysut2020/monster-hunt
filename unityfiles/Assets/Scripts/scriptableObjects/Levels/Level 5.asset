@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca7133b6d09d47dea5409bd48c89e7bc, type: 3}
   m_Name: Level 5
   m_EditorClassIdentifier: 
-  time: 810
+  time: 540
   numberOfEnemies: 45
   numberOfEnemiesAtStart: 6
   numberOfLetters: 30
