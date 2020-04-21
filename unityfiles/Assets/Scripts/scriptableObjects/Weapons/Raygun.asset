@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
   holdingAnimation: 2
   bulletVelocity: 30
-  bulletDamage: 1.2
+  bulletDamage: 2
   bulletTtl: 3
   fireRate: 4.8
   bulletSpread: 0
