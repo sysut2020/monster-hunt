@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8838853588162826497}
   - component: {fileID: 9208286105835638680}
+  - component: {fileID: 2127215442848484053}
   m_Layer: 0
   m_Name: PlayerAudioListener
   m_TagString: Untagged
@@ -50,6 +51,7 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     mute: 0
+    playOnAwake: 0
   laserFireSound:
     name: 
     audioClipToPlay: {fileID: 8300000, guid: 9db972f8419c3544bb71da7c25a52a13, type: 3}
@@ -57,6 +59,7 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     mute: 0
+    playOnAwake: 0
   poopFireSound:
     name: 
     audioClipToPlay: {fileID: 8300000, guid: 72690fdb509ce6b25bbc3d436126336b, type: 3}
@@ -64,3 +67,40 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     mute: 0
+    playOnAwake: 0
+--- !u!114 &2127215442848484053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8838853588162826498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec68e652ec8fc4ced9fa57ad3e97d302, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageSound1:
+    name: 
+    audioClipToPlay: {fileID: 8300000, guid: 583a2a3d0024a4659a2c0e431e82c48b, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    mute: 0
+    playOnAwake: 0
+  damageSound2:
+    name: 
+    audioClipToPlay: {fileID: 8300000, guid: 1c333f1481a89412394b5a3533df91a4, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    mute: 0
+    playOnAwake: 0
+  damageSound3:
+    name: 
+    audioClipToPlay: {fileID: 8300000, guid: 962112c93d5d749489c3a6ae07811452, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    mute: 0
+    playOnAwake: 0

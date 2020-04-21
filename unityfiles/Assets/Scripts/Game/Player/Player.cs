@@ -1,6 +1,12 @@
+using System;
 using UnityEngine;
 
+/// <summary>
+/// Event to trigger damage sound 
+/// </summary>
+public class PlayerDamagedEventArgs : EventArgs {
 
+}
 /// <summary>
 /// A player is the controllable character that a person play as.
 /// </summary>
@@ -13,6 +19,8 @@ public class Player : MonoBehaviour, IKillable, IDamageNotifyable {
     private Vector3 spawnPosition;
 
     private static Player instance;
+
+    public static event EventHandler<PlayerDamagedEventArgs> OnPlayerDamagedEvent;
 
     /// <summary>
     /// Respawns the player and notify that the player died
@@ -30,7 +38,7 @@ public class Player : MonoBehaviour, IKillable, IDamageNotifyable {
     }
 
     private void CallbackWeaponChangedEvent(object _, WeaponChangedEventArgs args) {
-        animator.SetInteger("ACTIVE_WEAPON", (int)args.AnimId);
+        animator.SetInteger("ACTIVE_WEAPON", (int) args.AnimId);
     }
 
     /// <summary>
@@ -55,5 +63,7 @@ public class Player : MonoBehaviour, IKillable, IDamageNotifyable {
 
     public void Damaged() {
         animator.SetTrigger(AnimationTriggers.DAMAGE);
+        PlayerDamagedEventArgs args = new PlayerDamagedEventArgs();
+        OnPlayerDamagedEvent?.Invoke(this, args);
     }
 }
