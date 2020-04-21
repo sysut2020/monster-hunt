@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// Responsible for adding a new score entry to persistant storage. This is done
+/// Responsible for adding a new score entry to persistent storage. This is done
 /// when the input field contains char length > 0 and the user clicks the registered
 /// button which fires the click event.
 /// </summary>
