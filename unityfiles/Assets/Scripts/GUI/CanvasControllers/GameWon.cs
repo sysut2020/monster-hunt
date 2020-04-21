@@ -14,6 +14,12 @@ public class GameWon : MonoBehaviour {
     /// </summary>
     private int timeLeft;
 
+    /// <summary>
+    /// Used to balance the scoring of time
+    /// </summary>
+    [SerializeField]
+    private int scoreDivider = 10;
+
     [SerializeField]
     private TextMeshProUGUI timeLeftText;
 
@@ -31,7 +37,7 @@ public class GameWon : MonoBehaviour {
 
     private int levelScore;
 
-    private bool initalSet = false;
+    private bool initialSet = false;
 
     /// <summary>
     /// Amount of time the countdown should take
@@ -67,18 +73,19 @@ public class GameWon : MonoBehaviour {
     private void Update() {
 
         var t = (Time.unscaledTime - timeEnabled) / duration; // used to smooth the count down/up
-        var pointsCounter = Mathf.RoundToInt(Mathf.SmoothStep(0, timeLeft, t));
+        var timeToScore = timeLeft / scoreDivider;
+        var pointsCounter = Mathf.RoundToInt(Mathf.SmoothStep(0, timeToScore, t));
         extraScore.text = pointsCounter.ToString();
         var timeInSeconds = Mathf.RoundToInt(Mathf.SmoothStep(timeLeft, 0, t));
         timeLeftText.text = FormatAsClockTime(timeInSeconds);
         totalScore.text = (this.gameScoreNumber + pointsCounter).ToString();
 
-        if (!initalSet) {
-            GameManager.Instance.GameDataManager.AddGameScore(timeLeft);
+        if (!initialSet) {
+            GameManager.Instance.GameDataManager.AddGameScore(timeToScore);
             this.levelScore = GameManager.Instance.GameDataManager.GameScore;
-            gameScoreNumber = this.levelScore - timeLeft;
+            gameScoreNumber = this.levelScore - timeToScore;
             gameScore.text = (gameScoreNumber).ToString();
-            initalSet = true;
+            initialSet = true;
         }
         if (timeInSeconds <= 0 && !continueButton.interactable) {
             continueButton.interactable = true;
