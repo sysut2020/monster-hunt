@@ -43,5 +43,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7f804d0a6a76400fa3b8135892ee667, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minimumSpawnItems: 1
-  maximumSpawnItems: 3
+  minimumSpawnItems: 2
+  maximumSpawnItems: 4

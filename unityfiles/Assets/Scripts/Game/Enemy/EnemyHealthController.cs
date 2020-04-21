@@ -28,6 +28,9 @@ public class EnemyHealthController : HealthController {
     /// <param name="dmg">The amount of damage given to the entity</param>
     public override void ApplyDamage(float dmg) {
         Health -= dmg;
+        if (this.Health > this.StartHealth){
+            this.Health = StartHealth;    
+        }
         healthBarGuiController.UpdateHealthBar(Health);
         this.CheckIfDead();
 
