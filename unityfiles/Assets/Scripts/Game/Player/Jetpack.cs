@@ -43,8 +43,7 @@ public class Jetpack : MonoBehaviour {
     }
 
     /// <summary>
-    /// Adds force to rigid body as long as the selected key is pressed,
-    /// until the maximum velocity is reached.
+    /// Adds force to rigid body until the maximum velocity is reached.
     /// </summary>
     private void AddForce() {
         if (this.massToAffect.velocity.y <= this.maxYVelocity) {

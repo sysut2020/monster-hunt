@@ -27,7 +27,7 @@ public class ScoreBoardEntryGUI : MonoBehaviour {
     /// </summary>
     /// <param name="entry">score entry to add to gui</param>
     public void SetEntry(ScoreboardEntry entry) {
-        if (entry == null) return;
+        if (entry == null) { return; }
         this.name.SetText(entry.PlayerName);
         this.score.SetText(entry.Score.ToString());
     }

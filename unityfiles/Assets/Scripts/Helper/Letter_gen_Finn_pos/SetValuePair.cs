@@ -1,5 +1,5 @@
 /// <summary>
-/// Data class holding a word letter sett and the associated score
+/// Data class holding a word letter set and the associated score
 /// </summary>
 [System.Serializable]
 public class SetValuePair {

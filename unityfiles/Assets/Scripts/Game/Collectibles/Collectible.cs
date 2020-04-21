@@ -1,7 +1,8 @@
 using UnityEngine;
 
 /// <summary>
-/// Used to give a score value to each collectible item
+/// Abstract class to represent a collectible item. 
+/// Each collectible has a score value
 /// </summary>
 public abstract class Collectible : MonoBehaviour {
     [SerializeField]

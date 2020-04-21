@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 
 /// <summary>
-/// Data class holding the SettValuePairs for the different word lengths
+/// Data class holding the SetValuePairs for the different word lengths
 /// </summary>
 [System.Serializable]
 public class SetValuePairs {

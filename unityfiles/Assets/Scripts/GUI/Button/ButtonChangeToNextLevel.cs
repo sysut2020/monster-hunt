@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 /// <summary>
 /// Makes a button change to next level
-/// Attache script to a button to make it change to next level
+/// Attach script to a button to make it change to next level
 /// </summary>
 [RequireComponent(typeof(Button))]
 public class ButtonChangeToNextLevel : MonoBehaviour {
