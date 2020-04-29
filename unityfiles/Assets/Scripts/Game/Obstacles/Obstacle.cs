@@ -20,7 +20,6 @@ public class Obstacle : MonoBehaviour {
     /// </summary>
     /// <param name="other">object colided with</param>
     private void OnTriggerEnter2D(Collider2D other) {
-        Debug.Log(other);
         this.TryDamage(other.gameObject);
     }
 

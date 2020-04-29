@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// Used to move objects from game position, to where on the camera the desired GUI element is being displayed
+/// </summary>
 public class MoveToGuiElement : MonoBehaviour {
 
     /// <summary>

@@ -1,9 +1,13 @@
 using UnityEngine;
 
+/// <summary>
+/// Data holder for a weapon. All the different data must be set in the unity editor, in the inspector.
+/// Also creates a shortcut in unity for creating new weapon data objects.
+/// </summary>
 [CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/WeaponData", order = 2)]
 public class WeaponData : ScriptableObject {
 
-    [Header("Weapon posission")]
+    [Header("Weapon position")]
     [Tooltip("the Angle of the different arm elements")]
     [SerializeField]
     private PLAYER_ANIMATION holdingAnimation;
@@ -17,7 +21,10 @@ public class WeaponData : ScriptableObject {
     [SerializeField]
     private float bulletDamage = 0;
 
-    [Tooltip("How long the bullet will live if it doesn´t hit anything.")]
+    /// <summary>
+    /// <value>Time in seconds</value> 
+    /// </summary>
+    [Tooltip("How long the bullet will live in seconds if it doesnt hit anything.")]
     [SerializeField]
     private int bulletTtl = 0;
 
@@ -25,7 +32,11 @@ public class WeaponData : ScriptableObject {
     [SerializeField]
     private float fireRate = 1f;
 
-    [Tooltip("Fire rate in shots/sec.")]
+    /// <summary>
+    /// The spread of the bullet in degrees.
+    /// A spread of eg. 20 degrees will add 20 degrees above and below the middle line resulting a total of 40 degree spread
+    /// </summary>
+    [Tooltip("Set the spread of the bullet")]
     [SerializeField]
     private float bulletSpread = 0f;
 

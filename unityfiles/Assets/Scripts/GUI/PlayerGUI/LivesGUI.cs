@@ -1,6 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Responsible for displaying the amount of lives a player has.
+/// Lives can be added and removed.
+/// It listens on PlayerLivesUpdate, and adds/remove lives visuals as lives changes.
+/// </summary>
 public class LivesGUI : MonoBehaviour {
 
     /// <summary>
@@ -11,7 +16,11 @@ public class LivesGUI : MonoBehaviour {
 
     readonly List<Transform> lifesObjects = new List<Transform>();
 
+    /// <summary>
+    /// Flag that tells if lives are generated on first try.
+    /// </summary>
     private bool initialized = false;
+
     private void Awake() {
         PlayerHealthController.OnPlayerLivesUpdate += CallbackOnLivesUpdate;
     }
@@ -27,6 +36,11 @@ public class LivesGUI : MonoBehaviour {
         PlayerHealthController.OnPlayerLivesUpdate -= CallbackOnLivesUpdate;
     }
 
+    /// <summary>
+    /// Adds or removes lives when player lives updates.
+    /// </summary>
+    /// <param name="_">unsused</param>
+    /// <param name="args">player lives argument</param>
     private void CallbackOnLivesUpdate(object _, PlayerLivesUpdateArgs args) {
         if (!initialized) {
             GenerateLifeObject(args.CurrentLives);
@@ -43,7 +57,7 @@ public class LivesGUI : MonoBehaviour {
 
     /// <summary>
     /// Generates provided amount of lives objects and adds them as its
-    /// siblings. All references are stored in an ArrayList
+    /// siblings.
     /// </summary>
     public void GenerateLifeObject(int lives) {
         for (int i = 0; i < lives; i++) {
@@ -54,7 +68,7 @@ public class LivesGUI : MonoBehaviour {
     }
 
     /// <summary>
-    /// Enables lives if there are any diabled, else create remaining
+    /// Adds provided amount of lives.
     /// </summary>
     /// <param name="amount">number of lives to add</param>
     private void AddLife(int amount) {
@@ -76,7 +90,7 @@ public class LivesGUI : MonoBehaviour {
     }
 
     /// <summary>
-    /// Remove number of lives from the GUI
+    /// Remove number of lives.
     /// </summary>
     /// <param name="amount">amount of lives to remove</param>
     private void RemoveLife(int amount) {

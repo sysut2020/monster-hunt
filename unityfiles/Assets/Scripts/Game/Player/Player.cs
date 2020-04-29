@@ -1,25 +1,18 @@
 using System;
 using UnityEngine;
 
-public class PlayerEventArgs : EventArgs {
-    public GameObject PlayerGO { get; set; }
-    public EnemyType PlayerMoney { get; set; }
-    public EnemyType PlayerLetters { get; set; }
-}
+/// <summary>
+/// Event to trigger damage sound 
+/// </summary>
+public class PlayerDamagedEventArgs : EventArgs {
 
+}
 /// <summary>
 /// A player is the controllable character that a person play as.
 /// </summary>
 public class Player : MonoBehaviour, IKillable, IDamageNotifyable {
-
-    [SerializeField]
-    private PlayerHealthController playerHealthController;
-
+    
     private Animator animator;
-
-    public delegate void EventHandler();
-
-    public static event EventHandler OnPlayerDead;
 
     private PlayerWeaponController playerWeaponController;
 
@@ -27,37 +20,15 @@ public class Player : MonoBehaviour, IKillable, IDamageNotifyable {
 
     private static Player instance;
 
-    public static Player Instance {
-        get {
-            if (instance == null) {
-                GameObject player = new GameObject("Player");
-                player.AddComponent<Player>();
-            }
-
-            return instance;
-        }
-    }
-
-    public PlayerHealthController PlayerHealthController {
-        get => playerHealthController;
-        internal set => this.playerHealthController = value;
-    }
-
-    public PlayerWeaponController PlayerWeaponController {
-        get => playerWeaponController;
-        internal set => this.playerWeaponController = value;
-    }
+    public static event EventHandler<PlayerDamagedEventArgs> OnPlayerDamagedEvent;
 
     /// <summary>
     /// Respawns the player and notify that the player died
     /// </summary>
     public void IsDead() {
         Respawn();
-        PlayerEventArgs args = new PlayerEventArgs();
-        PlayerKilledEvent?.Invoke(this, args);
     }
 
-    public static event EventHandler<PlayerEventArgs> PlayerKilledEvent;
     private void SubscribeToEvents() {
         PlayerWeaponController.WeaponChangedEvent += CallbackWeaponChangedEvent;
     }
@@ -67,7 +38,7 @@ public class Player : MonoBehaviour, IKillable, IDamageNotifyable {
     }
 
     private void CallbackWeaponChangedEvent(object _, WeaponChangedEventArgs args) {
-        animator.SetInteger("ACTIVE_WEAPON", (int)args.AnimId);
+        animator.SetInteger("ACTIVE_WEAPON", (int) args.AnimId);
     }
 
     /// <summary>
@@ -86,11 +57,13 @@ public class Player : MonoBehaviour, IKillable, IDamageNotifyable {
         this.spawnPosition = this.transform.position;
     }
 
-    void OnDestroy() {
+    private void OnDestroy() {
         this.UnsubscribeFromEvents();
     }
 
     public void Damaged() {
         animator.SetTrigger(AnimationTriggers.DAMAGE);
+        PlayerDamagedEventArgs args = new PlayerDamagedEventArgs();
+        OnPlayerDamagedEvent?.Invoke(this, args);
     }
 }

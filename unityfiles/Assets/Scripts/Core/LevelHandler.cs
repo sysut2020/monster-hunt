@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 /// <summary>
 /// Handles the changing of levels in the game.
 /// It can start a specific scene/level or go to the next level.
-/// It toggles between lettergame, the different levels, and finaly the scoreboard
+/// It toggles between letter game, the different levels, and finally the scoreboard
 /// scene when there are no more levels left.
 /// </summary>
 public class LevelHandler : MonoBehaviour {
@@ -27,13 +27,13 @@ public class LevelHandler : MonoBehaviour {
     /// <summary>
     /// Index of the current scene. If it is a hunting game it is >=0 else its -1
     /// </summary>
-    /// <value></value>
+    /// <value>scene index</value>
     private static int CurrentScene { get; set; } = -1;
 
     /// <summary>
     /// Index of the last scene. If it was a hunting game it is >=0 else its -1
     /// </summary>
-    /// <value></value>
+    /// <value>scene index</value>
     private static int LastHuntingScene { get; set; } = -1;
 
     private static bool isCreated;
@@ -49,9 +49,11 @@ public class LevelHandler : MonoBehaviour {
     }
 
     /// <summary>
-    /// Changes to the next level. If we are in letter game, go to the next
-    /// hunting game level. If we are in the letter game and there are no more levels
-    /// the game is finnished, and scoreboard scene is loaded.
+    /// Changes to the next level. 
+    ///     - If we are in letter game, go to the next
+    ///     hunting game level. 
+    ///     - If we are in the letter game and there are no more levels
+    ///     the game is finished, and scoreboard scene is loaded.
     /// </summary>
     public void NextLevel() {
         string nextLevelName;

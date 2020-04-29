@@ -37,7 +37,7 @@ namespace GUI.Lettergame {
 
             for (int i = 0; i < columns * rows; i++) {
                 GameObject n = Instantiate(this.boardTile, transform, true);
-                GameBoardTile tile = n.GetComponent<GameBoardTile>();
+                LetterGameBoardTile tile = n.GetComponent<LetterGameBoardTile>();
                 var rectTransform = n.GetComponent<RectTransform>();
 
                 tile.XPos = i % Mathf.RoundToInt(columns);

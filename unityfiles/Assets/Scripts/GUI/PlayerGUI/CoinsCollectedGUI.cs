@@ -1,16 +1,17 @@
 using TMPro;
 using UnityEngine;
+
 /// <summary>
-/// This class is responsible for updating the GUI with how many coins that 
+/// This class is responsible for updating the GUI with how many coins that
 /// the player has collected
 /// </summary>
 public class CoinsCollectedGUI : MonoBehaviour {
 
     /// <summary>
-    /// Text for visualizing numbers of letters collected and have left.
+    /// Text element for displaying collected coins
     /// </summary>
     [SerializeField]
-    TMP_Text coinCounter;
+    private TMP_Text coinCounter;
 
     private int collectedCoins = 0;
 
@@ -18,7 +19,7 @@ public class CoinsCollectedGUI : MonoBehaviour {
         if (coinCounter == null) {
             throw new MissingComponentException("Missing text component");
         }
-        CoinCollectable.OnCoinCollected += OnNewCoin;
+        CoinCollectible.OnCoinCollected += OnNewCoin;
         SetCoinamountText();
     }
 
@@ -32,7 +33,7 @@ public class CoinsCollectedGUI : MonoBehaviour {
     }
 
     private void OnDestroy() {
-        CoinCollectable.OnCoinCollected -= OnNewCoin;
+        CoinCollectible.OnCoinCollected -= OnNewCoin;
     }
 
 }

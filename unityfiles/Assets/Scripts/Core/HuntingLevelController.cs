@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 /// <summary>
-/// The event data for the game state changed events 
+/// The event arguments for the game state changed events 
 /// </summary>
 public class LevelStateChangeEventArgs : EventArgs {
     public LEVEL_STATE NewState { get; set; }
@@ -40,27 +40,21 @@ public class HuntingLevelController : Singleton<HuntingLevelController> {
     public static event EventHandler<LevelStateChangeEventArgs> OnLevelStateChangeEvent;
 
     /// <summary>
-    /// This event tells the listeners they are about to be deleted and should relese 
+    /// This event tells the listeners they are about to be deleted and should release 
     /// all subscribed events
-    /// Mainly for non mono behaviour objects that cant use onDelete
+    /// Mainly for non mono behaviour objects that cant use onDestroy
     /// </summary>
     public static event EventHandler CleanUpEvent;
 
-    /// <summary>
-    /// Subscribes to the relevant events for this class
-    /// </summary>
     private void SubscribeToEvents() {
-        LetterCollectable.OnLetterCollected += CallbackLetterCollected;
+        LetterCollectible.OnLetterCollected += CallbackLetterCollected;
         PlayerHealthController.OnPlayerLivesUpdate += CallbackPlayerLivesUpdate;
         Enemy.EnemyKilledEvent += CallbackEnemyKilledEvent;
         GameManager.GamePausedEvent += CallbackOnGamePaused;
     }
 
-    /// <summary>
-    /// Subscribes to the relevant events for this class
-    /// </summary>
     private void UnsubscribeFromEvents() {
-        LetterCollectable.OnLetterCollected -= CallbackLetterCollected;
+        LetterCollectible.OnLetterCollected -= CallbackLetterCollected;
         PlayerHealthController.OnPlayerLivesUpdate -= CallbackPlayerLivesUpdate;
         Enemy.EnemyKilledEvent -= CallbackEnemyKilledEvent;
         GameManager.GamePausedEvent -= CallbackOnGamePaused;
@@ -74,18 +68,18 @@ public class HuntingLevelController : Singleton<HuntingLevelController> {
     }
 
     /// <summary>
-    /// This function is fiered when the PlayerKilled is invoked
+    /// Fired when the PlayerKilled event is invoked
     /// Ends the level
     /// </summary>
     /// <param name="_">the object calling</param>
     /// <param name="args">the event args</param>
     private void CallbackPlayerLivesUpdate(object _, PlayerLivesUpdateArgs args) {
-        if (args.CurrentLives == 0)LevelStateChange(LEVEL_STATE.GAME_OVER);
+        if (args.CurrentLives == 0) LevelStateChange(LEVEL_STATE.GAME_OVER);
     }
 
     /// <summary>
-    /// This function is fiered when the EnemyKilled is invoked
-    /// Increses the enemy killed counter by one
+    /// This function is fired when the EnemyKilled event is invoked
+    /// Increases the enemy killed counter by one
     /// </summary>
     /// <param name="_">the object calling</param>
     /// <param name="args">the event args</param>
@@ -128,6 +122,7 @@ public class HuntingLevelController : Singleton<HuntingLevelController> {
         switch (NewState) {
             // The game is over show game over screen
             case LEVEL_STATE.GAME_OVER:
+                break;
             case LEVEL_STATE.GAME_WON:
                 break;
             case LEVEL_STATE.PLAY:
@@ -141,7 +136,6 @@ public class HuntingLevelController : Singleton<HuntingLevelController> {
         OnLevelStateChangeEvent?.Invoke(this, args);
     }
 
-    // TODO: maybe remove?
     /// <summary>
     /// spawns all the enemys and inits the player
     /// </summary>
@@ -166,10 +160,9 @@ public class HuntingLevelController : Singleton<HuntingLevelController> {
     }
 
     /// <summary>
-    /// returns the time left in milliseconds
-    /// if timer is done -1 is returned
+    /// Returns the time left in milliseconds
     /// </summary>
-    /// <returns>time left in milliseconds -1 if done</returns>
+    /// <returns>Time left in milliseconds, if no timer is attached to ID -1 is returned.</returns>
     public int GetLevelTimeLeft() {
         return this.levelTimer.TimeLeft(this.LEVEL_TIMER_ID);
     }
@@ -197,7 +190,7 @@ public class HuntingLevelController : Singleton<HuntingLevelController> {
         CleanUpScene();
         UnsubscribeFromEvents();
 
-        dataManager.AddLetters(playerInventory.CollectedLetters);
-        dataManager.AddMoney(playerInventory.Money);
+        this.dataManager.AddLetters(playerInventory.CollectedLetters);
+        this.dataManager.AddMoney(playerInventory.Money);
     }
 }

@@ -8,7 +8,10 @@ public class CoinCollectedArgs : EventArgs {
     public int Amount { get; set; }
 }
 
-public class CoinCollectable : Collectable {
+/// <summary>
+/// Used to handle the coin collectibles 
+/// </summary>
+public class CoinCollectible : Collectible {
     public static event EventHandler<CoinCollectedArgs> OnCoinCollected;
 
     private MoveToGuiElement moveToGuiElement;

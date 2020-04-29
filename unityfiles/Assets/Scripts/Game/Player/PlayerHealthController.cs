@@ -1,6 +1,9 @@
 using System;
 using UnityEngine;
 
+/// <summary>
+/// Arguments to be passed with an event. Add new fields if needed to send more details with events 
+/// </summary>
 public class PlayerHealthUpdateArgs : EventArgs {
     public float CurrentHealth { get; set; }
     public float MaxHealth { get; set; }
@@ -9,6 +12,9 @@ public class PlayerLivesUpdateArgs : EventArgs {
     public int CurrentLives { get; set; }
 }
 
+/// <summary>
+/// Controls health of the player. Handles damage and healing events 
+/// </summary>
 public class PlayerHealthController : HealthController, IObstacleDamagable {
 
     public static event EventHandler<PlayerHealthUpdateArgs> OnPlayerHealthUpdate;
@@ -16,28 +22,34 @@ public class PlayerHealthController : HealthController, IObstacleDamagable {
 
     private float MaxHealth { get; set; }
 
+    /// <summary>
+    /// The amount of starting life. This is also the maximum amount of life a player can have
+    /// </summary>
     [SerializeField]
     private int startLives = 3;
     private int StartLives {
-        get { return startLives; }
-        set { startLives = value; }
+        get => startLives; 
     }
 
     [SerializeField]
     private int currentLives;
     public int CurrentLives { get => currentLives; set => currentLives = value; }
 
-    // Timer for when last was hit.
+    /// <summary>
+    /// Timer for when last was hit.
+    /// </summary>
     private float lastHitTimer;
 
-    // Guard time before can take damage again
+    /// <summary>
+    /// Guard time before can take damage again
+    /// </summary>
     private float guardTime = 0.2f;
 
     /// <summary>
     /// Remove the provided damage amount from the players health pool
     /// </summary>
     /// <param name="damage"></param>
-    override public void ApplyDamage(float damage) {
+    public override void ApplyDamage(float damage) {
         this.ReduceHealth(damage);
 
     }
@@ -63,7 +75,7 @@ public class PlayerHealthController : HealthController, IObstacleDamagable {
     /// Reduces the health by given amount, if the player can take damage.
     /// Trigger health update event to notify health change.
     /// </summary>
-    /// <param name="reduceAmount">amount to remove</param>
+    /// <param name="amount">amount to remove</param>
     private void ReduceHealth(float amount) {
         if (!this.CanTakeDamage()) { return; }
         this.Health -= amount;
@@ -72,8 +84,8 @@ public class PlayerHealthController : HealthController, IObstacleDamagable {
         if (this.IsDead) {
             ReduceLivesAndResetHealth();
         } else {
-            foreach (var notifyable in Notifyables) {
-                notifyable?.Damaged();
+            foreach (var notifiable in Notifyables) {
+                notifiable?.Damaged();
             }
         }
     }
@@ -91,10 +103,14 @@ public class PlayerHealthController : HealthController, IObstacleDamagable {
         }
     }
 
-    // Guard timer for multi damage, like if player hits damage collider X frames in a row.
+    /// <summary>
+    /// Checks if a player has taken damage recently.
+    /// Guard timer for multi damage, like if player hits damage collider X frames in a row.
+    /// </summary>
+    /// <returns>Returns true if time since last damage taken is > than threshold. False if not </returns>
     private bool CanTakeDamage() {
         if (Time.time < this.lastHitTimer) { return false; }
-        this.lastHitTimer = Time.time + this.guardTime; // Adds 0.15 seconds guard time.
+        this.lastHitTimer = Time.time + this.guardTime;
         return true;
     }
 
@@ -107,20 +123,20 @@ public class PlayerHealthController : HealthController, IObstacleDamagable {
     }
 
     private void SubscribeToEvents() {
-        LivesManager.OnPickupLivesUpdate += CallbacOnPickupLivesUpdate;
+        LivesManager.OnPickupLivesUpdate += CallbackOnPickupLivesUpdate;
     }
 
     private void UnsubscribeFromEvents() {
-        LivesManager.OnPickupLivesUpdate -= CallbacOnPickupLivesUpdate;
+        LivesManager.OnPickupLivesUpdate -= CallbackOnPickupLivesUpdate;
     }
 
-    private void CallbacOnPickupLivesUpdate(object _, OnPickupLivesUpdateArgs args) {
-        int newlives = this.CurrentLives + args.LivesToAdd;
-        if (newlives > this.startLives) {
-            newlives = this.startLives;
+    private void CallbackOnPickupLivesUpdate(object _, OnPickupLivesUpdateArgs args) {
+        int newLives = this.CurrentLives + args.LivesToAdd;
+        if (newLives > this.startLives) {
+            newLives = this.startLives;
         }
 
-        this.CurrentLives = newlives;
+        this.CurrentLives = newLives;
         this.InvokeLivesUpdate();
     }
 

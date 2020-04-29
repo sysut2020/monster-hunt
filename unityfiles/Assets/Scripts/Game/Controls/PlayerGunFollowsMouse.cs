@@ -2,6 +2,9 @@ using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
 using Quaternion = UnityEngine.Quaternion;
 
+/// <summary>
+/// Handler for making the player view and gun point to follow the mouse correctly
+/// </summary>
 public class PlayerGunFollowsMouse : MonoBehaviour {
     [SerializeField]
     private Transform rotatePoint;

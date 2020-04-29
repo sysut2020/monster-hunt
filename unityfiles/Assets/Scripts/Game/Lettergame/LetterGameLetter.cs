@@ -1,5 +1,10 @@
 using System;
 
+/// <summary>
+/// Used to control each letter in the letter game,
+/// Checking if the letters on the letter game board are in a valid word,
+/// updating the letters if they are in a valid word
+/// </summary>
 public class LetterGameLetter {
 
     private readonly string letter;

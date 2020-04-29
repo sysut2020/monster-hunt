@@ -15,6 +15,13 @@ public class LetterGameEndedArgs : EventArgs {
 public class WordScoreUpdateArgs : EventArgs {
     public int Score { get; set; }
 }
+
+/// <summary>
+/// Used to control the letter level, the creation of words,
+/// getting all the valid letters to use in the letter level,
+/// controlling all the tiles in the letter level,
+/// handling the made words
+/// </summary>
 public class LetterLevelController : Singleton<LetterLevelController> {
 
     private int wordsPoints = 0;

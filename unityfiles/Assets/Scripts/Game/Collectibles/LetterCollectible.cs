@@ -9,7 +9,10 @@ public class LetterCollectedArgs : EventArgs {
     public string Letter { get; set; }
 }
 
-public class LetterCollectable : Collectable {
+/// <summary>
+/// Used to handle the letter collectibles
+/// </summary>
+public class LetterCollectible : Collectible {
     public static event EventHandler<LetterCollectedArgs> OnLetterCollected;
 
     [SerializeField]
@@ -17,20 +20,33 @@ public class LetterCollectable : Collectable {
 
     private MoveToGuiElement moveToGuiElement;
 
+    private Boolean voidLetter = false;
+
     public string LetterString {
         get => letterComponent.text;
     }
 
     private void OnDestroy() {
+        HuntingLevelController.OnLevelStateChangeEvent -= CallbackOnLevelStateChange;
         LetterCollectedArgs letterEventArgs = new LetterCollectedArgs();
         letterEventArgs.Letter = this.LetterString;
-        LetterCollectable.OnLetterCollected?.Invoke(this, letterEventArgs);
+        if (!this.voidLetter) {
+            OnLetterCollected?.Invoke(this, letterEventArgs);
+        }
     }
 
     private void Awake() {
+        HuntingLevelController.OnLevelStateChangeEvent += CallbackOnLevelStateChange;
         this.letterComponent.SetText(SudoRandomLetterGenerator.Instance.GenerateLetter());
         if (TryGetComponent(out moveToGuiElement)) {
             moveToGuiElement.FindTarget<LettersCollectedGUI>();
+        }
+    }
+
+    private void CallbackOnLevelStateChange(object _, LevelStateChangeEventArgs args) {
+        if (args.NewState == LEVEL_STATE.GAME_WON || args.NewState == LEVEL_STATE.GAME_OVER) {
+            this.voidLetter = true;
+            Destroy(this.gameObject);
         }
     }
 }

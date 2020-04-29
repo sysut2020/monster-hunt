@@ -393,7 +393,7 @@ GameObject:
   - component: {fileID: 7673223311210071034}
   - component: {fileID: 599571110}
   m_Layer: 0
-  m_Name: Main character - with weapon
+  m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -529,7 +529,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1840690805adbb3cf95e3bb52fc1bd47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerHealthController: {fileID: 599571110}
 --- !u!114 &4570665202509030192
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -546,6 +545,7 @@ MonoBehaviour:
   - {fileID: 3220301693665953141, guid: dd8af2c07b6404a5abb28b334eb87623, type: 3}
   - {fileID: 2890025789579660477, guid: fed697ff2506772edb77667ba8bd9c7d, type: 3}
   - {fileID: 2279751618471833427, guid: b9963bc197517bab6a7c0d5b028bbc19, type: 3}
+  - {fileID: 2710092501898412679, guid: 9c6476b6a98242af88dce11b5f5b7706, type: 3}
   gunHand: {fileID: 2455075742465879498}
 --- !u!114 &7673223311210071034
 MonoBehaviour:
