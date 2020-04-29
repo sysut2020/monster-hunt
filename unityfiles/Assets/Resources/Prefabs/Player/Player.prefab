@@ -514,7 +514,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   force: {x: 0, y: 2000}
-  maxYVelocity: 5
+  maxYVelocity: 9
   massToAffect: {fileID: 2271420244141534157}
   flames: {fileID: 5286960567874303616}
 --- !u!114 &2399217038643513078
