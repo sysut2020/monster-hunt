@@ -32,7 +32,6 @@ public class HuntingLevelController : Singleton<HuntingLevelController> {
     private LEVEL_STATE currentState; // may need default here in that case find out the starting state
 
     private PlayThroughData playThroughData;
-    private GameDataManager dataManager;
 
     /// <summary>
     /// This event tells the listeners the level state has changed
@@ -168,7 +167,6 @@ public class HuntingLevelController : Singleton<HuntingLevelController> {
     }
 
     private void Start() {
-        dataManager = GameManager.Instance.GameDataManager;
         playerInventory = new PlayerInventory();
         this.playThroughData = new PlayThroughData();
         LEVEL_TIMER_ID = this.levelTimer.RollingUID;
@@ -189,8 +187,7 @@ public class HuntingLevelController : Singleton<HuntingLevelController> {
     private void OnDestroy() {
         CleanUpScene();
         UnsubscribeFromEvents();
-
-        this.dataManager.AddLetters(playerInventory.CollectedLetters);
-        this.dataManager.AddMoney(playerInventory.Money);
+        GameManager.Instance.GameDataManager?.AddLetters(playerInventory.CollectedLetters);
+        GameManager.Instance.GameDataManager?.AddMoney(playerInventory.Money);
     }
 }
