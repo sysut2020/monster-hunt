@@ -47,6 +47,6 @@ public class AudioManager : Singleton<AudioManager> {
         gameMusic.playOnAwake = sound.PlayOnAwake;
         gameMusic.clip = sound.AudioClip;
         gameMusic.loop = sound.Loop;
-        gameMusic.PlayDelayed(1500);
+        gameMusic.Play();
     }
 }
