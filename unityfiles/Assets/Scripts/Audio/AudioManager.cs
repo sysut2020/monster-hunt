@@ -49,7 +49,7 @@ public class AudioManager : Singleton<AudioManager> {
         gameMusic.clip = sound.AudioClip;
         gameMusic.loop = sound.Loop;
         gameMusic.name = sound.Name;
-        gameMusic.Play(1500);
+        gameMusic.PlayDelayed(1500);
 
     }
 }
