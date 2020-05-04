@@ -463,7 +463,7 @@ public class LetterLevelController : Singleton<LetterLevelController> {
             FillPlayerLetters(GameManager.Instance?.GameDataManager.PlayerLetters);
         }
 
-        var fc = new FileReader("Assets/Resources/wordlist.txt");
+        var fc = new FileReader(Application.streamingAssetsPath + "/wordlist.txt");
         this.wordChecker = new WordChecker(fc.ReadAllLines().AsArray(), false);
 
         RefreshLetterCountDisplay();

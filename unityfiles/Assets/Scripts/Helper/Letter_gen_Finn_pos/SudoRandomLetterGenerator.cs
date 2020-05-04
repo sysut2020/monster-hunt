@@ -16,14 +16,14 @@ public class SudoRandomLetterGenerator {
     /// </summary>
     private SudoRandomLetterGenerator() {
         // reads the letter freq 
-        using(StreamReader r = new StreamReader("Assets/Scripts/Helper/Letter_gen_Finn_pos/letter_sett_lists/letter_frequensy_weight_100.json")) {
+        using(StreamReader r = new StreamReader(Application.streamingAssetsPath + "/letter_frequensy_weight_100.json")) {
             string jsonText = r.ReadToEnd();
             this.letterFrequency = JsonUtility.FromJson<LetterFrequency>(jsonText);
 
         }
 
         // reads the letter setts 
-        using(StreamReader r = new StreamReader("Assets/Scripts/Helper/Letter_gen_Finn_pos/letter_sett_lists/score_sorted_sett_size_dict.json")) {
+        using(StreamReader r = new StreamReader(Application.streamingAssetsPath + "/score_sorted_sett_size_dict.json")) {
             string jsonText = r.ReadToEnd();
             this.allSettValuePairs = JsonUtility.FromJson<SetValuePairs>(jsonText);
         }
@@ -94,7 +94,7 @@ public class SudoRandomLetterGenerator {
                 int val = rand.Next(0, nextUsedSets.Count);
                 SetValuePair usedSett = nextUsedSets[val];
 
-                String nextLetter = WUArrays.RemoveAllAFromB(activeAr, usedSett.letter_sett)[0];
+                String nextLetter = WUArrays.RemoveAllAFromB(activeAr, usedSett.letter_sett) [0];
 
                 this.AddLetter(nextLetter);
                 return nextLetter;
