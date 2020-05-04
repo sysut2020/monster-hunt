@@ -28,7 +28,7 @@ public class HuntingLevelController : Singleton<HuntingLevelController> {
 
     private PlayerInventory playerInventory;
     private WUTimers levelTimer = new WUTimers();
-    private string LEVEL_TIMER_ID;
+    private string LEVEL_TIMER_ID = "";
     private LEVEL_STATE currentState; // may need default here in that case find out the starting state
 
     private PlayThroughData playThroughData;
