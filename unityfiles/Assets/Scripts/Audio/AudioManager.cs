@@ -21,7 +21,7 @@ public class AudioManager : Singleton<AudioManager> {
             soundFX.Add(gameObject.AddComponent<AudioSource>());
         }
     }
-    
+
     /// <summary>
     /// Plays the desired sounds
     /// </summary>
@@ -31,7 +31,6 @@ public class AudioManager : Singleton<AudioManager> {
             if (!source.isPlaying) {
                 source.playOnAwake = sound.PlayOnAwake;
                 source.loop = sound.Loop;
-                source.name = sound.Name;
                 source.pitch = sound.Pitch;
                 source.mute = sound.Mute;
                 source.PlayOneShot(sound.AudioClip);
@@ -39,7 +38,7 @@ public class AudioManager : Singleton<AudioManager> {
             }
         }
     }
-    
+
     /// <summary>
     /// Plays the desired music
     /// </summary>
@@ -48,8 +47,6 @@ public class AudioManager : Singleton<AudioManager> {
         gameMusic.playOnAwake = sound.PlayOnAwake;
         gameMusic.clip = sound.AudioClip;
         gameMusic.loop = sound.Loop;
-        gameMusic.name = sound.Name;
-        gameMusic.Play(1500);
-
+        gameMusic.Play();
     }
 }

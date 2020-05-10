@@ -29,10 +29,10 @@ public class GameManager : Singleton<GameManager> {
 
     private GAME_STATE CurrentState { get; set; }
 
-    private GameDataManager gameDataManager;
+    private static GameDataManager gameDataManager;
 
     public GameDataManager GameDataManager {
-        get => gameDataManager;
+        get { return gameDataManager; }
     }
 
     /// <summary>
@@ -132,13 +132,15 @@ public class GameManager : Singleton<GameManager> {
 
     private void Awake() {
         Instance.SetGameState(GAME_STATE.PLAY);
-        this.gameDataManager = new GameDataManager();
+        if (gameDataManager == null) {
+            gameDataManager = new GameDataManager();
+        }
         SubscribeToEvents();
     }
 
     private void OnDestroy() {
+        gameDataManager.SaveData();
         UnsubscribeFromEvents();
-        this.gameDataManager.SaveData();
     }
 
 }

@@ -37,7 +37,8 @@ public class LetterCollectible : Collectible {
 
     private void Awake() {
         HuntingLevelController.OnLevelStateChangeEvent += CallbackOnLevelStateChange;
-        this.letterComponent.SetText(SudoRandomLetterGenerator.Instance.GenerateLetter());
+        var generatedLetter = SudoRandomLetterGenerator.Instance.GenerateLetter();
+        this.letterComponent.text = generatedLetter;
         if (TryGetComponent(out moveToGuiElement)) {
             moveToGuiElement.FindTarget<LettersCollectedGUI>();
         }

@@ -325,7 +325,7 @@ public class LetterLevelController : Singleton<LetterLevelController> {
     /// <param name="connectedLetters">array of letters to convert to single string</param>
     /// <returns>string of the individual letters</returns>
     private string GetWordStringOfLetters(LetterGameLetter[] connectedLetters) {
-        if (connectedLetters == null)return "";
+        if (connectedLetters == null) return "";
         var letters = connectedLetters.Select(tile => tile.Letter).ToArray();
         return string.Concat(letters.ToArray());
     }
@@ -463,7 +463,7 @@ public class LetterLevelController : Singleton<LetterLevelController> {
             FillPlayerLetters(GameManager.Instance?.GameDataManager.PlayerLetters);
         }
 
-        var fc = new FileReader("Assets/Resources/wordlist.txt");
+        var fc = new FileReader(Application.streamingAssetsPath + "/wordlist.txt");
         this.wordChecker = new WordChecker(fc.ReadAllLines().AsArray(), false);
 
         RefreshLetterCountDisplay();
