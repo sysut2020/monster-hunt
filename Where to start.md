@@ -1,10 +1,13 @@
 # Where to start
 
-To start exploring the code one could start in the `GameManager` class `unityfiles/Assets/Scripts/Core/GameManager.cs`. 
+Core game controllers
 
-Some other key classes are classes under 
+- GameManager class `/unityfiles/Assets/Scripts/Core/GameManager.cs`.
+- HuntingLevelController `/unityfiles/Assets/Scripts/Core/HuntingLevelController.cs`
+- LetterLevelController `/unityfiles/Assets/Scripts/Game/Lettergame/LetterLevelController.cs`
 
-- `unityfiles/Assets/Scripts/Game/Player/` 
-- `unityfiles/Assets/Scripts/Game/Enemy/` 
+Some other key starting points are under these locations, with important .cs files sublisted.
+
+- `unityfiles/Assets/Scripts/Game/Player/` - Player.cs
+- `unityfiles/Assets/Scripts/Game/Enemy/` - Behaviour/EnemyBehaviour.cs
 - `unityfiles/Assets/Scripts/Game/LetterGame/`
-
