@@ -7,7 +7,11 @@ public class TileChangedEventArgs : EventArgs {
     private String Letter { get; set; }
 }
 
-public class GameBoardTile : Dragable {
+/// <summary>
+/// Used to handle all the aspects of the letter game board tile.
+/// Setting all the tiles of tile board, updating the tiles when a letter gets dragged onto it
+/// </summary>
+public class LetterGameBoardTile : DragableLetter {
 
     [SerializeField]
     private TMP_Text TileText;
@@ -108,7 +112,7 @@ public class GameBoardTile : Dragable {
         GameObject hit = eventData.pointerCurrentRaycast.gameObject;
         if (hit != null) {
             // hit something
-            if (hit.TryGetComponent<GameBoardTile>(out GameBoardTile tile)) {
+            if (hit.TryGetComponent<LetterGameBoardTile>(out LetterGameBoardTile tile)) {
                 // hit something with game tile
                 if (tile != this) {
                     // not self

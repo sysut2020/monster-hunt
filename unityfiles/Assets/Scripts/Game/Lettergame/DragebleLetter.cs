@@ -3,8 +3,11 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-///TODO: shit name
-public abstract class Dragable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
+/// <summary>
+/// Used to handle all the aspects of dragging a letter in the letter level scene.
+/// Controls where the drag has started, ended and the dragging itself
+/// </summary>
+public abstract class DragableLetter : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
 
     [SerializeField]
     private GameObject DraggingIcon;

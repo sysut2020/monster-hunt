@@ -2,12 +2,23 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Handler for the game won canvas.
+/// The canvas will count down the time remaining and add it to the total score.
+/// Will display the count down and score updating in real time to the user.
+/// Enables the continue button when the count down is done
+/// </summary>
 public class GameWon : MonoBehaviour {
-
     /// <summary>
     /// Time left when game ended
     /// </summary>
     private int timeLeft;
+
+    /// <summary>
+    /// Used to balance the scoring of time
+    /// </summary>
+    [SerializeField]
+    private int scoreDivider = 10;
 
     [SerializeField]
     private TextMeshProUGUI timeLeftText;
@@ -26,6 +37,8 @@ public class GameWon : MonoBehaviour {
 
     private int levelScore;
 
+    private bool initialSet = false;
+
     /// <summary>
     /// Amount of time the countdown should take
     /// </summary>
@@ -36,6 +49,8 @@ public class GameWon : MonoBehaviour {
     /// Time when the game won canvas was enabled
     /// </summary>
     private float timeEnabled;
+
+    private int gameScoreNumber;
 
     private void Awake() {
         if (continueButton.IsInteractable()) {
@@ -52,20 +67,26 @@ public class GameWon : MonoBehaviour {
         timeLeft = HuntingLevelController.Instance.GetLevelTimeLeft() / 1000; // divide by 1000 to get sec
         timeLeftText.text = FormatAsClockTime(timeLeft);
 
-        this.levelScore = dataManager.GameScore;
-        gameScore.text = this.levelScore.ToString();
-        dataManager.AddGameScore(timeLeft); // add time left in seconds as points to game score
-
+        // add time left in seconds as points to game score
     }
 
     private void Update() {
+
         var t = (Time.unscaledTime - timeEnabled) / duration; // used to smooth the count down/up
-        var pointsCounter = Mathf.RoundToInt(Mathf.SmoothStep(0, timeLeft, t));
+        var timeToScore = timeLeft / scoreDivider;
+        var pointsCounter = Mathf.RoundToInt(Mathf.SmoothStep(0, timeToScore, t));
         extraScore.text = pointsCounter.ToString();
         var timeInSeconds = Mathf.RoundToInt(Mathf.SmoothStep(timeLeft, 0, t));
         timeLeftText.text = FormatAsClockTime(timeInSeconds);
-        totalScore.text = (this.levelScore + pointsCounter).ToString();
+        totalScore.text = (this.gameScoreNumber + pointsCounter).ToString();
 
+        if (!initialSet) {
+            GameManager.Instance.GameDataManager.AddGameScore(timeToScore);
+            this.levelScore = GameManager.Instance.GameDataManager.GameScore;
+            gameScoreNumber = this.levelScore - timeToScore;
+            gameScore.text = (gameScoreNumber).ToString();
+            initialSet = true;
+        }
         if (timeInSeconds <= 0 && !continueButton.interactable) {
             continueButton.interactable = true;
         }
@@ -82,7 +103,7 @@ public class GameWon : MonoBehaviour {
         var asClockTime = $"{min}:{sec}"; // string interpolation
         // https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/tokens/interpolated
         if (sec < 10) {
-            asClockTime = $"{min}:0{sec}"; // just added a 0 if sec is less than 10
+            asClockTime = $"{min}:0{sec}"; // just added a leading 0 if sec is less than 10
         }
 
         return asClockTime;

@@ -9,14 +9,14 @@ public class SpawnPoint : MonoBehaviour {
     /// <summary>
     /// Flag to check if the spawn poin is available
     /// </summary>
-    /// <value></value>
+    /// <value>boolean</value>
     public bool IsAvailable { get; private set; } = true;
 
     /// <summary>
     /// Tries to spawn an entity at the spawn points position if the 
-    /// SpawnPoint is available. If the enity provided is null, do nothing.
+    /// SpawnPoint is available. If the entity provided is null, do nothing.
     /// </summary>
-    /// <param name="toSpawn"></param>
+    /// <param name="toSpawn">game object to spawn</param>
     public void Spawn(GameObject toSpawn) {
         if (!this.IsAvailable || toSpawn == null) {
             return;

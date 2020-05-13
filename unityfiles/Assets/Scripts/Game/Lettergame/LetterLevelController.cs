@@ -15,6 +15,13 @@ public class LetterGameEndedArgs : EventArgs {
 public class WordScoreUpdateArgs : EventArgs {
     public int Score { get; set; }
 }
+
+/// <summary>
+/// Used to control the letter level, the creation of words,
+/// getting all the valid letters to use in the letter level,
+/// controlling all the tiles in the letter level,
+/// handling the made words
+/// </summary>
 public class LetterLevelController : Singleton<LetterLevelController> {
 
     private int wordsPoints = 0;
@@ -318,7 +325,7 @@ public class LetterLevelController : Singleton<LetterLevelController> {
     /// <param name="connectedLetters">array of letters to convert to single string</param>
     /// <returns>string of the individual letters</returns>
     private string GetWordStringOfLetters(LetterGameLetter[] connectedLetters) {
-        if (connectedLetters == null)return "";
+        if (connectedLetters == null) return "";
         var letters = connectedLetters.Select(tile => tile.Letter).ToArray();
         return string.Concat(letters.ToArray());
     }
@@ -456,7 +463,7 @@ public class LetterLevelController : Singleton<LetterLevelController> {
             FillPlayerLetters(GameManager.Instance?.GameDataManager.PlayerLetters);
         }
 
-        var fc = new FileReader("Assets/Resources/wordlist.txt");
+        var fc = new FileReader(Application.streamingAssetsPath + "/wordlist.txt");
         this.wordChecker = new WordChecker(fc.ReadAllLines().AsArray(), false);
 
         RefreshLetterCountDisplay();

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 /// <summary>
 /// event args for the weapon change event. 
@@ -14,6 +15,9 @@ public class WeaponChangedEventArgs : EventArgs {
     public int GunIndex { get; set; }
 }
 
+/// <summary>
+/// Handles the player weapon. Handles the controls for using and changing the weapon 
+/// </summary>
 public class PlayerWeaponController : MonoBehaviour {
 
     [SerializeField]
@@ -47,8 +51,11 @@ public class PlayerWeaponController : MonoBehaviour {
         internal set => this.activeGunController = value;
     }
 
-    public void MaybeFire() {
-        this.activeGunController?.MaybeFire();
+    /// <summary>
+    /// Tries to fire.
+    /// </summary>
+    public void TryFire() {
+        this.activeGunController?.TryFire();
     }
 
     public static event EventHandler<WeaponChangedEventArgs> WeaponChangedEvent;
@@ -75,12 +82,12 @@ public class PlayerWeaponController : MonoBehaviour {
             this.ChangeWeapon(-1);
         }
 
-        if (Input.GetMouseButtonDown(0)) {
-            this.MaybeFire();
+        if (Input.GetMouseButtonDown((int) MouseButton.LeftMouse)) {
+            this.TryFire();
         }
 
-        if (Input.GetMouseButton(1)) {
-            this.MaybeFire();
+        if (Input.GetMouseButton((int) MouseButton.RightMouse)) {
+            this.TryFire();
         }
     }
 

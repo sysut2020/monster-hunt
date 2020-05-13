@@ -16,7 +16,8 @@ public class GamePausedEventArgs : EventArgs {
 }
 
 /// <summary>
-/// The manager for the whole game main task is to start and stop scenes and huntingGameSceneNames
+/// The manager for the whole game
+/// Responsible for starting, pausing and exiting the game
 /// </summary>
 public class GameManager : Singleton<GameManager> {
 
@@ -28,10 +29,10 @@ public class GameManager : Singleton<GameManager> {
 
     private GAME_STATE CurrentState { get; set; }
 
-    private GameDataManager gameDataManager;
+    private static GameDataManager gameDataManager;
 
     public GameDataManager GameDataManager {
-        get => gameDataManager;
+        get { return gameDataManager; }
     }
 
     /// <summary>
@@ -48,7 +49,6 @@ public class GameManager : Singleton<GameManager> {
     /// Subscribes to the relevant events for this class
     /// </summary>
     private void SubscribeToEvents() {
-        // todo subscribe to OnPlayerDead, OnTimeOut, OnAllEnemiesDead
         HuntingLevelController.OnLevelStateChangeEvent += CallbackLevelStateChangeEvent;
         LetterLevelController.OnLetterGameEndedEvent += CallbackLetterGameEnded;
     }
@@ -57,8 +57,6 @@ public class GameManager : Singleton<GameManager> {
     /// Subscribes to the relevant events for this class
     /// </summary>
     private void UnsubscribeFromEvents() {
-        // todo unsubscribe from OnPlayerDead, OnTimeOut, OnAllEnemiesDead
-        // maybe that this also should be done on disable
         HuntingLevelController.OnLevelStateChangeEvent -= CallbackLevelStateChangeEvent;
         LetterLevelController.OnLetterGameEndedEvent -= CallbackLetterGameEnded;
     }
@@ -134,13 +132,15 @@ public class GameManager : Singleton<GameManager> {
 
     private void Awake() {
         Instance.SetGameState(GAME_STATE.PLAY);
-        this.gameDataManager = new GameDataManager();
+        if (gameDataManager == null) {
+            gameDataManager = new GameDataManager();
+        }
         SubscribeToEvents();
     }
 
     private void OnDestroy() {
+        gameDataManager.SaveData();
         UnsubscribeFromEvents();
-        this.gameDataManager.SaveData();
     }
 
 }

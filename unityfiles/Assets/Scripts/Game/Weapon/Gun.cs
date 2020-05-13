@@ -1,7 +1,7 @@
 using UnityEngine;
 
 /// <summary>
-/// A dataholder holding a guns data
+/// A data holder with information about a gun
 /// </summary>
 public class Gun : MonoBehaviour {
 

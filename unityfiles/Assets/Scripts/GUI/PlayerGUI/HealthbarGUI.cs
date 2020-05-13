@@ -8,21 +8,21 @@ using UnityEngine.UI;
 /// </summary>
 public class HealthbarGUI : MonoBehaviour {
 
-    /// <summary>
-    /// Maximum health so we know what is maximum
-    /// </summary>
     private float maxHealth = 20;
 
+    /// <summary>
+    /// The entities maximum health
+    /// </summary>
     public float MaxHealth {
         get { return this.maxHealth; }
         set { this.maxHealth = value; }
     }
 
+    private float currentHealth = 0;
+
     /// <summary>
     /// Current health value
     /// </summary>
-    private float currentHealth = 0;
-
     public float CurrentHealth {
         get { return this.currentHealth; }
         set { this.currentHealth = value; }

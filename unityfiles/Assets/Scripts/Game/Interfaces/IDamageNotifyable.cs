@@ -1,5 +1,5 @@
 /// <summary>
-/// Object which need notifications when their healthcontroller has reported
+/// Object which need notifications when their health controller has reported
 /// damage can implement this interface.
 /// </summary>
 public interface IDamageNotifyable {
